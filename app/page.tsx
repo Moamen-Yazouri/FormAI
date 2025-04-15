@@ -1,103 +1,126 @@
-import Image from "next/image";
+import Link from "next/link"
+import Image from "next/image"
+import { Button } from "@/components/ui/button"
+import { ArrowRight, CheckCircle, Cpu, FileText, Zap } from "lucide-react"
 
-export default function Home() {
+export default function LandingPage() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="flex min-h-screen flex-col">
+      {/* Header */}
+      <header className="sticky top-0 z-40 w-full border-b bg-white">
+        <div className="w-full max-w-7xl mx-auto px-6 flex h-16 items-center justify-between">
+          <div className="flex items-center gap-2">
+            <FileText className="h-6 w-6 text-purple-500" />
+            <span className="text-xl font-bold">FormAI</span>
+          </div>
+          <nav className="hidden md:flex gap-6">
+            <Link href="#features" className="text-sm font-medium hover:text-purple-500 transition-colors">
+              Features
+            </Link>
+            <Link href="#how-it-works" className="text-sm font-medium hover:text-purple-500 transition-colors">
+              How It Works
+            </Link>
+            <Link href="#pricing" className="text-sm font-medium hover:text-purple-500 transition-colors">
+              Pricing
+            </Link>
+          </nav>
+          <div className="flex items-center gap-4">
+            <Link href="/login" className="text-sm font-medium hover:text-purple-500 transition-colors">
+              Log in
+            </Link>
+            <Button className="bg-purple-500 hover:bg-purple-600">Get Started</Button>
+          </div>
         </div>
+      </header>
+
+      {/* Main */}
+      <main className="flex-1">
+
+        {/* Hero Section */}
+{/* Hero Section */}
+<section className="relative py-20 md:py-28 w-full bg-white">
+  <div className="w-full max-w-7xl mx-auto px-6 text-center">
+    <div className="inline-flex items-center rounded-full border px-4 py-1.5 text-sm font-medium mb-6">
+      <span className="bg-purple-100 text-purple-700 rounded-full px-3 py-0.5 text-xs font-semibold mr-2">
+        NEW
+      </span>
+      <span className="text-sm">Introducing AI-powered form analytics</span>
+      <ArrowRight className="ml-1 h-3.5 w-3.5" />
+    </div>
+    <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl mb-6">
+      Create intelligent forms <br className="hidden sm:inline" />
+      <span className="text-purple-500">powered by AI</span>
+    </h1>
+    <p className="max-w-[42rem] text-muted-foreground sm:text-xl mb-8 mx-auto">
+      Build, deploy, and analyze forms with the help of artificial intelligence.
+    </p>
+
+    {/* ✅ Centered buttons */}
+    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-md mx-auto">
+      <Button size="lg" className="bg-purple-500 hover:bg-purple-600 w-full sm:w-auto">
+        Start for free
+      </Button>
+      <Button size="lg" variant="outline" className="w-full sm:w-auto">
+        Watch demo
+      </Button>
+    </div>
+
+    {/* Image */}
+    <div className="mt-16 relative w-full max-w-4xl mx-auto">
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-purple-100/70 rounded-3xl blur-3xl" />
+      <Image
+        src="/hero.png"
+        alt="FormAI Dashboard"
+        width={1000}
+        height={600}
+        className="rounded-xl border shadow-xl"
+      />
+    </div>
+  </div>
+</section>
+
+
+        {/* CTA Section */}
+        <section className="w-full bg-purple-500 py-20">
+          <div className="w-full max-w-7xl mx-auto px-6 text-center text-white">
+            <div className="rounded-2xl px-8 py-16 md:px-16">
+              <h2 className="text-3xl font-bold sm:text-4xl mb-4">Ready to transform your forms?</h2>
+              <p className="mb-8 max-w-md mx-auto">
+                Join thousands of businesses using FormAI to create intelligent, high-converting forms.
+              </p>
+              <Button size="lg" className="bg-white text-purple-500 hover:bg-gray-100">
+                Start your free trial
+              </Button>
+            </div>
+          </div>
+        </section>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      {/* Footer */}
+      <footer className="w-full border-t bg-white py-12">
+        <div className="w-full max-w-7xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="flex items-center gap-2 mb-4 md:mb-0">
+              <FileText className="h-6 w-6 text-purple-500" />
+              <span className="text-xl font-bold">FormAI</span>
+            </div>
+            <div className="flex gap-8">
+              <Link href="#" className="text-sm text-muted-foreground hover:text-purple-500 transition-colors">
+                Terms
+              </Link>
+              <Link href="#" className="text-sm text-muted-foreground hover:text-purple-500 transition-colors">
+                Privacy
+              </Link>
+              <Link href="#" className="text-sm text-muted-foreground hover:text-purple-500 transition-colors">
+                Contact
+              </Link>
+            </div>
+          </div>
+          <div className="mt-8 text-center text-sm text-muted-foreground">
+            © {new Date().getFullYear()} FormAI. All rights reserved.
+          </div>
+        </div>
       </footer>
     </div>
-  );
+  )
 }
