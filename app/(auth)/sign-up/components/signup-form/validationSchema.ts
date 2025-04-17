@@ -1,6 +1,6 @@
 import * as yup from "yup";
 import {ERole} from "@/@types/index";
-export const validationSchema = yup.object().shape({
+export const validationSchema = yup.object({
     name: yup.string()
         .required("Name is required")
         .min(3, "Name must be at least 3 characters long"),
