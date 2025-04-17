@@ -1,6 +1,6 @@
 "use client"
 import { useFormik } from "formik";
-import { FormValues } from "..";
+import { FormValues } from "../types";
 import { INITIAL_VALUES } from "../constants";
 
 const useSignIn = () => {

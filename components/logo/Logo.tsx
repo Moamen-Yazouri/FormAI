@@ -1,30 +1,17 @@
-import React from 'react'
-import Image from 'next/image'
-import { motion } from 'framer-motion'
+import { motion } from "framer-motion";
 
-const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { type: "spring", stiffness: 100, damping: 12 },
-    },
-  }
-
-  interface LogoProps {
-    width?: number,
-    height?: number,
-    className?: string,
-    textDirection?: "Row" | "Column",
-  }
-
-const Logo = ({width = 0, height = 0, className= "", textDirection = "Column"} : LogoProps) => {
+const Logo = () => {
   return (
-    <motion.div variants={itemVariants} className={` flex ${textDirection == "Column"? "flex-col": "flex-row"} items-center justify-center text-muted-foreground ${className}`}>
-        <Image src="/logo.png" alt="CodePilot Logo" width={width || 100} height={height || 100} />
-        <span className={`${textDirection === "Column"? "-mt-5 mb-5": "mt-0"} font-semibold text-xl bg-gradient-to-r from-blue-600 to-muted-foreground bg-clip-text text-transparent animate-pulse`}>CodePilot</span>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: 0.3, ease: "easeOut" }}
+      className="w-full"
+    >
+      <div className="flex flex-col gap-2 justify-center items-center mb-2">
+        <img className="w-[100px] h-[100px] rounded-full" src="/logo.png" alt="logo" />
+      </div>
     </motion.div>
   )
 }
-
-export default Logo
+export default Logo;
