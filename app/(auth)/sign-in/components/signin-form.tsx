@@ -6,7 +6,7 @@ import Link from 'next/link';
 import React from 'react'
 import { motion } from "framer-motion";
 import MotionField from '@/components/custom-text-field/CustomTextField';
-import  useSignIn  from '../hooks/useSignIn';
+import  useSignIn  from './hooks/useSignIn';
 
 const SignInForm = () => {
     const {formik} = useSignIn();
@@ -26,7 +26,7 @@ const SignInForm = () => {
                     name="password"
                     type="password"
                     isPassword={true}
-                    placeholder='name@example.com'
+                    placeholder='••••••••'
                 />
                 <Link href="/forget-password" className="text-sm text-purple-500 hover:text-purple-600 underline underline-offset-4">
                     Forgot password?
