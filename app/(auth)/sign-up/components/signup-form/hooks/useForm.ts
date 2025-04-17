@@ -2,6 +2,7 @@
 import { useFormik } from "formik";
 import { FormValues } from "../types";
 import { INITIAL_VALUES } from "../constatnts";
+import { validationSchema } from "../validationSchema";
 
 
 const useSignIn = () => {
@@ -16,7 +17,10 @@ const useSignIn = () => {
         initialValues: INITIAL_VALUES,
         onSubmit: (values, {resetForm}) => {
             handleSignUp(values, resetForm)
-        }
+        },
+        validationSchema,
+        validateOnMount: true,
+        validateOnChange: false,
     })
     return {formik}
 }
