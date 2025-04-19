@@ -3,49 +3,15 @@ import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, CheckCircle, Cpu, FileText, Zap } from "lucide-react"
-import { useContext } from "react"
-import { AuthContext } from "@/providers/authProvider"
+import Header from "@/components/header/header"
+
 
 export default function LandingPage() {
-  const {user} = useContext(AuthContext);
+
   return (
     <div className="flex min-h-screen flex-col">
       {/* Header */}
-      <header className="sticky top-0 z-40 w-full border-b bg-white">
-        <div className="w-full max-w-7xl mx-auto px-6 flex h-16 items-center justify-between">
-          <div className="flex items-center gap-2">
-            <FileText className="h-6 w-6 text-purple-500" />
-            <span className="text-xl font-bold">FormAI</span>
-          </div>
-          <nav className="hidden md:flex gap-6">
-            <Link href="#features" className="text-sm font-medium hover:text-purple-500 transition-colors">
-              Features
-            </Link>
-            <Link href="#how-it-works" className="text-sm font-medium hover:text-purple-500 transition-colors">
-              How It Works
-            </Link>
-            <Link href="#pricing" className="text-sm font-medium hover:text-purple-500 transition-colors">
-              Pricing
-            </Link>
-          </nav>
-          <div className="flex items-center gap-4">
-            {
-              user ? (
-                <Link href="/sign-in" className="text-sm font-medium hover:text-purple-500 transition-colors">
-                Logout
-              </Link>
-              )
-              : (
-                <Link href="/sign-in" className="text-sm font-medium hover:text-purple-500 transition-colors">
-                Log in
-              </Link>
-              )
-            }
-
-            <Button className="bg-purple-500 hover:bg-purple-600">Get Started</Button>
-          </div>
-        </div>
-      </header>
+      <Header/>
 
       {/* Main */}
       <main className="flex-1">
