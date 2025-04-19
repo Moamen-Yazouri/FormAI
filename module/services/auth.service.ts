@@ -1,8 +1,10 @@
-import { IUser } from "@/@types";
+"server-only"
+import { IUser, IUserFromDB } from "@/@types";
 import { validationSchema } from "@/app/(auth)/sign-up/components/signup-form/validationSchema";
 import authRepo from "../repositories/auth.repo";
-import { hashPassword } from "@/lib/compareAndHash";
+import { comparePassword, hashPassword } from "@/lib/compareAndHash";
 import xss from "xss";
+import { generateToken } from "@/lib/generateAndVerifyToken";
 
 class AuthService {
     async signUp(user: IUser) {
@@ -33,5 +35,25 @@ class AuthService {
         }
         return newUser;
     }
+
+    async signin(data: Pick<IUser, "email" | "password">) {
+        const user: IUserFromDB | null = await authRepo.findUserByEmail(xss(data.email));
+
+        if(!user) {
+            throw new Error("User not found");
+        }
+
+        const isMatch = await comparePassword(data.password, user.password);
+
+        if(!isMatch) {
+            throw new Error("Invalid credentials");
+        }
+
+        const token = await generateToken({email: user.email, userId: user._id, name: user.name, role: user.role});
+        return {
+            user,
+            token,
+        };
+    }   
 }
 export default new AuthService();
