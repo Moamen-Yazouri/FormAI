@@ -5,9 +5,12 @@ import { INITIAL_VALUES } from "../constants";
 import { validationSchema } from "../validationSchema";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
+import { useContext } from "react";
+import { AuthContext, IContextUser } from "@/providers/authProvider";
 
 
 const useSignIn = () => {
+    const {setUser} = useContext(AuthContext)
     const handleSignIn = async(
         values: FormValues,
         resetForm: () => void,
@@ -27,6 +30,8 @@ const useSignIn = () => {
                 return;
             }
             toast.success(data.message);
+            const userForContext: IContextUser = {user: {email: data.user.email, role: data.user.role}}
+            setUser(userForContext)
             resetForm();
             setTimeout(() => {
                 redirect("/")
