@@ -1,8 +1,8 @@
-import { IUser } from "@/@types";
+import { IUser, IUserFromDB } from "@/@types";
 import userModel from "@/DB/models/user.model";
 
 class AuthRepo {
-    async findUserByEmail(email: string) {
+    async findUserByEmail(email: string): Promise<IUserFromDB | null>  {
         return await userModel.findOne({ email });
     }
 
