@@ -1,9 +1,13 @@
+"use client"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, CheckCircle, Cpu, FileText, Zap } from "lucide-react"
+import { useContext } from "react"
+import { AuthContext } from "@/providers/authProvider"
 
 export default function LandingPage() {
+  const {user} = useContext(AuthContext);
   return (
     <div className="flex min-h-screen flex-col">
       {/* Header */}
@@ -25,9 +29,19 @@ export default function LandingPage() {
             </Link>
           </nav>
           <div className="flex items-center gap-4">
-            <Link href="/login" className="text-sm font-medium hover:text-purple-500 transition-colors">
-              Log in
-            </Link>
+            {
+              user ? (
+                <Link href="/sign-in" className="text-sm font-medium hover:text-purple-500 transition-colors">
+                Logout
+              </Link>
+              )
+              : (
+                <Link href="/sign-in" className="text-sm font-medium hover:text-purple-500 transition-colors">
+                Log in
+              </Link>
+              )
+            }
+
             <Button className="bg-purple-500 hover:bg-purple-600">Get Started</Button>
           </div>
         </div>
