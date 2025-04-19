@@ -49,3 +49,16 @@ export interface IFormResponse {
     userId?: string;
     answers: IAnswer[]; 
 }
+
+
+export interface IUserFromDB {
+  _id: string;
+  name: string;
+  role: UserRoles;
+  email: string;
+  password: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+

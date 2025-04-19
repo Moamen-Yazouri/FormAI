@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Github } from "lucide-react"
 import SignInForm from "./components/signin-form"
 import { motion } from "framer-motion"
+import Logo from "@/components/logo/Logo"
 
 const SignIn = () => {
   const containerVariants = {
@@ -26,7 +27,8 @@ const SignIn = () => {
         animate="visible"
         variants={containerVariants}
     >
-      <Card className="w-full max-w-md">
+      <Card className="w-full max-w-md gap-3">
+        <Logo/>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -34,11 +36,6 @@ const SignIn = () => {
           className="w-full"
         >
         <CardHeader className="space-y-1">
-          <div className="flex flex-col gap-2 justify-center items-center">
-            <img className="w-[100px] h-[100px] rounded-full" src="/logo.png" alt="logo" />
-          </div>
-
-
           <CardTitle className="text-2xl font-bold text-center">Sign in</CardTitle>
           <CardDescription className="text-center">
             Enter your email and password to access your account
