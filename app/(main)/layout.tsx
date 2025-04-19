@@ -12,11 +12,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <SidebarProvider>
-          <div className="flex min-h-screen">
+        <SidebarProvider className="w-full">
             <AppSidebar />
-            <main className="flex-1">{children}</main>
-          </div>
+          {children}
         </SidebarProvider>
       </body>
     </html>
