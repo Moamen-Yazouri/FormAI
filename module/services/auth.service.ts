@@ -48,8 +48,14 @@ class AuthService {
         if(!isMatch) {
             throw new Error("Invalid credentials");
         }
-
-        const token = await generateToken({email: user.email, userId: user._id, name: user.name, role: user.role});
+        const payload = {
+            email: user.email,
+            userId: String(user._id),
+            name: user.name,
+            role: user.role
+        }
+        console.log(payload);
+        const token = await generateToken(payload);
         return {
             user,
             token,

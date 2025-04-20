@@ -10,13 +10,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body>
+
         <SidebarProvider className="w-full">
             <AppSidebar />
           {children}
         </SidebarProvider>
-      </body>
-    </html>
   )
 }

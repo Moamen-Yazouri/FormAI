@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 export enum ERole {
     Admin = "admin",
     Creator = "creator",
@@ -71,10 +73,9 @@ export interface IFormData {
     fields: IFormField[]
     submitButton: string
 }
-export interface IContextUser {
-    user: Pick<IUserFromDB, "email" | "role" | "_id">;
-}
+export interface IContextUser extends Pick<IUserFromDB, "_id"| "role" | "email"> {}
 export interface IAuthContext {
     user: IContextUser | null;
-    setUser: React.Dispatch<React.SetStateAction<IContextUser | null>>
+    setUser: React.Dispatch<React.SetStateAction<IContextUser | null>>;
+    isLoading: boolean;
 }

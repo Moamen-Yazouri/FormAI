@@ -1,6 +1,6 @@
 "use client";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
-import {Menu, User} from "lucide-react";
+import {Loader2, Menu, User} from "lucide-react";
 import React, {useContext, useState} from "react";
 import {Button} from "../ui/button";
 import Link from "next/link";
@@ -10,12 +10,12 @@ import { AuthContext } from "@/providers/auth/authProvider";
 
 
 const Header = () => {
-    const {user, setUser} = useContext(AuthContext);
+    const {user, setUser, isLoading} = useContext(AuthContext);
     const [mobileOpen, setMobileOpen] = useState(false);
     const handleLogout = async () => {
         setUser(null);
         await fetch("api/auth/logout", {method: "POST"});
-        redirect("/sign-in")
+        redirect("/sign-in");
     };
 
     return (
@@ -78,19 +78,24 @@ const Header = () => {
                     {
                     user ? (
                         <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
+                            <DropdownMenuTrigger asChild className="cursor-pointer">
                                 <Button variant="ghost" className="flex items-center gap-2">
                                     <User className="h-4 w-4"/> {
-                                    user.user.email
+                                    user.email
                                 } </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
-                                <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
+                                <DropdownMenuItem className="cursor-pointer" onClick={handleLogout}>Logout</DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
                     ) : (
                         <Link href="/sign-in" className="text-sm font-medium text-gray-700 hover:text-purple-600 transition-colors">
-                            Log in
+                            {
+                                isLoading ? (
+                                    <Loader2 className="animate-spin text-purple-600"/>
+                                )
+                                : "login"
+                            }
                         </Link>
                     )
                 }
