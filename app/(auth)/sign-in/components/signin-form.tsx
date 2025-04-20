@@ -1,5 +1,5 @@
 "use client"
-
+import { Loader2 } from "lucide-react";
 import { Button } from '@/components/ui/button';
 import { Form, FormikProvider, useFormik } from 'formik';
 import Link from 'next/link';
@@ -39,9 +39,15 @@ const SignInForm = () => {
                 >
                 <Button
                     type='submit'
-                    className='w-full bg-purple-500 hover:bg-purple-600 mt-2'
+                    className='w-full cursor-pointer bg-purple-500 hover:bg-purple-600 mt-2 disabled:opacity-70 disabled:cursor-not-allowed'
+                    disabled={formik.isSubmitting}
                 >
-                    Sign-In
+                    {
+                        formik.isSubmitting ? (
+                            <Loader2 className="animate-spin text-white" />
+                        )
+                        : "Sign-In"
+                    }
                 </Button>
                 </motion.div>
             </Form>

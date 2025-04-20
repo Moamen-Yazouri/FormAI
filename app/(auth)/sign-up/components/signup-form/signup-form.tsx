@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Form, FormikProvider, useFormik } from "formik";
 import MotionSelect from "@/components/CustomSelectField/CustomSelectField";
 import useForm from "./hooks/useForm";
+import { Loader2 } from "lucide-react";
 
 const SignUpForm = () => {
     const {formik} = useForm()
@@ -48,9 +49,14 @@ const SignUpForm = () => {
                 /> 
                 <Button
                     type='submit'
-                    className='w-full bg-purple-500 hover:bg-purple-600 mt-2 cursor-pointer'
+                    className='w-full bg-purple-500 hover:bg-purple-600 mt-2 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed'
                 >
-                    Sign Up
+                                        {
+                        formik.isSubmitting ? (
+                            <Loader2 className="animate-spin text-white" />
+                        )
+                        : "Create an account"
+                    }
                 </Button>
             </Form>
         </FormikProvider>
