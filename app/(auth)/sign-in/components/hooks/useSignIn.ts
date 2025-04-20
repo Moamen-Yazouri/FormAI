@@ -6,8 +6,8 @@ import { validationSchema } from "../validationSchema";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
 import { useContext } from "react";
-import { AuthContext, IContextUser } from "@/providers/authProvider";
-
+import { AuthContext } from "@/providers/auth/authProvider";
+import { IContextUser } from "@/@types";
 
 const useSignIn = () => {
     const {setUser} = useContext(AuthContext)
@@ -30,7 +30,7 @@ const useSignIn = () => {
                 return;
             }
             toast.success(data.message);
-            const userForContext: IContextUser = {user: {email: data.user.email, role: data.user.role}}
+            const userForContext: IContextUser = {user: {email: data.user.email, role: data.user.role, _id: data.user._id}}
             setUser(userForContext)
             resetForm();
             setTimeout(() => {
