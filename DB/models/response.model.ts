@@ -1,9 +1,9 @@
 import { IFormResponse } from "@/@types";
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
 
 export interface IResponseDocument extends IFormResponse, Document {}
 
-const ResponseSchema = new mongoose.Schema<IResponseDocument> ({
+const ResponseSchema = new Schema<IResponseDocument> ({
     formId: {type: String, required: true, ref: "Form"},
     userId: {type: String, required: true, unique: true, ref: "User"},
     answers: [

@@ -1,3 +1,4 @@
+import { IUserDocument } from "@/DB/models/user.model";
 import mongoose from "mongoose";
 
 export enum ERole {
@@ -56,16 +57,7 @@ export interface IFormResponse {
 }
 
 
-export interface IUserFromDB {
-    _id: string;
-    name: string;
-    role: UserRoles;
-    email: string;
-    password: string;
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
-}
+export interface IUserFromDB extends IUserDocument{}
 
 export interface IFormData {
     title: string
