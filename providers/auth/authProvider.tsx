@@ -1,22 +1,13 @@
 "use client"
-import { IUser } from "@/@types";
+import { IAuthContext, IContextUser, IUserFromDB } from "@/@types";
 import { createContext, useState } from "react";
-export interface IContextUser {
-    user: Pick<IUser, "email" | "role">;
-}
-interface IAuthContext {
-    user: IContextUser | null;
-    setUser: React.Dispatch<React.SetStateAction<IContextUser | null>>
-}
+import { INITIAL_CONTEXT } from "./constants";
 
 interface IProps {
     children: React.ReactNode;
 }
 
-const AuthContext = createContext<IAuthContext>({
-    user: null,
-    setUser: () => {}
-});
+const AuthContext = createContext<IAuthContext>(INITIAL_CONTEXT);
 
 const AuthProvider = (props: IProps) => {
     const [user, setUser] = useState<IContextUser | null>(null);

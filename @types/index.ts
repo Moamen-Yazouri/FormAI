@@ -17,6 +17,8 @@ export enum EType {
     checkbox = "checkbox",
     radio = "radio",
     dropdown= "dropdown",
+    email = "email",
+    select = "select",
 }
 
 export type fieldTypes = `${EType}`;
@@ -27,6 +29,7 @@ export interface IFormField {
     type: fieldTypes; 
     required: boolean;
     options?: string[];
+    placeholder?: string;
 }
 export interface IForm {
     title: string;
@@ -52,13 +55,26 @@ export interface IFormResponse {
 
 
 export interface IUserFromDB {
-  _id: string;
-  name: string;
-  role: UserRoles;
-  email: string;
-  password: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
+    _id: string;
+    name: string;
+    role: UserRoles;
+    email: string;
+    password: string;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
 }
 
+export interface IFormData {
+    title: string
+    description: string
+    fields: IFormField[]
+    submitButton: string
+}
+export interface IContextUser {
+    user: Pick<IUserFromDB, "email" | "role" | "_id">;
+}
+export interface IAuthContext {
+    user: IContextUser | null;
+    setUser: React.Dispatch<React.SetStateAction<IContextUser | null>>
+}

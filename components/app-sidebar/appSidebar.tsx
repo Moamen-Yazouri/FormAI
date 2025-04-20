@@ -38,7 +38,7 @@ export default function AppSidebar() {
         {
             title: "Dashboard",
             icon: LayoutDashboard,
-            href: "/dashboard"
+            href: "/admin/dashboard"
         },
         {
             title: "Form Generator",
@@ -51,10 +51,6 @@ export default function AppSidebar() {
             href: "/projects"
         },
         {
-            title: "Developer",
-            icon: Code,
-            href: "/developer"
-        }, {
             title: "Profile",
             icon: User,
             href: "/profile"

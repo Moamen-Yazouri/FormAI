@@ -3,10 +3,10 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger
 import {Menu, User} from "lucide-react";
 import React, {useContext, useState} from "react";
 import {Button} from "../ui/button";
-import {AuthContext} from "@/providers/authProvider";
 import Link from "next/link";
 import {redirect} from "next/navigation";
 import {motion} from "framer-motion";
+import { AuthContext } from "@/providers/auth/authProvider";
 
 
 const Header = () => {
