@@ -1,4 +1,4 @@
-import { IUsersData } from "@/@types";
+import { IUserData } from "@/@types";
 import { connection } from "@/DB/connection";
 import dashboardService from "@/module/services/dashboard.service";
 import { NextResponse } from "next/server";
@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 export const GET = async () => {
     try {
         await connection()
-        const users: IUsersData[] = await dashboardService.getUsersData();
+        const users: IUserData[] = await dashboardService.getUsersData();
         if(!users || users.length === 0) {
             return NextResponse.json({message: "No users found"}, {status: 404})
         }
@@ -15,7 +15,7 @@ export const GET = async () => {
     catch (error) {
         if (error instanceof Error)  {
             
-            return NextResponse.json({message: error.message}, {status: 401})
+            return NextResponse.json({message: error.message}, {status: 400})
         }
         return NextResponse.json({message: "Something went wrong"}, {status: 500})
     }
