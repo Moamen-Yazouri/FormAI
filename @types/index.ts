@@ -57,7 +57,14 @@ export interface IFormResponse {
 }
 
 
-export interface IUserFromDB extends IUserDocument{}
+export interface IUserFromDB {
+    _id: string;          
+    name: string;
+    email: string;
+    role: UserRoles;  
+    createdAt: string;    
+    updatedAt: string;
+}
 
 export interface IFormData {
     title: string
@@ -70,4 +77,14 @@ export interface IAuthContext {
     user: IContextUser | null;
     setUser: React.Dispatch<React.SetStateAction<IContextUser | null>>;
     isLoading: boolean;
+}
+
+export interface IUsersData {
+    id: string,
+    name: string,
+    email: string,
+    role: string,
+    status: string,
+    forms: number,
+    lastActive: string,
 }
