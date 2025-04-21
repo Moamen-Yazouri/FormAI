@@ -16,8 +16,17 @@ const formSchema = new Schema<IFormDocument>(
                 options: { type: [String], default: [] },
             }
         ],
-        answeredBy: [{ type: String }], 
-        creatorId: { type: String, required: true }, 
+        answeredBy: [
+            { 
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User" 
+            }
+        ], 
+        creatorId: { 
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User", 
+            required: true 
+        }, 
         isPublic: { type: Boolean, default: false },
         allowAnonymous: { type: Boolean, default: false },
         expiredAt: { type: Date },

@@ -39,7 +39,7 @@ export interface IForm {
     description: string;
     fields: IFormField[];
     answeredBy: string[];
-    creatorId: string;
+    creatorId: mongoose.Types.ObjectId;
     isPublic: boolean;
     allowAnonymous: boolean;
     expiredAt: Date;
@@ -58,7 +58,7 @@ export interface IFormResponse {
 
 
 export interface IUserFromDB {
-    _id: string;          
+    _id: mongoose.Types.ObjectId;          
     name: string;
     email: string;
     role: UserRoles;  
@@ -73,13 +73,14 @@ export interface IFormData {
     submitButton: string
 }
 export interface IContextUser extends Pick<IUserFromDB, "_id"| "role" | "email"> {}
+
 export interface IAuthContext {
     user: IContextUser | null;
     setUser: React.Dispatch<React.SetStateAction<IContextUser | null>>;
     isLoading: boolean;
 }
 
-export interface IUsersData {
+export interface IUserData {
     id: string,
     name: string,
     email: string,
@@ -87,4 +88,26 @@ export interface IUsersData {
     status: string,
     forms: number,
     lastActive: string,
+}
+
+export interface IDashboardForm {
+    id: string,
+    name: string,
+    creator: string,
+    responses: number,
+    createdAt: string,
+}
+
+export interface IFormFromDB extends IForm {
+    _id: mongoose.Types.ObjectId;
+    createdAt: string;
+    updatedAt: string;
+    creatorId: mongoose.Types.ObjectId;
+    _v: number;
+}
+
+export interface IFormPopulatedByCreator extends Omit<IFormFromDB, "creatorId"> {
+    creatorId: {
+        name: string
+    }
 }
