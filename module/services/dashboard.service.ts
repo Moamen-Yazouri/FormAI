@@ -1,6 +1,7 @@
-import { IUserFromDB, IUserData, IFormPopulatedByCreator, IFormData, IDashboardForm, IUsersActivityData } from "@/@types";
-import { getActiveStatus, getDateOnly, getWeekDaysDates } from "@/lib/dateUtils";
+import { IUserFromDB, IUserData, IFormPopulatedByCreator, IFormData, IDashboardForm, IUsersActivityData, IFormFromDB, IFormCreationData } from "@/@types";
+import { getActiveStatus, getDateOnly, getMonthName, getWeekDaysDates } from "@/lib/dateUtils";
 import dashboardRepo from "../repositories/dashboard.repo";
+import { months } from "@/constants/dateConstants";
 
 class DashboardService {
     async getUsersData() {
@@ -27,7 +28,7 @@ class DashboardService {
 
     async getFormsData() {
         const populatedForms: IFormPopulatedByCreator[] = await dashboardRepo.getAllFormsWithCreators();
-        console.log(populatedForms);
+
         const formsData: IDashboardForm[] = populatedForms.map(form => {
             return {
                 id: String(form._id),
@@ -39,6 +40,7 @@ class DashboardService {
         })
         return formsData;
     }
+
     async getUsersActivityData() {
         const users: IUserFromDB[] = await dashboardRepo.getAllUsers();
         const dates = getWeekDaysDates();
@@ -50,6 +52,17 @@ class DashboardService {
             }
         })
         return userActivityData;
+    }
+
+    async getFormsCreationData() {
+        const forms: IFormFromDB[] = await dashboardRepo.getAllForms();
+        const formCreationData: IFormCreationData[] = months.map((month) => {
+            return {
+                name: month,
+                forms: forms.filter(form => getMonthName(form.createdAt) === month).length || 0,
+            }
+        })
+        return formCreationData;
     }
 }
 export default new DashboardService();
