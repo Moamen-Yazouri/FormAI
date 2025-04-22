@@ -1,5 +1,5 @@
-import { IUserFromDB, IUserData, IFormPopulatedByCreator, IFormData, IDashboardForm } from "@/@types";
-import { getActiveStatus } from "@/lib/getDateFromISO";
+import { IUserFromDB, IUserData, IFormPopulatedByCreator, IFormData, IDashboardForm, IUsersActivityData } from "@/@types";
+import { getActiveStatus, getDateOnly, getWeekDaysDates } from "@/lib/dateUtils";
 import dashboardRepo from "../repositories/dashboard.repo";
 
 class DashboardService {
@@ -16,7 +16,7 @@ class DashboardService {
                     name: user.name,
                     email: user.email,
                     role: user.role,
-                    status: getActiveStatus(user.updatedAt),
+                    status: getActiveStatus(user.updatedAt, new Date().toISOString()),
                     forms: await formsCount(String(user._id)),
                     lastActive: user.updatedAt,
                 }
@@ -38,6 +38,18 @@ class DashboardService {
             }
         })
         return formsData;
+    }
+    async getUsersActivityData() {
+        const users: IUserFromDB[] = await dashboardRepo.getAllUsers();
+        const dates = getWeekDaysDates();
+        const userActivityData: IUsersActivityData[] = dates.map((date) => {
+            return {
+                name: date.day,
+                active: users.filter(user => (getActiveStatus(user.updatedAt, date.date) === "active")).length || 0, 
+                new: users.filter(user => getDateOnly(user.createdAt) === getDateOnly(date.date)).length || 0,
+            }
+        })
+        return userActivityData;
     }
 }
 export default new DashboardService();

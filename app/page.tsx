@@ -6,8 +6,8 @@ import { ArrowRight, CheckCircle, Cpu, FileText, Zap } from "lucide-react"
 import Header from "@/components/header/header"
 
 
-export default function LandingPage() {
 
+export default function LandingPage() {
   return (
     <div className="flex min-h-screen flex-col">
       {/* Header */}

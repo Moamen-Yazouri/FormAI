@@ -111,3 +111,9 @@ export interface IFormPopulatedByCreator extends Omit<IFormFromDB, "creatorId"> 
         name: string
     }
 }
+
+export interface IUsersActivityData {
+    name: string,
+    active: number,
+    new: number, 
+}
