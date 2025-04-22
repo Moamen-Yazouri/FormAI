@@ -1,3 +1,5 @@
+import { days } from "@/constants/dateConstants";
+
 export const getDateFromISO = (isoDate: string) => {
     const date = isoDate.split("T")[0];
     return date;
@@ -26,7 +28,6 @@ export const getISOStringFromDay = (day: number) => {
     return date.toISOString();
 }
 export const getDayFromIndex = (index: number) => {
-    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     return days[index];
 }
 
@@ -65,3 +66,5 @@ export const getWeekDaysDates = () => {
 }
 
 export const getDateOnly = (date: Date | string) => new Date(date).toISOString().split("T")[0];
+
+export const getMonthName = (isoDate: string | Date) => new Date(isoDate).toLocaleString("en-US", {month: "short"});

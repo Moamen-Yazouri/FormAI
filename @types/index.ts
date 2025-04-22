@@ -95,13 +95,13 @@ export interface IDashboardForm {
     name: string,
     creator: string,
     responses: number,
-    createdAt: string,
+    createdAt: Date,
 }
 
 export interface IFormFromDB extends IForm {
     _id: mongoose.Types.ObjectId;
-    createdAt: string;
-    updatedAt: string;
+    createdAt: Date;
+    updatedAt: Date;
     creatorId: mongoose.Types.ObjectId;
     _v: number;
 }
@@ -116,4 +116,9 @@ export interface IUsersActivityData {
     name: string,
     active: number,
     new: number, 
+}
+
+export interface IFormCreationData {
+    name: string,
+    forms: number
 }

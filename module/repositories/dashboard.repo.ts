@@ -19,6 +19,10 @@ class DashboardRepo {
     async getAllFormsWithCreators() {
         return await FormModel.find({}).populate('creatorId', "name -_id").lean<IFormPopulatedByCreator[]>();
     }
+
+    async getAllForms() {
+        return await FormModel.find({}).lean<IFormFromDB[]>();
+    }
 }
 
 export default new DashboardRepo();
