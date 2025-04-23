@@ -6,11 +6,11 @@ import { NextResponse } from "next/server";
 export const GET = async () => {
     try {
         await connection()
-        const users: IUserData[] = await dashboardService.getUsersData();
-        if(!users || users.length === 0) {
+        const usersData: IUserData[] = await dashboardService.getUsersData();
+        if(!usersData || usersData.length === 0) {
             return NextResponse.json({message: "No users found"}, {status: 404})
         }
-        return NextResponse.json({users}, {status: 200});
+        return NextResponse.json({usersData}, {status: 200});
     }
     catch (error) {
         if (error instanceof Error)  {

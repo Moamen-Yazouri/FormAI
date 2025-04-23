@@ -75,5 +75,15 @@ class DashboardService {
         })
         return formResponseData;
     }
+
+    async deleteUser(userId: string) {
+        const deletedUser: IUserFromDB | null = await dashboardRepo.deleteUser(userId);
+        return deletedUser;
+    }
+
+    async deleteForm(formId: string) {
+        const deletedForm: IFormFromDB | null = await dashboardRepo.deleteForm(formId);
+        return deletedForm;
+    }
 }
 export default new DashboardService();

@@ -23,6 +23,23 @@ class DashboardRepo {
     async getAllForms() {
         return await FormModel.find({}).lean<IFormFromDB[]>();
     }
+
+    async deleteUser(userId: string) {
+        return await userModel.findByIdAndDelete(userId).lean<IUserFromDB>();
+    }
+
+    async deleteForm(formId: string) {
+        return await FormModel.findByIdAndDelete(formId).lean<IFormFromDB>();
+    }
+
+    async getFormById(formId: string) {
+        return await FormModel.findById(formId).lean<IFormFromDB>();
+    }
+
+    async getFormResponses(formId: string) {
+        return await responseModel.find({formId}).lean();
+    }
+
 }
 
-export default new DashboardRepo();
+export default new DashboardRepo(); 

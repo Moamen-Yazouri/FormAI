@@ -60,6 +60,7 @@ export interface IFormResponse {
 export interface IUserFromDB {
     _id: mongoose.Types.ObjectId;          
     name: string;
+    password: string,
     email: string;
     role: UserRoles;  
     createdAt: string;    
