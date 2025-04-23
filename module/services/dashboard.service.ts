@@ -64,5 +64,16 @@ class DashboardService {
         })
         return formCreationData;
     }
+
+    async getResponsesData() {
+        const fomrs: IFormFromDB[] = await dashboardRepo.getAllForms();
+        const formResponseData = fomrs.map( form => {
+            return {
+                name: form.title,
+                value: form.answeredBy?.length || 0,
+            }
+        })
+        return formResponseData;
+    }
 }
 export default new DashboardService();
