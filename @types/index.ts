@@ -132,3 +132,13 @@ export interface IStateCard {
     stateValue: number,
     statePercentage: number,
 }
+
+export interface IActiveUsers {
+    id: string | number,
+    name: string,
+    email: string,
+    avatar: string,
+    lastActive: string,
+    status: String,
+    forms: number,
+}

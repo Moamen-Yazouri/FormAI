@@ -1,7 +1,6 @@
 import { IFormCreationData } from "@/@types";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ChartTooltip } from "@/components/ui/chart"
-import { ResponsiveContainer, XAxis, YAxis, Line, LineChart } from "recharts"
+import { ResponsiveContainer, XAxis, YAxis, Line, LineChart, Tooltip  } from "recharts"
 interface IProps {
     formCreationData: IFormCreationData[];
 }
@@ -18,7 +17,7 @@ const FormCreationTrend = (props: IProps) => {
                     <LineChart data={props.formCreationData}>
                         <XAxis dataKey="name"/>
                         <YAxis/>
-                        <ChartTooltip/>
+                        <Tooltip/>
                         <Line type="monotone" dataKey="forms" name="Forms Created" stroke="#8b5cf6"
                             strokeWidth={2}/>
                     </LineChart>

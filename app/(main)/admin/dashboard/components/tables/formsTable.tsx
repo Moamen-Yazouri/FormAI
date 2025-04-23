@@ -2,18 +2,29 @@ import { IDashboardForm } from '@/@types'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuItem, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
-import { FileText, MoreVertical, Eye, MessageSquare, Trash2 } from 'lucide-react'
+import { 
+    DropdownMenu, 
+    DropdownMenuTrigger, 
+    DropdownMenuContent, 
+    DropdownMenuLabel, 
+    DropdownMenuItem, 
+    DropdownMenuSeparator 
+} from '@/components/ui/dropdown-menu'
+import { FileText, MoreVertical, Eye, MessageSquare } from 'lucide-react'
 import React, { useState } from 'react'
 import DeleteDialog from '../deleteDialog'
+
 interface IProps {
     filteredForms: IDashboardForm[]
 }
+
 const FormsTable = (props: IProps) => {
     const [formToDelete, setFormToDelete] = useState<number | null>(null);
+    
     const handelFormDelete = (form: number) => {
         setFormToDelete(null);
     }
+
     return (
         <div className="rounded-md border">
             <Table>
@@ -26,32 +37,22 @@ const FormsTable = (props: IProps) => {
                         <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
                 </TableHeader>
-                <TableBody> {
-                    props.filteredForms.map((form) => (
-                        <TableRow key={
-                            form.id
-                        }>
+                <TableBody>
+                    {props.filteredForms.map((form) => (
+                        <TableRow key={form.id}>
                             <TableCell>
                                 <div className="flex items-center gap-2">
                                     <FileText className="h-4 w-4 text-purple-600"/>
-                                    <span className="font-medium">
-                                        {
-                                        form.name
-                                    }</span>
+                                    <span className="font-medium">{form.name}</span>
                                 </div>
                             </TableCell>
-                            <TableCell>{
-                                form.creator
-                            }</TableCell>
+                            <TableCell>{form.creator}</TableCell>
                             <TableCell>
                                 <Badge variant="secondary" className="bg-purple-100 text-purple-800 hover:bg-purple-100">
-                                    {
-                                    form.responses
-                                } </Badge>
+                                    {form.responses}
+                                </Badge>
                             </TableCell>
-                            <TableCell>
-                                {String(form.createdAt)}
-                            </TableCell>
+                            <TableCell>{String(form.createdAt)}</TableCell>
                             <TableCell className="text-right">
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
@@ -72,20 +73,19 @@ const FormsTable = (props: IProps) => {
                                         </DropdownMenuItem>
                                         <DropdownMenuSeparator/>
                                         <DeleteDialog
-                                        itemToDelete={formToDelete}
-                                        item={form}
-                                        data={props.filteredForms}
-                                        setItemToDelete={setFormToDelete}
-                                        itemsType="Form"
-                                        handleDeleteItem={handelFormDelete}
-                                    />
-
+                                            itemToDelete={formToDelete}
+                                            item={form}
+                                            data={props.filteredForms}
+                                            setItemToDelete={setFormToDelete}
+                                            itemsType="Form"
+                                            handleDeleteItem={handelFormDelete}
+                                        />
                                     </DropdownMenuContent>
                                 </DropdownMenu>
                             </TableCell>
                         </TableRow>
-                    ))
-                } </TableBody>
+                    ))}
+                </TableBody>
             </Table>
         </div>
     )

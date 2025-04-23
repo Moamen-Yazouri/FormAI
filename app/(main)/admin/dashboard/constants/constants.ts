@@ -1,3 +1,5 @@
+import { IStateCard } from "@/@types"
+
 export const COLORS = [
     '#8b5cf6',
     '#a78bfa',
