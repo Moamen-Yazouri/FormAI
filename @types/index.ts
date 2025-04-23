@@ -81,21 +81,21 @@ export interface IAuthContext {
 }
 
 export interface IUserData {
-    id: string,
+    id: string | number,
     name: string,
     email: string,
-    role: string,
+    role: UserRoles,
     status: string,
     forms: number,
     lastActive: string,
 }
 
 export interface IDashboardForm {
-    id: string,
+    id: string | number,
     name: string,
     creator: string,
     responses: number,
-    createdAt: Date,
+    createdAt: Date | string,
 }
 
 export interface IFormFromDB extends IForm {
@@ -121,4 +121,14 @@ export interface IUsersActivityData {
 export interface IFormCreationData {
     name: string,
     forms: number
+}
+
+export interface IFormResponseData {
+    name: string,
+    value: number,
+}
+export interface IStateCard {
+    stateTitle: string,
+    stateValue: number,
+    statePercentage: number,
 }
