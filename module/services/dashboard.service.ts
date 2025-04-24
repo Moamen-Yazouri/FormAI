@@ -7,7 +7,7 @@ class DashboardService {
     async getUsersData() {
         const users: IUserFromDB[] = await dashboardRepo.getAllUsers();
         const formsCount = async (userId: string) => {
-            const forms = await dashboardRepo.getUserForms(userId);
+            const forms = await dashboardRepo.getUserForms(userId) || [];
             return forms.length;
         }
         const usersData: IUserData[] = await Promise.all(
@@ -19,7 +19,7 @@ class DashboardService {
                     role: user.role,
                     status: getActiveStatus(user.updatedAt, new Date().toISOString()),
                     forms: await formsCount(String(user._id)),
-                    lastActive: user.updatedAt,
+                    lastActive: getDateOnly(user.updatedAt),
                 }
             })
         )
@@ -35,7 +35,7 @@ class DashboardService {
                 name: form.title,
                 creator: form.creatorId.name,
                 responses: form.answeredBy?.length || 0,
-                createdAt: form.createdAt
+                createdAt: getDateOnly(form.createdAt),
             }
         })
         return formsData;

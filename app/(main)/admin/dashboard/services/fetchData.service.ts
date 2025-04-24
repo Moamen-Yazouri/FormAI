@@ -1,7 +1,7 @@
-import { IFormCreationData, IFormData, IFormResponseData, IUserData, IUsersActivityData } from "@/@types";
+import { IDashboardForm, IFormCreationData, IFormData, IFormResponseData, IUserData, IUsersActivityData } from "@/@types";
 
 class FetchData {
-    private baseUrl: string = "/api/dashboard";
+    private baseUrl: string = "http://localhost:3000//api/dashboard";
 
     async usersActivity(): Promise<IUsersActivityData[]> {
         try {
@@ -11,7 +11,7 @@ class FetchData {
                 console.error(data.message);
                 return [];
             }
-            const userActivityData: IUsersActivityData[] = data.userActivityData;
+            const userActivityData: IUsersActivityData[] = data.usersActivityData;
             return userActivityData;
         }
         catch(err) {
@@ -51,7 +51,7 @@ class FetchData {
                 console.error(data.message);
                 return [];
             }
-            const formResponsesData: IFormResponseData[] = data.formsResponsesData;
+            const formResponsesData: IFormResponseData[] = data.formResponsesData;
             return formResponsesData;
         }
         catch(err) {
@@ -83,15 +83,15 @@ class FetchData {
         }    
     }
     
-    async formsData(): Promise<IFormData[]> {
+    async formsData(): Promise<IDashboardForm[]> {
         try {
-            const res = await fetch(`${this.baseUrl}/users-data`);
+            const res = await fetch(`${this.baseUrl}/forms-data`);
             const data = await res.json();
             if(!res.ok) {
                 console.error(data.message);
                 return [];
             }
-            const formsData: IFormData[] = data.formsData;
+            const formsData: IDashboardForm[] = data.formsData;
             return formsData;
         }
         catch(err) {

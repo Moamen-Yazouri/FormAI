@@ -45,6 +45,6 @@ const UserActivityChart = (props: IProps) => {
         </Card>
     );
 };
-  
-  export default UserActivityChart;
-  
+
+
+export default UserActivityChart;

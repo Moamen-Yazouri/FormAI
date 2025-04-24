@@ -9,7 +9,7 @@ class DashboardRepo {
     }
 
     async getUserForms(userId: string) {
-        return await FormModel.find({userId}).lean<IFormFromDB[]>();
+        return await FormModel.find({creatorId: userId}).lean<IFormFromDB[]>();
     }
 
     async getUserResponses(userId: string) {
