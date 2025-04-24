@@ -26,6 +26,31 @@ class DashboardService {
         return usersData;
     }
 
+    async getUserForms (userId: string) {
+        try {
+            const user: IUserFromDB | null= await dashboardRepo.getUserById(userId);
+            if(user) {
+                const forms: IFormFromDB[] = await dashboardRepo.getUserForms(userId);
+                const formsData: IDashboardForm[] = forms.map(form => {
+                    return {
+                        id: String(form._id),
+                        name: form.title,
+                        creator: user.name,
+                        responses: form.answeredBy?.length || 0,
+                        createdAt: getDateOnly(form.createdAt),
+                    }
+                })
+                return formsData;
+            }
+            console.error("User not found!");
+            return [];
+        } catch(err) {
+            console.error("Faild to fetch user forms!");
+            return [];
+        }
+
+    }
+
     async getFormsData() {
         const populatedForms: IFormPopulatedByCreator[] = await dashboardRepo.getAllFormsWithCreators();
 

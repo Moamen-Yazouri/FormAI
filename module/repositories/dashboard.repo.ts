@@ -40,6 +40,9 @@ class DashboardRepo {
         return await responseModel.find({formId}).lean();
     }
 
+    async getUserById(userId: string) {
+        return await userModel.findById(userId).lean<IUserFromDB>();
+    }
 }
 
 export default new DashboardRepo(); 

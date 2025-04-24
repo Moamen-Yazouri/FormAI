@@ -9,6 +9,7 @@ import DeleteDialog from '../deleteDialog';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import actionsService from '../../services/actions.service';
 import { toast } from 'sonner';
+import { redirect } from 'next/navigation';
 interface IProps {
     filteredUsers: IUserData[];
 }
@@ -88,7 +89,10 @@ const UsersTable = (props: IProps) => {
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent align="end">
                                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                        <DropdownMenuItem className="flex items-center gap-2">
+                                        <DropdownMenuItem className="flex items-center gap-2" 
+                                            onClick={() => redirect(`/all-forms/${user.id}`)}
+                                        >
+
                                             <Eye className="h-4 w-4" />
                                             View Forms
                                         </DropdownMenuItem>

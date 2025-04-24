@@ -92,7 +92,7 @@ export interface IUserData {
 }
 
 export interface IDashboardForm {
-    id: string | number,
+    id: string ,
     name: string,
     creator: string,
     responses: number,
