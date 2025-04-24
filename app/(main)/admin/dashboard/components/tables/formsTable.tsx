@@ -1,3 +1,4 @@
+"use client"
 import { IDashboardForm } from '@/@types'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -19,9 +20,9 @@ interface IProps {
 }
 
 const FormsTable = (props: IProps) => {
-    const [formToDelete, setFormToDelete] = useState<number | null>(null);
+    const [formToDelete, setFormToDelete] = useState<string | null>(null);
     
-    const handelFormDelete = (form: number) => {
+    const handelFormDelete = (form: string) => {
         setFormToDelete(null);
     }
 
