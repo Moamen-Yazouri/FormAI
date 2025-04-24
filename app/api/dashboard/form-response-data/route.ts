@@ -6,13 +6,13 @@ import { NextResponse } from "next/server"
 export const GET = async() => {
     try{
         await connection();
-        const formResponseData: IFormResponseData[] = await dashboardService.getResponsesData();
+        const formResponsesData: IFormResponseData[] = await dashboardService.getResponsesData();
 
-        if(!formResponseData) {
-            return NextResponse.json({formResponseData: []}, {status: 404});
+        if(!formResponsesData) {
+            return NextResponse.json({formResponsesData: []}, {status: 404});
         }
 
-        return NextResponse.json({formResponseData}, {status: 200});
+        return NextResponse.json({formResponsesData}, {status: 200});
     }
     catch(error) {
         if(error instanceof Error) {

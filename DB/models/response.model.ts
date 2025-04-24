@@ -16,6 +16,6 @@ const ResponseSchema = new Schema<IResponseDocument> ({
 { timestamps: true }
 ); 
 const responseModel =
-    mongoose.models.responseModel || mongoose.model<IResponseDocument>("Response", ResponseSchema);
+    mongoose.models.Response || mongoose.model<IResponseDocument>("Response", ResponseSchema);
 
 export default responseModel;

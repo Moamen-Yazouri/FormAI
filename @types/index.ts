@@ -60,6 +60,7 @@ export interface IFormResponse {
 export interface IUserFromDB {
     _id: mongoose.Types.ObjectId;          
     name: string;
+    password: string,
     email: string;
     role: UserRoles;  
     createdAt: string;    
@@ -131,4 +132,14 @@ export interface IStateCard {
     stateTitle: string,
     stateValue: number,
     statePercentage: number,
+}
+
+export interface IActiveUsers {
+    id: string | number,
+    name: string,
+    email: string,
+    avatar: string,
+    lastActive: string,
+    status: String,
+    forms: number,
 }
