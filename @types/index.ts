@@ -58,7 +58,7 @@ export interface IFormResponse {
 
 
 export interface IUserFromDB {
-    _id: mongoose.Types.ObjectId;          
+    _id: string;          
     name: string;
     password: string,
     email: string;
@@ -82,7 +82,7 @@ export interface IAuthContext {
 }
 
 export interface IUserData {
-    id: string | number,
+    id: string ,
     name: string,
     email: string,
     role: UserRoles,

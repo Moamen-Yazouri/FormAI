@@ -16,6 +16,7 @@ import AllCharts from "../components/allCharts"
 import { useMemo } from "react"
 import AllCards from "../components/allStates"
 import DashboardHeader from "../components/dashboardHeader"
+import { getActivesFirst } from "../utils/sortArray"
 interface IProps {
     usersData: IUserData[],
     formsData: IDashboardForm[],
@@ -31,7 +32,8 @@ const AdminDashboard = (props: IProps) => {
         userActivityData,
         formCreationData,
         formResponsesData,
-    } = props
+    } = props;
+    const userData = getActivesFirst(usersData);
     const {
         filteredUsers,
         filteredForms,
@@ -43,7 +45,7 @@ const AdminDashboard = (props: IProps) => {
         totalResponses,
         setSearchUsers,
         setSearchForms,
-    } = useDashboard({usersData, formsData});
+    } = useDashboard({userData, formsData});
 
     const stateCardsData = useMemo(() => [
         {

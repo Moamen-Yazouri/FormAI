@@ -2,11 +2,11 @@ import { IDashboardForm, IUserData } from "@/@types"
 import { useCallback, useMemo, useState } from "react"
 
 interface IProps {
-    usersData: IUserData[],
+    userData: IUserData[],
     formsData: IDashboardForm[],
 }
 const useDashboard = (props: IProps) => {
-    const { usersData, formsData } = props
+    const { userData, formsData } = props
     const [searchUsers, setSearchUsers] = useState("")
     const [searchForms, setSearchForms] = useState("")
     const [totalUsers, setTotalUsers] = useState(0);
@@ -15,7 +15,7 @@ const useDashboard = (props: IProps) => {
     const [totalResponses, setTotalResponses] = useState(0);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
         
-    const filteredUsers = usersData.filter(
+    const filteredUsers = userData.filter(
         user => user.name.toLowerCase().includes(searchUsers.toLowerCase()) || 
         user.email.toLowerCase().includes(searchUsers.toLowerCase())
     );
@@ -26,9 +26,9 @@ const useDashboard = (props: IProps) => {
     );
 
     useMemo(() => {
-        setTotalUsers(usersData.length);
-        setActiveUsers(usersData.filter(user => user.status === "active").length); 
-    }, [usersData]);
+        setTotalUsers(userData.length);
+        setActiveUsers(userData.filter(user => user.status === "active").length); 
+    }, [userData]);
 
     useMemo(() => {
         setTotalForms(formsData.length);
