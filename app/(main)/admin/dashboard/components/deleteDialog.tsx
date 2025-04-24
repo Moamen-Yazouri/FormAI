@@ -13,7 +13,7 @@ import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { UserX, AlertCircle, FormInputIcon } from 'lucide-react';
 import React, { useState } from 'react'
 interface ISharedProps {
-    id: string | number;
+    id: string;
     name: string;
     email?: string;
     creator?: string;
@@ -22,9 +22,9 @@ interface IProps<T extends ISharedProps> {
     itemsType: string;
     item: T;
     data: T[];
-    setItemToDelete: (value: React.SetStateAction<number | null>) => void;
-    handleDeleteItem: (id: number) => void;
-    itemToDelete: number | null;
+    setItemToDelete: (value: React.SetStateAction<string | null>) => void;
+    handleDeleteItem: (id: string) => void;
+    itemToDelete: string | null;
 }
 const DeleteDialog = <T extends ISharedProps>(props: IProps<T>) => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -36,7 +36,7 @@ const DeleteDialog = <T extends ISharedProps>(props: IProps<T>) => {
             className="flex items-center gap-2 text-red-600 focus:text-red-600"
             onSelect={(e) => {
                 e.preventDefault()
-                setItemToDelete(Number(item.id))
+                setItemToDelete(item.id)
                 setIsDialogOpen(true) // ✅ open the dialog manually
             }}
             >

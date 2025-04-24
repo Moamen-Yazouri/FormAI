@@ -7,15 +7,23 @@ import React, {useState } from 'react'
 import { Badge } from '@/components/ui/badge';
 import DeleteDialog from '../deleteDialog';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import actionsService from '../../services/actions.service';
+import { toast } from 'sonner';
 interface IProps {
     filteredUsers: IUserData[];
 }
 const UsersTable = (props: IProps) => {
-    const [userToDelete, setUserToDelete] = useState < number | null > (null);
+    const [userToDelete, setUserToDelete] = useState < string | null > (null);
     const {filteredUsers} = props
 
-    const handleDeleteUser = (userId: number) => {
-        console.log("Deleting user with ID: ", userId); 
+    const handleDeleteUser = async(userId: string) => {
+        const deletedUser = await actionsService.deleteUser(userId);
+        if(deletedUser) {
+            toast.success(`User: ${deletedUser.email}, deleted successfully`);
+        }
+        else {
+            toast.error(`failed to delete user`);
+        }
     }
     return (
 
