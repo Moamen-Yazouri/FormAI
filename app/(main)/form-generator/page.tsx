@@ -18,6 +18,7 @@ import {
 import FormPreview from "./components/form-preview"
 import LoadingSpinner from "./components/loading-spinner"
 
+
 const formTemplates = [
   "Contact Form",
   "Survey Form",
@@ -72,27 +73,22 @@ export default function FormGeneratorPage() {
       setLoading(true)
       setPrompt("")
       resetTextareaHeight()
+        const res = await fetch("http://localhost:3000/api/generate-form",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              formRequirements: prompt, // 👈 match your API expectations
+            }),
+          },
+        )
 
-      // Simulate API call - replace with your actual implementation
-      await new Promise((resolve) => setTimeout(resolve, 1500))
+
 
       // Mock generated form data - replace with your actual implementation
-      const mockForm = {
-        title: "Contact Us",
-        description: "We'd love to hear from you! Fill out the form below to get in touch.",
-        fields: [
-          { type: "text", label: "Full Name", placeholder: "Enter your name", required: true },
-          { type: "email", label: "Email Address", placeholder: "Enter your email", required: true },
-          {
-            type: "select",
-            label: "Subject",
-            options: ["General Inquiry", "Support", "Feedback", "Other"],
-            required: true,
-          },
-          { type: "textarea", label: "Message", placeholder: "How can we help you?", required: true },
-        ],
-        submitButton: "Send Message",
-      }
+      const mockForm = await res.json();
 
       setGeneratedForm(mockForm)
     } catch (error) {

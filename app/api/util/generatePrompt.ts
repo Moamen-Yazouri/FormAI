@@ -29,4 +29,5 @@ export const generatePrompt = (form: string) => {
         Input Form Requirements: ${form}
         Output must be a single valid JSON object matching the structure above. No text, no markdown, no explanations.
     `
+    return prompt
 } 
