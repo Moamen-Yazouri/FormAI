@@ -33,6 +33,8 @@ export interface IFormField {
     required: boolean;
     options?: string[];
     placeholder?: string;
+    min?: number;
+    max?: number;
 }
 export interface IForm {
     title: string;
