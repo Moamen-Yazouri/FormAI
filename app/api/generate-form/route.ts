@@ -5,14 +5,16 @@ import { cleanJsonResponse } from "../util/cleanJsonResponse";
 export const POST = async(req: NextRequest ) => {
     try{
         const {formRequirements} = await req.json();    
-        const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-        const OPENAI_API_URL = "https://api.openai.com/v1/chat/completions";
-        if(!OPENAI_API_KEY) {
+        const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+        if(!GEMINI_API_KEY) {
             return NextResponse.json(
                 {error: "API key not found!"},
                 {status: 404}
             )
         }
+        const GEMINI_API_URL = 
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`
+
         if(!formRequirements) {
             return NextResponse.json(
                 {error: "Please Provide form details!"},
@@ -20,20 +22,21 @@ export const POST = async(req: NextRequest ) => {
             )
         }
         const prompt = generatePrompt(formRequirements);
-        const response = await fetch(OPENAI_API_URL, {
-                method: "POST",
-                headers: {
-                    "content-type": "application/json",
-                    Authorization: `Bearer ${OPENAI_API_KEY}`
-                },
-                body: JSON.stringify({
-                    model: "gpt-3.5-turbo",
-                    messages: [{role: "user", content: prompt}],
-                    max_tokens: 2025,
-                    temperature: 0.2,
-                })
-            }
-        );
+        const response = await fetch(GEMINI_API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                contents: [
+                {
+                    parts: [
+                    { text: prompt }
+                    ]
+                }
+                ]
+            })
+        });
         if(!response.ok) {
             const errorMessage = await response.json();
             console.error(errorMessage);
@@ -43,7 +46,7 @@ export const POST = async(req: NextRequest ) => {
             )
         }
         const data = await response.json();
-        const jsonResponse = data.choices[0]?.message?.content;
+        const jsonResponse = data.candidates?.[0]?.content?.parts?.[0]?.text;;
         if(!jsonResponse) {
             console.error("No response from the OPENAI API!");
             return NextResponse.json(
