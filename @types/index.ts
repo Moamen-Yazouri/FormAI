@@ -145,3 +145,8 @@ export interface IActiveUsers {
     status: String,
     forms: number,
 }
+
+export interface IStyle {
+    input: string,
+    label: string,
+}
