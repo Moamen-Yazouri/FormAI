@@ -57,6 +57,6 @@ const CustomSelectField: React.FC<ISelectProps> = ({
         </div>
     )
 }
-const MotionSelect = withMotion(CustomSelectField);
+const MotionedSelect = withMotion(CustomSelectField);
 
-export default MotionSelect;
+export default MotionedSelect;
