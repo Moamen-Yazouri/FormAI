@@ -18,7 +18,6 @@ const FieldProvider = (props: IProps) => {
         case "textarea": {
             return (
                 <MotionedTextArea
-                    name= {props.field.label.toLowerCase()}
                     {...props.field}
                 />
             )
@@ -27,7 +26,6 @@ const FieldProvider = (props: IProps) => {
             return (
 
                 <MotionedSelect
-                    name= {props.field.label.toLowerCase()}
                     {...props.field}    
                     options={options}
                 />
@@ -36,7 +34,6 @@ const FieldProvider = (props: IProps) => {
         case "radio": {
             return (
                 <MotionedRadio
-                    name= {props.field.label.toLowerCase()}
                     {...props.field}
                     value={props.field.label.toLowerCase()}
                 />
@@ -45,7 +42,6 @@ const FieldProvider = (props: IProps) => {
         default: {
             return (
                 <MotionField
-                    name= {props.field.label.toLowerCase()}
                     {...props.field}
                 />
             )

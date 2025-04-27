@@ -1,7 +1,7 @@
 import * as yup from "yup";
 import { IFormField } from "@/@types";
 const numberFields = ["number", "range", "rating", "quantity", "age"];
-export const vcreateValidationScehma = (formData: IFormField[]) => {
+export const generateValidationScehma = (formData: IFormField[]) => {
     const dynamicValidationSchema = formData.reduce((acc, field) => {
         if(numberFields.includes(field.type)) {
             let validator = yup.number();

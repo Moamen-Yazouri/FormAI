@@ -1,0 +1,15 @@
+import { IFormField } from "@/@types";
+import { IFormValues } from "./types";
+
+export const getInitials = (fields: IFormField[]) => {
+    const intitialValues: IFormValues = fields.reduce((acc, field) => {
+            if (field.type === "checkbox") {
+                acc[field.label.toLowerCase()] = false;
+            }
+            else {
+                acc[field.label.toLowerCase()] = "";
+            }
+        return acc;
+    }, {} as IFormValues);
+    return intitialValues;
+}
