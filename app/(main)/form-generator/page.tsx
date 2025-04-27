@@ -62,9 +62,7 @@ export default function FormGeneratorPage() {
     }
   }
 
-  const handleSelectedTemplate = (value: string) => {
-    setTemplate(value)
-  }
+ 
 
   const generateForm = async () => {
     try {
@@ -121,7 +119,7 @@ export default function FormGeneratorPage() {
           transition={{ duration: 0.5, ease: "easeIn" }}
           className="relative"
         >
-          <FormPreview formData={generatedForm} />
+          {/* <FormPreview formData={generatedForm} /> */}
           <motion.div
             layout
             initial={{ opacity: 0, scale: 0.9 }}
@@ -138,23 +136,7 @@ export default function FormGeneratorPage() {
               ref={areaRef}
               style={{ minHeight: "60px" }}
             />
-            <div className="flex justify-between mt-4">
-              <Select value={template} onValueChange={handleSelectedTemplate}>
-                <SelectTrigger className="w-[180px] rounded-xl bg-muted cursor-pointer">
-                  <SelectValue placeholder="Select Template" />
-                </SelectTrigger>
-                <SelectContent className="rounded-2xl">
-                  <SelectGroup className="cursor-pointer">
-                    <SelectLabel>Templates</SelectLabel>
-                    {formTemplates.map((item, index) => (
-                      <SelectItem key={`template-${index}`} className="cursor-pointer" value={item}>
-                        {item}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-              <div className="flex gap-2">
+              <div className="flex gap-2 items-center justify-end">
                 <Button
                   variant="outline"
                   size="icon"
@@ -174,7 +156,6 @@ export default function FormGeneratorPage() {
                   {loading ? <LoadingSpinner /> : <ArrowUp size={20} className="text-white" />}
                 </Button>
               </div>
-            </div>
           </motion.div>
         </motion.div>
 

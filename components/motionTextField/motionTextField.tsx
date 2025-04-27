@@ -6,6 +6,9 @@ import { useField } from "formik"
 import { Button } from "../ui/button"
 import { Eye, EyeOff } from "lucide-react"
 import withMotion from "@/HOC/withMotion"
+import clsx from "clsx"
+import { IStyle } from "@/@types"
+import { Checkbox } from "../ui/checkbox"
 type CustomTextFieldProps = Omit<
     React.InputHTMLAttributes<HTMLInputElement>,
     "name"
@@ -14,12 +17,15 @@ type CustomTextFieldProps = Omit<
     name: string,
     label?: string,
     isPassword?: boolean,
+    style?: IStyle
 }
 
 const CustomTextField : React.FC<CustomTextFieldProps> = ({
     name,
     label,
     isPassword,
+    type,
+    style,
     ...rest
 }) => {
     const [showPassword, setShowPassword] = useState(false);
@@ -29,20 +35,34 @@ const CustomTextField : React.FC<CustomTextFieldProps> = ({
             { label && (
                 <Label
                 htmlFor={name}
-                className="my-2"
+                className= {clsx(style?.label || "my-2")}
                 >
                     {label}
                 </Label>
             )
             }
             <div className="relative">
-                <Input
-                    id={name}
-                    {...field}
-                    {...rest}
-                    type={isPassword ? (showPassword ? "text" : "password") : rest.type}
-                    className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
-                />
+                {
+                    type === "checkbox" ? (
+                        <Checkbox
+                            id={name}
+                            checked={rest.checked}
+                            {...field}
+                            className={clsx(style?.input || "w-full", meta.error && "border-red-500")}
+                        />
+                        
+                    ) : (
+                        <Input
+                            id={name}
+                            {...field}
+                            {...rest}
+                            type={isPassword ? (showPassword ? "text" : "password") : type}
+                            className= {clsx(style?.input || "w-full", meta.error && "border-red-500")}
+                        />
+                    )
+                    
+                }
+
                 {
                     isPassword && (
                         <div>

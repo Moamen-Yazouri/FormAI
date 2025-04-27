@@ -15,11 +15,21 @@ const SignInForm = () => {
             <Form className='space-y-4'>
                 <MotionField label="Email" name="email" type="email"
                     isPassword={false}
-                    placeholder='name@example.com'/>
+                    placeholder='name@example.com'
+                    style={{
+                        label: "",
+                        input: "w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                    }}
+                />
 
                 <MotionField label="Password" name="password" type="password"
                     isPassword={true}
-                    placeholder='••••••••'/>
+                    placeholder='••••••••'
+                    style={{
+                        label: "",
+                        input: "w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                    }}
+                />
                 <Link href="/forget-password" className="text-sm text-purple-500 hover:text-purple-600 underline underline-offset-4">
                     Forgot password?
                 </Link>
