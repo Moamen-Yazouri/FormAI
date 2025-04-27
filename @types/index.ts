@@ -28,6 +28,7 @@ export type fieldTypes = `${EType}`;
 
 export interface IFormField {
     fieldId: string;
+    name: string;
     label: string;
     type: fieldTypes; 
     required: boolean;
