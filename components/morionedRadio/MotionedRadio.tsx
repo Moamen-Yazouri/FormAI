@@ -11,7 +11,6 @@ type IProps = Omit<
 >
 & {
     name: string,
-    isPassword?: boolean,
     style?: IStyle,
     value: string,
 }

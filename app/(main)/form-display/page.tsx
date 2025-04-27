@@ -3,11 +3,12 @@
 import type React from "react"
 
 import { useState } from "react"
-import StyledFormTemplate from "@/components/form-template/formGenerator"
+import StyledFormTemplate from "@/components/form-template/formTemplate"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import MotionField from "@/components/motionTextField/motionTextField"
+import FormTemplate from "@/components/form-template/formTemplate"
 
 export default function FormExample() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -27,7 +28,7 @@ export default function FormExample() {
   }
 
   return (
-    <StyledFormTemplate
+    <FormTemplate
         title="Create New Task"
         description="Fill in the details to create a new task"
         onSubmit={handleSubmit}
@@ -69,6 +70,6 @@ export default function FormExample() {
           name="taskDescription"
           placeholder="Enter task description"
         />
-    </StyledFormTemplate>
+    </FormTemplate>
   )
 }

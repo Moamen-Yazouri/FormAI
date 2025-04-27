@@ -18,7 +18,7 @@ interface IProps {
   isPreview: boolean;
 }
 
-const StyledFormTemplate = (props: IProps) => {
+const FormTemplate = (props: IProps) => {
   const {
     title,
     description,
@@ -100,4 +100,4 @@ const StyledFormTemplate = (props: IProps) => {
   );
 };
 
-export default StyledFormTemplate;
+export default FormTemplate;
