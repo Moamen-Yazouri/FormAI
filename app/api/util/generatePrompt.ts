@@ -20,8 +20,8 @@ export const generatePrompt = (form: string) => {
 
         Strict Requirements:
         - Do not return anything except the JSON object.
-        - Ensure the type matches exactly one of: text, textarea, checkbox, radio, dropdown, email, select.
-        - Only include the options array for fields where it is applicable (checkbox, radio, dropdown, select).
+        - Ensure the type matches exactly one of: text, textarea, checkbox, radio, email, select, range.
+        - Only include the options array for fields where it is applicable (checkbox, radio, select).
         - Use clear and appropriate fieldId names (e.g., "firstName", "userFeedback", "preferredContactMethod").
         - Add useful placeholders for input types (text, textarea, email) whenever possible.
         - Assume all fields are required unless otherwise specified.
