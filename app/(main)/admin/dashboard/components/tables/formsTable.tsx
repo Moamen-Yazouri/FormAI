@@ -1,5 +1,5 @@
 "use client"
-import { IDashboardForm } from '@/@types'
+import { IDashboardForm, IUserForm } from '@/@types'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
@@ -16,7 +16,7 @@ import React, { useState } from 'react'
 import DeleteDialog from '../deleteDialog'
 
 interface IProps {
-    filteredForms: IDashboardForm[]
+    filteredForms: IDashboardForm[] | IUserForm[]
 }
 
 const FormsTable = (props: IProps) => {
@@ -48,11 +48,15 @@ const FormsTable = (props: IProps) => {
                                 </div>
                             </TableCell>
                             <TableCell>{form.creator}</TableCell>
-                            <TableCell>
-                                <Badge variant="secondary" className="bg-purple-100 text-purple-800 hover:bg-purple-100">
-                                    {form.responses}
-                                </Badge>
-                            </TableCell>
+                            {
+                                "responses" in form && (
+                                    <TableCell>
+                                        <Badge variant="secondary" className="bg-purple-100 text-purple-800 hover:bg-purple-100">
+                                            {form.responses}
+                                        </Badge>
+                                    </TableCell>
+                                )
+                            }
                             <TableCell>{String(form.createdAt)}</TableCell>
                             <TableCell className="text-right">
                                 <DropdownMenu>
