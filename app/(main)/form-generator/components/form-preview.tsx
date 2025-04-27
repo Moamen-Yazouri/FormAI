@@ -51,30 +51,12 @@ export default function FormPreview({ formData }: FormPreviewProps) {
               <CardDescription className="text-purple-100">{formData.description}</CardDescription>
             </div>
             <div className="flex gap-2">
-              <Button variant="ghost" size="icon" className="h-8 w-8 text-white hover:bg-purple-600" onClick={copyCode}>
-                {copied ? <Check size={16} /> : <Copy size={16} />}
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-8 w-8 text-white hover:bg-purple-600"
-                onClick={downloadCode}
-              >
-                <Download size={16} />
-              </Button>
+
             </div>
           </div>
         </CardHeader>
         <CardContent className="p-0">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="w-full rounded-none border-b">
-              <TabsTrigger value="preview" className="flex-1 data-[state=active]:bg-purple-50">
-                <Eye size={16} className="mr-2" /> Preview
-              </TabsTrigger>
-              <TabsTrigger value="code" className="flex-1 data-[state=active]:bg-purple-50">
-                <Code size={16} className="mr-2" /> Code
-              </TabsTrigger>
-            </TabsList>
             <TabsContent value="preview" className="p-6 bg-white">
               <div className="space-y-4">
                 {formData.fields.map((field, index) => (
@@ -121,67 +103,6 @@ export default function FormPreview({ formData }: FormPreviewProps) {
                 <div className="pt-4">
                   <Button className="bg-purple-600 hover:bg-purple-700">{formData.submitButton}</Button>
                 </div>
-              </div>
-            </TabsContent>
-            <TabsContent value="code" className="p-0">
-              <div className="bg-gray-900 text-gray-100 p-4 overflow-x-auto text-left">
-                <pre className="text-sm font-mono">
-                  {`import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
-const formSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters."),
-  email: z.string().email("Please enter a valid email address."),
-  subject: z.string().min(1, "Please select a subject."),
-  message: z.string().min(10, "Message must be at least 10 characters."),
-});
-
-export function ContactForm() {
-  const form = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    },
-  });
-
-  function onSubmit(values) {
-    console.log(values);
-    // Handle form submission
-  }
-
-  return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Full Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter your name" {...field} />
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        
-        {/* More form fields would be here */}
-        
-        <Button type="submit">Send Message</Button>
-      </form>
-    </Form>
-  );
-}`}
-                </pre>
               </div>
             </TabsContent>
           </Tabs>
