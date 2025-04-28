@@ -7,7 +7,7 @@ import clsx from "clsx";
 import { IFormFromDB } from "@/@types";
 import FormGenerator from "../formGenerator/formGenerator";
 import { useEffect, useState } from "react";
-
+import { v4 as uuidv4 } from "uuid";
 interface IProps {
   isPreview: boolean;
   id: string;
@@ -31,8 +31,26 @@ const FormTemplate = (props: IProps) => {
       }
     )
     const {form} = await res.json();
-    console.log(form);
-    setData(form);
+        const isPublic = {
+                fieldId: uuidv4(),
+                name: "isPublic",
+                label: "make form public",
+                type: "checkbox",
+                required: false,
+        }
+        const allowAnonymous = {
+                fieldId: uuidv4(),
+                name: "allowAnonymous",
+                label: "allow anonymous answers",
+                type: "checkbox",
+                required: false,
+        }
+        const fetchedForm = {
+          ...form,
+          fields: [...form.fields, isPublic, allowAnonymous]
+        }
+    console.log(fetchedForm);
+    setData(fetchedForm);
     setLoading(false);
   }
   useEffect(() => {

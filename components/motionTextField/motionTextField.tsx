@@ -32,7 +32,7 @@ const CustomTextField : React.FC<CustomTextFieldProps> = ({
     const [field, meta] = useField<string>(name);
     return (
         <div className="space-y-2">
-            { label && (
+            { label && type !== "checkbox" &&(
                 <Label
                 htmlFor={name}
                 className= {clsx(style?.label || "my-2")}
@@ -44,12 +44,20 @@ const CustomTextField : React.FC<CustomTextFieldProps> = ({
             <div className="relative">
                 {
                     type === "checkbox" ? (
-                        <Checkbox
-                            id={name}
-                            checked={rest.checked}
-                            {...field}
-                            className={clsx(style?.input || "w-full", meta.error && "border-red-500")}
-                        />
+                        <div className="flex items-center space-x-2">
+                            <Checkbox
+                                id={name}
+                                checked={rest.checked}
+                                {...field}
+                                className={clsx(style?.input || "", meta.error && "border-red-500")}
+                            />
+                            <Label
+                                htmlFor={name}
+                                className= {clsx(style?.label || "my-2")}
+                            >
+                                {label}
+                            </Label>
+                        </div>
                         
                     ) : (
                         <Input
@@ -57,7 +65,7 @@ const CustomTextField : React.FC<CustomTextFieldProps> = ({
                             {...field}
                             {...rest}
                             type={isPassword ? (showPassword ? "text" : "password") : type}
-                            className= {clsx(style?.input || "w-full", meta.error && "border-red-500")}
+                            className= {clsx(style?.input || "w-full",)}
                         />
                     )
                     

@@ -13,8 +13,7 @@ interface IProps {
 
 export const useForm = (props: IProps) => {
         const initialValues = useMemo(() => {
-            console.log(getInitials(props.fields));
-            return getInitials(props.fields);
+            return getInitials(props.fields); 
         }, [props.fields]);
 
         const validationSchema = useMemo(() => {
@@ -47,7 +46,7 @@ export const useForm = (props: IProps) => {
         onSubmit: (values, {resetForm, setSubmitting}) => {
             handleSignUp(values, resetForm, setSubmitting)
         },
-        validationSchema: yup.object().shape(validationSchema),
+        validationSchema,
         enableReinitialize: true,
         validateOnMount: true,
         validateOnChange: false,

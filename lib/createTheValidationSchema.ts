@@ -19,6 +19,6 @@ export const generateValidationScehma = (formData: IFormField[]) => {
         field.max && (validator = validator.max(field.max, `The max length is ${field.max}`));
         acc[field.label.toLowerCase()] = validator;
         return acc;
-    }, {} as Record<string, yup.AnySchema>);
-    return dynamicValidationSchema;
+    }, {} as Record<string, yup.Schema<any>>);
+    return  yup.object().shape(dynamicValidationSchema);
 }

@@ -1,17 +1,20 @@
 import { IFormField } from '@/@types'
 import { Form, FormikProvider } from 'formik';
-import React from 'react'
+import React, { useEffect } from 'react'
 import FieldProvider from '../fieldProvider/fieldProvider';
 import { useForm } from './hook/useForm';
 import { CardContent, CardFooter } from '../ui/card';
 import { Save } from 'lucide-react';
 import { Button } from '../ui/button';
+import MotionField from '../motionTextField/motionTextField';
 interface IProps {
     fields: IFormField[];
     formId: string;
 }
 const FormGenerator = (props: IProps) => {
     const {formik} = useForm({...props});
+
+    
     const onCancel = () => {
         formik.resetForm();
 
