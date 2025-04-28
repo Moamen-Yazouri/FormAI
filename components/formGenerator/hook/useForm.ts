@@ -4,15 +4,25 @@ import { IFormValues } from "../types";
 import { getInitials } from "../getInitials";
 import { generateValidationScehma } from "@/lib/createTheValidationSchema";
 import { toast } from "sonner";
-
+import { useMemo } from "react";
+import * as yup from "yup";
 interface IProps {
     fields: IFormField[];
     formId: string;
 }
 
 export const useForm = (props: IProps) => {
-        const initialValues = getInitials(props.fields);
-        const validationSchema = generateValidationScehma(props.fields)
+        const initialValues = useMemo(() => {
+            console.log(getInitials(props.fields));
+            return getInitials(props.fields);
+        }, [props.fields]);
+
+        const validationSchema = useMemo(() => {
+            const schema = generateValidationScehma(props.fields);
+            console.log(schema); // Add this line to print the validation schem
+            return generateValidationScehma(props.fields);
+        }, [props.fields]);
+
         const handleSignUp = async(
         values: IFormValues,
         resetForm: () => void,
@@ -37,7 +47,8 @@ export const useForm = (props: IProps) => {
         onSubmit: (values, {resetForm, setSubmitting}) => {
             handleSignUp(values, resetForm, setSubmitting)
         },
-        validationSchema,
+        validationSchema: yup.object().shape(validationSchema),
+        enableReinitialize: true,
         validateOnMount: true,
         validateOnChange: false,
     })
