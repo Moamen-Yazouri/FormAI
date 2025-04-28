@@ -1,7 +1,8 @@
-import { IDashboardForm, IFormFromDB, IUserForm } from "@/@types";
+import { IDashboardForm, IForm, IFormData, IFormFromDB, IUserForm } from "@/@types";
 import formsRepo from "../repositories/forms.repo";
 import { getDateOnly } from "@/lib/dateUtils";
-
+import { generateValidationScehma } from "@/lib/createTheValidationSchema";
+import * as yup from "yup";
 class FormServices {
     async getAllowedForms(userId: string): Promise<IUserForm[] | []> {
         try {
@@ -26,7 +27,6 @@ class FormServices {
         }
     }
     async getFormById(formId: string): Promise<IFormFromDB | null> {
-        try {
             const form = await formsRepo.getFormById(formId);
             if(!form) {
                 console.error("No form found");
@@ -34,10 +34,16 @@ class FormServices {
             };
             return form;
         }
-        catch(err) {
-            console.error(err);
-            return null;
+    async addNewForm (formData: IForm) {
+        if(!formData) {
+            throw new Error("No form data provided");
         }
-        
+        const schema = generateValidationScehma(formData.fields);
+        const isValid = await schema.validate(formData, {abortEarly: false});
+        if(!isValid) {
+            throw new Error("Invalid form data"); 
+        }
+        const newForm: IFormFromDB = await formsRepo.addForm(formData);
+        return newForm;
     }
 }
