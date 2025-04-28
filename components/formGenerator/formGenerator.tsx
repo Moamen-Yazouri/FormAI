@@ -9,7 +9,8 @@ import { Button } from '../ui/button';
 import MotionField from '../motionTextField/motionTextField';
 interface IProps {
     fields: IFormField[];
-    formId: string;
+    formId?: string;
+    isPreview: boolean;
 }
 const FormGenerator = (props: IProps) => {
     const {formik} = useForm({...props});

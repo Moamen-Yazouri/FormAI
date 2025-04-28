@@ -4,7 +4,7 @@ import { Card, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import clsx from "clsx";
-import { IFormFromDB } from "@/@types";
+import { IForm, IFormFromDB } from "@/@types";
 import FormGenerator from "../formGenerator/formGenerator";
 import { useEffect, useState } from "react";
 import LoadingPage from "../loadingPage/loadingPage";
@@ -12,7 +12,8 @@ import { motion } from "framer-motion";
 
 interface IProps {
   isPreview: boolean;
-  id: string;
+  id?: string;
+  form?: IForm;
 }
 
 const FormTemplate = (props: IProps) => {
@@ -20,7 +21,7 @@ const FormTemplate = (props: IProps) => {
     id,
     isPreview,
   } = props;
-  const [data, setData] = useState<IFormFromDB | null>(null);
+  const [data, setData] = useState<IForm | null>(null);
   const [loading, setLoading] = useState(true);
   const fetcForm = async(id: string) => {
       const res = await fetch("http://localhost:3000/api/get-form",
@@ -41,17 +42,20 @@ const FormTemplate = (props: IProps) => {
     if(id) {
       fetcForm(id);
     }
-  }, [])
+    else {
+      setData(props.form!)
+    }
+  }, [props])
   return (
     <div
       className={clsx(
-        isPreview ? "max-w-3xl mx-auto p-8" : "w-full p-10",
+        isPreview ? "max-w-3xl mx-auto p-8 bg-white" : "w-full p-10",
         "bg-gradient-to-tr from-purple-100 via-purple-50 to-purple-200 min-h-screen flex items-center justify-center"
       )}
     >
       
       {        
-        loading ? (
+        loading && !isPreview ? (
           <LoadingPage/>
           ) 
         : (
@@ -92,7 +96,7 @@ const FormTemplate = (props: IProps) => {
                 </motion.div>
                     {
                       data && (
-                        <FormGenerator fields={data.fields} formId={String(data._id)} />
+                        <FormGenerator fields={data.fields} formId={String(id)} isPreview={props.isPreview}/>
                       )
                     }
               </Card>

@@ -11,7 +11,7 @@ import FormModel from "@/DB/models/form.model";
 const AnswerFormPage = async () => {
 
   return (
-    <FormTemplate id={"6809f073821e25a336f5382f"} isPreview={false} />
+    <FormTemplate id={"6809f073821e25a336f5382f"} isPreview={false}  />
   );
 };
 
