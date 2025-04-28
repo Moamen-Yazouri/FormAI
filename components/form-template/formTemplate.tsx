@@ -1,13 +1,15 @@
 "use client";
 import type React from "react";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { Card, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Save } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import clsx from "clsx";
 import { IFormFromDB } from "@/@types";
 import FormGenerator from "../formGenerator/formGenerator";
 import { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import LoadingPage from "../loadingPage/loadingPage";
+import { motion } from "framer-motion";
+
 interface IProps {
   isPreview: boolean;
   id: string;
@@ -19,7 +21,7 @@ const FormTemplate = (props: IProps) => {
     isPreview,
   } = props;
   const [data, setData] = useState<IFormFromDB | null>(null);
-  const [laoding, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const fetcForm = async(id: string) => {
       const res = await fetch("http://localhost:3000/api/get-form",
       {
@@ -31,26 +33,8 @@ const FormTemplate = (props: IProps) => {
       }
     )
     const {form} = await res.json();
-        const isPublic = {
-                fieldId: uuidv4(),
-                name: "isPublic",
-                label: "make form public",
-                type: "checkbox",
-                required: false,
-        }
-        const allowAnonymous = {
-                fieldId: uuidv4(),
-                name: "allowAnonymous",
-                label: "allow anonymous answers",
-                type: "checkbox",
-                required: false,
-        }
-        const fetchedForm = {
-          ...form,
-          fields: [...form.fields, isPublic, allowAnonymous]
-        }
-    console.log(fetchedForm);
-    setData(fetchedForm);
+    console.log(form);
+    setData(form);
     setLoading(false);
   }
   useEffect(() => {
@@ -65,31 +49,55 @@ const FormTemplate = (props: IProps) => {
         "bg-gradient-to-tr from-purple-100 via-purple-50 to-purple-200 min-h-screen flex items-center justify-center"
       )}
     >
-      <Card className="w-full rounded-2xl border border-purple-300 shadow-xl overflow-hidden py-0 gap-2">
-        <CardHeader className="bg-gradient-to-r from-purple-200 to-purple-300 px-8 py-6 border-b border-purple-300">
-          <div className="space-y-2">
-            <div className="flex items-center gap-4">
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  className="h-10 w-10 rounded-full hover:bg-purple-200/50 transition"
+      
+      {        
+        loading ? (
+          <LoadingPage/>
+          ) 
+        : (
+            <motion.div
+                className="w-full"
+                layout
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <Card className="w-full rounded-2xl border border-purple-300 shadow-xl overflow-hidden py-0 gap-2">
+                  <motion.div
+                    className="w-full"
+                    layout
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
                 >
-                  <ArrowLeft className="h-5 w-5 text-purple-700" />
-                </Button>
-              <h1 className="text-2xl font-bold text-purple-700">{data?.title || "Form title"}</h1>
-            </div>
-            {data?.description && (
-              <p className="text-sm text-purple-600">{data?.description}</p>
-            )}
-          </div>
-        </CardHeader>
-            {
-              data && (
-                <FormGenerator fields={data.fields} formId={String(data._id)} />
-              )
-            }
-      </Card>
+
+                    <CardHeader className="bg-gradient-to-r from-purple-200 to-purple-300 px-8 py-6 border-b border-purple-300">
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-4">
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="icon"
+                                className="h-10 w-10 rounded-full hover:bg-purple-200/50 transition"
+                              >
+                                <ArrowLeft className="h-5 w-5 text-purple-700" />
+                              </Button>
+                            <h1 className="text-2xl font-bold text-purple-700">{data?.title || "Form title"}</h1>
+                          </div>
+                          {data?.description && (
+                            <p className="text-sm text-purple-600">{data?.description}</p>
+                          )}
+                        </div>
+                    </CardHeader>
+                </motion.div>
+                    {
+                      data && (
+                        <FormGenerator fields={data.fields} formId={String(data._id)} />
+                      )
+                    }
+              </Card>
+            </motion.div>
+        )}
     </div>
   );
 };

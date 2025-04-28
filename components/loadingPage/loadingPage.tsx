@@ -16,7 +16,7 @@ export default function LoadingPage() {
   }, [])
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-white">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-transparent">
       {/* Cool Spinner */}
       <div className="relative w-24 h-24 mb-8">
         {/* Outer spinning circle */}

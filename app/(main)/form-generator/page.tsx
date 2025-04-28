@@ -6,16 +6,6 @@ import { useRef, useState } from "react"
 import { motion } from "framer-motion"
 import { ArrowUp, Wand2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import FormPreview from "./components/form-preview"
 import LoadingSpinner from "./components/loading-spinner"
 
 
