@@ -26,11 +26,11 @@ class DashboardService {
         return usersData;
     }
 
-    async getUserForms (userId: string) {
+    async getUserForms (username: string) {
         try {
-            const user: IUserFromDB | null= await dashboardRepo.getUserById(userId);
+            const user: IUserFromDB | null= await dashboardRepo.getUserByName(username);
             if(user) {
-                const forms: IFormFromDB[] = await dashboardRepo.getUserForms(userId);
+                const forms: IFormFromDB[] = await dashboardRepo.getUserForms(user._id);
                 const formsData: IDashboardForm[] = forms.map(form => {
                     return {
                         id: String(form._id),

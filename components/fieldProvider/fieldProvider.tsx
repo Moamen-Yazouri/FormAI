@@ -38,11 +38,19 @@ const FieldProvider = (props: IProps) => {
         }
         case "radio": {
             return (
-                <MotionedRadio
-                    value={props.field.label.toLowerCase()} 
-                    name={props.field.label.toLowerCase()}
-                    required={props.field.required}                
-                />
+                <fieldset className='flex items-start justify-center flex-col gap-y-2'>
+                    <legend className='text-start mb-2'>{props.field.label} :</legend>
+                    {
+                        options.map((option, index) => (
+                            <MotionedRadio
+                                key={index}
+                                name={props.field.label.toLowerCase()}
+                                value={option.value}
+                                required={props.field.required}
+                            />
+                        ))
+                    }
+                </fieldset>
             )
         }
         default: {

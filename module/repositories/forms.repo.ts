@@ -11,6 +11,10 @@ class FormsRepo {
     async getFormById(formId: string): Promise<IFormFromDB | null> {
         return await FormModel.findById(formId).lean<IFormFromDB>();
     }
+
+    async getFormByName(formName: string): Promise<IFormFromDB | null> {
+        return await FormModel.findOne({title: formName}).lean<IFormFromDB>();
+    }
     async addForm(formData: IForm): Promise<IFormFromDB> {
         return await FormModel.create(formData);
     }

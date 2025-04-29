@@ -11,6 +11,7 @@ interface IProps {
     fields: IFormField[];
     formId?: string;
     isPreview: boolean;
+    isView: boolean;
 }
 const FormGenerator = (props: IProps) => {
     const {formik} = useForm({...props});

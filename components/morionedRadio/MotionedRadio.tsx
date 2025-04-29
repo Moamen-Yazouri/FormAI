@@ -31,7 +31,7 @@ const MotionRadio = (props: IProps) => {
                     required={props.required || false}
                     className={clsx(props.style?.input || "h-4 w-4 text-purple-500 focus:ring-purple-500")}
                 />
-                <span className={clsx(props.style?.label || "ml-2")}>{props.name}</span>
+                <span className={clsx(props.style?.label || "ml-2")}>{props.value}</span>
             </Label>
             {
                 meta.touched && meta.error && (

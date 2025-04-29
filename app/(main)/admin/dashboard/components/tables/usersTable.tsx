@@ -90,7 +90,7 @@ const UsersTable = (props: IProps) => {
                                     <DropdownMenuContent align="end">
                                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                                         <DropdownMenuItem className="flex items-center gap-2" 
-                                            onClick={() => redirect(`/all-forms/${user.id}`)}
+                                            onClick={() => redirect(`/user-forms/${user.name}`)}
                                         >
 
                                             <Eye className="h-4 w-4" />

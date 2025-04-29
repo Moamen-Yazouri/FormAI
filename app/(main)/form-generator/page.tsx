@@ -107,7 +107,7 @@ export default function FormGeneratorPage() {
           transition={{ duration: 0.5, ease: "easeIn" }}
           className="relative"
         >
-          <FormTemplate isPreview={true} form={generatedForm} />
+          <FormTemplate isPreview={true} form={generatedForm} isView={false}/>
           <motion.div
             layout
             initial={{ opacity: 0, scale: 0.9 }}

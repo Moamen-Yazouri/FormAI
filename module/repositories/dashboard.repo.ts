@@ -39,7 +39,9 @@ class DashboardRepo {
     async getFormResponses(formId: string) {
         return await responseModel.find({formId}).lean();
     }
-
+    async getUserByName(username: string): Promise<IUserFromDB | null> {
+        return await userModel.findOne({name: username}).lean<IUserFromDB>(); 
+    }
     async getUserById(userId: string) {
         return await userModel.findById(userId).lean<IUserFromDB>();
     }
