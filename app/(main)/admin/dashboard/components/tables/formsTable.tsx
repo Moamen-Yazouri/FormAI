@@ -14,6 +14,8 @@ import {
 import { FileText, MoreVertical, Eye, MessageSquare } from 'lucide-react'
 import React, { useState } from 'react'
 import DeleteDialog from '../deleteDialog'
+import { redirect } from 'next/navigation'
+import ActionsProvider from '@/components/form-actions-provider/ActionsProvider'
 
 interface IProps {
     filteredForms: IDashboardForm[] | IUserForm[]
@@ -68,14 +70,7 @@ const FormsTable = (props: IProps) => {
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent align="end">
                                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                        <DropdownMenuItem className="flex items-center gap-2">
-                                            <Eye className="h-4 w-4"/>
-                                            View Form
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem className="flex items-center gap-2">
-                                            <MessageSquare className="h-4 w-4"/>
-                                            View Responses
-                                        </DropdownMenuItem>
+                                        <ActionsProvider role='admin' id={form.id}/>
                                         <DropdownMenuSeparator/>
                                         <DeleteDialog
                                             itemToDelete={formToDelete}

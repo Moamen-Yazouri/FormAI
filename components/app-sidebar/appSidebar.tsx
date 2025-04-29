@@ -31,7 +31,7 @@ export default function AppSidebar() {
     const {setUser} = useContext(AuthContext)
     const pathname = usePathname()
     const {isMobile} = useSidebar()
-    if(pathname === "/form-display") return
+    if(pathname.includes("answer-form")) return
     const isActive = (path : string) => {
         return pathname === path
     }

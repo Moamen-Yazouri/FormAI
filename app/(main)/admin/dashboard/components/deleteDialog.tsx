@@ -50,7 +50,7 @@ const DeleteDialog = <T extends ISharedProps>(props: IProps<T>) => {
 
         <DialogContent>
             <DialogHeader>
-            <DialogTitle>Delete User</DialogTitle>
+            <DialogTitle>{`Delete ${itemsType}`}</DialogTitle>
             <DialogDescription>
                 {`Are you sure you want to delete this ${itemsType}? This action cannot be undone.`}
             </DialogDescription>

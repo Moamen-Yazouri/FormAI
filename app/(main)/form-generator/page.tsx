@@ -7,6 +7,7 @@ import { motion } from "framer-motion"
 import { ArrowUp, Wand2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import LoadingSpinner from "./components/loading-spinner"
+import FormTemplate from "@/components/form-template/formTemplate"
 
 
 const formTemplates = [
@@ -22,7 +23,6 @@ const formTemplates = [
 
 export default function FormGeneratorPage() {
   const [prompt, setPrompt] = useState("")
-  const [template, setTemplate] = useState("Custom Form")
   const [loading, setLoading] = useState(false)
   const [isEmpty, setIsEmpty] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -51,8 +51,6 @@ export default function FormGeneratorPage() {
       textarea.style.height = "fit-content"
     }
   }
-
- 
 
   const generateForm = async () => {
     try {
@@ -109,7 +107,7 @@ export default function FormGeneratorPage() {
           transition={{ duration: 0.5, ease: "easeIn" }}
           className="relative"
         >
-          {/* <FormPreview formData={generatedForm} /> */}
+          <FormTemplate isPreview={true} form={generatedForm} isView={false}/>
           <motion.div
             layout
             initial={{ opacity: 0, scale: 0.9 }}

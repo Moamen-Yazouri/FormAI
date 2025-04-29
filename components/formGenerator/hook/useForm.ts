@@ -8,7 +8,7 @@ import { useMemo } from "react";
 import * as yup from "yup";
 interface IProps {
     fields: IFormField[];
-    formId: string;
+    formId?: string;
 }
 
 export const useForm = (props: IProps) => {
