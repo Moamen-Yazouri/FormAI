@@ -48,9 +48,9 @@ export interface IForm {
     expiredAt: Date;
 }
 
-type IAnswer = {
+export type IAnswer = {
     fieldId: string;
-    answer: string | string[];
+    answer: string | string[] | boolean | number;
 };
 
 export interface IFormResponse {

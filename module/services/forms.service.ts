@@ -1,4 +1,4 @@
-import { IDashboardForm, IForm, IFormData, IFormFromDB, IUserForm } from "@/@types";
+import { IDashboardForm, IForm, IFormData, IFormFromDB, IFormResponse, IUserForm } from "@/@types";
 import formsRepo from "../repositories/forms.repo";
 import { getDateOnly } from "@/lib/dateUtils";
 import { generateValidationScehma } from "@/lib/createTheValidationSchema";
@@ -46,4 +46,17 @@ class FormServices {
         const newForm: IFormFromDB = await formsRepo.addForm(formData);
         return newForm;
     }
+
+    async addResponse (response: IFormResponse) {
+        const form = await formsRepo.getFormById(response.formId);
+        if(!form) {
+            throw new Error("No form found");
+        }
+        const isValid = generateValidationScehma(form.fields).validate(response, {abortEarly: true});
+        if(!isValid) {
+            throw new Error("Invalid response");
+        }
+        return await formsRepo.addResponse(response);
+    }
 }
+export default new FormServices();
