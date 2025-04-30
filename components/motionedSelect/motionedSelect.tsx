@@ -35,7 +35,7 @@ const CustomSelectField: React.FC<ISelectProps> = ({
                     {...field}
                 >
                     <SelectTrigger>
-                        <SelectValue placeholder="Select role" />
+                        <SelectValue placeholder={label && label.toLocaleLowerCase() === name ? "Select" : name} />
                     </SelectTrigger>
                     <SelectContent>
                         {
