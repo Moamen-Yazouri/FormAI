@@ -18,7 +18,7 @@ const FieldProvider = (props: IProps) => {
         case "textarea": {
             return (
                 <MotionedTextArea
-                    name={props.field.label.toLowerCase()}
+                    name={props.field.name || props.field.label.toLowerCase()}
                     label={props.field.label}
                     placeholder={props.field.placeholder || ""}
                     required={props.field.required}
@@ -29,7 +29,7 @@ const FieldProvider = (props: IProps) => {
         case "dropdown": {
             return (
             <MotionedSelect
-                name={props.field.label.toLowerCase()}
+                name={props.field.name || props.field.label.toLowerCase()}
                 label={props.field.label}
                 required={props.field.required}
                 options={options}
@@ -44,7 +44,7 @@ const FieldProvider = (props: IProps) => {
                         options.map((option, index) => (
                             <MotionedRadio
                                 key={index}
-                                name={props.field.label.toLowerCase()}
+                                name={props.field.name || props.field.label.toLowerCase()}
                                 value={option.value}
                                 required={props.field.required}
                             />
@@ -57,7 +57,7 @@ const FieldProvider = (props: IProps) => {
             return (
                 <MotionField
                     isPassword={false} 
-                    name={props.field.label.toLowerCase()}
+                    name={props.field.name || props.field.label.toLowerCase()}
                     label={props.field.label}
                     placeholder={props.field.placeholder || ""}
                     type= {props.field.type}

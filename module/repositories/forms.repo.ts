@@ -1,5 +1,6 @@
-import { IForm, IFormFromDB, IFormPopulatedByCreator } from "@/@types";
+import { IForm, IFormFromDB, IFormPopulatedByCreator, IFormResponse } from "@/@types";
 import FormModel from "@/DB/models/form.model";
+import responseModel from "@/DB/models/response.model";
 import userModel from "@/DB/models/user.model";
 
 class FormsRepo {
@@ -17,6 +18,9 @@ class FormsRepo {
     }
     async addForm(formData: IForm): Promise<IFormFromDB> {
         return await FormModel.create(formData);
+    }
+    async addResponse(response: IFormResponse) {
+        return await responseModel.insertOne(response);
     }
 }
 
