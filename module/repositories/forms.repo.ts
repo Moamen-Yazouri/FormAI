@@ -4,8 +4,8 @@ import responseModel from "@/DB/models/response.model";
 import userModel from "@/DB/models/user.model";
 
 class FormsRepo {
-    async getAllowedForms(userId: string): Promise<IFormPopulatedByCreator[] | null> {
-        const email = await userModel.findById(userId).select("email");
+    async getAllowedForms(username: string): Promise<IFormPopulatedByCreator[] | null> {
+        const email = await userModel.findOne({name: username}).select("email");
         const allowedForms = await FormModel.find({isPublic: true}).populate('creatorId', "name -_id").lean<IFormPopulatedByCreator[]>();
         return allowedForms;
     }

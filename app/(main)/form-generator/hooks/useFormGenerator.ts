@@ -1,7 +1,10 @@
-import { useRef, useState } from "react"
+import { IForm } from "@/@types"
+import { AuthContext } from "@/providers/auth/authProvider"
+import { useContext, useRef, useState } from "react"
 import { toast } from "sonner"
 
 export const useFormGenerator = () => {
+    const {user} = useContext(AuthContext);
     const [prompt, setPrompt] = useState("")
     const [loading, setLoading] = useState(false)
     const [isEmpty, setIsEmpty] = useState(true)
@@ -9,6 +12,7 @@ export const useFormGenerator = () => {
     const [isSent, setIsSent] = useState(false)
     const [generatedForm, setGeneratedForm] = useState<any>(null)
     const [showPublishDialog, setShowPublishDialog] = useState(false)
+    const [isPublishing, setIsPublishing] = useState(false)
     const [allowAnonymous, setAllowAnonymous] = useState(false)
     const [isPublic, setIsPublic] = useState(false)
     const [email, setEmail] = useState("")
@@ -79,8 +83,9 @@ const handleRemoveEmail = (emailToRemove: string) => {
             setPrompt("")
 
         const formData = await res.json();
+        console.log(formData)
         if(!res.ok) {
-            toast.error(formData.message);
+            toast.error(formData.message || "Failed to generate form!");
             return;
         }
             setGeneratedForm(formData)
@@ -89,6 +94,49 @@ const handleRemoveEmail = (emailToRemove: string) => {
         setError(error instanceof Error ? error.message : "Failed to generate form")
         } finally {
         setLoading(false)
+        }
+    }
+    const handlePublishForm = async () => {
+        setIsPublishing(true);
+
+        if(!user) {
+            toast.error("You must be logged in to publish a form")
+            return;
+        }
+        const formData: IForm = {
+            ...generatedForm,
+            creatorId: user._id,
+            allowAnonymous,
+            isPublic,
+            allowedUsers: emails || [],
+        }
+
+        try {
+            const res = await fetch("http://localhost:3000/api/add-form",
+                {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json" 
+                    },
+                    body: JSON.stringify(formData),
+                }
+            )
+            const data = await res.json();
+            if(!res.ok) {
+                toast.error(data.message);
+                return;
+            }
+            setShowPublishDialog(false)
+            toast.success("Form published successfully!")
+        }
+        catch(err) {
+            if(err instanceof Error) {
+                toast.error(err.message)
+            }
+            toast.error("Something went wrong!")
+        }
+        finally {
+            setIsPublishing(false);
         }
     }
     return {
@@ -115,5 +163,6 @@ const handleRemoveEmail = (emailToRemove: string) => {
         setEmail,
         handleRemoveEmail,
         handleAddEmail,
+        handlePublishForm
     }
 }

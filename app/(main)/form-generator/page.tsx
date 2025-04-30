@@ -51,8 +51,8 @@ export default function FormGeneratorPage() {
       autoResizeTextarea,
       generateForm,
       setPrompt,
-  } = useFormGenerator()
-  console.log(generatedForm)
+      handlePublishForm,
+  } = useFormGenerator();
   return (
     <section className={`w-full px-4 py-8 ${isSent ? "mt-auto" : "my-auto"}`}>
       <div className="mx-auto text-center max-w-4xl">
@@ -192,7 +192,7 @@ export default function FormGeneratorPage() {
                   <Button variant="ghost" onClick={() => setShowPublishDialog(false)}>
                     Cancel
                   </Button>
-                  <Button className="bg-purple-600 hover:bg-purple-700 text-white">Publish</Button>
+                  <Button onClick={handlePublishForm} className="bg-purple-600 hover:bg-purple-700 text-white">Publish</Button>
                 </DialogFooter>
               </DialogContent>
             </Dialog>
