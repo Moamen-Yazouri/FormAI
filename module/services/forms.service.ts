@@ -2,14 +2,18 @@ import { IDashboardForm, IForm, IFormData, IFormFromDB, IFormResponse, IUserForm
 import formsRepo from "../repositories/forms.repo";
 import { getDateOnly } from "@/lib/dateUtils";
 import { generateValidationScehma } from "@/lib/createTheValidationSchema";
-import * as yup from "yup";
+
+import userRepo from "../repositories/user.repo";
 class FormServices {
-    async getAllowedForms(userId: string): Promise<IUserForm[] | []> {
+    async getAllowedForms(username: string): Promise<IUserForm[] | []> {
         try {
-            const forms = await formsRepo.getAllowedForms(userId);
+            const user = await userRepo.getUserByName(username);
+            if(!user) {
+                throw new Error("User not found");
+            }
+            const forms = await formsRepo.getAllowedForms(username);
             if(!forms){
-                console.error("No forms found");
-                return []
+                return []; 
             } ;
             const allowedForms: IUserForm[] = forms.map(form => {
                     return {
@@ -22,8 +26,10 @@ class FormServices {
             return allowedForms;
         }
         catch(err) {
-            console.error(err);
-            return []
+            if(err instanceof Error) {
+                throw new Error(err.message);
+            }
+            throw new Error("Something went wrong");
         }
     }
     async getFormById(formId: string): Promise<IFormFromDB | null> {

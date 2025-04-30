@@ -7,7 +7,7 @@ import {
 import useDashboard from "../hooks/useDahboard"
 import { IDashboardForm, IFormCreationData, IFormResponseData, IUserData, IUsersActivityData } from "@/@types"
 import UsersTable from "./tables/usersTable"
-import FormsTable from "./tables/formsTable"
+import FormsTable from "@/components/forms-table/formsTable"
 import SearchBar from "../components/searchBar"
 import AllTabs from "../components/allTabs"
 import { TABS } from "../constants/constants"

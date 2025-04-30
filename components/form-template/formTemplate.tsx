@@ -1,8 +1,6 @@
 "use client";
 import type React from "react";
 import { Card, CardHeader } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
 import clsx from "clsx";
 import { IForm } from "@/@types";
 import FormGenerator from "../formGenerator/formGenerator";

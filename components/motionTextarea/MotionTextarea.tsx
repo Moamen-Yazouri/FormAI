@@ -38,7 +38,6 @@ const TextArea = (props: TProps) => {
                     className= {
                             clsx(
                                 style?.input || "my-2 w-full", 
-                                meta.error && "border-red-500"
                             )
                     }
                 />

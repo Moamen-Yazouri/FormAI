@@ -41,7 +41,7 @@ export const POST = async(req: NextRequest ) => {
             const errorMessage = await response.json();
             console.error(errorMessage);
             return NextResponse.json(
-                {error: "Faild to fetch data from the OPENAI API, please retry!"},
+                {error: errorMessage.message},
                 {status: 502}
             )
         }
