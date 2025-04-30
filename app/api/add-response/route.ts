@@ -12,7 +12,7 @@ export const POST = async(req: NextRequest) => {
     }
     catch(error) {
         if(error instanceof Error) {
-            return Response.json({message: error.message}, {status: 401});
+            return Response.json({message: error.message}, {status: 400});
         }
         return Response.json({message: "Something went wrong!"}, {status: 500});
     }

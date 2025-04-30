@@ -1,5 +1,5 @@
 "use client"
-import { IAnswer, IFormField } from "@/@types";
+import { IAnswer, IFormField, IFormResponse } from "@/@types";
 import { useFormik } from "formik";
 import { IFormValues } from "../types";
 import { getInitials } from "../getInitials";
@@ -35,7 +35,7 @@ export const useForm = (props: IProps) => {
         ) => {
             if(props.isPreview || props.isView) {
                 resetForm();
-                toast.success("Form submissions works correctly!");
+                toast.success("Form submission works correctly!");
                 return;
             }
 
@@ -44,15 +44,18 @@ export const useForm = (props: IProps) => {
                 toast.error("You must be logged in to submit a form!");
                 return;
             }
-
+            console.log(user)
             const answers: IAnswer[] = props.fields.map(field => {
                 return {
                     fieldId: field.fieldId,
                     answer: values[field.name || field.label.toLowerCase()],
-                    userId: user._id,
                 }
             })
-
+            const formResponse: IFormResponse = {
+                formId: props.formId!,
+                answers: answers,
+                userId: user._id,
+            }
         try{
 
             const res = await fetch("http://localhost:3000/api/add-response",
@@ -61,7 +64,7 @@ export const useForm = (props: IProps) => {
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify(answers),
+                    body: JSON.stringify(formResponse),
                 }
             )
 
@@ -72,7 +75,7 @@ export const useForm = (props: IProps) => {
                 return;
             }
             resetForm();
-            toast.success(data.message);
+            toast.success("Response submitted successfully!");
         }
         catch(err){
             if(err instanceof Error) {
