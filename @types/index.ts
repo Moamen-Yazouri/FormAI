@@ -46,6 +46,7 @@ export interface IForm {
     isPublic: boolean;
     allowAnonymous: boolean;
     expiredAt: Date;
+    allowedUsers?: string[];
 }
 
 export type IAnswer = {

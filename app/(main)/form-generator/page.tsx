@@ -4,10 +4,15 @@ import type React from "react"
 
 import { useRef, useState } from "react"
 import { motion } from "framer-motion"
-import { ArrowUp, Wand2 } from "lucide-react"
+import { ArrowUp, Mail, Wand2, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import LoadingSpinner from "./components/loading-spinner"
 import FormTemplate from "@/components/form-template/formTemplate"
+import { useFormGenerator } from "./hooks/useFormGenerator"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
+import { Switch } from "@/components/ui/switch"
+import { Input } from "@/components/ui/input"
 
 
 const formTemplates = [
@@ -22,69 +27,32 @@ const formTemplates = [
 ]
 
 export default function FormGeneratorPage() {
-  const [prompt, setPrompt] = useState("")
-  const [loading, setLoading] = useState(false)
-  const [isEmpty, setIsEmpty] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const [isSent, setIsSent] = useState(false)
-  const [generatedForm, setGeneratedForm] = useState<any>(null)
-  const areaRef = useRef<HTMLTextAreaElement>(null)
-
-  const handleTypedMessage = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const value = e.target.value
-    setIsEmpty(value.trim() === "")
-    setPrompt(value)
-    autoResizeTextarea()
-  }
-
-  const autoResizeTextarea = () => {
-    const textarea = areaRef.current
-    if (textarea) {
-      textarea.style.height = "auto"
-      textarea.style.height = `${Math.min(textarea.scrollHeight, 200)}px`
-    }
-  }
-
-  const resetTextareaHeight = () => {
-    const textarea = areaRef.current
-    if (textarea) {
-      textarea.style.height = "fit-content"
-    }
-  }
-
-  const generateForm = async () => {
-    try {
-      setIsSent(true)
-      setError(null)
-      setLoading(true)
-      setPrompt("")
-      resetTextareaHeight()
-        const res = await fetch("http://localhost:3000/api/generate-form",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              formRequirements: prompt, // 👈 match your API expectations
-            }),
-          },
-        )
-
-
-
-      // Mock generated form data - replace with your actual implementation
-      const mockForm = await res.json();
-
-      setGeneratedForm(mockForm)
-    } catch (error) {
-      console.error("Error generating form:", error)
-      setError(error instanceof Error ? error.message : "Failed to generate form")
-    } finally {
-      setLoading(false)
-    }
-  }
-
+  const {
+      prompt,
+      loading,
+      error,
+      isSent,
+      generatedForm,
+      isEmpty,
+      areaRef,
+      showPublishDialog,
+      allowAnonymous,
+      isPublic,
+      email,
+      emails,
+      emailError,
+      handleAddEmail,
+      handleRemoveEmail,
+      setShowPublishDialog,
+      setAllowAnonymous,
+      setIsPublic,
+      setEmail,
+      handleTypedMessage,
+      autoResizeTextarea,
+      generateForm,
+      setPrompt,
+  } = useFormGenerator()
+  console.log(generatedForm)
   return (
     <section className={`w-full px-4 py-8 ${isSent ? "mt-auto" : "my-auto"}`}>
       <div className="mx-auto text-center max-w-4xl">
@@ -108,6 +76,126 @@ export default function FormGeneratorPage() {
           className="relative"
         >
           <FormTemplate isPreview={true} form={generatedForm} isView={false}/>
+        {
+          generatedForm && (
+            <div className="w-full max-w-3xl flex justify-end gap-3 mb-4">
+                <Button
+                  variant="outline"
+                  className="border-purple-300 text-purple-700 hover:bg-purple-50"
+                  onClick={() => setShowPublishDialog(true)}
+                >
+                  Publish Form
+                </Button>
+                <Button variant="outline" className="border-purple-300 text-purple-700 hover:bg-purple-50">
+                  Regenerate
+                </Button>
+            </div>
+          )
+        }
+            <Dialog open={showPublishDialog} onOpenChange={setShowPublishDialog}>
+              <DialogContent className="sm:max-w-md">
+                <DialogHeader>
+                  <DialogTitle className="text-purple-700">Publish Form</DialogTitle>
+                  <DialogDescription>Configure how users can access and submit this form.</DialogDescription>
+                </DialogHeader>
+                <div className="space-y-6 py-4">
+                  <div className="flex items-center justify-between">
+                    <div className="space-y-1">
+                      <Label htmlFor="anonymous" className="text-sm font-medium">
+                        Allow Anonymous Submissions
+                      </Label>
+                      <p className="text-xs text-gray-500">Users can submit the form without authentication.</p>
+                    </div>
+                    <Switch
+                      id="anonymous"
+                      checked={allowAnonymous}
+                      onCheckedChange={setAllowAnonymous}
+                      className="data-[state=checked]:bg-purple-600"
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div className="space-y-1">
+                      <Label htmlFor="public" className="text-sm font-medium">
+                        Public Form
+                      </Label>
+                      <p className="text-xs text-gray-500">Anyone with the link can access this form.</p>
+                    </div>
+                    <Switch
+                      id="public"
+                      checked={isPublic}
+                      onCheckedChange={setIsPublic}
+                      className="data-[state=checked]:bg-purple-600"
+                    />
+                  </div>
+                  {
+                    !isPublic && (
+                      <div className="space-y-3 pt-2">
+                        <Label className="text-sm font-medium">Add Users by Email</Label>
+                        <div className="border rounded-md p-4 bg-gray-50">
+                          <div className="flex flex-col gap-3">
+                            <div className="flex items-center gap-2">
+                              <Input
+                                type="email"
+                                placeholder="Enter email address"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className={emailError ? "border-red-300" : ""}
+                              />
+                              <Button
+                                type="button"
+                                onClick={handleAddEmail}
+                                className="bg-purple-600 hover:bg-purple-700 text-white"
+                              >
+                                Add
+                              </Button>
+                            </div>
+                            {emailError && <p className="text-xs text-red-500">{emailError}</p>}
+
+                            <div className="mt-2">
+                              {emails.length > 0 ? (
+                                <div className="space-y-2">
+                                  {emails.map((email) => (
+                                    <div
+                                      key={email}
+                                      className="flex items-center justify-between bg-purple-50 border border-purple-100 rounded-md px-3 py-2"
+                                    >
+                                      <div className="flex items-center gap-2">
+                                        <Mail className="h-4 w-4 text-purple-500" />
+                                        <span className="text-sm">{email}</span>
+                                      </div>
+                                      <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => handleRemoveEmail(email)}
+                                        className="h-6 w-6 p-0 hover:bg-purple-100"
+                                      >
+                                        <X className="h-4 w-4 text-purple-500" />
+                                      </Button>
+                                    </div>
+                                  ))}
+                                </div>
+                              ) : (
+                                <div className="flex items-center gap-2 text-sm text-gray-500">
+                                  <Mail className="h-4 w-4" />
+                                  <span>No users added yet</span>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  }
+                </div>
+                <DialogFooter>
+                  <Button variant="ghost" onClick={() => setShowPublishDialog(false)}>
+                    Cancel
+                  </Button>
+                  <Button className="bg-purple-600 hover:bg-purple-700 text-white">Publish</Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           <motion.div
             layout
             initial={{ opacity: 0, scale: 0.9 }}

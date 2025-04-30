@@ -26,7 +26,13 @@ const formSchema = new Schema<IFormDocument>(
             type: mongoose.Schema.Types.ObjectId,
             ref: "User", 
             required: true 
-        }, 
+        },
+        allowedUsers: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User"
+            }
+        ],
         isPublic: { type: Boolean, default: false },
         allowAnonymous: { type: Boolean, default: false },
         expiredAt: { type: Date },
