@@ -41,11 +41,11 @@ export interface IForm {
     title: string;
     description: string;
     fields: IFormField[];
-    answeredBy: string[];
+    answeredBy: mongoose.Types.ObjectId[];
     creatorId: mongoose.Types.ObjectId;
     isPublic: boolean;
     allowAnonymous: boolean;
-    expiredAt: Date;
+    expiredAt?: Date;
     allowedUsers?: string[];
 }
 

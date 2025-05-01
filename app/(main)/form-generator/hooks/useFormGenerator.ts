@@ -1,5 +1,6 @@
-import { IForm } from "@/@types"
+import { IForm, IFormField } from "@/@types"
 import { AuthContext } from "@/providers/auth/authProvider"
+import mongoose from "mongoose"
 import { useContext, useRef, useState } from "react"
 import { toast } from "sonner"
 
@@ -103,14 +104,22 @@ const handleRemoveEmail = (emailToRemove: string) => {
             toast.error("You must be logged in to publish a form")
             return;
         }
+        const fields = generatedForm.fields as Omit<IFormField[], "name">;
+        const validFields: IFormField[] = fields.map((field) => ({
+            ...field,
+            name: field.fieldId.toLowerCase(),
+        }));
         const formData: IForm = {
-            ...generatedForm,
-            creatorId: user._id,
+            title: generatedForm.title as string,
+            description: generatedForm.description as string,
+            fields: validFields,
+            answeredBy: [],
+            creatorId: new mongoose.Types.ObjectId(user._id),
             allowAnonymous,
             isPublic,
             allowedUsers: emails || [],
         }
-
+        console.log(formData)
         try {
             const res = await fetch("http://localhost:3000/api/add-form",
                 {
@@ -126,7 +135,8 @@ const handleRemoveEmail = (emailToRemove: string) => {
                 toast.error(data.message);
                 return;
             }
-            setShowPublishDialog(false)
+            setShowPublishDialog(false);
+            setGeneratedForm(null);
             toast.success("Form published successfully!")
         }
         catch(err) {

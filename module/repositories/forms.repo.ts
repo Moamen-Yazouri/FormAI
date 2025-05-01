@@ -22,6 +22,14 @@ class FormsRepo {
     async addResponse(response: IFormResponse) {
         return await responseModel.insertOne(response);
     }
+
+    async getAnswerdForms (id: string) {
+        const answeredForms = await FormModel.findOne({
+            answeredBy: {$in: [id]}
+        });
+        
+        return answeredForms;
+    }
 }
 
 export default new FormsRepo();
