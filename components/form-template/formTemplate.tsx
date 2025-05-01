@@ -83,7 +83,12 @@ const FormTemplate = (props: IProps) => {
                     </CardHeader>
                     {
                       data && (
-                        <FormGenerator fields={data.fields} formId={String(id)} isPreview={props.isPreview} isView={props.isView}/>
+                        <FormGenerator 
+                          fields={data.fields} 
+                          formId={String(id)} 
+                          isPreview={props.isPreview} 
+                          isView={props.isView} 
+                        />
                       )
                     }
               </Card>

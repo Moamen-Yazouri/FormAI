@@ -1,21 +1,27 @@
 import { IFormField } from '@/@types'
 import { Form, FormikProvider } from 'formik';
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import FieldProvider from '../fieldProvider/fieldProvider';
 import { useForm } from './hook/useForm';
 import { CardContent, CardFooter } from '../ui/card';
 import { Save } from 'lucide-react';
 import { Button } from '../ui/button';
 import MotionField from '../motionTextField/motionTextField';
+import { AuthContext } from '@/providers/auth/authProvider';
 interface IProps {
     fields: IFormField[];
     formId?: string;
     isPreview: boolean;
     isView: boolean;
+    allowAnonymous?: boolean;
 }
 const FormGenerator = (props: IProps) => {
     const {formik} = useForm({...props});
-
+    const {user} = useContext(AuthContext);
+    const [isSub, setIsSub] = useState(formik.isSubmitting)
+    useEffect(() => {
+        setIsSub(formik.isSubmitting);
+    }, [formik.isSubmitting])
     
     const onCancel = () => {
         formik.resetForm();
@@ -25,6 +31,16 @@ const FormGenerator = (props: IProps) => {
         <FormikProvider value= {formik}>
             <Form className='flex flex-col gap-5'>
                 <CardContent className='flex flex-col space-y-2'>
+                        {
+                            props.allowAnonymous && (
+                                <MotionField
+                                    label={`Include Your Email: ${user?.email} in the response`}
+                                    name='allowAnonymous'
+                                    type='checkbox'
+                                    className='w-full'
+                                />
+                            ) 
+                        }
                         {
                             props.fields.map((field, index) => {
                                 return (
@@ -47,7 +63,7 @@ const FormGenerator = (props: IProps) => {
                         disabled={formik.isSubmitting}
                         className="bg-purple-500 hover:bg-purple-600 text-white font-semibold transition"
                     >
-                    {formik.isSubmitting ? (
+                    {isSub ? (
                         <>
                         <span className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
                         Processing...

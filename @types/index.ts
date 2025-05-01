@@ -55,8 +55,8 @@ export type IAnswer = {
 };
 
 export interface IFormResponse {
-    formId: string;
-    userId?: string;
+    formId: mongoose.Types.ObjectId;
+    userId?: mongoose.Types.ObjectId;
     answers: IAnswer[]; 
 }
 

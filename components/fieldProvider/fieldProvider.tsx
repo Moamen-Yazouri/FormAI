@@ -18,10 +18,20 @@ const FieldProvider = (props: IProps) => {
         case "textarea": {
             return (
                 <MotionedTextArea
-                    name={props.field.name || props.field.label.toLowerCase()}
+                    name={props.field.fieldId.toLowerCase()}
                     label={props.field.label}
                     placeholder={props.field.placeholder || ""}
                     required={props.field.required}
+                />
+            )
+        }
+        case "checkbox": {
+        return (
+                <MotionField
+                type="checkbox"
+                name={props.field.fieldId.toLowerCase()}
+                label={props.field.label}
+                required={props.field.required}
                 />
             )
         }
@@ -29,7 +39,7 @@ const FieldProvider = (props: IProps) => {
         case "dropdown": {
             return (
             <MotionedSelect
-                name={props.field.name || props.field.label.toLowerCase()}
+                name={props.field.fieldId.toLowerCase()}
                 label={props.field.label}
                 required={props.field.required}
                 options={options}
@@ -44,7 +54,7 @@ const FieldProvider = (props: IProps) => {
                         options.map((option, index) => (
                             <MotionedRadio
                                 key={index}
-                                name={props.field.name || props.field.label.toLowerCase()}
+                                name={props.field.fieldId.toLowerCase()}
                                 value={option.value}
                                 required={props.field.required}
                             />
@@ -57,11 +67,11 @@ const FieldProvider = (props: IProps) => {
             return (
                 <MotionField
                     isPassword={false} 
-                    name={props.field.name || props.field.label.toLowerCase()}
+                    name={props.field.fieldId.toLowerCase()}
                     label={props.field.label}
                     placeholder={props.field.placeholder || ""}
                     type= {props.field.type}
-                    required={props.field.required}
+                    checked={false}
                 />
             )
         }

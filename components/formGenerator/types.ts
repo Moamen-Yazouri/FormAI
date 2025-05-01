@@ -1,3 +1,3 @@
 export interface IFormValues {
-    [key: string]: string | number | boolean;
+    [key: string]: string | number | boolean | string[];
 }
