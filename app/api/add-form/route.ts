@@ -8,7 +8,6 @@ export const POST = async (request: NextRequest ) => {
         return NextResponse.json({message: "Form data not found!"})
     }
     await connection();
-        console.log(formData);
     try {
         await formsService.addNewForm(formData);
         return NextResponse.json({message: "Form added successfully!"}, {status: 201})

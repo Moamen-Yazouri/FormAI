@@ -16,26 +16,25 @@ const formSchema = new Schema<IFormDocument>(
                 options: { type: [String], default: [] },
             }
         ],
-        answeredBy: [
-            { 
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "User" 
-            }
-        ], 
+        answeredBy: {
+            type: [mongoose.Schema.Types.ObjectId],
+            ref: "User",
+            default: []
+        }, 
         creatorId: { 
             type: mongoose.Schema.Types.ObjectId,
             ref: "User", 
             required: true 
         },
-        allowedUsers: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "User"
+        isPublic: { type: Boolean, default: true },
+        allowAnonymous: { type: Boolean, default: true },
+        expiredAt: { type: Date,
+            default:  () => {
+                const farFuture = new Date();
+                farFuture.setFullYear(farFuture.getFullYear() + 100);
+                return farFuture;
             }
-        ],
-        isPublic: { type: Boolean, default: false },
-        allowAnonymous: { type: Boolean, default: false },
-        expiredAt: { type: Date },
+        },
     },
     { timestamps: true }
 );

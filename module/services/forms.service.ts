@@ -32,6 +32,7 @@ class FormServices {
             throw new Error("Something went wrong");
         }
     }
+
     async getFormById(formId: string): Promise<IFormFromDB | null> {
             const form = await formsRepo.getFormById(formId);
             if(!form) {
@@ -40,14 +41,10 @@ class FormServices {
             };
             return form;
         }
+
     async addNewForm (formData: IForm) {
         if(!formData) {
             throw new Error("No form data provided");
-        }
-        const schema = generateValidationScehma(formData.fields);
-        const isValid = await schema.validate(formData, {abortEarly: false});
-        if(!isValid) {
-            throw new Error("Invalid form data"); 
         }
         const newForm: IFormFromDB = await formsRepo.addForm(formData);
         return newForm;
@@ -64,5 +61,18 @@ class FormServices {
         }
         return await formsRepo.addResponse(response);
     }
+
+    async getAnswerdForms (username: string) {
+        const user = await userRepo.getUserByName(username);
+        if(!user) {
+            throw new Error("User not found");
+        }
+        const forms = await formsRepo.getAnswerdForms(user._id);
+        if(!forms) {
+            return [];
+        }
+        return forms;
+    }
+
 }
 export default new FormServices();
