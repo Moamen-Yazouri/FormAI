@@ -51,7 +51,7 @@ class FormServices {
     }
 
     async addResponse (response: IFormResponse) {
-        const form = await formsRepo.getFormById(response.formId);
+        const form = await formsRepo.getFormById(String(response.formId));
         if(!form) {
             throw new Error("No form found");
         }

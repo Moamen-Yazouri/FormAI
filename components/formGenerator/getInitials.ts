@@ -3,11 +3,11 @@ import { IFormValues } from "./types";
 
 export const getInitials = (fields: IFormField[]) => {
     const intitialValues: IFormValues = fields.reduce((acc, field) => {
-            if (field.type === "checkbox") {
-                acc[field.name || field.label.toLowerCase()] = false;
+            if (Array.isArray(field.options) && field.type === "radio") {
+                acc[field.fieldId.toLowerCase()] = [];
             }
             else {
-                acc[field.name || field.label.toLowerCase()] = "";
+                acc[field.fieldId.toLowerCase()] = "";
             }
         return acc;
     }, {} as IFormValues);

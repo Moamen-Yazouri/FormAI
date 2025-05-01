@@ -8,17 +8,31 @@ export const generateValidationScehma = (formData: IFormField[]) => {
             field.min && (validator = validator.min(field.min, `The min value is ${field.min}`));
             field.max && (validator = validator.max(field.max, `The max value is ${field.min}`));
             field.required && (validator = validator.required("This field is required"));
-            acc[field.label.toLowerCase()] = validator;
+            acc[field.fieldId.toLowerCase()] = validator;
             return acc;
         }
+        if (field.type === "checkbox") {
+            let validator = yup.boolean();
+
+            // If it's required, enforce it must be `true`
+            if (field.required) {
+                validator = validator.oneOf([true], "required field");
+            }
+
+            acc[field.fieldId.toLowerCase()] = validator;
+            return acc;
+        }
+
         let validator = yup.string();
         field.required && (validator = validator.required("This field is required"));
         field.type === "email" && (validator = validator.email("Please enter a valid email"));
         field.options?.length && (validator = validator.oneOf(field.options, "Please select a valid option"));
         field.min && (validator = validator.min(field.min, `The min length is ${field.min}`));
         field.max && (validator = validator.max(field.max, `The max length is ${field.max}`));
-        acc[field.label.toLowerCase()] = validator;
+        acc[field.fieldId.toLowerCase()] = validator;
+        // allowAnonymous && (acc["allowAnonymous"] = yup.boolean());
+        
         return acc;
     }, {} as Record<string, yup.Schema<any>>);
-    return  yup.object().shape(dynamicValidationSchema);
+    return  yup.object(dynamicValidationSchema);
 }

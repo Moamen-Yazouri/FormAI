@@ -45,9 +45,10 @@ const CustomTextField : React.FC<CustomTextFieldProps> = ({
                 {
                     type === "checkbox" ? (
                         <div className="flex items-center space-x-2">
-                            <Checkbox
+                            <Input
+                                type="checkbox"
                                 id={name}
-                                checked={rest.checked}
+                                checked={field.checked}
                                 {...field}
                                 className={clsx(style?.input || "", meta.error && "border-red-500")}
                             />

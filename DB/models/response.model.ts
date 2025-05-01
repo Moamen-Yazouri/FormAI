@@ -1,20 +1,23 @@
 import { IFormResponse } from "@/@types";
 import mongoose, { Schema, Document } from "mongoose";
 
-export interface IResponseDocument extends IFormResponse, Document {}
+export interface IResponseDocument extends IFormResponse, Document { }
 
-const ResponseSchema = new Schema<IResponseDocument> ({
-    formId: {type: String, required: true, ref: "Form"},
-    userId: {type: String, required: true, unique: true, ref: "User"},
-    answers: [
+const ResponseSchema = new Schema<IResponseDocument>(
+    {
+        formId: { type: Schema.Types.ObjectId, ref: "Form", required: true },
+        userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+        answers: [
         {
-        fieldId: {type: String, required: true},
-        answer: {type: Schema.Types.Mixed, required: true},
-    }
-],
-},
-{ timestamps: true }
-); 
+            fieldId: { type: String, required: true },
+            answer: { type: Schema.Types.Mixed, required: true },
+        }
+        ],
+    },
+    { timestamps: true }
+);
+
+ResponseSchema.index({ formId: 1, userId: 1 }, { unique: true });
 const responseModel =
     mongoose.models.Response || mongoose.model<IResponseDocument>("Response", ResponseSchema);
 
