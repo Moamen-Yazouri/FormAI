@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import FieldProvider from '../fieldProvider/fieldProvider';
 import { useForm } from './hook/useForm';
 import { CardContent, CardFooter } from '../ui/card';
-import { Save } from 'lucide-react';
+import { Loader2, Save } from 'lucide-react';
 import { Button } from '../ui/button';
 import MotionField from '../motionTextField/motionTextField';
 import { AuthContext } from '@/providers/auth/authProvider';
@@ -65,8 +65,7 @@ const FormGenerator = (props: IProps) => {
                     >
                     {isSub ? (
                         <>
-                        <span className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
-                        Processing...
+                            <Loader2 className='animate-spin text-white'/>
                         </>
                     ) : (
                         <>

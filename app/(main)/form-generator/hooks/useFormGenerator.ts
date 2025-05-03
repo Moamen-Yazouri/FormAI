@@ -162,6 +162,7 @@ const handleRemoveEmail = (emailToRemove: string) => {
         email,
         emails,
         emailError,
+        isPublishing,
         setGeneratedForm,
         handleTypedMessage,
         autoResizeTextarea,

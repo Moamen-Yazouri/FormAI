@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useRef, useState } from "react"
 import { motion } from "framer-motion"
-import { ArrowUp, Mail, Wand2, X } from "lucide-react"
+import { ArrowUp, Loader2, Mail, Wand2, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import LoadingSpinner from "./components/loading-spinner"
 import FormTemplate from "@/components/form-template/formTemplate"
@@ -41,6 +41,7 @@ export default function FormGeneratorPage() {
       email,
       emails,
       emailError,
+      isPublishing,
       handleAddEmail,
       handleRemoveEmail,
       setGeneratedForm,
@@ -85,7 +86,13 @@ export default function FormGeneratorPage() {
                   className="border-purple-300 text-purple-700 hover:bg-purple-50"
                   onClick={() => setShowPublishDialog(true)}
                 >
-                  Publish Form
+                  {
+                    isPublishing ? (
+                      <Loader2 className="animate-spin text-white"/>
+                    )
+                    : "Publish Form"
+                  }
+                  
                 </Button>
                 <Button 
                   variant="outline" 
