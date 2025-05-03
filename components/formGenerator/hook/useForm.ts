@@ -33,68 +33,64 @@ export const useForm = (props: IProps) => {
             resetForm: () => void,
             setSubmitting: (isSubmitting: boolean) => void
         ) => {
-        setSubmitting(false)
-        console.log(values)
-        resetForm();
-        //     if(props.isPreview || props.isView) {
-        //         resetForm();
-        //         toast.success("Form submission works correctly!");
-        //         return;
-        //     }
+            if(props.isPreview || props.isView) {
+                resetForm();
+                toast.success("Form submission works correctly!");
+                return;
+            }
 
-        //     if(!user) {
-        //         resetForm();
-        //         toast.error("You must be logged in to submit a form!");
-        //         return;
-        //     }
-        //     console.log(user)
-        //     const answers: IAnswer[] = props.fields.map(field => {
-        //         return {
-        //             fieldId: field.fieldId,
-        //             answer: values[field.name || field.label.toLowerCase()],
-        //         }
-        //     })
-        //     const formResponse: IFormResponse = {
-        //         formId: new mongoose.Types.ObjectId(props.formId),
-        //         answers: answers,
-        //         userId: new mongoose.Types.ObjectId(user._id),
-        //     }
-        // try{
+            if(!user) {
+                resetForm();
+                toast.error("You must be logged in to submit a form!");
+                return;
+            }
+            const answers: IAnswer[] = props.fields.map(field => {
+                return {
+                    fieldId: field.fieldId,
+                    answer: values[field.fieldId.toLowerCase()],
+                }
+            })
+            const formResponse: IFormResponse = {
+                formId: new mongoose.Types.ObjectId(props.formId),
+                answers: answers,
+                userId: new mongoose.Types.ObjectId(user._id),
+            }
+            console.log(formResponse);
+        try{
 
-        //     const res = await fetch("http://localhost:3000/api/add-response",
-        //         {
-        //             method: "POST",
-        //             headers: {
-        //                 "Content-Type": "application/json",
-        //             },
-        //             body: JSON.stringify(formResponse),
-        //         }
-        //     )
+            const res = await fetch("http://localhost:3000/api/add-response",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(formResponse),
+                }
+            )
 
-        //     const data = await res.json();
-        //     if(!res.ok) {
-        //         console.error(data.message);
-        //         toast.error(data.message);
-        //         return;
-        //     }
-        //     resetForm();
-        //     toast.success("Response submitted successfully!");
-        // }
-        // catch(err){
-        //     if(err instanceof Error) {
-        //         toast.error(err.message)
-        //     }
-        //     toast.error("Something went wrong!")
-        // }
-        // finally{
-        //     setSubmitting(false);
-        // }
+            const data = await res.json();
+            if(!res.ok) {
+                console.error(data.message);
+                toast.error(data.message);
+                return;
+            }
+            resetForm();
+            toast.success("Response submitted successfully!");
+        }
+        catch(err){
+            if(err instanceof Error) {
+                toast.error(err.message)
+            }
+            toast.error("Something went wrong!")
+        }
+        finally{
+            setSubmitting(false);
+        }
     }
     const formik = useFormik<IFormValues>({
         initialValues: initialValues,
         onSubmit: (values, {resetForm, setSubmitting}) => {
             handleSubmitForm(values, resetForm, setSubmitting);
-        
         },
         validationSchema,
         enableReinitialize: true,

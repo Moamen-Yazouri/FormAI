@@ -119,7 +119,6 @@ const handleRemoveEmail = (emailToRemove: string) => {
             isPublic,
             allowedUsers: emails || [],
         }
-        console.log(formData)
         try {
             const res = await fetch("http://localhost:3000/api/add-form",
                 {
@@ -163,6 +162,7 @@ const handleRemoveEmail = (emailToRemove: string) => {
         email,
         emails,
         emailError,
+        setGeneratedForm,
         handleTypedMessage,
         autoResizeTextarea,
         generateForm,

@@ -43,6 +43,7 @@ export default function FormGeneratorPage() {
       emailError,
       handleAddEmail,
       handleRemoveEmail,
+      setGeneratedForm,
       setShowPublishDialog,
       setAllowAnonymous,
       setIsPublic,
@@ -86,7 +87,11 @@ export default function FormGeneratorPage() {
                 >
                   Publish Form
                 </Button>
-                <Button variant="outline" className="border-purple-300 text-purple-700 hover:bg-purple-50">
+                <Button 
+                  variant="outline" 
+                  className="border-purple-300 text-purple-700 hover:bg-purple-50"
+                  onClick={() => setGeneratedForm(null)}
+                >
                   Regenerate
                 </Button>
             </div>
