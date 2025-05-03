@@ -1,6 +1,6 @@
 import { IUserFromDB, IUserData, IFormPopulatedByCreator, IFormData, IDashboardForm, IUsersActivityData, IFormFromDB, IFormCreationData } from "@/@types";
 import { getActiveStatus, getDateOnly, getMonthName, getWeekDaysDates } from "@/lib/dateUtils";
-import dashboardRepo from "../repositories/dashboard.repo";
+import dashboardRepo from "../../repositories/admin/dashboard.repo";
 import { months } from "@/constants/dateConstants";
 
 class DashboardService {
@@ -26,10 +26,10 @@ class DashboardService {
         return usersData;
     }
 
-    async getUserForms (username: string) {
+    async getUserForms(username: string) {
         try {
-            const user: IUserFromDB | null= await dashboardRepo.getUserByName(username);
-            if(user) {
+            const user: IUserFromDB | null = await dashboardRepo.getUserByName(username);
+            if (user) {
                 const forms: IFormFromDB[] = await dashboardRepo.getUserForms(user._id);
                 const formsData: IDashboardForm[] = forms.map(form => {
                     return {
@@ -44,7 +44,7 @@ class DashboardService {
             }
             console.error("User not found!");
             return [];
-        } catch(err) {
+        } catch (err) {
             console.error("Faild to fetch user forms!");
             return [];
         }
@@ -72,7 +72,7 @@ class DashboardService {
         const userActivityData: IUsersActivityData[] = dates.map((date) => {
             return {
                 name: date.day,
-                active: users.filter(user => (getActiveStatus(user.updatedAt, date.date) === "active")).length || 0, 
+                active: users.filter(user => (getActiveStatus(user.updatedAt, date.date) === "active")).length || 0,
                 new: users.filter(user => getDateOnly(user.createdAt) === getDateOnly(date.date)).length || 0,
             }
         })
@@ -92,7 +92,7 @@ class DashboardService {
 
     async getResponsesData() {
         const fomrs: IFormFromDB[] = await dashboardRepo.getAllForms();
-        const formResponseData = fomrs.map( form => {
+        const formResponseData = fomrs.map(form => {
             return {
                 name: form.title,
                 value: form.answeredBy?.length || 0,

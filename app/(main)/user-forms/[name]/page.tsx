@@ -1,5 +1,5 @@
 import {connection} from '@/DB/connection';
-import dashboardService from '@/module/services/dashboard.service';
+import dashboardService from '@/module/services/admin/dashboard.service';
 import DashboardHeader from '../../admin/dashboard/components/dashboardHeader';
 import FormsTable from '../../../../components/forms-table/formsTable';
 interface IProps {
