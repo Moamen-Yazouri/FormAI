@@ -30,6 +30,13 @@ class FormsRepo {
         
         return answeredForms;
     }
+
+    async getCreatorForm (id: string) {
+        const creatorForms = await FormModel.find({
+            creatorId: id
+        }).lean<IFormFromDB[]>();
+        return creatorForms;
+        }
 }
 
 export default new FormsRepo();
