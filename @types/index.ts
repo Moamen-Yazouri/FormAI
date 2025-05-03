@@ -50,7 +50,7 @@ export interface IForm {
 }
 
 export type IAnswer = {
-    fieldId: string;
+    fieldId: string | mongoose.Types.ObjectId;
     answer: string | string[] | boolean | number;
 };
 

@@ -20,7 +20,7 @@ class FormsRepo {
         return await FormModel.create(formData);
     }
     async addResponse(response: IFormResponse) {
-        return await responseModel.insertOne(response);
+        return await responseModel.create(response);
     }
 
     async getAnswerdForms (id: string) {
