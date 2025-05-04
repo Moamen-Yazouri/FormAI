@@ -60,7 +60,13 @@ export interface IFormResponse {
     answers: IAnswer[]; 
 }
 
-
+export interface IDisplayResponse {
+    formTitle: string;
+    respondateName: string;
+    respondateEmail: string;
+    submittedAt: string;
+    responses: IAnswer[];
+}
 export interface IUserFromDB {
     _id: string;          
     name: string;

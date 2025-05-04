@@ -50,17 +50,7 @@ class FormServices {
         return newForm;
     }
 
-    async addResponse (response: IFormResponse) {
-        const form = await formsRepo.getFormById(String(response.formId));
-        if(!form) {
-            throw new Error("No form found");
-        }
-        const isValid = generateValidationScehma(form.fields).validate(response, {abortEarly: true});
-        if(!isValid) {
-            throw new Error("Invalid response");
-        }
-        return await formsRepo.addResponse(response);
-    }
+
 
     async getAnswerdForms (username: string) {
         const user = await userRepo.getUserByName(username);
