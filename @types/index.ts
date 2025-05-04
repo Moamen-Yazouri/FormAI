@@ -62,8 +62,8 @@ export interface IFormResponse {
 
 export interface IDisplayResponse {
     formTitle: string;
-    respondateName: string;
-    respondateEmail: string;
+    respondentName: string;
+    respondentEmail: string;
     submittedAt: string;
     responses: IAnswer[];
 }

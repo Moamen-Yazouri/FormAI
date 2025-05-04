@@ -24,8 +24,8 @@ class ResponseService {
         }
         const responseData: IDisplayResponse = {
             formTitle: response.formId.title,
-            respondateName: response.userId.name,
-            respondateEmail: response.userId.email,
+            respondentName: response.userId.name,
+            respondentEmail: response.userId.email,
             submittedAt: response.createdAt,
             responses: answers.map(answer => {
                 {
