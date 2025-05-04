@@ -13,6 +13,8 @@ import TabHeader from "./tabHeader"
 import SearchBar from "./searchBar"
 import FormsTable from "@/components/forms-table/formsTable"
 import ResponsesTable from "./responsesTable"
+import CreatorFormsTable from "./creatorFormsTable"
+import { ICreatorActivityData, ICreatorFormData, IFormCreationData, IFormResponseData } from "../types"
 export const dummyForms = [
   {
     id: "1",
@@ -52,34 +54,34 @@ export const dummyForms = [
 ];
 
 // Types for our data
-interface IFormData {
-  id: string
-  title: string
-  createdAt: string
-  responsesCount: number
-  status: "active" | "draft" | "archived"
-  conversionRate: number
-}
+// interface IFormData {
+//   id: string
+//   title: string
+//   createdAt: string
+//   responsesCount: number
+//   status: "active" | "draft" | "archived"
+//   conversionRate: number
+// }
 
-interface IFormCreationData {
-  date: string
-  count: number
-}
+// interface IFormCreationData {
+//   date: string
+//   count: number
+// }
 
-interface IFormResponseData {
-  formId: string
-  formTitle: string
-  responsesCount: number
-}
+// interface IFormResponseData {
+//   formId: string
+//   formTitle: string
+//   responsesCount: number
+// }
 
-interface ICreatorActivityData {
-  date: string
-  formsCreated: number
-  responsesReceived: number
-}
+// interface ICreatorActivityData {
+//   date: string
+//   formsCreated: number
+//   responsesReceived: number
+// }
 
 interface IProps {
-  formsData: IFormData[]
+  formsData: ICreatorFormData[]
   formCreationData: IFormCreationData[]
   formResponsesData: IFormResponseData[]
   creatorActivityData: ICreatorActivityData[]
@@ -110,9 +112,7 @@ const CreatorDashboard = (props: IProps) => {
     filteredForms,
     filteredResponses,
     totalForms,
-    activeForms,
     totalResponses,
-    conversionRate,
     searchForms,
     searchResponses,
     setSearchForms,
@@ -129,7 +129,7 @@ const CreatorDashboard = (props: IProps) => {
       },
       {
         stateTitle: "Active Forms",
-        stateValue: activeForms,
+        stateValue: 8,
         statePercentage: 15,
         icon: <BarChart className="h-5 w-5 text-green-500" />,
       },
@@ -139,14 +139,8 @@ const CreatorDashboard = (props: IProps) => {
         statePercentage: 12,
         icon: <Users className="h-5 w-5 text-purple-500" />,
       },
-      {
-        stateTitle: "Conversion Rate",
-        stateValue: `${conversionRate}%`,
-        statePercentage: 5,
-        icon: <PieChart className="h-5 w-5 text-amber-500" />,
-      },
     ],
-    [totalForms, activeForms, totalResponses, conversionRate],
+    [totalForms, totalResponses],
   )
 
   return (
@@ -172,7 +166,7 @@ const CreatorDashboard = (props: IProps) => {
               <TabHeader title="My Forms" description="View and manage all your created forms" />
               <CardContent>
                 <SearchBar placeholder="Search forms..." setSearch={setSearchForms} search={searchForms} />
-                <FormsTable filteredForms={dummyForms} />
+                <CreatorFormsTable filteredForms={filteredForms}/>
               </CardContent>
             </Card>
           </TabsContent>
