@@ -71,6 +71,15 @@ export interface IUserFromDB {
     updatedAt: string;
 }
 
+export interface IResponseFromDB {
+    _id: string; 
+    formId: string;
+    userId: string;
+    answers: string[]; 
+    createdAt: string; 
+    updatedAt: string;
+    __v: number;
+}
 export interface IFormData {
     title: string
     description: string
