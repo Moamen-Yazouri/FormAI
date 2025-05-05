@@ -1,4 +1,10 @@
-import { IDashboardForm, IFormCreationData, IFormData, IFormResponseData, IUserData, IUsersActivityData } from "@/@types";
+import { 
+            IDashboardForm, 
+            IFormCreationData, 
+            IFormResponseData, 
+            IUserData, 
+            IUsersActivityData 
+        } from "@/@types";
 
 class FetchData {
     private baseUrl: string = "http://localhost:3000//api/dashboard";

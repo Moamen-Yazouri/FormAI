@@ -1,4 +1,4 @@
-import { IForm, IFormFromDB, IFormPopulatedByCreator, IFormResponse } from "@/@types";
+import { IForm, IFormFromDB, IFormPopulatedByCreator, IFormResponse, IUserFromDB } from "@/@types";
 import FormModel from "@/DB/models/form.model";
 import responseModel from "@/DB/models/response.model";
 import userModel from "@/DB/models/user.model";
@@ -31,11 +31,15 @@ class FormsRepo {
         return answeredForms;
     }
 
-    async getCreatorForm (id: string) {
+    async getCreatorForm (name: string) {
+        const id = (await userModel.findOne({name}).lean<IUserFromDB>())?._id;
+        if(!id) {
+            return null
+        }
         const creatorForms = await FormModel.find({
             creatorId: id
         }).lean<IFormFromDB[]>();
-        return creatorForms;
+            return creatorForms;
         }
 }
 

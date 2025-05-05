@@ -3,8 +3,8 @@ import formsRepo from "../forms.repo";
 import { IFormCreationData } from "@/app/(main)/creator/dashboard/types";
 
 class DashboardRepo {
-    async getFormCreationData(id: string) {
-        return await formsRepo.getCreatorForm(id);
+    async getFormCreationData(name: string) {
+        return await formsRepo.getCreatorForm(name);
     }
 }
 

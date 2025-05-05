@@ -1,6 +1,5 @@
-import React from 'react'
-import ResponseDetailsPage from '../components/responseReview'
-import dashboardService from '@/module/services/creator/dashboard.service';
+import React from 'react';
+import ResponseDetailsPage from '../components/responseReview';
 import { IDisplayResponse } from '@/@types';
 import responseService from '@/module/services/response.service';
 interface IProps {
