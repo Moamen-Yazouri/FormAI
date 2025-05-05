@@ -1,5 +1,5 @@
 import { IFormFromDB, IResponseFromDB } from "@/@types";
-import { ICreatorActivityData, IFormResponseData } from "@/app/(main)/creator/dashboard/types";
+import { ICreatorActivityData, IFormCreationData, IFormResponseData } from "@/app/(main)/creator/dashboard/types";
 import { getDateOnly } from "@/lib/dateUtils";
 import { getDataPerDate } from "@/lib/getDataPerDate";
 import dashboardRepo from "@/module/repositories/creator/dashboard.repo";
@@ -10,11 +10,10 @@ class DashboardService {
         const forms  = await dashboardRepo.getFormCreationData(name);
         if(forms) {
             const formsPerDate: {[key: string]: number} = getDataPerDate(forms);
-
-            const formCreationData = Object.keys(formsPerDate).map((date) => {
+            const formCreationData: IFormCreationData[] = Object.keys(formsPerDate).map((date) => {
                 return {
                     date,
-                    value: formsPerDate[date]
+                    count: formsPerDate[date]
                 }
             })
 
@@ -44,8 +43,8 @@ class DashboardService {
     }
 
     async getCreatorActivityData (name: string) {
-        const forms: IFormFromDB[] | null = await dashboardRepo.getFormCreationData(name);
-        if(forms) {
+        const forms: IFormFromDB[]  = await dashboardRepo.getFormCreationData(name);
+        if(forms.length > 0) {
             const responses: IResponseFromDB[] = await responseRepo.getCreatorResponses(name);
             const formsPerDate: {[key: string]: number} = getDataPerDate(forms);
 
@@ -61,9 +60,7 @@ class DashboardService {
 
             return creatorActivityData;
         }
-        else {
-            throw new Error("User not found!")
-        }
+        return [];
     }
 }
 

@@ -34,7 +34,8 @@ class FormsRepo {
     async getCreatorForm (name: string) {
         const id = (await userModel.findOne({name}).lean<IUserFromDB>())?._id;
         if(!id) {
-            return null
+            throw new Error("User not found!");
+            
         }
         const creatorForms = await FormModel.find({
             creatorId: id
