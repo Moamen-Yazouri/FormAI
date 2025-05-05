@@ -15,3 +15,10 @@ export interface ICreatorActivityData {
     formsCreated: number
     responsesReceived: number
 }
+
+export interface ICreatorFormData {
+    id: string
+    title: string
+    createdAt: string
+    responsesCount: number
+}

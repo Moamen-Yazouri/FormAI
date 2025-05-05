@@ -6,51 +6,64 @@ import dashboardRepo from "@/module/repositories/creator/dashboard.repo";
 import responseRepo from "@/module/repositories/response.repo";
 
 class DashboardService {
-    async formCreationData (id: string) {
-        const forms  = await dashboardRepo.getFormCreationData(id);
+    async formCreationData (name: string) {
+        const forms  = await dashboardRepo.getFormCreationData(name);
+        if(forms) {
+            const formsPerDate: {[key: string]: number} = getDataPerDate(forms);
 
-        const formsPerDate: {[key: string]: number} = getDataPerDate(forms);
+            const formCreationData = Object.keys(formsPerDate).map((date) => {
+                return {
+                    date,
+                    value: formsPerDate[date]
+                }
+            })
 
-        const formCreationData = Object.keys(formsPerDate).map((date) => {
-            return {
-                date,
-                value: formsPerDate[date]
-            }
-        })
-
-        return formCreationData;
+            return formCreationData;
+        }
+        else {
+            throw new Error("User not found!")
+        }
     }
 
-    async getFormResponseData (id: string) {
-        const forms = await dashboardRepo.getFormCreationData(id);
+    async getFormResponseData (name: string) {
+        const forms = await dashboardRepo.getFormCreationData(name);
+        if(forms) {
+            const formResponseData: IFormResponseData[] = forms.map((form) => {
+                return {
+                    formId: String(form._id),
+                    formTitle: form.title,
+                    responsesCount: form.answeredBy?.length || 0,
+                }
+            })
 
-        const formResponseData: IFormResponseData[] = forms.map((form) => {
-            return {
-                formId: String(form._id),
-                formTitle: form.title,
-                responsesCount: form.answeredBy?.length || 0,
-            }
-        })
-
-        return formResponseData;
+            return formResponseData;
+        }
+        else {
+            throw new Error("User not found!");
+        }
     }
 
-    async getCreatorActivityData (id: string) {
-        const forms: IFormFromDB[] = await dashboardRepo.getFormCreationData(id);
-        const responses: IResponseFromDB[] = await responseRepo.getCreatorResponses(id);
-        const formsPerDate: {[key: string]: number} = getDataPerDate(forms);
+    async getCreatorActivityData (name: string) {
+        const forms: IFormFromDB[] | null = await dashboardRepo.getFormCreationData(name);
+        if(forms) {
+            const responses: IResponseFromDB[] = await responseRepo.getCreatorResponses(name);
+            const formsPerDate: {[key: string]: number} = getDataPerDate(forms);
 
-        const responsesPerDate: {[key: string]: number} = getDataPerDate(responses);
+            const responsesPerDate: {[key: string]: number} = getDataPerDate(responses);
 
-        const creatorActivityData: ICreatorActivityData[] = Object.keys(formsPerDate).map((date) => {
-            return {
-                date,
-                formsCreated: formsPerDate[date],
-                responsesReceived: responsesPerDate[date] || 0,
-            }
-        });
+            const creatorActivityData: ICreatorActivityData[] = Object.keys(formsPerDate).map((date) => {
+                return {
+                    date,
+                    formsCreated: formsPerDate[date],
+                    responsesReceived: responsesPerDate[date] || 0,
+                }
+            });
 
-        return creatorActivityData;
+            return creatorActivityData;
+        }
+        else {
+            throw new Error("User not found!")
+        }
     }
 }
 

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useMemo } from "react"
+import { ICreatorFormData } from "../types"
 
 interface IFormData {
     id: string
@@ -73,7 +74,7 @@ const sampleResponsesData: IResponseData[] = [
 ]
 
 interface IProps {
-    formsData: IFormData[]
+    formsData: ICreatorFormData[]
 }
 
 /**
@@ -90,7 +91,7 @@ const useCreatorDashboard = ({ formsData }: IProps) => {
 
         const searchTerm = searchForms.toLowerCase()
         return formsData.filter(
-            (form) => form.title.toLowerCase().includes(searchTerm) || form.status.toLowerCase().includes(searchTerm),
+            (form) => form.title.toLowerCase().includes(searchTerm)
         )
     }, [formsData, searchForms])
 
@@ -110,33 +111,32 @@ const useCreatorDashboard = ({ formsData }: IProps) => {
   // Calculate dashboard metrics
     const totalForms = useMemo(() => formsData.length, [formsData])
 
-    const activeForms = useMemo(() => formsData.filter((form) => form.status === "active").length, [formsData])
+    // const activeForms = useMemo(() => formsData.filter((form) => form.status === "active").length, [formsData])
 
     const totalResponses = useMemo(() => formsData.reduce((sum, form) => sum + form.responsesCount, 0), [formsData])
 
   // Calculate overall conversion rate across all forms
-    const conversionRate = useMemo(() => {
-    if (totalForms === 0) return 0
+  //   const conversionRate = useMemo(() => {
+  //   if (totalForms === 0) return 0
 
-    // Calculate total views and responses
-    const activeForms = formsData.filter((form) => form.status === "active" && form.responsesCount > 0)
+  //   // Calculate total views and responses
+  //   const activeForms = formsData.filter((form) => form.status === "active" && form.responsesCount > 0)
 
-    if (activeForms.length === 0) return 0
+  //   if (activeForms.length === 0) return 0
 
-    // Calculate weighted average conversion rate
-    const totalWeightedConversion = activeForms.reduce((sum, form) => {
-      return sum + form.conversionRate * form.responsesCount
-    }, 0)
+  //   // Calculate weighted average conversion rate
+  //   const totalWeightedConversion = activeForms.reduce((sum, form) => {
+  //     return sum + form.conversionRate * form.responsesCount
+  //   }, 0)
 
-    const totalActiveResponses = activeForms.reduce((sum, form) => sum + form.responsesCount, 0)
+  //   const totalActiveResponses = activeForms.reduce((sum, form) => sum + form.responsesCount, 0)
 
-    return totalActiveResponses > 0 ? Number.parseFloat((totalWeightedConversion / totalActiveResponses).toFixed(1)) : 0
-  }, [formsData, totalForms])
+  //   return totalActiveResponses > 0 ? Number.parseFloat((totalWeightedConversion / totalActiveResponses).toFixed(1)) : 0
+  // }, [formsData, totalForms])
 
   // Get forms sorted by response count (for analytics)
     const topPerformingForms = useMemo(() => {
         return [...formsData]
-        .filter((form) => form.status === "active")
         .sort((a, b) => b.responsesCount - a.responsesCount)
         .slice(0, 5)
     }, [formsData])
@@ -161,9 +161,7 @@ const useCreatorDashboard = ({ formsData }: IProps) => {
 
     // Dashboard metrics
     totalForms,
-    activeForms,
     totalResponses,
-    conversionRate,
 
     // Growth metrics
     formGrowthRate,

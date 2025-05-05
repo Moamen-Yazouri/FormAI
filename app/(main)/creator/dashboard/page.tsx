@@ -93,7 +93,12 @@ export const creatorActivityData: ICreatorActivityData[] = [
 
 const page = () => {
   return (
-    <CreatorDashboard formsData={formData} formCreationData={formCreationData} formResponsesData={formResponseData} creatorActivityData={creatorActivityData}/>
+    <CreatorDashboard 
+      formsData={formData} 
+      formCreationData={formCreationData} 
+      formResponsesData={formResponseData} 
+      creatorActivityData={creatorActivityData}
+    />
   )
 }
 
