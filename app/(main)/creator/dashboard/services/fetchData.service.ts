@@ -1,6 +1,6 @@
 import { connection } from "@/DB/connection";
 import dashboardService from "@/module/services/creator/dashboard.service";
-import { IFormCreationData } from "../types";
+import { ICreatorFormData, IFormCreationData } from "../types";
 
 class FetchServices {
     async formCreationData(name: string) {
@@ -62,6 +62,26 @@ class FetchServices {
                 return[];
             }
             console.error("Failed to fetch creator activity data!");
+            return [];
+        } 
+    }
+    async formsData(name: string) {
+        await connection();
+        try {
+            const formsData: ICreatorFormData[] = await dashboardService.getCreatorForms(name);
+            if (!formsData || formsData.length === 0) {
+            console.warn(`No forms found for "${name}".`);
+            return [];
+            }
+
+            return formsData;
+        }
+        catch (error) {
+            if(error instanceof Error) {
+                console.error(error.message);
+                return[];
+            }
+            console.error("Failed to fetch creator forms data!");
             return [];
         } 
     }
