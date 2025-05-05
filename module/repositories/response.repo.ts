@@ -1,6 +1,7 @@
 import { IResponseFromDB } from "@/@types";
 import responseModel from "@/DB/models/response.model";
 import mongoose from "mongoose";
+import userRepo from "./user.repo";
 
 class ResponseRepo {
     async getResponseById(responseId: string) {
@@ -23,11 +24,12 @@ class ResponseRepo {
         return await responseModel.find({userId});
     }
 
-    async getCreatorResponses(creatorId: string) {
+    async getCreatorResponses(name: string) {
+        const creator = await userRepo.getUserByName(name);
         const creatorResponses = await responseModel.find().populate(
             {
                 path: "formId",
-                match: {creatorId: new mongoose.Types.ObjectId(creatorId) },
+                match: {creatorId: creator._id },
                 select: "_id"
             }
         )

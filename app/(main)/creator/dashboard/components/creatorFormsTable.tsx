@@ -55,7 +55,7 @@ const CreatorFormsTable = ({ filteredForms }: IProps) => {
                 filteredForms.map((form) => (
                 <TableRow key={form.id}>
                     <TableCell className="font-medium">{form.title}</TableCell>
-                    <TableCell>{new Date(form.createdAt).toLocaleDateString()}</TableCell>
+                    <TableCell>{new Date(form.createdAt).toISOString().split("T")[0]}</TableCell>
                     <TableCell>{form.responsesCount}</TableCell>
                     <TableCell className="text-right">
                     <DropdownMenu>
