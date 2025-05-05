@@ -86,3 +86,4 @@ class FetchServices {
         } 
     }
 }
+export default new FetchServices();

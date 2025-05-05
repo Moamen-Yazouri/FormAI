@@ -53,7 +53,7 @@ const ResponsesTable = ({ filteredResponses }: IProps) => {
                     <TableCell className="font-medium">{response.formTitle}</TableCell>
                     <TableCell>{response.respondentName}</TableCell>
                     <TableCell>{response.respondentEmail}</TableCell>
-                    <TableCell>{new Date(response.submittedAt).toLocaleDateString()}</TableCell>
+                    <TableCell>{new Date(response.submittedAt).toISOString().split("T")[0]}</TableCell>
                     <TableCell>
                     <Badge variant={response.status === "complete" ? "default" : "outline"}>
                         {response.status.charAt(0).toUpperCase() + response.status.slice(1)}

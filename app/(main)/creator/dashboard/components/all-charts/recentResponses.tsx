@@ -63,7 +63,7 @@ const RecentResponses = () => {
                 <Badge variant={response.status === "completed" ? "default" : "outline"}>
                   {response.status === "completed" ? "Complete" : "Partial"}
                 </Badge>
-                <p className="text-xs text-muted-foreground">{new Date(response.date).toLocaleDateString()}</p>
+                <p className="text-xs text-muted-foreground">{new Date(response.date).toISOString().split("T")[0]}</p>
               </div>
             </div>
           ))}

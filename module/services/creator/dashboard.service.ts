@@ -53,7 +53,7 @@ class DashboardService {
             const creatorActivityData: ICreatorActivityData[] = Object.keys(formsPerDate).map((date) => {
                 return {
                     date,
-                    formsCreated: formsPerDate[date],
+                    formsCreated: formsPerDate[date] || 0,
                     responsesReceived: responsesPerDate[date] || 0,
                 }
             });
