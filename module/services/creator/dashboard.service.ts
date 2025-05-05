@@ -1,5 +1,5 @@
 import { IFormFromDB, IResponseFromDB } from "@/@types";
-import { ICreatorActivityData, IFormCreationData, IFormResponseData } from "@/app/(main)/creator/dashboard/types";
+import { ICreatorActivityData, ICreatorFormData, IFormCreationData, IFormResponseData } from "@/app/(main)/creator/dashboard/types";
 import { getDateOnly } from "@/lib/dateUtils";
 import { getDataPerDate } from "@/lib/getDataPerDate";
 import dashboardRepo from "@/module/repositories/creator/dashboard.repo";
@@ -59,6 +59,22 @@ class DashboardService {
             });
 
             return creatorActivityData;
+        }
+        return [];
+    }
+
+    async getCreatorForms(name: string) {
+        const forms = await dashboardRepo.getFormCreationData(name);
+        if(forms.length > 0) {
+            const formsData: ICreatorFormData[] = forms.map((form) => {
+                return {
+                    id: String(form._id),
+                    title: form.title,
+                    createdAt: getDateOnly(form.createdAt),
+                    responsesCount: form.answeredBy?.length || 0,
+                }
+            })
+            return formsData;
         }
         return [];
     }
