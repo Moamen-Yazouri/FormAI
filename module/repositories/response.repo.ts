@@ -2,6 +2,8 @@ import { IResponseFromDB } from "@/@types";
 import responseModel from "@/DB/models/response.model";
 import mongoose from "mongoose";
 import userRepo from "./user.repo";
+import { ICreatorResponses } from "@/app/(main)/creator/dashboard/types";
+import { getDateOnly } from "@/lib/dateUtils";
 
 class ResponseRepo {
     async getResponseById(responseId: string) {
@@ -26,26 +28,28 @@ class ResponseRepo {
 
     async getCreatorResponses(name: string) {
         const creator = await userRepo.getUserByName(name);
-        const creatorResponses = await responseModel.find().populate(
+        const creatorResponses = await responseModel.find().populate([
+            {
+                path: "userId",
+                match: {name: creator?.name},
+                select: "name -_id"
+            },
             {
                 path: "formId",
                 match: {creatorId: creator._id },
-                select: "_id"
+                select: "title"
             }
-        )
+        ])
         
-        const filteredResponses: IResponseFromDB[] = creatorResponses.filter(
+        const filteredResponses: ICreatorResponses[] = creatorResponses.filter(
                     response => response.formId !== null
                 )
                 .map(
                     res => ({
-                        _id: res._id,
-                        formId: res.formId._id, 
-                        userId: res.userId,
-                        answers: res.answers,
-                        createdAt: res.createdAt,
-                        updatedAt: res.updatedAt,
-                        __v: res.__v
+                        id: res._id,
+                        formTitle: res.formId.title, 
+                        respondent: res.userId.name,
+                        date: getDateOnly(res.createdAt)
                     })
                 );
 

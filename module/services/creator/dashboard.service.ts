@@ -45,7 +45,7 @@ class DashboardService {
     async getCreatorActivityData (name: string) {
         const forms: IFormFromDB[]  = await dashboardRepo.getFormCreationData(name);
         if(forms.length > 0) {
-            const responses: IResponseFromDB[] = await responseRepo.getCreatorResponses(name);
+            const responses = await responseRepo.getCreatorResponses(name);
             const formsPerDate: {[key: string]: number} = getDataPerDate(forms);
 
             const responsesPerDate: {[key: string]: number} = getDataPerDate(responses);
@@ -60,7 +60,8 @@ class DashboardService {
 
             return creatorActivityData;
         }
-        return [];
+        throw new Error("No User activity data!");
+        
     }
 
     async getCreatorForms(name: string) {
@@ -76,7 +77,15 @@ class DashboardService {
             })
             return formsData;
         }
-        return [];
+        throw new Error("No forms yet!");
+    }
+
+    async getCreatorResponses(name: string) {
+        const responses = await responseRepo.getCreatorResponses(name);
+        if(responses.length === 0) {
+            throw new Error("No responses found");
+        }
+        return responses;
     }
 }
 
