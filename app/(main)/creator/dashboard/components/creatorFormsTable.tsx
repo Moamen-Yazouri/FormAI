@@ -23,6 +23,8 @@ import { MoreHorizontal, Eye, Edit, Trash, BarChart } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
 import DeleteDialog from "@/components/deleteDialog/deleteDialog"
+import ActionServices from "../services/action.service"
+import { toast } from "sonner"
 
 
 interface IFormData {
@@ -39,8 +41,14 @@ interface IProps {
 const CreatorFormsTable = ({ filteredForms }: IProps) => {
     const [formToDelete, setFormToDelete] = useState<string | null>(null);
 
-    const handelFormDelete = (form : string) => {
-        console.log(form)
+    const handelFormDelete = async (form : string) => {
+        const deletedForm = await ActionServices.deleteForm(form);
+        if (deletedForm) {
+            toast.success("Form deleted successfully!");
+        }
+        else {
+            toast.error("Form deletion failed!");
+        }
     }
     return (
         <div className="rounded-md border">
@@ -83,11 +91,7 @@ const CreatorFormsTable = ({ filteredForms }: IProps) => {
                         </DropdownMenuItem>
                         <DropdownMenuItem>
                             <Edit className="mr-2 h-4 w-4" />
-                            <span>Edit</span>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <BarChart className="mr-2 h-4 w-4" />
-                            <span>Analytics</span>
+                            <span>Regenerate</span>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DeleteDialog

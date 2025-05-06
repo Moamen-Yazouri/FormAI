@@ -37,7 +37,7 @@ function SelectTrigger({
       data-slot="select-trigger"
       data-size={size}
       className={cn(
-        "w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm",
+        "rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm",
         "focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500",
         "flex items-center justify-between disabled:cursor-not-allowed disabled:opacity-50",
         className
