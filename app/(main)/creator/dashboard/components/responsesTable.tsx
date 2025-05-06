@@ -1,14 +1,12 @@
 "use client"
-
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Badge } from "@/components/ui/badge"
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import { MoreHorizontal, Eye, Download, Mail } from 'lucide-react'
@@ -19,7 +17,6 @@ interface IResponseData {
     respondentName: string
     respondentEmail: string
     submittedAt: string
-    status: "complete" | "partial"
 }
 
 interface IProps {
@@ -36,7 +33,6 @@ const ResponsesTable = ({ filteredResponses }: IProps) => {
                 <TableHead>Respondent</TableHead>
                 <TableHead>Email</TableHead>
                 <TableHead>Submitted</TableHead>
-                <TableHead>Status</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
             </TableRow>
             </TableHeader>
@@ -54,11 +50,6 @@ const ResponsesTable = ({ filteredResponses }: IProps) => {
                     <TableCell>{response.respondentName}</TableCell>
                     <TableCell>{response.respondentEmail}</TableCell>
                     <TableCell>{new Date(response.submittedAt).toISOString().split("T")[0]}</TableCell>
-                    <TableCell>
-                    <Badge variant={response.status === "complete" ? "default" : "outline"}>
-                        {response.status.charAt(0).toUpperCase() + response.status.slice(1)}
-                    </Badge>
-                    </TableCell>
                     <TableCell className="text-right">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>

@@ -22,3 +22,10 @@ export interface ICreatorFormData {
     createdAt: string
     responsesCount: number
 }
+
+export interface ICreatorResponses {
+    id: string,
+    formTitle: string,
+    respondent: string,
+    date: string,
+}
