@@ -20,6 +20,10 @@ import {
 
 import { Button } from "@/components/ui/button"
 import { MoreHorizontal, Eye, Edit, Trash, BarChart } from "lucide-react"
+import Link from "next/link"
+import { useState } from "react"
+import DeleteDialog from "@/components/deleteDialog/deleteDialog"
+
 
 interface IFormData {
     id: string
@@ -33,6 +37,11 @@ interface IProps {
 }
 
 const CreatorFormsTable = ({ filteredForms }: IProps) => {
+    const [formToDelete, setFormToDelete] = useState<string | null>(null);
+
+    const handelFormDelete = (form : string) => {
+        console.log(form)
+    }
     return (
         <div className="rounded-md border">
         <Table>
@@ -70,7 +79,7 @@ const CreatorFormsTable = ({ filteredForms }: IProps) => {
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>
                             <Eye className="mr-2 h-4 w-4" />
-                            <span>View</span>
+                            <Link href={`/view-form/${form.id}`}>View Forms</Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem>
                             <Edit className="mr-2 h-4 w-4" />
@@ -81,10 +90,14 @@ const CreatorFormsTable = ({ filteredForms }: IProps) => {
                             <span>Analytics</span>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem className="text-red-600">
-                            <Trash className="mr-2 h-4 w-4" />
-                            <span>Delete</span>
-                        </DropdownMenuItem>
+                        <DeleteDialog
+                            itemToDelete={formToDelete}
+                            item={form}
+                            data={filteredForms}
+                            setItemToDelete={setFormToDelete}
+                            itemsType="Form"
+                            handleDeleteItem={handelFormDelete}
+                        />
                         </DropdownMenuContent>
                     </DropdownMenu>
                     </TableCell>

@@ -9,8 +9,11 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
-import { MoreHorizontal, Eye, Download, Mail } from 'lucide-react'
+import { MoreHorizontal, Eye, Download, Mail, Trash } from 'lucide-react'
 import { ICreatorResponses } from "../types"
+import Link from "next/link"
+import { useState } from "react"
+import DeleteDialog from "@/components/deleteDialog/deleteDialog"
 
 
 interface IProps {
@@ -18,6 +21,10 @@ interface IProps {
 }
 
 const ResponsesTable = ({ filteredResponses }: IProps) => {
+    const [responseToDelete, setResponseToDelete] = useState<string | null>(null);
+    const handleDeleteResponse = (id: string) => {
+        console.log("deleting response", id)
+    }
     return (
         <div className="rounded-md border">
         <Table>
@@ -57,7 +64,7 @@ const ResponsesTable = ({ filteredResponses }: IProps) => {
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>
                             <Eye className="mr-2 h-4 w-4" />
-                            <span>View Details</span>
+                            <Link href={`/review-response/${response.id}`}>{"View Details"}</Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem>
                             <Download className="mr-2 h-4 w-4" />
@@ -67,6 +74,15 @@ const ResponsesTable = ({ filteredResponses }: IProps) => {
                             <Mail className="mr-2 h-4 w-4" />
                             <span>Contact Respondent</span>
                         </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DeleteDialog
+                            itemToDelete={responseToDelete}
+                            item={response}
+                            data={filteredResponses}
+                            setItemToDelete={setResponseToDelete}
+                            itemsType="Response"
+                            handleDeleteItem={handleDeleteResponse}
+                        />
                         </DropdownMenuContent>
                     </DropdownMenu>
                     </TableCell>

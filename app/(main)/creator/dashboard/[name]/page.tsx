@@ -112,7 +112,7 @@ const page = async (props: IProps) => {
         FetchServices.creatorActivityData(name),
         FetchServices.creatorResponses(name),
     ]);
-    console.log(creatorActivityData)
+
   return (
     <CreatorDashboard 
       formsData={formData} 
