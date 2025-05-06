@@ -10,17 +10,11 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import { MoreHorizontal, Eye, Download, Mail } from 'lucide-react'
+import { ICreatorResponses } from "../types"
 
-interface IResponseData {
-    id: string
-    formTitle: string
-    respondentName: string
-    respondentEmail: string
-    submittedAt: string
-}
 
 interface IProps {
-    filteredResponses: IResponseData[]
+    filteredResponses: ICreatorResponses[]
 }
 
 const ResponsesTable = ({ filteredResponses }: IProps) => {
@@ -49,7 +43,7 @@ const ResponsesTable = ({ filteredResponses }: IProps) => {
                     <TableCell className="font-medium">{response.formTitle}</TableCell>
                     <TableCell>{response.respondentName}</TableCell>
                     <TableCell>{response.respondentEmail}</TableCell>
-                    <TableCell>{new Date(response.submittedAt).toISOString().split("T")[0]}</TableCell>
+                    <TableCell>{new Date(response.date).toISOString().split("T")[0]}</TableCell>
                     <TableCell className="text-right">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>

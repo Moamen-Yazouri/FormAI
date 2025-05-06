@@ -32,7 +32,7 @@ class ResponseRepo {
             {
                 path: "userId",
                 match: {name: creator?.name},
-                select: "name -_id"
+                select: "name email -_id"
             },
             {
                 path: "formId",
@@ -46,9 +46,10 @@ class ResponseRepo {
                 )
                 .map(
                     res => ({
-                        id: res._id,
+                        id: String(res._id),
                         formTitle: res.formId.title, 
-                        respondent: res.userId.name,
+                        respondentName: res.userId.name,
+                        respondentEmail: res.userId.email,
                         date: getDateOnly(res.createdAt)
                     })
                 );

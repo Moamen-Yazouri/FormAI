@@ -26,6 +26,7 @@ export interface ICreatorFormData {
 export interface ICreatorResponses {
     id: string,
     formTitle: string,
-    respondent: string,
+    respondentName: string,
+    respondentEmail: string,
     date: string,
 }

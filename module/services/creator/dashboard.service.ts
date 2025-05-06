@@ -1,5 +1,5 @@
 import { IFormFromDB, IResponseFromDB } from "@/@types";
-import { ICreatorActivityData, ICreatorFormData, IFormCreationData, IFormResponseData } from "@/app/(main)/creator/dashboard/types";
+import { ICreatorActivityData, ICreatorFormData, ICreatorResponses, IFormCreationData, IFormResponseData } from "@/app/(main)/creator/dashboard/types";
 import { getDateOnly } from "@/lib/dateUtils";
 import { getDataPerDate } from "@/lib/getDataPerDate";
 import dashboardRepo from "@/module/repositories/creator/dashboard.repo";
@@ -81,11 +81,16 @@ class DashboardService {
     }
 
     async getCreatorResponses(name: string) {
-        const responses = await responseRepo.getCreatorResponses(name);
+        const responses: ICreatorResponses[] = await responseRepo.getCreatorResponses(name);
         if(responses.length === 0) {
             throw new Error("No responses found");
         }
-        return responses;
+        const sortedResponses = responses.sort((a, b) => {
+            const dateA = new Date(a.date);
+            const dateB = new Date(b.date);
+            return dateB.getTime() - dateA.getTime();
+        })
+        return sortedResponses;
     }
 }
 
