@@ -40,7 +40,13 @@ class ResponseService {
         return responseData;
     }
 
-
+    async deleteResponse(id: string) {
+        const response = await responseRepo.getResponseById(id);
+        if(!response) {
+            throw new Error("No response found");
+        }
+        return response;
+    }
 }
 
 export default new ResponseService();

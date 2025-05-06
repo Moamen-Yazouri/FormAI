@@ -19,7 +19,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import {FileText, MoreVertical, Eye, MessageSquare} from 'lucide-react'
 import React, {useState} from 'react'
-import DeleteDialog from '../../app/(main)/admin/dashboard/components/deleteDialog'
+import DeleteDialog from '../deleteDialog/deleteDialog'
 import ActionsProvider from '@/components/form-actions-provider/ActionsProvider'
 
 interface IProps {

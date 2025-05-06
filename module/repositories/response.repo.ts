@@ -56,6 +56,9 @@ class ResponseRepo {
 
         return filteredResponses;           
     }
+    async deleteResponse(responseId: string) {
+        return await responseModel.findByIdAndDelete(responseId);
+    }
 }
 
 export default new ResponseRepo();

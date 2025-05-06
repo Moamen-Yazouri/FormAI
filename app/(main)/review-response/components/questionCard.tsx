@@ -23,7 +23,7 @@ const QuestionCard = (props: IProps) => {
                     <p className="whitespace-pre-wrap">{item.answer}</p>
                 </div>
                 ) : (
-                <div className="bg-purple-50 p-3 rounded-md text-purple-800">{item.answer}</div>
+                <div className="bg-purple-50 p-3 rounded-md text-purple-800">{String(item.answer)}</div>
                 )}
             </CardContent>
         </Card>

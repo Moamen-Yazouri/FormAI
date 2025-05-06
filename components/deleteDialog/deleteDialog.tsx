@@ -11,11 +11,11 @@ import {
 } from "@/components/ui/dialog"
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 
-import { UserX, AlertCircle, FormInputIcon } from 'lucide-react';
+import { UserX, AlertCircle, FormInputIcon, Trash2 } from 'lucide-react';
 import React, { useState } from 'react'
 interface ISharedProps {
     id: string;
-    name: string;
+    name?: string;
     email?: string;
     creator?: string;
 }
@@ -41,9 +41,7 @@ const DeleteDialog = <T extends ISharedProps>(props: IProps<T>) => {
                 setIsDialogOpen(true) // ✅ open the dialog manually
             }}
             >
-            {
-                itemsType === "User" ? <UserX className="h-4 w-4" /> : <FormInputIcon className="h-4 w-4"/>
-            }
+                <Trash2/>
             {`Delete ${itemsType}`}
             </DropdownMenuItem>
         </DialogTrigger>
