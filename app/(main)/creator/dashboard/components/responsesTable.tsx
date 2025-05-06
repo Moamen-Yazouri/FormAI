@@ -14,7 +14,8 @@ import { ICreatorResponses } from "../types"
 import Link from "next/link"
 import { useState } from "react"
 import DeleteDialog from "@/components/deleteDialog/deleteDialog"
-
+import ActionServices from "../services/action.service"
+import { toast } from "sonner"
 
 interface IProps {
     filteredResponses: ICreatorResponses[]
@@ -22,8 +23,14 @@ interface IProps {
 
 const ResponsesTable = ({ filteredResponses }: IProps) => {
     const [responseToDelete, setResponseToDelete] = useState<string | null>(null);
-    const handleDeleteResponse = (id: string) => {
-        console.log("deleting response", id)
+    const handleDeleteResponse = async (id: string) => {
+        const deletedResponse = await ActionServices.deleteResponse(id);
+        if (deletedResponse) {
+            toast.success("Response deleted successfully!");
+        }
+        else {
+            toast.error("Failed to delete response!");
+        }
     }
     return (
         <div className="rounded-md border">

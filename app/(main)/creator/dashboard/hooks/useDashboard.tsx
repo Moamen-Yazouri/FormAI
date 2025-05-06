@@ -3,21 +3,13 @@
 import { useState, useMemo, useEffect } from "react"
 import { ICreatorFormData, ICreatorResponses } from "../types"
 
-
-// Sample response data for demonstration
-
-
 interface IProps {
     formsData: ICreatorFormData[]
     responses: ICreatorResponses[]
 }
 
-/**
- * Hook for managing creator dashboard state and calculations
- */
 const useCreatorDashboard = ({ formsData, responses }: IProps) => {
 
-    // Search state
     const [recentResponses, setRecentResponses] = useState<ICreatorResponses[]>([])
     const [searchForms, setSearchForms] = useState("")
     const [searchResponses, setSearchResponses] = useState("")
@@ -40,7 +32,7 @@ const useCreatorDashboard = ({ formsData, responses }: IProps) => {
         )
     }, [formsData, searchForms])
 
-  // Filter responses based on search term
+
     const filteredResponses = useMemo(() => {
         if (!searchResponses.trim()) return responses
 
@@ -53,7 +45,6 @@ const useCreatorDashboard = ({ formsData, responses }: IProps) => {
         )
     }, [searchResponses])
 
-  // Calculate dashboard metrics
     const totalForms = useMemo(() => formsData.length, [formsData])
 
 
@@ -65,7 +56,6 @@ const useCreatorDashboard = ({ formsData, responses }: IProps) => {
         .slice(0, 5)
     }, [formsData])
 
-  // Get recent responses (last 7 days)
   const recentResponsesCount = useMemo(() => {
     const oneWeekAgo = new Date()
     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7)
@@ -73,10 +63,10 @@ const useCreatorDashboard = ({ formsData, responses }: IProps) => {
     return responses.filter((response) => new Date(response.date) >= oneWeekAgo).length
   }, [])
 
-  // Calculate growth metrics (for demonstration)
-  const formGrowthRate = 10 // 10% growth in forms from last month
-  const responseGrowthRate = 12 // 12% growth in responses from last month
-  const conversionRateGrowth = 5 // 5% improvement in conversion rate
+
+  const formGrowthRate = 10; 
+  const responseGrowthRate = 12; 
+  const conversionRateGrowth = 5; 
 
   return {
     filteredForms,

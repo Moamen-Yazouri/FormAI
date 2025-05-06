@@ -1,8 +1,8 @@
 import { IFormFromDB, IResponseFromDB } from "@/@types";
 
-class ActionService {
-        private baseUrl: string = "http://localhost:3000//api/dashboard";
-        async deleteForm(formId: string): Promise<IFormFromDB | null> {
+class ActionServices {
+    private baseUrl: string = "http://localhost:3000//api/dashboard";
+    async deleteForm(formId: string): Promise<IFormFromDB | null> {
         try {
             const res = await fetch(`${this.baseUrl}/delete-from`,
                 {
@@ -57,4 +57,4 @@ class ActionService {
     }
 }
 
-export default new ActionService();
+export default new ActionServices();
