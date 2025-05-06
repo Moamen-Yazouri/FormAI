@@ -14,7 +14,7 @@ import SearchBar from "./searchBar"
 import FormsTable from "@/components/forms-table/formsTable"
 import ResponsesTable from "./responsesTable"
 import CreatorFormsTable from "./creatorFormsTable"
-import { ICreatorActivityData, ICreatorFormData, IFormCreationData, IFormResponseData } from "../types"
+import { ICreatorActivityData, ICreatorFormData, ICreatorResponses, IFormCreationData, IFormResponseData } from "../types"
 export const dummyForms = [
   {
     id: "1",
@@ -85,6 +85,7 @@ interface IProps {
   formCreationData: IFormCreationData[]
   formResponsesData: IFormResponseData[]
   creatorActivityData: ICreatorActivityData[]
+  responses: ICreatorResponses[]
 }
 
 const CREATOR_TABS = [
@@ -106,7 +107,7 @@ const CREATOR_TABS = [
 ]
 
 const CreatorDashboard = (props: IProps) => {
-  const { formsData, formCreationData, formResponsesData, creatorActivityData } = props
+  const { formsData, formCreationData, formResponsesData, creatorActivityData,  responses} = props
 
   const {
     filteredForms,
@@ -115,9 +116,11 @@ const CreatorDashboard = (props: IProps) => {
     totalResponses,
     searchForms,
     searchResponses,
+    recentResponses,
     setSearchForms,
     setSearchResponses,
-  } = useCreatorDashboard({ formsData })
+  } = useCreatorDashboard({ formsData,  responses})
+
 
   const stateCardsData = useMemo(
     () => [
@@ -157,7 +160,8 @@ const CreatorDashboard = (props: IProps) => {
             <AllCharts
               formResponsesData={formResponsesData}
               formCreationData={formCreationData}
-              creatorActivityData={creatorActivityData}
+              creatorActivityData={creatorActivityData} 
+              recentResponses={recentResponses}            
             />
           </TabsContent>
 

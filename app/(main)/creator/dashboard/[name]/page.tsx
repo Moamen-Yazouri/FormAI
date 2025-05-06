@@ -104,11 +104,13 @@ const page = async (props: IProps) => {
         formCreationData,
         formResponseData,
         creatorActivityData,
+        responses,
     ] = await Promise.all([
         FetchServices.formsData(name),      
         FetchServices.formCreationData(name),
         FetchServices.formResponseData(name),
         FetchServices.creatorActivityData(name),
+        FetchServices.creatorResponses(name),
     ]);
     console.log(creatorActivityData)
   return (
@@ -117,6 +119,7 @@ const page = async (props: IProps) => {
       formCreationData={formCreationData} 
       formResponsesData={formResponseData} 
       creatorActivityData={creatorActivityData}
+      responses={responses}
     />
   )
 }
