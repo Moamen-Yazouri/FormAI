@@ -6,7 +6,7 @@ interface IProps {
 }
 const AvailableForms = async(props: IProps) => {
     const name = (await props.params).name;
-    const availableForms = await formsService.getAllowedForms(name);
+    const availableForms = await formsService.getUserForms(name);
     return (
         <FormsTable filteredForms={availableForms}/>
     )
