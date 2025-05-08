@@ -196,6 +196,7 @@ export interface IResponsePopulatedCreator extends Omit<IResponseFromDB, "formId
 }
 export interface IResponsePopulatedUser extends Omit<IResponseFromDB, "formId"> {
     formId: {
-        title: string
+        title: string,
+        description: string,
     }
 }
