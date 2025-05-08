@@ -5,8 +5,16 @@ import userModel from "@/DB/models/user.model";
 
 class FormsRepo {
     async getAllowedForms(username: string): Promise<IFormPopulatedByCreator[] | null> {
-        const email = await userModel.findOne({name: username}).select("email");
-        const allowedForms = await FormModel.find({isPublic: true}).populate('creatorId', "name -_id").lean<IFormPopulatedByCreator[]>();
+        const user = await userModel.findOne({name: username});
+        if(!user) {
+            return null;
+        }
+        const allowedForms = await FormModel.find({
+                                isPublic: true,
+                                answeredBy: {$nin: [user._id]}
+                            })
+                            .populate('creatorId', "name -_id")
+                            .lean<IFormPopulatedByCreator[]>();
         return allowedForms;
     }
     async getFormById(formId: string): Promise<IFormFromDB | null> {
@@ -26,6 +34,10 @@ class FormsRepo {
     async getAnswerdForms (id: string) {
         const answeredForms = await FormModel.findOne({
             answeredBy: {$in: [id]}
+        })
+        .populate({
+            path: "creatorId",
+            select: "name -_id"
         });
         
         return answeredForms;
