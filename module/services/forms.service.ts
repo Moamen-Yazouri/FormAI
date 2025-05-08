@@ -5,61 +5,6 @@ import { generateValidationScehma } from "@/lib/createTheValidationSchema";
 
 import userRepo from "../repositories/user.repo";
 class FormServices {
-    async getUserForms(username: string): Promise<IUserForm[] | []> {
-        try {
-            const user = await userRepo.getUserByName(username);
-            if(!user) {
-                throw new Error("User not found");
-            }
-            const forms = await formsRepo.getAllowedForms(username);
-            if(!forms){
-                return []; 
-            } ;
-            const allowedForms: IUserForm[] = forms.map(form => {
-                    return {
-                        id: String(form._id),
-                        name: form.title,
-                        creator: form.creatorId.name,
-                        createdAt: getDateOnly(form.createdAt),
-                    }
-                })
-            return allowedForms;
-        }
-        catch(err) {
-            if(err instanceof Error) {
-                throw new Error(err.message);
-            }
-            throw new Error("Something went wrong");
-        }
-    }
-
-    async getUserAnsweredForms(name: string) {
-            try {
-            const user: IUserFromDB = await userRepo.getUserByName(name);
-            if(!user) {
-                throw new Error("User not found");
-            }
-            const forms: IFormPopulatedByCreator[] = await formsRepo.getAnswerdForms(String(user._id));
-            if(!forms){
-                return []; 
-            } ;
-            const allowedForms: IUserForm[] = forms.map(form => {
-                    return {
-                        id: String(form._id),
-                        name: form.title,
-                        creator: form.creatorId.name,
-                        createdAt: getDateOnly(form.createdAt),
-                    }
-                })
-            return allowedForms;
-        }
-        catch(err) {
-            if(err instanceof Error) {
-                throw new Error(err.message);
-            }
-            throw new Error("Something went wrong");
-        }
-    }
     async getFormById(formId: string): Promise<IFormFromDB | null> {
             const form = await formsRepo.getFormById(formId);
             if(!form) {

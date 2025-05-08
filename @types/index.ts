@@ -134,6 +134,17 @@ export interface IFormPopulatedByCreator extends Omit<IFormFromDB, "creatorId"> 
     }
 }
 
+export interface IUserResponse extends Omit<IFormResponse, "formId">  {
+    formId: {
+        title: string
+    }
+}
+
+export interface IUserResponseTable {
+    id: string,
+    formTitle: string,
+    date: string,
+}
 export interface IUsersActivityData {
     name: string,
     active: number,
@@ -168,4 +179,20 @@ export interface IActiveUsers {
 export interface IStyle {
     input: string,
     label: string,
+}
+
+export interface IResponsePopulatedCreator extends Omit<IResponseFromDB, "formId" | "userId"> {
+    formId: {
+        id: string,
+        title: string
+    }
+    userId : {
+        name: string,
+        email: string,
+    }
+}
+export interface IResponsePopulatedUser extends Omit<IResponseFromDB, "formId"> {
+    formId: {
+        title: string
+    }
 }

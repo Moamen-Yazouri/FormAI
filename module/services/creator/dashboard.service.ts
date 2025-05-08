@@ -1,5 +1,6 @@
-import { IFormFromDB, IResponseFromDB } from "@/@types";
+import { IFormFromDB, IResponseFromDB, IResponsePopulatedCreator } from "@/@types";
 import { ICreatorActivityData, ICreatorFormData, ICreatorResponses, IFormCreationData, IFormResponseData } from "@/app/(main)/creator/dashboard/types";
+import { connection } from "@/DB/connection";
 import { getDateOnly } from "@/lib/dateUtils";
 import { getDataPerDate } from "@/lib/getDataPerDate";
 import dashboardRepo from "@/module/repositories/creator/dashboard.repo";
@@ -7,6 +8,7 @@ import responseRepo from "@/module/repositories/response.repo";
 
 class DashboardService {
     async formCreationData (name: string) {
+        await connection()
         const forms  = await dashboardRepo.getFormCreationData(name);
         if(forms) {
             const formsPerDate: {[key: string]: number} = getDataPerDate(forms);
@@ -25,6 +27,7 @@ class DashboardService {
     }
 
     async getFormResponseData (name: string) {
+        await connection()
         const forms = await dashboardRepo.getFormCreationData(name);
         if(forms) {
             const formResponseData: IFormResponseData[] = forms.map((form) => {
@@ -43,9 +46,17 @@ class DashboardService {
     }
 
     async getCreatorActivityData (name: string) {
+        await connection()
         const forms: IFormFromDB[]  = await dashboardRepo.getFormCreationData(name);
-        if(forms.length > 0) {
-            const responses = await responseRepo.getCreatorResponses(name);
+            if(forms.length === 0) {
+                throw new Error("No forms found!");
+            }
+
+            const responses: IResponsePopulatedCreator[] | null = await responseRepo.getCreatorResponses(name);
+            if(!responses) {
+                throw new Error("Creator not found!")
+            };
+
             const formsPerDate: {[key: string]: number} = getDataPerDate(forms);
 
             const responsesPerDate: {[key: string]: number} = getDataPerDate(responses);
@@ -59,12 +70,11 @@ class DashboardService {
             });
 
             return creatorActivityData;
-        }
-        throw new Error("No User activity data!");
         
     }
 
     async getCreatorForms(name: string) {
+        await connection()
         const forms = await dashboardRepo.getFormCreationData(name);
         if(forms.length > 0) {
             const formsData: ICreatorFormData[] = forms.map((form) => {
@@ -81,11 +91,27 @@ class DashboardService {
     }
 
     async getCreatorResponses(name: string) {
-        const responses: ICreatorResponses[] = await responseRepo.getCreatorResponses(name);
-        if(responses.length === 0) {
-            throw new Error("No responses found");
+        await connection()
+        const responses: IResponsePopulatedCreator[] | null = await responseRepo.getCreatorResponses(name);
+        if(!responses) {
+            throw new Error("No user found!");
         }
-        const sortedResponses = responses.sort((a, b) => {
+        if(responses?.length === 0) {
+            throw new Error("No response found!")
+        }
+        const filteredResponses: ICreatorResponses[] = responses.filter(
+            response => response.formId !== null
+        )
+        .map(
+            res => ({
+                id: String(res._id),
+                formTitle: res.formId.title, 
+                respondentName: res.userId.name,
+                respondentEmail: res.userId.email,
+                date: getDateOnly(res.createdAt)
+            })
+        );
+        const sortedResponses = filteredResponses.sort((a, b) => {
             const dateA = new Date(a.date);
             const dateB = new Date(b.date);
             return dateB.getTime() - dateA.getTime();

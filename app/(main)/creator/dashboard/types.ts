@@ -30,3 +30,4 @@ export interface ICreatorResponses {
     respondentEmail: string,
     date: string,
 }
+
