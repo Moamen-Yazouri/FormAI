@@ -4,6 +4,7 @@ import formsRepo from "../repositories/forms.repo";
 import userRepo from "../repositories/user.repo";
 import { connection } from "@/DB/connection";
 import responseRepo from "../repositories/response.repo";
+import { IAnsweredForms } from "@/app/(main)/user/dashboard/types";
 
 class UserService {
         async getUserForms(username: string): Promise<IUserForm[] | []> {
@@ -16,11 +17,21 @@ class UserService {
                 throw new Error("No forms found!"); 
             } ;
             const allowedForms: IUserForm[] = forms.map(form => {
-                    return {
+                    return form.expiredAt ? {
                         id: String(form._id),
                         name: form.title,
+                        description: form.description,
+                        creator: form.creatorId.name,
+                        deadline: getDateOnly(form.expiredAt),
+                        createdAt: getDateOnly(form.createdAt),
+                    }
+                    : {
+                        id: String(form._id),
+                        name: form.title,
+                        description: form.description,
                         creator: form.creatorId.name,
                         createdAt: getDateOnly(form.createdAt),
+                        expiredAt: form.expiredAt,
                     }
                 })
             return allowedForms;
@@ -40,6 +51,7 @@ class UserService {
                         return {
                             id: String(form._id),
                             name: form.title,
+                            description: form.description,
                             creator: form.creatorId.name,
                             createdAt: getDateOnly(form.createdAt),
                         }
@@ -50,14 +62,19 @@ class UserService {
     async getUserResponses(name: string) {
         await connection();
             const responses: IResponsePopulatedUser[] = await responseRepo.getUserResponses(name);
-            throw new Error("No responses found!")
-            const userResponses: IUserResponseTable[] = responses.map((res) => {
+            if(!responses) {
+                throw new Error("No responses found!")
+            }
+            const userResponses: IAnsweredForms[] = responses.map((res) => {
                 return {
                     id: res._id,
-                    formTitle: res.formId.title,
+                    title: res.formId.title,
                     date: res.createdAt,
                 }
             })
+            return userResponses;
 
     }
 }
+
+export default new UserService();

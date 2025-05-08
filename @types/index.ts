@@ -118,7 +118,10 @@ export interface IDashboardForm {
     createdAt: Date | string,
 }
 
-export interface IUserForm extends Omit<IDashboardForm, "responses"> {}
+export interface IUserForm extends Omit<IDashboardForm, "responses"> {
+    description: string,
+    deadline?: string ,
+}
 
 export interface IFormFromDB extends IForm {
     _id: mongoose.Types.ObjectId;

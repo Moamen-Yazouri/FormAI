@@ -1,107 +1,109 @@
-"use client"
+    "use client"
 
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
-import { Button } from "@/components/ui/button"
-import { motion } from "framer-motion"
-import { CheckCircle, ClipboardList, Clock, ArrowRight } from "lucide-react"
-import { useState, useEffect } from "react"
+    import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+    import { Progress } from "@/components/ui/progress"
+    import { Button } from "@/components/ui/button"
+    import { motion } from "framer-motion"
+    import { CheckCircle, ClipboardList, Clock, ArrowRight, User } from "lucide-react"
+    import { useState, useEffect } from "react"
+import { IUserResponseTable } from "@/@types"
 
-interface UserFormData {
-formsCompleted: number
-formsAvailable: number
-averageCompletionTime: string
-completedForms: {
-    id: string
-    title: string
-    completedAt: string
-}[]
-availableForms: {
-    id: string
-    title: string
-    description: string
-    deadline?: string
-}[]
-}
-
-export default function UserFormActivityPage() {
-const [loading, setLoading] = useState(true);
-const INITIAL_DATA = {
-    formsCompleted: 6,
-    formsAvailable: 4,
-    averageCompletionTime: "3m 45s",
+    interface UserFormData {
+    formsCompleted: number
+    formsAvailable: number
+    averageCompletionTime: string
+    completedForms: IUserResponseTable[]
+    availableForms: {
+        id: string
+        formTitle: string
+        description: string
+        deadline?: string
+        creator: string
+    }[]
+    }
+    const initialUserFormData: UserFormData = {
+    formsCompleted: 0,
+    formsAvailable: 0,
+    averageCompletionTime: "",
     completedForms: [],
     availableForms: [],
-}
-const [data, setData] = useState<UserFormData>(INITIAL_DATA)
-
-// Simulating data fetch - replace with actual API call
-useEffect(() => {
-    // Mock data - replace with actual API call
-    const mockData: UserFormData = {
-    formsCompleted: 6,
-    formsAvailable: 4,
-    averageCompletionTime: "3m 45s",
-    completedForms: [
-        {
-        id: "form-1",
-        title: "Customer Feedback Survey",
-        completedAt: "2 days ago",
-        },
-        {
-        id: "form-2",
-        title: "Product Satisfaction",
-        completedAt: "1 week ago",
-        },
-        {
-        id: "form-3",
-        title: "Website Usability Test",
-        completedAt: "2 weeks ago",
-        },
-        {
-        id: "form-4",
-        title: "Service Quality Evaluation",
-        completedAt: "3 weeks ago",
-        },
-        {
-        id: "form-5",
-        title: "Feature Request Form",
-        completedAt: "1 month ago",
-        },
-        {
-        id: "form-6",
-        title: "User Experience Survey",
-        completedAt: "1 month ago",
-        },
-    ],
-    availableForms: [
-        {
-        id: "form-7",
-        title: "Quarterly Feedback",
-        description: "Help us improve our services with your quarterly feedback",
-        deadline: "3 days left",
-        },
-        {
-        id: "form-8",
-        title: "New Feature Evaluation",
-        description: "Evaluate our latest features and provide your thoughts",
-        deadline: "5 days left",
-        },
-        {
-        id: "form-9",
-        title: "User Satisfaction Survey",
-        description: "Tell us about your overall satisfaction with our platform",
-        deadline: "1 week left",
-        },
-        {
-        id: "form-10",
-        title: "Product Improvement Ideas",
-        description: "Share your ideas on how we can improve our products",
-        },
-    ],
     }
 
-    // Simulate loading
+export default function UserFormActivityPage() {
+    const [loading, setLoading] = useState(true)
+    const [data, setData] = useState<UserFormData>(initialUserFormData)
+
+    // Simulating data fetch - replace with actual API call
+    useEffect(() => {
+        // Mock data - replace with actual API call
+        const mockData: UserFormData = {
+        formsCompleted: 6,
+        formsAvailable: 4,
+        averageCompletionTime: "3m 45s",
+        completedForms: [
+            {
+                id: "form-1",
+                formTitle: "Customer Feedback Survey",
+                date: "2 days ago",
+            },
+            {
+                id: "form-2",
+                formTitle: "Product Satisfaction",
+                date: "1 week ago",
+            },
+            {
+                id: "form-3",
+                formTitle: "Website Usability Test",
+                date: "2 weeks ago",
+            },
+            {
+                id: "form-4",
+                formTitle: "Service Quality Evaluation",
+                date: "3 weeks ago",
+            },
+            {
+                id: "form-5",
+                formTitle: "Feature Request Form",
+                date: "1 month ago",
+            },
+            {
+                id: "form-6",
+                formTitle: "User Experience Survey",
+                date: "1 month ago",
+            },
+        ],
+        availableForms: [
+            {
+                id: "form-7",
+                formTitle: "Quarterly Feedback",
+                description: "Help us improve our services with your quarterly feedback",
+                deadline: "3 days left",
+                creator: "Sarah Johnson",
+            },
+            {
+                id: "form-8",
+                formTitle: "New Feature Evaluation",
+                description: "Evaluate our latest features and provide your thoughts",
+                deadline: "5 days left",
+                creator: "Michael Chen",
+            },
+            {
+                id: "form-9",
+                formTitle: "User Satisfaction Survey",
+                description: "Tell us about your overall satisfaction with our platform",
+                deadline: "1 week left",
+                creator: "Alex Rodriguez",
+            },
+            {
+                id: "form-10",
+                formTitle: "Product Improvement Ideas",
+                description: "Share your ideas on how we can improve our products",
+                creator: "Emily Parker",
+            },
+        ],
+        }
+
+        // Simulate loading
         setTimeout(() => {
         setData(mockData)
         setLoading(false)
@@ -144,7 +146,7 @@ useEffect(() => {
                 <CardContent>
                     <div className="text-3xl font-bold text-purple-800">{data?.formsCompleted}</div>
                     <div className="text-sm text-purple-600 mt-1">
-                    {(data?.formsCompleted ||  0 + 0 || data?.formsAvailable)} total assigned
+                    {data?.formsCompleted + data?.formsAvailable} total assigned
                     </div>
                     <Progress
                     value={(data?.formsCompleted! / (data?.formsCompleted! + data?.formsAvailable!)) * 100}
@@ -220,8 +222,12 @@ useEffect(() => {
                         <CardHeader className="pb-2">
                         <div className="flex justify-between items-start">
                             <div>
-                            <CardTitle className="text-lg font-medium text-purple-700">{form.title}</CardTitle>
+                            <CardTitle className="text-lg font-medium text-purple-700">{form.formTitle}</CardTitle>
                             <CardDescription className="text-purple-600 mt-1">{form.description}</CardDescription>
+                            <div className="flex items-center mt-2 text-sm text-purple-500">
+                                <User className="h-3.5 w-3.5 mr-1" />
+                                <span className="text-gray-500">Created by {form.creator}</span>
+                            </div>
                             </div>
                             {form.deadline && (
                             <span className="text-xs font-medium px-2 py-1 bg-purple-100 text-purple-700 rounded-full">
@@ -285,8 +291,8 @@ useEffect(() => {
                                 <CheckCircle className="h-5 w-5 text-purple-600" />
                             </div>
                             <div>
-                                <h3 className="font-medium text-purple-800">{form.title}</h3>
-                                <p className="text-sm text-purple-600">Completed {form.completedAt}</p>
+                                <h3 className="font-medium text-purple-800">{form.formTitle}</h3>
+                                <p className="text-sm text-purple-600">Completed {form.date}</p>
                             </div>
                             </div>
                             <Button
