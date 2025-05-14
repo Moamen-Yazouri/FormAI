@@ -8,21 +8,12 @@
     import { ArrowLeft, Calendar, Filter, Search, User } from "lucide-react"
     import { Input } from "@/components/ui/input"
     import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-    import { getDateOnly } from "@/lib/dateUtils"
-import { IUserResponseDetails } from "@/@types"
+    import { IUserResponseDetails } from "@/@types"
 
-    interface CompletedFormData {
-    id: string
-    name: string
-    description: string
-    creator: string
-    createdAt: string
-    completedAt?: string
-    }
 
     export default function CompletedFormsPage() {
     const [loading, setLoading] = useState(true)
-    const [forms, setForms] = useState<CompletedFormData[]>([])
+    const [forms, setForms] = useState<IUserResponseDetails[]>([])
     const [searchQuery, setSearchQuery] = useState("")
     const [timeFilter, setTimeFilter] = useState("all")
     const [creatorFilter, setCreatorFilter] = useState("all")
@@ -32,38 +23,31 @@ import { IUserResponseDetails } from "@/@types"
         const responseFromDB: IUserResponseDetails[] = [
         {
             id: "form-1",
+            formId: "f-1",
             title: "Customer Feedback Survey",
             description: "Customer service feedback",
-            creatorId: { name: "Sarah Johnson" },
-            createdAt: new Date("2023-04-15"),
+            creator: "Sarah Johnson",
+            createdAt: "2023-04-15",
             completedAt: "2 days ago",
         },
         {
             id: "form-2",
+            formId: "f-1",
             title: "Product Satisfaction",
             description: "Rate satisfaction",
-            creatorId: { name: "Michael Chen" },
-            createdAt: new Date("2023-04-20"),
+            creator: "Michael Chen",
+            createdAt: "2023-04-20",
             completedAt: "1 week ago",
         },
         ]
 
-        const mapped = responseFromDB.map(form => ({
-            id: String(form.id),
-            name: form.title,
-            description: form.description,
-            creator: form.creatorId?.name ?? "Unknown",
-            createdAt: getDateOnly(form.createdAt),
-            completedAt: form.completedAt,
-        }))
-
-        setForms(mapped)
+        setForms(responseFromDB)
         setLoading(false)
     }, [])
 
     const filteredForms = forms.filter((form) => {
         const matchesSearch =
-        form.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        form.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         form.description.toLowerCase().includes(searchQuery.toLowerCase())
         const matchesCreator = creatorFilter === "all" || form.creator === creatorFilter
         const matchesTime =
@@ -187,7 +171,7 @@ import { IUserResponseDetails } from "@/@types"
                     ) : (
                     filteredForms.map((form) => (
                         <TableRow key={form.id} className="hover:bg-purple-50">
-                        <TableCell className="font-medium text-purple-800">{form.name}</TableCell>
+                        <TableCell className="font-medium text-purple-800">{form.title}</TableCell>
                         <TableCell className="text-purple-700 flex items-center">
                             <User className="h-3.5 w-3.5 mr-1.5 text-purple-500" />
                             {form.creator}
