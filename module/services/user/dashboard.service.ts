@@ -19,21 +19,12 @@ class DashboardService {
                 throw new Error("No forms found!"); 
             } ;
             const allowedForms: IUserForm[] = forms.map(form => {
-                    return form.expiredAt ? {
+                    return {
                         id: String(form._id),
-                        name: form.title,
+                        formTitle: form.title,
                         description: form.description,
                         creator: form.creatorId.name,
-                        deadline: getDateOnly(form.expiredAt),
-                        createdAt: getDateOnly(form.createdAt),
-                    }
-                    : {
-                        id: String(form._id),
-                        name: form.title,
-                        description: form.description,
-                        creator: form.creatorId.name,
-                        createdAt: getDateOnly(form.createdAt),
-                        expiredAt: form.expiredAt,
+                        deadline: form.expiredAt ? getDateOnly(form.expiredAt) : "No deadline",
                     }
                 })
             return allowedForms;

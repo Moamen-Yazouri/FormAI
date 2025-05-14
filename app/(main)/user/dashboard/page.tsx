@@ -6,20 +6,14 @@
     import { motion } from "framer-motion"
     import { CheckCircle, ClipboardList, Clock, ArrowRight, User } from "lucide-react"
     import { useState, useEffect } from "react"
-import { IUserResponseTable } from "@/@types"
+import { IUserForm, IUserResponseTable } from "@/@types"
 
     interface UserFormData {
     formsCompleted: number
     formsAvailable: number
     averageCompletionTime: string
     completedForms: IUserResponseTable[]
-    availableForms: {
-        id: string
-        formTitle: string
-        description: string
-        deadline?: string
-        creator: string
-    }[]
+    availableForms: IUserForm[]
     }
     const initialUserFormData: UserFormData = {
     formsCompleted: 0,

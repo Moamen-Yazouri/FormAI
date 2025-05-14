@@ -15,7 +15,7 @@ class FetchDataService {
             const availableForms: IAvailableForms[] = forms.map(form => {
                 return {
                     id: form.id,
-                    title: form.name,
+                    title: form.formTitle,
                     description: form.description,
                     deadline: form.deadline ? form.deadline : undefined,
                     creator: form.creator

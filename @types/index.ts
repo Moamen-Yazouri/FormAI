@@ -118,9 +118,12 @@ export interface IDashboardForm {
     createdAt: Date | string,
 }
 
-export interface IUserForm extends Omit<IDashboardForm, "responses"> {
-    description: string,
-    deadline?: string ,
+export interface IUserForm {
+    id: string
+    formTitle: string
+    description: string
+    deadline?: string
+    creator: string
 }
 
 export interface IFormFromDB extends IForm {
