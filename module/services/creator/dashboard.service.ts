@@ -4,12 +4,18 @@ import { connection } from "@/DB/connection";
 import { getDateOnly } from "@/lib/dateUtils";
 import { getDataPerDate } from "@/lib/getDataPerDate";
 import dashboardRepo from "@/module/repositories/creator/dashboard.repo";
+import formsRepo from "@/module/repositories/forms.repo";
 import responseRepo from "@/module/repositories/response.repo";
+import userRepo from "@/module/repositories/user.repo";
 
 class DashboardService {
     async formCreationData (name: string) {
-        await connection()
-        const forms  = await dashboardRepo.getFormCreationData(name);
+        await connection();
+        const creator = await userRepo.getUserByName(name);
+        if(!creator) {
+            throw new Error("Invalid creator name!");
+        }
+        const forms  = await formsRepo.getCreatorForm(creator._id);
         if(forms) {
             const formsPerDate: {[key: string]: number} = getDataPerDate(forms);
             const formCreationData: IFormCreationData[] = Object.keys(formsPerDate).map((date) => {
@@ -27,8 +33,8 @@ class DashboardService {
     }
 
     async getFormResponseData (name: string) {
-        await connection()
-        const forms = await dashboardRepo.getFormCreationData(name);
+        await connection();
+        const forms = await formsRepo.getCreatorForm(name);
         if(forms) {
             const formResponseData: IFormResponseData[] = forms.map((form) => {
                 return {
@@ -47,15 +53,23 @@ class DashboardService {
 
     async getCreatorActivityData (name: string) {
         await connection()
-        const forms: IFormFromDB[]  = await dashboardRepo.getFormCreationData(name);
-            if(forms.length === 0) {
-                throw new Error("No forms found!");
-            }
+        const creator = await userRepo.getUserByName(name);
 
-            const responses: IResponsePopulatedCreator[] | null = await responseRepo.getCreatorResponses(name);
-            if(!responses) {
-                throw new Error("Creator not found!")
-            };
+        if(!creator) throw new Error("Invalid creator name!");
+
+        const forms: IFormFromDB[]  = await formsRepo.getCreatorForm(creator._id);
+
+        if(forms.length === 0) {
+            throw new Error("No forms found!");
+        }
+
+        if(creator === null) {
+            throw new Error("Creator not found!");
+        }
+        const responses: IResponsePopulatedCreator[] | null = await responseRepo.getCreatorResponses(creator);
+        if(!responses) {
+            throw new Error("Creator not found!")
+        };
 
             const formsPerDate: {[key: string]: number} = getDataPerDate(forms);
 
@@ -75,7 +89,12 @@ class DashboardService {
 
     async getCreatorForms(name: string) {
         await connection()
-        const forms = await dashboardRepo.getFormCreationData(name);
+        const creator = await userRepo.getUserByName(name);
+
+        if(!creator) throw new Error("Invalid creator name!");
+
+        const forms: IFormFromDB[]  = await formsRepo.getCreatorForm(creator._id);
+
         if(forms.length > 0) {
             const formsData: ICreatorFormData[] = forms.map((form) => {
                 return {
@@ -91,14 +110,21 @@ class DashboardService {
     }
 
     async getCreatorResponses(name: string) {
-        await connection()
-        const responses: IResponsePopulatedCreator[] | null = await responseRepo.getCreatorResponses(name);
+        await connection();
+        const creator = await userRepo.getUserByName(name);
+        if(!creator) {
+            throw new Error("No user found!");
+        }
+
+        const responses: IResponsePopulatedCreator[] | null = await responseRepo.getCreatorResponses(creator);
         if(!responses) {
             throw new Error("No user found!");
         }
+
         if(responses?.length === 0) {
             throw new Error("No response found!")
         }
+
         const filteredResponses: ICreatorResponses[] = responses.filter(
             response => response.formId !== null
         )

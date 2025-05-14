@@ -22,14 +22,11 @@ class ResponseRepo {
             }
         ]);
     }
-    // async getUserResponses(userId: string) {
-    //     return await responseModel.find({userId});
-    // }
 
-    async getCreatorResponses(name: string) {
-        const creator = await userRepo.getUserByName(name);
+
+    async getCreatorResponses(creator: IUserFromDB) {
         if (!creator) {
-            return null;
+            throw new Error("Invalid Creator name!")
         }
         const creatorResponses = await responseModel.find().populate([
             {
@@ -42,14 +39,12 @@ class ResponseRepo {
                 select: "title"
             }
         ])
-
-        return creatorResponses;
+        const filtered = creatorResponses.filter(r => r.formId !== null);
+        return filtered;
     }
 
-    async getUserResponses(name: string) {
-        const user: IUserFromDB = await userRepo.getUserByName(name);
-        if (!user) throw new Error("Invalid user!")
-        const userResponses = await responseModel.find({ userId: user._id }).populate([
+    async getUserResponses(id: string) {
+        const userResponses = await responseModel.find({ userId: id }).populate([
             {
                 path: "formId",
                 select: "title -_id"

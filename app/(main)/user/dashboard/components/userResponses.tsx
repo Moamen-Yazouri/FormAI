@@ -9,6 +9,7 @@
     import { Input } from "@/components/ui/input"
     import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
     import { getDateOnly } from "@/lib/dateUtils"
+import { IUserResponseDetails } from "@/@types"
 
     interface CompletedFormData {
     id: string
@@ -28,9 +29,9 @@
 
     // Simulated fetch
     useEffect(() => {
-        const responseFromDB: any[] = [
+        const responseFromDB: IUserResponseDetails[] = [
         {
-            _id: "form-1",
+            id: "form-1",
             title: "Customer Feedback Survey",
             description: "Customer service feedback",
             creatorId: { name: "Sarah Johnson" },
@@ -38,7 +39,7 @@
             completedAt: "2 days ago",
         },
         {
-            _id: "form-2",
+            id: "form-2",
             title: "Product Satisfaction",
             description: "Rate satisfaction",
             creatorId: { name: "Michael Chen" },
@@ -48,12 +49,12 @@
         ]
 
         const mapped = responseFromDB.map(form => ({
-        id: String(form._id),
-        name: form.title,
-        description: form.description,
-        creator: form.creatorId?.name ?? "Unknown",
-        createdAt: getDateOnly(form.createdAt),
-        completedAt: form.completedAt,
+            id: String(form.id),
+            name: form.title,
+            description: form.description,
+            creator: form.creatorId?.name ?? "Unknown",
+            createdAt: getDateOnly(form.createdAt),
+            completedAt: form.completedAt,
         }))
 
         setForms(mapped)

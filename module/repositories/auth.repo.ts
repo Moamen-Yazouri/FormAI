@@ -1,5 +1,5 @@
 import { IUser, IUserFromDB } from "@/@types";
-import userModel, { IUserDocument } from "@/DB/models/user.model";
+import userModel from "@/DB/models/user.model";
 
 
 class AuthRepo {
