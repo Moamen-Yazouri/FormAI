@@ -1,5 +1,5 @@
 "use client"
-import { IAuthContext, IContextUser, IUserFromDB } from "@/@types";
+import { IAuthContext, IContextUser } from "@/@types";
 import { createContext, useEffect, useState } from "react";
 import { INITIAL_CONTEXT } from "./constants";
 

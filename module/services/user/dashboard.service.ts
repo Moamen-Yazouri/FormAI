@@ -1,10 +1,11 @@
 import { IUserForm, IUserFromDB, IFormPopulatedByCreator, IUserResponseTable, IResponsePopulatedUser } from "@/@types";
 import { getDateOnly } from "@/lib/dateUtils";
-import formsRepo from "../repositories/forms.repo";
-import userRepo from "../repositories/user.repo";
-import { connection } from "@/DB/connection";
-import responseRepo from "../repositories/response.repo";
+
 import { IAnsweredForms } from "@/app/(main)/user/dashboard/types";
+import userRepo from "@/module/repositories/user.repo";
+import formsRepo from "@/module/repositories/forms.repo";
+import { connection } from "@/DB/connection";
+import responseRepo from "@/module/repositories/response.repo";
 
 class UserService {
         async getUserForms(username: string): Promise<IUserForm[] | []> {
@@ -12,7 +13,7 @@ class UserService {
             if(!user) {
                 throw new Error("User not found");
             }
-            const forms = await formsRepo.getAllowedForms(username);
+            const forms = await formsRepo.getAllowedForms(user._id);
             if(!forms){
                 throw new Error("No forms found!"); 
             } ;
@@ -39,7 +40,7 @@ class UserService {
 
     async getUserAnsweredForms(name: string) {
             await connection()
-                const user: IUserFromDB = await userRepo.getUserByName(name);
+                const user: IUserFromDB | null = await userRepo.getUserByName(name);
                 if(!user) {
                     throw new Error("User not found");
                 }
@@ -61,18 +62,20 @@ class UserService {
 
     async getUserResponses(name: string) {
         await connection();
-            const responses: IResponsePopulatedUser[] = await responseRepo.getUserResponses(name);
-            if(!responses) {
-                throw new Error("No responses found!")
+        const user: IUserFromDB | null = await userRepo.getUserByName(name);
+        if(!user) throw new Error("User not found!");
+        const responses: IResponsePopulatedUser[] = await responseRepo.getUserResponses(user._id);
+        if(!responses) {
+            throw new Error("No responses found!")
+        }
+        const userResponses: IAnsweredForms[] = responses.map((res) => {
+            return {
+                id: res._id,
+                title: res.formId.title,
+                date: res.createdAt,
             }
-            const userResponses: IAnsweredForms[] = responses.map((res) => {
-                return {
-                    id: res._id,
-                    title: res.formId.title,
-                    date: res.createdAt,
-                }
-            })
-            return userResponses;
+        })
+        return userResponses;
 
     }
 }

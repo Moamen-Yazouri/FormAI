@@ -4,14 +4,10 @@ import responseModel from "@/DB/models/response.model";
 import userModel from "@/DB/models/user.model";
 
 class FormsRepo {
-    async getAllowedForms(username: string): Promise<IFormPopulatedByCreator[] | null> {
-        const user = await userModel.findOne({name: username});
-        if(!user) {
-            return null;
-        }
+    async getAllowedForms(id: string): Promise<IFormPopulatedByCreator[] | null> {
         const allowedForms = await FormModel.find({
                                 isPublic: true,
-                                answeredBy: {$nin: [user._id]}
+                                answeredBy: {$nin: [id]}
                             })
                             .populate('creatorId', "name -_id")
                             .lean<IFormPopulatedByCreator[]>();
@@ -43,12 +39,7 @@ class FormsRepo {
         return answeredForms;
     }
 
-    async getCreatorForm (name: string) {
-        const id = (await userModel.findOne({name}).lean<IUserFromDB>())?._id;
-        if(!id) {
-            throw new Error("User not found!");
-            
-        }
+    async getCreatorForm (id: string) {
         const creatorForms = await FormModel.find({
             creatorId: id
         }).lean<IFormFromDB[]>();

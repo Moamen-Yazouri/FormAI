@@ -1,15 +1,12 @@
-import { IDashboardForm, IForm, IFormData, IFormFromDB, IFormPopulatedByCreator, IFormResponse, IUserForm, IUserFromDB } from "@/@types";
+import { IForm, IFormFromDB } from "@/@types";
 import formsRepo from "../repositories/forms.repo";
-import { getDateOnly } from "@/lib/dateUtils";
-import { generateValidationScehma } from "@/lib/createTheValidationSchema";
 
 import userRepo from "../repositories/user.repo";
 class FormServices {
     async getFormById(formId: string): Promise<IFormFromDB | null> {
             const form = await formsRepo.getFormById(formId);
             if(!form) {
-                console.error("No form found");
-                return null;
+                throw new Error("Form not found");
             };
             return form;
         }
