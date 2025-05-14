@@ -202,10 +202,11 @@ export interface IResponsePopulatedUser extends Omit<IResponseFromDB, "formId"> 
 }
 
 export interface IUserResponseDetails {
-    id: string, 
+    id: string,
+    formId: string,
     title: string,
     description: string,
-    creatorId: {name: string},
-    createdAt: Date,
+    creator:  string,
+    createdAt: string,
     completedAt: string,
 }
