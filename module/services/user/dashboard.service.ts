@@ -15,7 +15,7 @@ class DashboardService {
                 throw new Error("User not found");
             }
             const forms = await formsRepo.getAllowedForms(user._id);
-            if(!forms){
+            if(forms.length == 0){
                 throw new Error("No forms found!"); 
             } ;
             const allowedForms: IUserForm[] = forms.map(form => {
@@ -39,7 +39,7 @@ class DashboardService {
             return allowedForms;
         }
 
-    async getUserAnsweredForms(name: string) {
+    async getUserResponsesDetails(name: string) {
             await connection()
             const user: IUserFromDB | null = await userRepo.getUserByName(name);
             if(!user) {
@@ -47,7 +47,7 @@ class DashboardService {
             }
             const responses = await responseRepo.getUserResponseDetails(user._id);
             if(responses.length == 0) {
-                throw new Error("No responses found!")
+                return [];
             }
             const userResponsesDetails: IUserResponseDetails[] = responses.map((res) => {
                 return {
@@ -60,6 +60,7 @@ class DashboardService {
                     completedAt: getDateOnly(res.createdAt),
                 }
             })
+            return userResponsesDetails;
         }
 
     async getUserResponses(name: string) {
@@ -67,8 +68,8 @@ class DashboardService {
         const user: IUserFromDB | null = await userRepo.getUserByName(name);
         if(!user) throw new Error("User not found!");
         const responses: IResponsePopulatedUser[] = await responseRepo.getUserResponses(user._id);
-        if(!responses) {
-            throw new Error("No responses found!")
+        if(responses.length == 0) {
+            return [];
         }
         const userResponses: IAnsweredForms[] = responses.map((res) => {
             return {

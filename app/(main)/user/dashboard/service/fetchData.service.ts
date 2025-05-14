@@ -1,13 +1,14 @@
 import { connection } from "@/DB/connection";
-import userService from "@/module/services/user.service";
 import { toast } from "sonner";
 import { IAnsweredForms, IAvailableForms } from "../types";
+import dashboardService from "@/module/services/user/dashboard.service";
+import { IUserResponseDetails } from "@/@types";
 
 class FetchDataService {
     async availableForms(username: string): Promise<IAvailableForms[]> {
         await connection();
         try {
-            const forms = await userService.getUserForms(username);
+            const forms = await dashboardService.getUserForms(username);
             if(forms.length === 0) {
                 toast.warning("No forms available!");
             }
@@ -35,10 +36,7 @@ class FetchDataService {
     async answeredForms(username: string): Promise<IAnsweredForms[]> {
         await connection();
         try {
-            const responses = await userService.getUserResponses(username);
-            if(responses.length === 0) {
-                toast.warning("No forms answered!");
-            }
+            const responses = await dashboardService.getUserResponses(username);
             return responses;
         }
         catch (error) {
@@ -50,6 +48,26 @@ class FetchDataService {
             return [];
         }
         
+    }
+
+    async getUserResponseDetails(username: string) {
+        await connection();
+        try {
+            const responsesDetails: IUserResponseDetails[] = await dashboardService.getUserResponsesDetails(username);
+            if(responsesDetails.length == 0) {
+                toast.warning("You do not have answered any forms");
+                return [];
+            }
+            return responsesDetails
+        }
+        catch (error) {
+            if(error instanceof Error) {
+                console.error(error.message);
+                return [];
+            }
+            console.error("Something went wrong!");
+            return [];
+        }
     }
 }
 
