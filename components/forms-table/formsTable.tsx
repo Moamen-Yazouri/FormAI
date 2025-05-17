@@ -1,5 +1,5 @@
 "use client" 
-import {IDashboardForm, IUserForm} from '@/@types'
+import { IFormTable} from '@/@types'
 import {Badge} from '@/components/ui/badge'
 import {Button} from '@/components/ui/button'
 import {
@@ -23,7 +23,7 @@ import DeleteDialog from '../deleteDialog/deleteDialog'
 import ActionsProvider from '@/components/form-actions-provider/ActionsProvider'
 
 interface IProps {
-    filteredForms: IDashboardForm[] | IUserForm[]
+    filteredForms: IFormTable[];
 }
 
 const FormsTable = (props : IProps) => {
@@ -51,7 +51,7 @@ const FormsTable = (props : IProps) => {
                             <TableCell>
                                 <div className="flex items-center gap-2">
                                     <FileText className="h-4 w-4 text-purple-600"/>
-                                    <span className="font-medium">{form.name}</span>
+                                    <span className="font-medium">{form.name }</span>
                                 </div>
                             </TableCell>
                             <TableCell>{form.creator}</TableCell>

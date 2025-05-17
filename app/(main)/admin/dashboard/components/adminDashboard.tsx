@@ -5,7 +5,7 @@ import {
     CardContent,
 } from "@/components/ui/card"
 import useDashboard from "../hooks/useDahboard"
-import { IDashboardForm, IFormCreationData, IFormResponseData, IUserData, IUsersActivityData } from "@/@types"
+import { IFormTable, IFormCreationData, IFormResponseData, IUserData, IUsersActivityData } from "@/@types"
 import UsersTable from "./tables/usersTable"
 import FormsTable from "@/components/forms-table/formsTable"
 import SearchBar from "../components/searchBar"
@@ -19,7 +19,7 @@ import DashboardHeader from "../components/dashboardHeader"
 import { getActivesFirst } from "../utils/sortArray"
 interface IProps {
     usersData: IUserData[],
-    formsData: IDashboardForm[],
+    formsData: IFormTable[],
     userActivityData: IUsersActivityData[],
     formCreationData: IFormCreationData[],
     formResponsesData: IFormResponseData[]
