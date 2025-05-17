@@ -1,5 +1,6 @@
 import { connection, NextRequest } from "next/server";
 import FormServices from "@/module/services/forms.service";
+import responseService from "@/module/services/response.service";
 export const POST = async(req: NextRequest) => {
     const formResponse = await req.json();
     if(!formResponse){
@@ -7,7 +8,7 @@ export const POST = async(req: NextRequest) => {
     }
     await connection();
     try {
-        const response = await FormServices.addResponse(formResponse);
+        const response = await responseService.addResponse(formResponse);
         return Response.json({response}, {status: 200});
     }
     catch(error) {

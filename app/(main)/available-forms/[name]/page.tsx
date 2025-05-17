@@ -1,14 +1,16 @@
-import FormsTable from '@/components/forms-table/formsTable'
 import dashboardService from '@/module/services/user/dashboard.service';
 import React from 'react'
+import AvailableTable from '../components/formsAvailableTable';
+import { connection } from '@/DB/connection';
 interface IProps {
     params: Promise<{name: string}>
 }
 const AvailableForms = async(props: IProps) => {
-    const name = (await props.params).name;
+    await connection();
+    const name = decodeURIComponent((await props.params).name); 
     const availableForms = await dashboardService.getUserForms(name);
     return (
-        <FormsTable filteredForms={availableForms}/>
+        <AvailableTable filteredForms={availableForms}/>
     )
 }
 

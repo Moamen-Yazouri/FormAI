@@ -8,6 +8,8 @@ import { Loader2, Save } from 'lucide-react';
 import { Button } from '../ui/button';
 import MotionField from '../motionTextField/motionTextField';
 import { AuthContext } from '@/providers/auth/authProvider';
+import { motion } from 'framer-motion';
+import router from 'next/router';
 interface IProps {
     fields: IFormField[];
     formId?: string;
@@ -16,9 +18,9 @@ interface IProps {
     allowAnonymous?: boolean;
 }
 const FormGenerator = (props: IProps) => {
-    const {formik} = useForm({...props});
+    const {formik, submitted} = useForm({...props});
     const {user} = useContext(AuthContext);
-    const [isSub, setIsSub] = useState(formik.isSubmitting)
+    const [isSub, setIsSub] = useState(formik.isSubmitting);
     useEffect(() => {
         setIsSub(formik.isSubmitting);
     }, [formik.isSubmitting])
@@ -27,6 +29,27 @@ const FormGenerator = (props: IProps) => {
         formik.resetForm();
 
     }
+
+    if(submitted) {
+        return (
+            <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center py-10"
+            >
+            <h2 className="text-2xl font-bold text-purple-700">Your response has been recorded!</h2>
+            <p className="text-purple-500 mt-2 mb-6">Thank you for your time.</p>
+
+            <button
+                onClick={() => router.push(`/available-forms/${user!.name}`)}
+                className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-md transition-all"
+            >
+                Back to Forms List
+            </button>
+            </motion.div>
+        );
+        }
     return (
         <FormikProvider value= {formik}>
             <Form className='flex flex-col gap-5'>
