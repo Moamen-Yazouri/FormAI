@@ -1,5 +1,30 @@
-import { IUserDocument } from "@/DB/models/user.model";
 import mongoose from "mongoose";
+export interface IUserFromDB {
+    _id: string;          
+    name: string;
+    password: string,
+    email: string;
+    role: UserRoles;  
+    createdAt: string;    
+    updatedAt: string;
+}
+
+export interface IFormFromDB extends IForm {
+    _id: mongoose.Types.ObjectId;
+    createdAt: Date;
+    updatedAt: Date;
+    creatorId: mongoose.Types.ObjectId;
+    _v: number;
+}
+export interface IResponseFromDB {
+    _id: string; 
+    formId: string;
+    userId: string;
+    answers: string[]; 
+    createdAt: string; 
+    updatedAt: string;
+    __v: number;
+}
 
 export enum ERole {
     Admin = "admin",
@@ -67,25 +92,7 @@ export interface IDisplayResponse {
     submittedAt: string;
     responses: IAnswer[];
 }
-export interface IUserFromDB {
-    _id: string;          
-    name: string;
-    password: string,
-    email: string;
-    role: UserRoles;  
-    createdAt: string;    
-    updatedAt: string;
-}
 
-export interface IResponseFromDB {
-    _id: string; 
-    formId: string;
-    userId: string;
-    answers: string[]; 
-    createdAt: string; 
-    updatedAt: string;
-    __v: number;
-}
 export interface IFormData {
     title: string
     description: string
@@ -110,8 +117,8 @@ export interface IUserData {
     lastActive: string,
 }
 
-export interface IDashboardForm {
-    id: string ,
+export interface IFormTable {
+    id: string,
     name: string,
     creator: string,
     responses: number,
@@ -124,14 +131,6 @@ export interface IUserForm {
     description: string
     deadline?: string
     creator: string
-}
-
-export interface IFormFromDB extends IForm {
-    _id: mongoose.Types.ObjectId;
-    createdAt: Date;
-    updatedAt: Date;
-    creatorId: mongoose.Types.ObjectId;
-    _v: number;
 }
 
 export interface IFormPopulatedByCreator extends Omit<IFormFromDB, "creatorId"> {
