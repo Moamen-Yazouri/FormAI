@@ -20,6 +20,7 @@ export const GET = async (): Promise<NextResponse> => {
             _id: userData.userId,
             email: userData.email,
             role: userData.role,
+            name: userData.name,
 
         }
         return NextResponse.json({user: userToContext}, {status: 200});

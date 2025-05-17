@@ -99,7 +99,7 @@ export interface IFormData {
     fields: IFormField[]
     submitButton: string
 }
-export interface IContextUser extends Pick<IUserFromDB, "_id"| "role" | "email"> {}
+export interface IContextUser extends Pick<IUserFromDB, "_id"| "role" | "email" | "name"> {}
 
 export interface IAuthContext {
     user: IContextUser | null;

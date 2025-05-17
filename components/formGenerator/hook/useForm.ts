@@ -5,7 +5,7 @@ import { IFormValues } from "../types";
 import { getInitials } from "../getInitials";
 import { generateValidationScehma } from "@/lib/createTheValidationSchema";
 import { toast } from "sonner";
-import { useContext, useMemo } from "react";
+import { useContext, useMemo, useState } from "react";
 import { AuthContext } from "@/providers/auth/authProvider";
 import * as mongoose from "mongoose";
 
@@ -19,7 +19,7 @@ interface IProps {
 
 export const useForm = (props: IProps) => {
         const {user} = useContext(AuthContext);
-
+        const [submitted, setSubmitted] = useState(false)
         const initialValues = useMemo(() => {
             return getInitials(props.fields); 
         }, [props.fields, props.allowAnonymous]);
@@ -75,7 +75,8 @@ export const useForm = (props: IProps) => {
                 return;
             }
             resetForm();
-            toast.success("Response submitted successfully!");
+            toast.success("Response recorded successfully!");
+            setSubmitted(true)
         }
         catch(err){
             if(err instanceof Error) {
@@ -97,6 +98,9 @@ export const useForm = (props: IProps) => {
         validateOnMount: true,
         validateOnChange: false,
     })
-    return {formik}
+    return {
+        formik,
+        submitted
+    }
 
 } 
