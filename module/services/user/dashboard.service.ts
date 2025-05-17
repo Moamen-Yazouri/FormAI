@@ -42,8 +42,8 @@ class DashboardService {
             }
             const userResponsesDetails: IUserResponseDetails[] = responses.map((res) => {
                 return {
-                    id: res._id,
-                    formId: res.formId._id,
+                    id: String(res._id),
+                    formId: String(res.formId._id),
                     title: res.formId.title,
                     description: res.formId.description,
                     creator: res.formId.creatorId.name,
@@ -64,9 +64,9 @@ class DashboardService {
         }
         const userResponses: IAnsweredForms[] = responses.map((res) => {
             return {
-                id: res._id,
+                id: String(res._id),
                 title: res.formId.title,
-                date: res.createdAt,
+                date: getDateOnly(res.createdAt),
             }
         })
         return userResponses;

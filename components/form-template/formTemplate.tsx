@@ -64,7 +64,7 @@ const FormTemplate = (props: IProps) => {
           ) 
         : (
             <motion.div
-              className="flex items-center justify-center"
+              className="flex items-center justify-center w-full"
               layout
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}

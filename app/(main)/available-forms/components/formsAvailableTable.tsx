@@ -1,83 +1,77 @@
-"use client" 
-import { IFormTable, IUserForm} from '@/@types'
-import {Badge} from '@/components/ui/badge'
-import {Button} from '@/components/ui/button'
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow
-} from '@/components/ui/table'
+"use client"
+import { Button } from "@/components/ui/button"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import {
     DropdownMenu,
     DropdownMenuTrigger,
     DropdownMenuContent,
     DropdownMenuLabel,
-    DropdownMenuSeparator
-} from '@/components/ui/dropdown-menu'
-import {FileText, MoreVertical, Eye, MessageSquare} from 'lucide-react'
-import React, {useState} from 'react'
-import ActionsProvider from '@/components/form-actions-provider/ActionsProvider'
-import DeleteDialog from '@/components/deleteDialog/deleteDialog'
+    DropdownMenuItem,
+} from "@/components/ui/dropdown-menu"
+import { FileText, MoreVertical, Send } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { IUserForm } from "@/@types"
 
 interface IProps {
-    filteredForms: IUserForm[];
+    forms: IUserForm[]
 }
 
-const AvailableTable = (props : IProps) => {
-
+const UserFormsTable = ({ forms }: IProps) => {
+    const router = useRouter();
     return (
-        <div className="rounded-md border">
+        <div className="rounded-md border border-purple-300 shadow-md w-full bg-purple-50 m-2 overflow-hidden">
             <Table>
-                <TableHeader>
+                <TableHeader className="bg-purple-100">
                     <TableRow>
-                        <TableHead>Form Name</TableHead>
-                        <TableHead>Description</TableHead>
-                        <TableHead>Creator</TableHead>
-                        <TableHead>Deadline</TableHead>
-                        <TableHead className="text-right">Actions</TableHead>
+                        <TableHead className="text-purple-800 font-semibold">Form Title</TableHead>
+                        <TableHead className="text-purple-800 font-semibold">Description</TableHead>
+                        <TableHead className="text-purple-800 font-semibold">Creator</TableHead>
+                        <TableHead className="text-purple-800 font-semibold">Deadline</TableHead>
+                        <TableHead className="text-right text-purple-800 font-semibold">Actions</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {props.filteredForms.map((form) => (
-                        <TableRow key={form.id}>
+                    {forms.map((form) => (
+                        <TableRow 
+                            key={form.id} 
+                            className="hover:bg-purple-100 transition-colors"
+                        >
                             <TableCell>
                                 <div className="flex items-center gap-2">
-                                    <FileText className="h-4 w-4 text-purple-600"/>
-                                    <span className="font-medium">{form.formTitle }</span>
+                                    <FileText className="h-4 w-4 text-purple-600" />
+                                    <span className="font-medium text-purple-700">{form.formTitle}</span>
                                 </div>
                             </TableCell>
-                            <TableCell>
-                                <div className="flex items-center gap-2">
-                                    <span className="font-medium">{form.description }</span>
-                                </div>
+                            <TableCell className="max-w-xs truncate text-purple-600">
+                                {form.description}
                             </TableCell>
-                            <TableCell>{form.creator}</TableCell>
-                            
-                            <TableCell>{String(form.deadline) || "No deadline"}</TableCell>
-                                
+                            <TableCell className="text-purple-600">
+                                {form.creator}
+                            </TableCell>
+                            <TableCell className="text-purple-600">
+                                {form.deadline || "No deadline"}
+                            </TableCell>
                             <TableCell className="text-right">
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
-                                        <Button variant="ghost" size="icon" className="h-8 w-8">
-                                            <MoreVertical className="h-4 w-4"/>
+                                        <Button 
+                                            variant="ghost" 
+                                            size="icon" 
+                                            className="h-8 w-8 text-purple-700 hover:bg-purple-200"
+                                        >
+                                            <MoreVertical className="h-4 w-4" />
                                             <span className="sr-only">Open menu</span>
                                         </Button>
                                     </DropdownMenuTrigger>
-                                    <DropdownMenuContent align="end">
-                                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                        <ActionsProvider role='user' id={form.id}/>
-                                        <DropdownMenuSeparator/>
-                                        <DeleteDialog 
-                                            itemToDelete={""}
-                                            item={form}
-                                            data={props.filteredForms}
-                                            setItemToDelete={() => { }}
-                                            itemsType="Form"
-                                            handleDeleteItem={() => {}}
-                                        />
+                                    <DropdownMenuContent align="end" className="bg-white border-purple-200">
+                                        <DropdownMenuLabel className="text-purple-700">Actions</DropdownMenuLabel>
+                                        <DropdownMenuItem
+                                            onClick={() => router.push(`/answer-form/${form.id}`)}
+                                            className="flex items-center gap-2 cursor-pointer text-purple-700 hover:bg-purple-100"
+                                        >
+                                            <Send className="h-4 w-4" />
+                                            Answer the form
+                                        </DropdownMenuItem>
                                     </DropdownMenuContent>
                                 </DropdownMenu>
                             </TableCell>
@@ -89,4 +83,4 @@ const AvailableTable = (props : IProps) => {
     )
 }
 
-export default AvailableTable;
+export default UserFormsTable

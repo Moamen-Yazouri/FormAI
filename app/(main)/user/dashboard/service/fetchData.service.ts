@@ -2,26 +2,17 @@ import { connection } from "@/DB/connection";
 import { toast } from "sonner";
 import { IAnsweredForms, IAvailableForms } from "../types";
 import dashboardService from "@/module/services/user/dashboard.service";
-import { IUserResponseDetails } from "@/@types";
+import { IUserForm, IUserResponseDetails } from "@/@types";
 
 class FetchDataService {
-    async availableForms(username: string): Promise<IAvailableForms[]> {
+    async availableForms(username: string): Promise<IUserForm[]> {
         await connection();
         try {
             const forms = await dashboardService.getUserForms(username);
             if(forms.length === 0) {
                 toast.warning("No forms available!");
             }
-            const availableForms: IAvailableForms[] = forms.map(form => {
-                return {
-                    id: form.id,
-                    title: form.formTitle,
-                    description: form.description,
-                    deadline: form.deadline ? form.deadline : undefined,
-                    creator: form.creator
-                }
-            })
-            return availableForms;
+            return forms;
         }
         catch (error) {
             if(error instanceof Error) {

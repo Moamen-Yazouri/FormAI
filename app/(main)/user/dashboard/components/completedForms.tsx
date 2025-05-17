@@ -3,8 +3,9 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { ArrowRight, CheckCircle } from 'lucide-react'
 import React from 'react'
+import { IAnsweredForms } from '../types'
 interface IProps {
-    completedForms: IUserResponseTable[];
+    completedForms: IAnsweredForms[];
 }
 const CompletedForms = (props: IProps) => {
     const {completedForms} = props;
@@ -28,7 +29,7 @@ const CompletedForms = (props: IProps) => {
                                 <CheckCircle className="h-5 w-5 text-purple-600" />
                             </div>
                             <div>
-                                <h3 className="font-medium text-purple-800">{form.formTitle}</h3>
+                                <h3 className="font-medium text-purple-800">{form.title}</h3>
                                 <p className="text-sm text-purple-600">Completed {form.date}</p>
                             </div>
                             </div>
