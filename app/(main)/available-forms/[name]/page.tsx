@@ -10,7 +10,7 @@ const AvailableForms = async(props: IProps) => {
     const name = decodeURIComponent((await props.params).name); 
     const availableForms = await dashboardService.getUserForms(name);
     return (
-        <AvailableTable filteredForms={availableForms}/>
+        <AvailableTable forms={availableForms}/>
     )
 }
 

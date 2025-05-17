@@ -1,203 +1,107 @@
-    "use client"
+"use client"
 
-    import { useEffect, useState } from "react"
-    import { motion } from "framer-motion"
-    import { Button } from "@/components/ui/button"
-    import { Card, CardHeader, CardTitle } from "@/components/ui/card"
-    import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-    import { ArrowLeft, Calendar, Filter, Search, User } from "lucide-react"
-    import { Input } from "@/components/ui/input"
-    import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-    import { IUserResponseDetails } from "@/@types"
-
-
-    export default function CompletedFormsPage() {
-    const [loading, setLoading] = useState(true)
-    const [forms, setForms] = useState<IUserResponseDetails[]>([])
-    const [searchQuery, setSearchQuery] = useState("")
-    const [timeFilter, setTimeFilter] = useState("all")
-    const [creatorFilter, setCreatorFilter] = useState("all")
-
-    // Simulated fetch
-    useEffect(() => {
-        const responseFromDB: IUserResponseDetails[] = [
-        {
-            id: "form-1",
-            formId: "f-1",
-            title: "Customer Feedback Survey",
-            description: "Customer service feedback",
-            creator: "Sarah Johnson",
-            createdAt: "2023-04-15",
-            completedAt: "2 days ago",
-        },
-        {
-            id: "form-2",
-            formId: "f-1",
-            title: "Product Satisfaction",
-            description: "Rate satisfaction",
-            creator: "Michael Chen",
-            createdAt: "2023-04-20",
-            completedAt: "1 week ago",
-        },
-        ]
-
-        setForms(responseFromDB)
-        setLoading(false)
-    }, [])
-
-    const filteredForms = forms.filter((form) => {
-        const matchesSearch =
-        form.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        form.description.toLowerCase().includes(searchQuery.toLowerCase())
-        const matchesCreator = creatorFilter === "all" || form.creator === creatorFilter
-        const matchesTime =
-        timeFilter === "all" ||
-        (timeFilter === "week" && form.completedAt?.includes("week")) ||
-        (timeFilter === "month" && (form.completedAt?.includes("week") || form.completedAt?.includes("day"))) ||
-        (timeFilter === "older" && form.completedAt?.includes("month"))
-
-        return matchesSearch && matchesCreator && matchesTime
-    })
-
-    const creators = ["all", ...new Set(forms.map(form => form.creator))]
-
-    if (loading) {
-        return (
-        <div className="w-full min-h-screen flex items-center justify-center">
-            <div className="text-purple-600 text-xl">Loading completed forms...</div>
-        </div>
-        )
-    }
-
+import { motion } from "framer-motion"
+import { ArrowLeftIcon, Eye, User, ListChecks } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
+import { IUserResponseDetails } from "@/@types"
+import { useRouter } from "next/router"
+interface IProps {
+    responsesDetails: IUserResponseDetails[];
+}
+const CompletedFormsPage = (props: IProps) => {
+    const router = useRouter();
+    const {responsesDetails} = props
     return (
-        <div className="w-full p-6 md:p-10 min-h-screen bg-gradient-to-br from-purple-50 to-white">
+        <div className="w-full min-h-screen bg-white px-4 md:px-10 py-8">
         <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="max-w-7xl mx-auto"
+            className="max-w-7xl mx-auto space-y-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
         >
-            {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+            <Link href="dashboard" className="pl-0 text-purple-800 hover:text-purple-900 hover:bg-transparent -ml-2">
+                <ArrowLeftIcon className="h-5 w-5 inline-block mr-1 align-text-top" />
+                Back to Dashboard
+            </Link>
             <div>
-                <Button
-                variant="ghost"
-                className="mb-2 pl-0 text-purple-700 hover:text-purple-800 hover:bg-transparent"
-                onClick={() => window.history.back()}
-                >
-                <ArrowLeft className="mr-2 h-4 w-4" /> Back to Dashboard
-                </Button>
-                <h1 className="text-3xl font-bold text-purple-700">Completed Forms</h1>
-                <p className="text-purple-600">View all your completed form submissions</p>
+                <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Completed Forms</h1>
+                <p className="text-gray-600 text-sm">Manage and view your submitted forms.</p>
             </div>
-            <Card className="w-full md:w-auto border-purple-200 shadow-sm">
-                <CardHeader className="p-4">
-                <CardTitle className="text-sm font-medium text-purple-700 flex items-center">
-                    {forms.length} forms completed
-                </CardTitle>
-                </CardHeader>
-            </Card>
             </div>
 
-            {/* Filters */}
-            <div className="flex flex-col md:flex-row gap-4 mb-6">
-            <div className="relative w-full md:w-2/5">
-                <Input
-                placeholder="Search forms..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 border-purple-200"
-                />
-                <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-purple-400">
-                <Search className="h-4 w-4" />
+            <div className="w-full">
+            <div className="rounded-xl bg-gradient-to-r from-purple-100 via-purple-200 to-purple-100 border border-purple-300 shadow flex items-center p-6 md:max-w-md">
+                <div className="flex-shrink-0 bg-white rounded-full p-3 shadow-inner border border-purple-300">
+                <ListChecks className="h-6 w-6 text-purple-700" />
+                </div>
+                <div className="ml-4">
+                <p className="text-sm font-medium text-purple-700">Total Forms Completed</p>
+                <p className="text-3xl font-bold text-purple-900">{responsesDetails.length}</p>
                 </div>
             </div>
-
-            <div className="w-full md:w-1/5">
-                <Select value={timeFilter} onValueChange={setTimeFilter}>
-                <SelectTrigger className="border-purple-200">
-                    <div className="flex items-center">
-                    <Filter className="h-4 w-4 mr-2 text-purple-500" />
-                    <SelectValue placeholder="Filter by time" />
-                    </div>
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectItem value="all">All Time</SelectItem>
-                    <SelectItem value="week">Last Week</SelectItem>
-                    <SelectItem value="month">Last Month</SelectItem>
-                    <SelectItem value="older">Older</SelectItem>
-                </SelectContent>
-                </Select>
             </div>
 
-            <div className="w-full md:w-1/5">
-                <Select value={creatorFilter} onValueChange={setCreatorFilter}>
-                <SelectTrigger className="border-purple-200">
-                    <div className="flex items-center">
-                    <User className="h-4 w-4 mr-2 text-purple-500" />
-                    <SelectValue placeholder="Filter by creator" />
-                    </div>
-                </SelectTrigger>
-                <SelectContent>
-                    {creators.map((creator) => (
-                    <SelectItem key={creator} value={creator}>
-                        {creator === "all" ? "All Creators" : creator}
-                    </SelectItem>
-                    ))}
-                </SelectContent>
-                </Select>
-            </div>
-            </div>
 
-            {/* Table */}
-            <Card className="border-purple-200 shadow-md overflow-hidden">
+            <div className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
             <div className="overflow-x-auto">
-                <Table>
-                <TableHeader className="bg-purple-50">
-                    <TableRow>
-                    <TableHead className="text-purple-700">Form Name</TableHead>
-                    <TableHead className="text-purple-700">Creator</TableHead>
-                    <TableHead className="text-purple-700">Created Date</TableHead>
-                    <TableHead className="text-purple-700 text-right">Action</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {filteredForms.length === 0 ? (
-                    <TableRow>
-                        <TableCell colSpan={6} className="text-center py-8 text-purple-600">
-                        No completed forms match your search criteria
-                        </TableCell>
-                    </TableRow>
-                    ) : (
-                    filteredForms.map((form) => (
-                        <TableRow key={form.id} className="hover:bg-purple-50">
-                        <TableCell className="font-medium text-purple-800">{form.title}</TableCell>
-                        <TableCell className="text-purple-700 flex items-center">
-                            <User className="h-3.5 w-3.5 mr-1.5 text-purple-500" />
-                            {form.creator}
-                        </TableCell>
-                        <TableCell className="text-purple-700 flex items-center">
-                            <Calendar className="h-3.5 w-3.5 mr-1.5 text-purple-500" />
-                            {form.createdAt}
-                        </TableCell>
-                        <TableCell className="text-right">
+                <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-purple-50">
+                    <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-purple-800 uppercase tracking-wider">Form Title</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-purple-800 uppercase tracking-wider">Description</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-purple-800 uppercase tracking-wider">Creator</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-purple-800 uppercase tracking-wider">Created</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-purple-800 uppercase tracking-wider">Completed</th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-purple-800 uppercase tracking-wider">Actions</th>
+                    </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                    {responsesDetails.length > 0 ? (
+                    responsesDetails.map((form) => (
+                        <tr key={form.id} className="hover:bg-purple-50/50 transition-colors">
+                        <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="font-medium text-gray-900">{form.title}</div>
+                        </td>
+                        <td className="px-6 py-4">
+                            <div className="text-gray-700 max-w-xs truncate">{form.description}</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="flex items-center">
+                            <User className="h-4 w-4 mr-2 text-purple-500" />
+                            <span className="text-gray-700">{form.creator}</span>
+                            </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-gray-700">{form.createdAt}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-gray-700">{form.completedAt}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-right">
                             <Button
                             size="sm"
                             variant="outline"
-                            className="border-purple-200 text-purple-700 hover:bg-purple-50"
+                            className="border-purple-200 text-purple-700 hover:bg-purple-50 hover:text-purple-800 transition cursor-pointer"
                             onClick={() => (window.location.href = `/form/${form.id}/view`)}
                             >
+                            <Eye className="h-4 w-4 mr-2" />
                             View
                             </Button>
-                        </TableCell>
-                        </TableRow>
+                        </td>
+                        </tr>
                     ))
+                    ) : (
+                    <tr>
+                        <td colSpan={6} className="px-6 py-10 text-center text-gray-500">
+                        No completed forms found
+                        </td>
+                    </tr>
                     )}
-                </TableBody>
-                </Table>
+                </tbody>
+                </table>
             </div>
-            </Card>
+            </div>
         </motion.div>
         </div>
-    )
-    }
+    );
+};
+
+export default CompletedFormsPage;

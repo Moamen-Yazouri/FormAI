@@ -1,5 +1,8 @@
-import UserDashboard from "./components/userDashboard";
-
+import UserDashboard from "../components/userDashboard";
+import fetchDataService from "../service/fetchData.service";
+interface IProps {
+    params: Promise<{name: string}>
+}
         const mockData = {
         formsCompleted: 6,
         formsAvailable: 4,
@@ -7,32 +10,32 @@ import UserDashboard from "./components/userDashboard";
         completedForms: [
             {
                 id: "form-1",
-                formTitle: "Customer Feedback Survey",
+                title: "Customer Feedback Survey",
                 date: "2 days ago",
             },
             {
                 id: "form-2",
-                formTitle: "Product Satisfaction",
+                title: "Product Satisfaction",
                 date: "1 week ago",
             },
             {
                 id: "form-3",
-                formTitle: "Website Usability Test",
+                title: "Website Usability Test",
                 date: "2 weeks ago",
             },
             {
                 id: "form-4",
-                formTitle: "Service Quality Evaluation",
+                title: "Service Quality Evaluation",
                 date: "3 weeks ago",
             },
             {
                 id: "form-5",
-                formTitle: "Feature Request Form",
+                title: "Feature Request Form",
                 date: "1 month ago",
             },
             {
                 id: "form-6",
-                formTitle: "User Experience Survey",
+                title: "User Experience Survey",
                 date: "1 month ago",
             },
         ],
@@ -67,9 +70,24 @@ import UserDashboard from "./components/userDashboard";
         ],
         }
 
-export default function UserFormActivityPage() {
-
+export default async function UserFormActivityPage(props: IProps) {
+    const name = decodeURIComponent((await props.params).name)
+    const [
+        responses,
+        availableForms,
+    ] = await Promise.all([
+        fetchDataService.answeredForms(name),
+        fetchDataService.availableForms(name),
+    ]) 
+    console.log(availableForms);
+    const data = {
+        formsCompleted: responses.length,
+        formsAvailable: availableForms.length,
+        averageCompletionTime: "3m 45s",
+        availableForms,
+        completedForms: responses,
+    }
     return (
-        <UserDashboard {...mockData}/>
+        <UserDashboard {...data}/>
     )
 }

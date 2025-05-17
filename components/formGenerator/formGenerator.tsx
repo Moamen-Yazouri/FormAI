@@ -3,13 +3,14 @@ import { Form, FormikProvider } from 'formik';
 import React, { useContext, useEffect, useState } from 'react'
 import FieldProvider from '../fieldProvider/fieldProvider';
 import { useForm } from './hook/useForm';
-import { CardContent, CardFooter } from '../ui/card';
+import { CardContent } from '../ui/card';
 import { Loader2, Save } from 'lucide-react';
 import { Button } from '../ui/button';
 import MotionField from '../motionTextField/motionTextField';
 import { AuthContext } from '@/providers/auth/authProvider';
 import { motion } from 'framer-motion';
 import router from 'next/router';
+import { useRouter } from 'next/navigation';
 interface IProps {
     fields: IFormField[];
     formId?: string;
@@ -21,13 +22,14 @@ const FormGenerator = (props: IProps) => {
     const {formik, submitted} = useForm({...props});
     const {user} = useContext(AuthContext);
     const [isSub, setIsSub] = useState(formik.isSubmitting);
+    const router = useRouter();
     useEffect(() => {
         setIsSub(formik.isSubmitting);
     }, [formik.isSubmitting])
     
     const onCancel = () => {
         formik.resetForm();
-
+        router.push(`/available-forms/${user!.name}`)
     }
 
     if(submitted) {
@@ -36,14 +38,14 @@ const FormGenerator = (props: IProps) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-center py-10"
+            className="text-center p-10"
             >
             <h2 className="text-2xl font-bold text-purple-700">Your response has been recorded!</h2>
             <p className="text-purple-500 mt-2 mb-6">Thank you for your time.</p>
 
             <button
                 onClick={() => router.push(`/available-forms/${user!.name}`)}
-                className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-md transition-all"
+                className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-md transition-all cursor-pointer"
             >
                 Back to Forms List
             </button>
@@ -52,7 +54,7 @@ const FormGenerator = (props: IProps) => {
         }
     return (
         <FormikProvider value= {formik}>
-            <Form className='flex flex-col gap-5'>
+            <Form className='flex flex-col gap-5 w-full'>
                 <CardContent className='flex flex-col space-y-2'>
                         {
                             props.allowAnonymous && (
@@ -79,12 +81,12 @@ const FormGenerator = (props: IProps) => {
                         onClick={onCancel}
                         className="border-purple-300 text-purple-700 hover:bg-purple-100 hover:text-purple-900 transition font-semibold"
                     >
-                        Cancel
+                        Go Back
                     </Button>
                     <Button
                         type="submit"
                         disabled={formik.isSubmitting}
-                        className="bg-purple-500 hover:bg-purple-600 text-white font-semibold transition"
+                        className="bg-purple-500 hover:bg-purple-600 text-white font-semibold transition cursor-pointer"
                     >
                     {isSub ? (
                         <>

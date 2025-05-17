@@ -7,12 +7,13 @@ import { useState, useEffect } from "react"
 import { IUserForm, IUserResponseTable } from "@/@types"
 import AvailableForms from "./availableForms"
 import CompletedForms from "./completedForms"
+import { IAnsweredForms } from "../types"
 
 interface IProps {
     formsCompleted: number,
     formsAvailable: number,
     averageCompletionTime: string,
-    completedForms: IUserResponseTable[];
+    completedForms: IAnsweredForms[];
     availableForms: IUserForm[]
 }
 export default function UserDashboard(props: IProps) {
