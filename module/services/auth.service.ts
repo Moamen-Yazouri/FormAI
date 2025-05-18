@@ -5,6 +5,7 @@ import authRepo from "../repositories/auth.repo";
 import { comparePassword, hashPassword } from "@/lib/compareAndHash";
 import xss from "xss";
 import { generateToken } from "@/lib/generateAndVerifyToken";
+import { cookies } from "next/headers";
 
 class AuthService {
     async signUp(user: IUser) {
@@ -56,6 +57,11 @@ class AuthService {
         }
         console.log(payload);
         const token = await generateToken(payload);
+        (await cookies()).set("auth-token", token, {
+            httpOnly: true,
+            secure: true,
+            expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+        });
         return {
             user,
             token,

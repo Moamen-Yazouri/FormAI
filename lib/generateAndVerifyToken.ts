@@ -2,7 +2,7 @@
 import { UserRoles } from "@/@types";
 import { JwtPayload } from "jsonwebtoken";
 import { SignJWT, jwtVerify } from "jose";
-import mongoose from "mongoose";
+import { cookies } from "next/headers";
 const secretKey = process.env.SESSION_SECRET;
 const encodedKey = new TextEncoder().encode(secretKey);
 export interface ITokenPayload extends JwtPayload {
@@ -20,7 +20,8 @@ export const generateToken = async (
                     .setProtectedHeader({ alg: "HS256" })
                     .setIssuedAt()
                     .setExpirationTime(expirationTime)
-    const token = await t.sign(encodedKey);
+    const token = await t.sign(encodedKey); 
+
     return token;
 }
 
