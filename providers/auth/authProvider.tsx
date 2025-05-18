@@ -13,26 +13,32 @@ const AuthProvider = (props: IProps) => {
     const [user, setUser] = useState<IContextUser | null>(null);
     const [isLoading, setLoading] = useState<boolean>(true);
     const initUser = async() => {
-        const res = await fetch("/api/auth/provide-logged-user", {
-            method: "GET",
-            headers: {
-                "content-type": "application/json"
-            }
-        })
+        try {
+            const res = await fetch("/api/auth/provide-logged-user", {
+                method: "GET",
+                credentials: "include",
+                headers: {
+                    "content-type": "application/json"
+                }
+            })
 
-        if(res.ok) {
-            const { user }: { user: IContextUser } = await res.json();
-            return user;
+            if(res.ok) {
+                const { user }: { user: IContextUser } = await res.json();
+                setUser(user);
+            }
+            
+        }
+        catch {
+            setUser(null);
+        }
+        finally {
+            setLoading(false); 
         }
 
-        return null;
     }
 
     useEffect(() => {
-        initUser().then((user) => {
-            setUser(user);
-            setLoading(false);
-        } )
+        initUser();
     }, [])
     
     const value: IAuthContext = {
