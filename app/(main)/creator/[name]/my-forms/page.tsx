@@ -4,7 +4,6 @@ interface IProps {
 }
 const MyForms = async(props: IProps) => {
     const name = (await props.params).name;
-     
     return (
         <div></div>
     )

@@ -1,6 +1,6 @@
 import React from 'react'
-import CreatorDashboard from '../components/creatorDashboard'
-import FetchServices from '../services/fetchData.service'
+import CreatorDashboard from '../dashboard/components/creatorDashboard';
+import FetchServices from '../dashboard/services/fetchData.service'
 import formsRepo from '@/module/repositories/forms.repo';
 import responseRepo from '@/module/repositories/response.repo';
 // export const formData: IFormData[] = [

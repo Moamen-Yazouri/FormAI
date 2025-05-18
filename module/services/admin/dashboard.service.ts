@@ -1,4 +1,4 @@
-import { IUserFromDB, IUserData, IFormPopulatedByCreator, IFormData, IDashboardForm, IUsersActivityData, IFormFromDB, IFormCreationData } from "@/@types";
+import { IUserFromDB, IUserData, IFormPopulatedByCreator, IFormData, IUsersActivityData, IFormFromDB, IFormCreationData, IFormTable } from "@/@types";
 import { getActiveStatus, getDateOnly, getMonthName, getWeekDaysDates } from "@/lib/dateUtils";
 import dashboardRepo from "../../repositories/admin/dashboard.repo";
 import { months } from "@/constants/dateConstants";
@@ -26,12 +26,12 @@ class DashboardService {
         return usersData;
     }
 
-    async getUserForms(username: string) {
+    async getCreatorForms(username: string) {
         try {
             const user: IUserFromDB | null = await dashboardRepo.getUserByName(username);
             if (user) {
                 const forms: IFormFromDB[] = await dashboardRepo.getUserForms(user._id);
-                const formsData: IDashboardForm[] = forms.map(form => {
+                const formsData: IFormTable[] = forms.map(form => {
                     return {
                         id: String(form._id),
                         name: form.title,
@@ -54,7 +54,7 @@ class DashboardService {
     async getFormsData() {
         const populatedForms: IFormPopulatedByCreator[] = await dashboardRepo.getAllFormsWithCreators();
 
-        const formsData: IDashboardForm[] = populatedForms.map(form => {
+        const formsData: IFormTable[] = populatedForms.map(form => {
             return {
                 id: String(form._id),
                 name: form.title,

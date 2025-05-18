@@ -17,10 +17,10 @@ const AllCharts = (props: IProps) => {
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <CreatorActivityChart creatorActivityData={creatorActivityData} />
-        <FormCreationTrend formCreationData={formCreationData} />
-        <FormsDistribution formResponsesData={formResponsesData} />
-        <RecentResponses recentResponses={recentResponses} />
+            <CreatorActivityChart creatorActivityData={creatorActivityData} />
+            <FormCreationTrend formCreationData={formCreationData} />
+            <FormsDistribution formResponsesData={formResponsesData} />
+            <RecentResponses recentResponses={recentResponses} />
         </div>
     )
 }

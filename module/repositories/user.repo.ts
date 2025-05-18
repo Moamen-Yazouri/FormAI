@@ -8,6 +8,9 @@ class UserRepo {
     async getUserByName(username: string) {
         return await userModel.findOne({name: username}).lean<IUserFromDB>();
     }
+    async getUserById(userId: string) {
+        return await userModel.findById(userId).lean<IUserFromDB>();
+    }
 }
 
 export default new UserRepo();
