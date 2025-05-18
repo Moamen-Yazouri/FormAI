@@ -7,6 +7,8 @@ import Link from "next/link";
 import {redirect} from "next/navigation";
 import {motion} from "framer-motion";
 import { AuthContext } from "@/providers/auth/authProvider";
+import LoadingSpinner from "@/app/(main)/form-generator/components/loading-spinner";
+import LoadingPage from "../loadingPage/loadingPage";
 
 
 const Header = () => {
@@ -17,7 +19,9 @@ const Header = () => {
         await fetch("api/auth/logout", {method: "POST"});
         redirect("/sign-in");
     };
-
+    // if(isLoading) {
+    //     return <LoadingPage />
+    // }
     return (
         <header className="sticky top-0 z-50 w-full border-b bg-white shadow-sm backdrop-blur-md">
             <div className="w-full max-w-7xl mx-auto px-6 flex h-16 items-center justify-between">

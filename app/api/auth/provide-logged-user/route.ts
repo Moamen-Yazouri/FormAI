@@ -1,20 +1,20 @@
 import { IContextUser } from "@/@types";
 import { ITokenPayload, verifyToken } from "@/lib/generateAndVerifyToken";
-import { cookies } from "next/headers"
-import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 
-export const GET = async (): Promise<NextResponse> => {
-    const token = (await cookies()).get("auth-token");
-    if(!token) {
-        return NextResponse.json({user: null}, {status: 401});
+import { NextRequest, NextResponse } from "next/server";
+
+export const GET = async (req: NextRequest): Promise<NextResponse> => {
+    const authToken = req.cookies.get("auth-token")?.value;
+    if(!authToken) {
+        return NextResponse.json({user: req.cookies}, {status: 401});
     }
 
     try {
-        const userData: ITokenPayload | null = await verifyToken(token.value);
-        console.log(userData);
+        const userData: ITokenPayload | null = await verifyToken(authToken);
         if(!userData) {
             (await cookies()).delete("auth-token")
-            return NextResponse.json({user: null}, {status: 401});
+            return NextResponse.json({user: null}, {status: 400});
         }
         const userToContext: IContextUser = {
             _id: userData.userId,
