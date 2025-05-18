@@ -1,5 +1,5 @@
-import UserDashboard from "../components/userDashboard";
-import fetchDataService from "../service/fetchData.service";
+import UserDashboard from "./components/userDashboard";
+import fetchDataService from "./service/fetchData.service";
 interface IProps {
     params: Promise<{name: string}>
 }
@@ -88,6 +88,6 @@ export default async function UserFormActivityPage(props: IProps) {
         completedForms: responses,
     }
     return (
-        <UserDashboard {...data}/>
+        <UserDashboard {...data} name={name}/>
     )
 }

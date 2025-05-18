@@ -8,13 +8,23 @@ import { Separator } from "@/components/ui/separator"
 import { IDisplayResponse } from "@/@types"
 import ResponseInfoCard from "./responseInfoCard"
 import QuestionCard from "./questionCard"
+import { toast } from "sonner"
 
 interface IProps {
-    response: IDisplayResponse;
+    response: IDisplayResponse | null;
 }
 
 export default function ResponseDetailsPage(props: IProps) {
-    const router = useRouter()
+    const router = useRouter();
+
+    if(!props.response) {
+        toast.error("Response not found");
+        setTimeout(() => {
+            router.back();
+        }, 500);
+        return null;
+    }
+
     const {responses, ...info} = props.response;
 
     const handleExport = (format: string) => {

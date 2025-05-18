@@ -1,11 +1,11 @@
 import { IUserForm, IUserFromDB, IFormPopulatedByCreator, IUserResponseTable, IResponsePopulatedUser, IUserResponseDetails } from "@/@types";
 import { getDateOnly } from "@/lib/dateUtils";
 
-import { IAnsweredForms } from "@/app/(main)/user/dashboard/types";
 import userRepo from "@/module/repositories/user.repo";
 import formsRepo from "@/module/repositories/forms.repo";
 import { connection } from "@/DB/connection";
 import responseRepo from "@/module/repositories/response.repo";
+import { IAnsweredForms } from "@/app/(main)/user/[name]/dashboard/types";
 
 
 class DashboardService {

@@ -2,12 +2,15 @@ import { IUserForm } from '@/@types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight, User } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 interface IProps {
     availableForms: IUserForm[];
+    name: string;
 }
 const AvailableForms = (props: IProps) => {
     const {availableForms} = props;
+    const router = useRouter();
     return (
         <div>
             <h2 className="text-2xl font-bold text-purple-700 mb-4">Forms to Answer</h2>
@@ -40,7 +43,7 @@ const AvailableForms = (props: IProps) => {
                         <CardContent>
                         <Button
                             className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700"
-                            onClick={() => (window.location.href = `/form/${form.id}`)}
+                            onClick={() => router.push(`/answer-form/${form.id}`)}
                         >
                             Answer Form <ArrowRight className="ml-2 h-4 w-4" />
                         </Button>
@@ -58,7 +61,7 @@ const AvailableForms = (props: IProps) => {
                     <Button
                         variant="outline"
                         className="border-purple-300 text-purple-700 hover:bg-purple-50"
-                        onClick={() => (window.location.href = "/my-forms/available")}
+                        onClick={() => router.push(`/user/${props.name}/available-forms`)}
                     >
                         Show All Available Forms <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>

@@ -11,6 +11,7 @@ import { AuthContext } from '@/providers/auth/authProvider';
 import { motion } from 'framer-motion';
 import router from 'next/router';
 import { useRouter } from 'next/navigation';
+import LoadingPage from '../loadingPage/loadingPage';
 interface IProps {
     fields: IFormField[];
     formId?: string;
@@ -20,7 +21,7 @@ interface IProps {
 }
 const FormGenerator = (props: IProps) => {
     const {formik, submitted} = useForm({...props});
-    const {user} = useContext(AuthContext);
+    const {user, isLoading} = useContext(AuthContext);
     const [isSub, setIsSub] = useState(formik.isSubmitting);
     const router = useRouter();
     useEffect(() => {
@@ -30,6 +31,14 @@ const FormGenerator = (props: IProps) => {
     const onCancel = () => {
         formik.resetForm();
         router.push(`/available-forms/${user!.name}`)
+    }
+
+    if(isLoading) {
+        return (
+            <div className="w-full min-h-screen bg-white px-4 md:px-10 py-8">
+                <LoadingPage/>
+            </div>
+        )
     }
 
     if(submitted) {
