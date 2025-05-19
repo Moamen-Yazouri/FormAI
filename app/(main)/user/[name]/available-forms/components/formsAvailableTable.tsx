@@ -83,4 +83,4 @@ const UserFormsTable = ({ forms }: IProps) => {
     )
 }
 
-export default UserFormsTable
+export default UserFormsTable;
