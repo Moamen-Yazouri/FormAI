@@ -1,5 +1,5 @@
 import { IFormFromDB, IResponseFromDB, IResponsePopulatedCreator } from "@/@types";
-import { ICreatorActivityData, ICreatorFormData, ICreatorResponses, IFormCreationData, IFormResponseData } from "@/app/(main)/creator/dashboard/types";
+import { ICreatorActivityData, ICreatorFormData, ICreatorResponses, IFormCreationData, IFormResponseData } from "@/app/(main)/creator/[name]/dashboard/types";
 import { connection } from "@/DB/connection";
 import { getDateOnly } from "@/lib/dateUtils";
 import { getDataPerDate } from "@/lib/getDataPerDate";
@@ -34,7 +34,11 @@ class DashboardService {
 
     async getFormResponseData (name: string) {
         await connection();
-        const forms = await formsRepo.getCreatorForm(name);
+        const creator = await userRepo.getUserByName(name);
+        if(!creator) {
+            throw new Error("Invalid creator name!");
+        }
+        const forms = await formsRepo.getCreatorForm(String(creator._id));
         if(forms) {
             const formResponseData: IFormResponseData[] = forms.map((form) => {
                 return {

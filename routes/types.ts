@@ -1,0 +1,12 @@
+export type PageAccessName = 
+    | "/"
+    | "/sign-in"
+    | "/sign-up"
+    | "/admin/dashboard"
+    | "/creator/dashboard"
+    | "/user/dashboard"
+    | "/answer-form"
+    | "/available-forms"
+    | "/review-response"
+    | "/form-answers"
+    | "/form-generator"

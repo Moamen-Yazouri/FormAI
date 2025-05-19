@@ -117,7 +117,7 @@ const UsersTable = (props : IProps) => {
                                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                                         <DropdownMenuItem className="flex items-center gap-2"
                                             onClick={
-                                                () => redirect(`/user-forms/${
+                                                () => redirect(`/admin/creator-forms/${
                                                     user.name
                                                 }`)
                                         }>
