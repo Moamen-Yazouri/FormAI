@@ -1,8 +1,9 @@
 import { UserRoles } from "@/@types";
 import { INavItem } from "../types";
-import { FileText, LayoutDashboard, Sparkles, User } from "lucide-react";
+import { FileText, LayoutDashboard, MessageCircleMoreIcon, Sparkles, User } from "lucide-react";
 
 export const getNavItems = (role: UserRoles, name: string): INavItem[] => {
+    console.log(name)
     switch(role) {
         case "admin": {
             const navItems = [
@@ -46,11 +47,6 @@ export const getNavItems = (role: UserRoles, name: string): INavItem[] => {
                     icon: Sparkles,
                     href: "/form-generator"
                 },
-                {
-                    title: "My Forms",
-                    icon: FileText,
-                    href: `/my-forms/${name}`
-                }
             ]
             return navItems;
         }
@@ -67,9 +63,14 @@ export const getNavItems = (role: UserRoles, name: string): INavItem[] => {
                     href: `/profile/${name}`,
                 },
                 {
-                    title: "My Forms",
+                    title: "Available Forms",
                     icon: FileText,
-                    href: `/my-forms/${name}`
+                    href: `/user/${name}/available-forms`
+                },
+                {
+                    title: "My Responses",
+                    icon: MessageCircleMoreIcon,
+                    href: `/user/${name}/responses-details`
                 }
             ]
             return navItems;
