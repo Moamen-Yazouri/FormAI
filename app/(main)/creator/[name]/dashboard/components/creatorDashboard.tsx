@@ -2,7 +2,7 @@
 
 import { Tabs, TabsContent } from "@/components/ui/tabs"
 import { Card, CardContent } from "@/components/ui/card"
-import { useMemo } from "react"
+import { useContext, useMemo } from "react"
 import { BarChart, PieChart, LayoutDashboard, FileText, Users } from "lucide-react"
 import useCreatorDashboard from "../hooks/useDashboard"
 import DashboardHeader from "./dashboardHeader"
@@ -16,6 +16,8 @@ import ResponsesTable from "./responsesTable"
 import CreatorFormsTable from "./creatorFormsTable"
 import { ICreatorActivityData, ICreatorFormData, ICreatorResponses, IFormCreationData, IFormResponseData } from "../types"
 import { IFormTable } from "@/@types"
+import { AuthContext } from "@/providers/auth/authProvider"
+import LoadingPage from "@/components/loadingPage/loadingPage"
 export const dummyForms = [
   {
     id: "1",
@@ -54,32 +56,6 @@ export const dummyForms = [
   },
 ];
 
-// Types for our data
-// interface IFormData {
-//   id: string
-//   title: string
-//   createdAt: string
-//   responsesCount: number
-//   status: "active" | "draft" | "archived"
-//   conversionRate: number
-// }
-
-// interface IFormCreationData {
-//   date: string
-//   count: number
-// }
-
-// interface IFormResponseData {
-//   formId: string
-//   formTitle: string
-//   responsesCount: number
-// }
-
-// interface ICreatorActivityData {
-//   date: string
-//   formsCreated: number
-//   responsesReceived: number
-// }
 
 interface IProps {
   formsData: IFormTable[]
@@ -109,7 +85,7 @@ const CREATOR_TABS = [
 
 const CreatorDashboard = (props: IProps) => {
   const { formsData, formCreationData, formResponsesData, creatorActivityData,  responses} = props
-
+  const {user, isLoading} = useContext(AuthContext)
   const {
     filteredForms,
     filteredResponses,
@@ -146,7 +122,13 @@ const CreatorDashboard = (props: IProps) => {
     ],
     [totalForms, totalResponses],
   )
-
+  if(isLoading) {
+      return (
+        <div className="w-full min-h-screen bg-white px-4 md:px-10 py-8">
+            <LoadingPage/>
+        </div>
+      )
+  }
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-purple-100 pb-20 pt-0 md:pt-0 w-full">
       <DashboardHeader />
@@ -170,7 +152,7 @@ const CreatorDashboard = (props: IProps) => {
               <TabHeader title="My Forms" description="View and manage all your created forms" />
               <CardContent>
                 <SearchBar placeholder="Search forms..." setSearch={setSearchForms} search={searchForms} />
-                <CreatorFormsTable forms={filteredForms}/>
+                <CreatorFormsTable forms={filteredForms} name={user!.name}/>
               </CardContent>
             </Card>
           </TabsContent>
