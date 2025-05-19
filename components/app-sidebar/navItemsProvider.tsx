@@ -9,7 +9,6 @@ interface IProps {
     name: string;
 }
 const NavItemsProvider = (props: IProps) => {
-    console.log(props.name)
     const navItems = getNavItems(props.role, props.name);
     const pathname = usePathname();;
     const isActive = (path : string) => {

@@ -4,12 +4,13 @@ import FormsTable from "@/components/forms-table/formsTable"
 import { IFormTable } from "@/@types"
 
 interface IProps {
-    forms: IFormTable[]
+    forms: IFormTable[];
+    name: string;
 }
 
-const CreatorFormsTable = ({ forms }: IProps) => {
+const CreatorFormsTable = ({ forms, name }: IProps) => {
     return (
-        <FormsTable forms={forms} role="creator"/>
+        <FormsTable forms={forms} role="creator" name={name} isSummary={true}/>
     )
 }
 
