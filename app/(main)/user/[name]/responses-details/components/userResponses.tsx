@@ -12,7 +12,7 @@ import LoadingPage from "@/components/loadingPage/loadingPage"
 interface IProps {
     responsesDetails: IUserResponseDetails[];
 }
-const CompletedFormsPage = (props: IProps) => {
+const UserResponsesDetails = (props: IProps) => {
     const router = useRouter();
     const {user, isLoading} = useContext(AuthContext)
     const {responsesDetails} = props;
@@ -115,4 +115,4 @@ const CompletedFormsPage = (props: IProps) => {
     );
 };
 
-export default CompletedFormsPage;
+export default UserResponsesDetails;

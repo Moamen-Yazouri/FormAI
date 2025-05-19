@@ -1,6 +1,6 @@
 import React from 'react'
-import CompletedFormsPage from '../../components/userResponses'
-import fetchDataService from '../../service/fetchData.service';
+import CompletedFormsPage from './components/userResponses'
+import fetchDataService from '../dashboard/service/fetchData.service';
 interface IProps {
     params: Promise<{name: string}>;
 }

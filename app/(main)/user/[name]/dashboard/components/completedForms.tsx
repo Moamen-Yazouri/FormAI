@@ -1,13 +1,16 @@
-import { IUserResponseTable } from '@/@types'
+"use client"
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { ArrowRight, CheckCircle } from 'lucide-react'
 import React from 'react'
 import { IAnsweredForms } from '../types'
+import { useRouter } from 'next/navigation'
 interface IProps {
     completedForms: IAnsweredForms[];
+    name: string;
 }
 const CompletedForms = (props: IProps) => {
+    const router = useRouter();
     const {completedForms} = props;
     return (
         <div>
@@ -19,7 +22,7 @@ const CompletedForms = (props: IProps) => {
                     <div className="text-center text-purple-600">You haven't completed any forms yet.</div>
                     ) : (
                     <>
-                        {completedForms.slice(0, 4).map((form, index) => (
+                        {completedForms.slice(0, 4).map((form) => (
                         <div
                             key={form.id}
                             className="flex items-center justify-between p-3 rounded-lg border border-purple-100 hover:bg-purple-50 transition-colors"
@@ -34,31 +37,14 @@ const CompletedForms = (props: IProps) => {
                             </div>
                             </div>
                             <Button
-                            variant="outline"
-                            size="sm"
-                            className="border-purple-200 text-purple-700 hover:bg-purple-50"
-                            onClick={() => (window.location.href = `/form/${form.id}/view`)}
+                                variant="outline"
+                                className="border-purple-300 text-purple-700 hover:bg-purple-50"
+                                onClick={() => (router.push(`/user/${props.name}/responses-details`))}
                             >
-                            View
+                            Show All Responses Details <ArrowRight className="ml-2 h-4 w-4" />
                             </Button>
                         </div>
                         ))}
-
-                        {completedForms.length > 4 && (
-                        <div className="text-center mt-6">
-                            <p className="text-purple-600 mb-3">
-                            {completedForms.length - 4} more{" "}
-                            {completedForms.length - 4 === 1 ? "form" : "forms"} completed
-                            </p>
-                            <Button
-                            variant="outline"
-                            className="border-purple-300 text-purple-700 hover:bg-purple-50"
-                            onClick={() => (window.location.href = "/my-forms/completed")}
-                            >
-                            Show All Completed Forms <ArrowRight className="ml-2 h-4 w-4" />
-                            </Button>
-                        </div>
-                        )}
                     </>
                     )}
                 </div>
