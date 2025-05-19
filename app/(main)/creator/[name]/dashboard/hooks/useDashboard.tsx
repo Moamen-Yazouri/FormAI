@@ -2,9 +2,10 @@
 
 import { useState, useMemo, useEffect } from "react"
 import { ICreatorFormData, ICreatorResponses } from "../types"
+import { IFormTable } from "@/@types"
 
 interface IProps {
-    formsData: ICreatorFormData[]
+    formsData: IFormTable[]
     responses: ICreatorResponses[]
 }
 
@@ -28,7 +29,7 @@ const useCreatorDashboard = ({ formsData, responses }: IProps) => {
 
         const searchTerm = searchForms.toLowerCase()
         return formsData.filter(
-            (form) => form.title.toLowerCase().includes(searchTerm)
+            (form) => form.name.toLowerCase().includes(searchTerm)
         )
     }, [formsData, searchForms])
 
@@ -48,11 +49,11 @@ const useCreatorDashboard = ({ formsData, responses }: IProps) => {
     const totalForms = useMemo(() => formsData.length, [formsData])
 
 
-    const totalResponses = useMemo(() => formsData.reduce((sum, form) => sum + form.responsesCount, 0), [formsData])
+    const totalResponses = useMemo(() => formsData.reduce((sum, form) => sum + form.responses, 0), [formsData])
 
     const topPerformingForms = useMemo(() => {
         return [...formsData]
-        .sort((a, b) => b.responsesCount - a.responsesCount)
+        .sort((a, b) => b.responses - a.responses)
         .slice(0, 5)
     }, [formsData])
 

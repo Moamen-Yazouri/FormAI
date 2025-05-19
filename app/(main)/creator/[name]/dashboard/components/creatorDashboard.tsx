@@ -15,6 +15,7 @@ import FormsTable from "@/components/forms-table/formsTable"
 import ResponsesTable from "./responsesTable"
 import CreatorFormsTable from "./creatorFormsTable"
 import { ICreatorActivityData, ICreatorFormData, ICreatorResponses, IFormCreationData, IFormResponseData } from "../types"
+import { IFormTable } from "@/@types"
 export const dummyForms = [
   {
     id: "1",
@@ -81,7 +82,7 @@ export const dummyForms = [
 // }
 
 interface IProps {
-  formsData: ICreatorFormData[]
+  formsData: IFormTable[]
   formCreationData: IFormCreationData[]
   formResponsesData: IFormResponseData[]
   creatorActivityData: ICreatorActivityData[]
@@ -149,7 +150,6 @@ const CreatorDashboard = (props: IProps) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-purple-100 pb-20 pt-0 md:pt-0 w-full">
       <DashboardHeader />
-
       <div className="container mx-auto px-4 py-8">
         <Tabs defaultValue="overview" className="space-y-6">
           <AllTabs tabs={CREATOR_TABS} />
@@ -170,7 +170,7 @@ const CreatorDashboard = (props: IProps) => {
               <TabHeader title="My Forms" description="View and manage all your created forms" />
               <CardContent>
                 <SearchBar placeholder="Search forms..." setSearch={setSearchForms} search={searchForms} />
-                <CreatorFormsTable filteredForms={filteredForms}/>
+                <CreatorFormsTable forms={filteredForms}/>
               </CardContent>
             </Card>
           </TabsContent>

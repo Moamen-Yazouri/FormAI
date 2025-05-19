@@ -1,7 +1,7 @@
-import { IForm, IFormFromDB, IFormPopulatedByCreator, IFormResponse, IUserFromDB } from "@/@types";
+import { IForm, IFormFromDB, IFormPopulatedByCreator, IFormResponse } from "@/@types";
 import FormModel from "@/DB/models/form.model";
 import responseModel from "@/DB/models/response.model";
-import userModel from "@/DB/models/user.model";
+
 
 class FormsRepo {
     async getAllowedForms(id: string): Promise<IFormPopulatedByCreator[]> {
@@ -13,6 +13,7 @@ class FormsRepo {
             .lean<IFormPopulatedByCreator[]>();
         return allowedForms;
     }
+
     async getFormById(formId: string): Promise<IFormFromDB | null> {
         return await FormModel.findById(formId).lean<IFormFromDB>();
     }
@@ -45,6 +46,9 @@ class FormsRepo {
         }).lean<IFormFromDB[]>();
             return creatorForms;
         }
+    async deleteForm (formId: string) {
+        return await FormModel.findByIdAndDelete(formId).lean<IFormFromDB>();
+    }
 }
 
 export default new FormsRepo();
