@@ -33,5 +33,16 @@ class FormServices {
         return forms;
     }
 
+    async deleteForm (formId: string) {
+        if(!formId) {
+            throw new Error("No form id provided");
+        }
+        const form = await formsRepo.getFormById(formId);
+        if(!form) {
+            throw new Error("Form not found");
+        }
+        const deletedForm = await formsRepo.deleteForm(formId);
+        return deletedForm;
+    }
 }
 export default new FormServices();

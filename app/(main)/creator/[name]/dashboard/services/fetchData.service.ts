@@ -1,6 +1,7 @@
 import { connection } from "@/DB/connection";
 import dashboardService from "@/module/services/creator/dashboard.service";
 import { ICreatorFormData, ICreatorResponses, IFormCreationData } from "../types";
+import { IFormTable } from "@/@types";
 
 class FetchServices {
     async formCreationData(name: string) {
@@ -68,7 +69,7 @@ class FetchServices {
     async formsData(name: string) {
         await connection();
         try {
-            const formsData: ICreatorFormData[] = await dashboardService.getCreatorForms(name);
+            const formsData: IFormTable[] = await dashboardService.getCreatorForms(name);
             if (!formsData || formsData.length === 0) {
             console.warn(`No forms found for "${name}".`);
             return [];

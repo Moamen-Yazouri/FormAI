@@ -41,16 +41,7 @@ const ActionsProvider = (props: IProps) => {
                 </>
             )
         }
-        case "user" : {
-            return (
-                <>
-                    <DropdownMenuItem className="flex items-center gap-2" onClick={() => redirect(`/answer-form/${props.id}`)}>
-                        <Eye className="h-4 w-4"/>
-                            Answer Form
-                    </DropdownMenuItem>
-                </>
-            )
-        }
+        default: return null;
     }
 }
 

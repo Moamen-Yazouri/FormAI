@@ -111,12 +111,7 @@ const AdminDashboard = (props: IProps) => {
                         <Card>
                             <TabHeader title={"Form Analytics"} description={"View and analyze all forms on the platform"}/>
                             <CardContent>
-                                <SearchBar
-                                    placeholder="Search forms..."
-                                    setSearch={setSearchForms}
-                                    search={searchForms}
-                                />
-                                <FormsTable filteredForms={filteredForms} />                            
+                                <FormsTable forms={filteredForms} role="admin"/>                            
                             </CardContent>
                         </Card>
                     </TabsContent>

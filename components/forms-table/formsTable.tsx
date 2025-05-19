@@ -1,5 +1,5 @@
 "use client" 
-import { IFormTable} from '@/@types'
+import { IFormFromDB, IFormTable, UserRoles} from '@/@types'
 import {Badge} from '@/components/ui/badge'
 import {Button} from '@/components/ui/button'
 import {
@@ -21,20 +21,49 @@ import {FileText, MoreVertical, Eye, MessageSquare} from 'lucide-react'
 import React, {useState} from 'react'
 import DeleteDialog from '../deleteDialog/deleteDialog'
 import ActionsProvider from '@/components/form-actions-provider/ActionsProvider'
+import { toast } from 'sonner'
+import SearchBar from './searchBar'
+import { useFilter } from './hook/useFilter'
 
 interface IProps {
-    filteredForms: IFormTable[];
+    forms: IFormTable[];
+    role: UserRoles;
 }
 
 const FormsTable = (props : IProps) => {
     const [formToDelete, setFormToDelete] = useState<string | null>(null);
-
-    const handelFormDelete = (form : string) => {
-        setFormToDelete(null);
+    const {setSearchTerm, searchTerm, filteredForms} = useFilter(props.forms);
+    const handelFormDelete = async(form : string) => {
+        try{
+            const res = await fetch("/api/delete-form",
+                {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        formId: form
+                    })
+                }
+            );
+            const {deletedForm}: {deletedForm: IFormFromDB} = await res.json();
+            toast.success(`Form ${deletedForm.title} deleted successfully`);
+        }
+        catch(err) {
+            if(err instanceof Error) {
+                toast.error(err.message);
+                return;
+            }
+            toast.error("Something went wrong");
+        }
+        finally{
+            setFormToDelete(null);
+        }
     }
 
     return (
         <div className="rounded-md border">
+            <SearchBar placeholder={'Search Forms...'} search={searchTerm} setSearch={setSearchTerm}/>
             <Table>
                 <TableHeader>
                     <TableRow>
@@ -46,7 +75,7 @@ const FormsTable = (props : IProps) => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {props.filteredForms.map((form) => (
+                    {filteredForms.map((form) => (
                         <TableRow key={form.id}>
                             <TableCell>
                                 <div className="flex items-center gap-2">
@@ -55,13 +84,13 @@ const FormsTable = (props : IProps) => {
                                 </div>
                             </TableCell>
                             <TableCell>{form.creator}</TableCell>
-                            {"responses" in form && (
-                                <TableCell>
-                                    <Badge variant="secondary" className="bg-purple-100 text-purple-800 hover:bg-purple-100">
-                                        {form.responses}
-                                    </Badge>
-                                </TableCell>
-                            )}
+
+                            <TableCell>
+                                <Badge variant="secondary" className="bg-purple-100 text-purple-800 hover:bg-purple-100">
+                                    {form.responses}
+                                </Badge>
+                            </TableCell>
+
                             <TableCell>{String(form.createdAt)}</TableCell>
                             <TableCell className="text-right">
                                 <DropdownMenu>
@@ -73,12 +102,12 @@ const FormsTable = (props : IProps) => {
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent align="end">
                                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                        <ActionsProvider role='admin' id={form.id}/>
+                                        <ActionsProvider role={props.role} id={form.id}/>
                                         <DropdownMenuSeparator/>
                                         <DeleteDialog 
                                             itemToDelete={formToDelete}
                                             item={form}
-                                            data={props.filteredForms}
+                                            data={props.forms}
                                             setItemToDelete={setFormToDelete}
                                             itemsType="Form"
                                             handleDeleteItem={handelFormDelete}

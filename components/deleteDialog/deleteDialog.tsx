@@ -85,7 +85,7 @@ const DeleteDialog = <T extends ISharedProps>(props: IProps<T>) => {
                 variant="outline"
                 onClick={() => {
                 setIsDialogOpen(false)  // ✅ Close dialog
-                setItemToDelete(null)   // Clear selected user
+                setItemToDelete(null)   
                 }}
             >
                 Cancel
