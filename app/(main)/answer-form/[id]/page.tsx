@@ -6,7 +6,6 @@ interface IProps {
 
 const AnswerFormPage = async (props: IProps) => {
   const id = (await props.params).id;
-
   return (
     <FormTemplate id={id} isPreview={false}  isView={false}/>
   );

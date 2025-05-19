@@ -1,5 +1,7 @@
-import {IUserData} from '@/@types'
+import {IUserData} from '@/@types';
+
 import {Button} from '@/components/ui/button';
+
 import {
     Table,
     TableBody,
@@ -8,6 +10,7 @@ import {
     TableHeader,
     TableRow
 } from '@/components/ui/table';
+
 import {Avatar, AvatarFallback} from '@radix-ui/react-avatar';
 import {MoreVertical, Eye} from 'lucide-react';
 import React, {useState} from 'react'
@@ -21,6 +24,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
+
 import actionsService from '../../services/actions.service';
 import {toast} from 'sonner';
 import {redirect} from 'next/navigation';

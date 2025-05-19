@@ -1,6 +1,6 @@
 "use client" 
 import Link from "next/link"
-import {redirect, usePathname} from "next/navigation"
+import {redirect, usePathname, useRouter} from "next/navigation"
 import {
     Sidebar,
     SidebarContent,
@@ -26,9 +26,11 @@ import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar"
 import {Button} from "@/components/ui/button"
 import { AuthContext } from "@/providers/auth/authProvider"
 import { useContext } from "react"
+import NavItemsProvider from "./navItemsProvider"
 
 export default function AppSidebar() {
-    const {setUser} = useContext(AuthContext)
+    const {setUser, user } = useContext(AuthContext);
+    const router = useRouter();
     const pathname = usePathname()
     const {isMobile} = useSidebar()
     if(pathname.includes("answer-form")) return
@@ -37,16 +39,16 @@ export default function AppSidebar() {
     }
 
     const handleLogout = async () => {
-        setUser(null);
         await fetch("api/auth/logout", {method: "POST"});
-        redirect("/sign-in")
+        setUser(null);
+        router.push("/sign-in")
     }
 
     const navItems = [
         {
             title: "Dashboard",
-            icon: LayoutDashboard,
-            href: "/admin/dashboard"
+                icon: LayoutDashboard,
+                href: "/admin/dashboard"
         },
         {
             title: "Form Generator",
@@ -93,33 +95,7 @@ export default function AppSidebar() {
                     </div>
                 </SidebarHeader>
 
-                <SidebarContent>
-                    <SidebarMenu> {
-                        navItems.map((item) => (
-                            <SidebarMenuItem key={
-                                item.href
-                            }>
-                                <SidebarMenuButton asChild
-                                    isActive={
-                                        isActive(item.href)
-                                    }
-                                    tooltip={
-                                        item.title
-                                }>
-                                    <Link href={
-                                            item.href
-                                        }
-                                        className="flex items-center">
-                                        <item.icon className="h-5 w-5"/>
-                                        <span>{
-                                            item.title
-                                        }</span>
-                                    </Link>
-                                </SidebarMenuButton>
-                            </SidebarMenuItem>
-                        ))
-                    } </SidebarMenu>
-                </SidebarContent>
+                <NavItemsProvider name={user!.name} role={user!.role}/>
 
                 <SidebarFooter className="border-t">
                     <div className="p-4">
