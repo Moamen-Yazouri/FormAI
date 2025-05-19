@@ -1,23 +1,14 @@
 "use client" 
-import Link from "next/link"
-import {redirect, usePathname, useRouter} from "next/navigation"
+import {usePathname, useRouter} from "next/navigation"
 import {
     Sidebar,
-    SidebarContent,
     SidebarFooter,
     SidebarHeader,
-    SidebarMenu,
-    SidebarMenuButton,
-    SidebarMenuItem,
+
     SidebarTrigger,
     useSidebar
 } from "@/components/ui/sidebar"
 import {
-    LayoutDashboard,
-    Code,
-    FileText,
-    User,
-    Settings,
     LogOut,
     Sparkles,
     Menu
@@ -27,16 +18,23 @@ import {Button} from "@/components/ui/button"
 import { AuthContext } from "@/providers/auth/authProvider"
 import { useContext } from "react"
 import NavItemsProvider from "./navItemsProvider"
+import Loader from "./loader"
 
 export default function AppSidebar() {
-    const {setUser, user } = useContext(AuthContext);
+    const {setUser, user, isLoading } = useContext(AuthContext);
     const router = useRouter();
-    const pathname = usePathname()
-    const {isMobile} = useSidebar()
-    if(pathname.includes("answer-form")) return
-    const isActive = (path : string) => {
-        return pathname === path
+    const pathname = usePathname();
+    const {isMobile} = useSidebar();
+    const nameForAvatar = user?.name?.split(" ").map((word) => word[0]).join("")
+
+    if(isLoading) {
+        return (
+            <Loader/>
+        )
     }
+
+
+    if(pathname.includes("answer-form")) return null;
 
     const handleLogout = async () => {
         await fetch("api/auth/logout", {method: "POST"});
@@ -44,35 +42,8 @@ export default function AppSidebar() {
         router.push("/sign-in")
     }
 
-    const navItems = [
-        {
-            title: "Dashboard",
-                icon: LayoutDashboard,
-                href: "/admin/dashboard"
-        },
-        {
-            title: "Form Generator",
-            icon: Sparkles,
-            href: "/form-generator"
-        },
-        {
-            title: "Projects",
-            icon: FileText,
-            href: "/projects"
-        },
-        {
-            title: "Profile",
-            icon: User,
-            href: "/profile"
-        }, {
-            title: "Settings",
-            icon: Settings,
-            href: "/settings"
-        },
-    ]
-
     return (
-        <> {/* Mobile header with menu trigger */}
+        <> 
             {
             isMobile && (
                 <div className="fixed top-0 left-0 right-0 h-14 border-b bg-white z-30 flex items-center px-4">
@@ -102,11 +73,11 @@ export default function AppSidebar() {
                         <div className="flex items-center gap-3">
                             <Avatar>
                                 <AvatarImage src="/placeholder.svg?height=32&width=32"/>
-                                <AvatarFallback className="bg-purple-200 text-purple-900">JD</AvatarFallback>
+                                <AvatarFallback className="bg-purple-200 text-purple-900">{nameForAvatar}</AvatarFallback>
                             </Avatar>
                             <div className="flex flex-col">
-                                <span className="text-sm font-medium">John Doe</span>
-                                <span className="text-xs text-muted-foreground">john@example.com</span>
+                                <span className="text-sm font-medium">{user!.name}</span>
+                                <span className="text-xs text-muted-foreground">{user!.email}</span>
                             </div>
                         </div>
                         <Button onClick={handleLogout} variant="ghost" size="sm" className="w-full mt-4 text-red-500 hover:text-red-600 hover:bg-red-50">
