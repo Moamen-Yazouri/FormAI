@@ -25,37 +25,27 @@ import { toast } from "sonner";
 import SearchBar from "../text-search-bar/searchBar";
 import { useFilter } from "./hook/useFilter";
 import Link from "next/link";
+import formAction from "./actions/form.action";
 
 interface IProps {
     forms: IFormTable[];
     role: UserRoles;
-    name?: string;
+    name: string;
     isSummary?: boolean;
 }
 
 const FormsTable = (props: IProps) => {
     const { forms, role, name, isSummary } = props;
     const [formToDelete, setFormToDelete] = useState<string | null>(null);
-    let limitedForms: IFormTable[] | undefined;
-    if(isSummary) {
-        limitedForms = forms.sort((a, b) => b.responses - a.responses).slice(0, 4);
-    }
-
-    const { setSearchTerm, searchTerm, filteredForms } = useFilter(limitedForms || forms);
+    const { setSearchTerm, searchTerm, filteredForms } = useFilter(forms);
 
     const handleFormDelete = async (formId: string) => {
-        try {
-            const res = await fetch("/api/delete-form", {
-                method: "DELETE",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ formId }),
-            });
-            const { deletedForm }: { deletedForm: IFormFromDB } = await res.json();
-            toast.success(`Form ${deletedForm.title} deleted successfully`);
-        } catch (err) {
-            toast.error(err instanceof Error ? err.message : "Something went wrong");
-        } finally {
-            setFormToDelete(null);
+        const deletedForm = await formAction.deleteForm(formId);
+        if (deletedForm) {
+            toast.success(`Form: ${deletedForm.title}, deleted successfully`);
+        }
+        else {
+            toast.error("Failed to delete the form!");
         }
     };
 
@@ -138,7 +128,7 @@ const FormsTable = (props: IProps) => {
                         <Link 
                             href= {
                                 role === "admin"
-                                ? `/admin/all-forms`
+                                ? `/${name}/all-forms`
                                 : `/creator/${name}/my-forms`
                             }
                         >
