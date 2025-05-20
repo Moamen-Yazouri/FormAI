@@ -24,9 +24,6 @@ class DashboardRepo {
         return await FormModel.find({}).lean<IFormFromDB[]>();
     }
 
-    async deleteUser(userId: string) {
-        return await userModel.findByIdAndDelete(userId).lean<IUserFromDB>();
-    }
 
     async deleteForm(formId: string) {
         return await FormModel.findByIdAndDelete(formId).lean<IFormFromDB>();

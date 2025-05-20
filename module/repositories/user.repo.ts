@@ -11,6 +11,11 @@ class UserRepo {
     async getUserById(userId: string) {
         return await userModel.findById(userId).lean<IUserFromDB>();
     }
+
+    
+    async deleteUser(userId: string) {
+        return await userModel.findByIdAndDelete(userId).lean<IUserFromDB>();
+    }
 }
 
 export default new UserRepo();
