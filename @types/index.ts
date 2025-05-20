@@ -165,11 +165,11 @@ export interface IFormResponseData {
     name: string,
     value: number,
 }
-export interface IStateCard {
-    stateTitle: string,
-    stateValue: number,
-    statePercentage: number,
-}
+// export interface IStateCard {
+//     stateTitle: string,
+//     stateValue: number,
+//     statePercentage: number,
+// }
 
 export interface IActiveUsers {
     id: string | number,
