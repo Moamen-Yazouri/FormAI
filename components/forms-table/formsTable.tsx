@@ -16,14 +16,13 @@ import {
     DropdownMenuContent,
     DropdownMenuLabel,
     DropdownMenuSeparator,
-    DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import { FileText, MoreVertical, MessageSquare } from "lucide-react";
+import { FileText, MoreVertical } from "lucide-react";
 import React, { useState } from "react";
 import DeleteDialog from "../deleteDialog/deleteDialog";
 import ActionsProvider from "@/components/form-actions-provider/ActionsProvider";
 import { toast } from "sonner";
-import SearchBar from "./searchBar";
+import SearchBar from "../text-search-bar/searchBar";
 import { useFilter } from "./hook/useFilter";
 import Link from "next/link";
 

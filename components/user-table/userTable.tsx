@@ -24,22 +24,31 @@ import {
     DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 
-import actionsService from '../../services/actions.service';
+
 import {toast} from 'sonner';
 import {useRouter} from 'next/navigation';
 import DeleteDialog from '@/components/deleteDialog/deleteDialog';
+import userAction from './actions/user.action';
+import { getLimitedUsers } from './lib/getLimitedUsers';
+import { useFilter } from './hooks/useFilter';
+import SearchBar from '../text-search-bar/searchBar';
 
 interface IProps {
-    filteredUsers: IUserData[];
+    users: IUserData[];
+    isSummary?: boolean;
 }
 
 const UsersTable = (props: IProps) => {
     const [userToDelete, setUserToDelete] = useState<string | null>(null);
-    const {filteredUsers} = props;
+    const {users} = props;
     const router = useRouter();
-
+    const {
+        searchTerm,
+        setSearchTerm,
+        filteredUsers
+    } = useFilter(users);
     const handleDeleteUser = async (userId: string) => {
-        const deletedUser = await actionsService.deleteUser(userId);
+        const deletedUser = await userAction.deleteUser(userId);
         if (deletedUser) {
             toast.success(`User: ${deletedUser.email}, deleted successfully`);
         } else {
@@ -49,6 +58,11 @@ const UsersTable = (props: IProps) => {
 
     return (
         <div className="rounded-md border">
+          <SearchBar
+            placeholder="Search Users..."
+            search={searchTerm}
+            setSearch={setSearchTerm}
+          />
             <Table>
                 <TableHeader>
                     <TableRow>
