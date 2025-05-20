@@ -6,17 +6,15 @@ import {
 } from "@/components/ui/card"
 import useDashboard from "../hooks/useDahboard"
 import { IFormTable, IFormCreationData, IFormResponseData, IUserData, IUsersActivityData } from "@/@types"
-import UsersTable from "./tables/usersTable"
 import FormsTable from "@/components/forms-table/formsTable"
-import SearchBar from "../components/searchBar"
 import AllTabs from "../components/allTabs"
 import { TABS } from "../constants/constants"
 import TabHeader from "../components/tabHeader"
 import AllCharts from "../components/allCharts"
-import { useMemo } from "react"
 import AllCards from "../components/allStates"
 import DashboardHeader from "../components/dashboardHeader"
-import { getActivesFirst } from "../utils/sortArray"
+import UsersTable from "@/components/user-table/userTable"
+
 interface IProps {
     usersData: IUserData[],
     formsData: IFormTable[],
@@ -33,42 +31,15 @@ const AdminDashboard = (props: IProps) => {
         formCreationData,
         formResponsesData,
     } = props;
-    const userData = getActivesFirst(usersData);
-    const {
-        filteredUsers,
-        filteredForms,
-        totalUsers,
-        searchUsers,
-        searchForms,
-        activeUsers,
-        totalForms,
-        totalResponses,
-        setSearchUsers,
-        setSearchForms,
-    } = useDashboard({userData, formsData});
 
-    const stateCardsData = useMemo(() => [
-        {
-            stateTitle: "Total Users",
-            stateValue: totalUsers,
-            statePercentage: 10,
-        },
-        {
-            stateTitle: "Active Users",
-            stateValue: activeUsers,
-            statePercentage: 10,
-        },
-        {
-            stateTitle: "Total Forms",
-            stateValue: totalForms,
-            statePercentage: 15,
-        },
-        {
-            stateTitle: "Form Responses",
-            stateValue: totalResponses,
-            statePercentage: 3,
-        },
-    ], [totalUsers, activeUsers, totalForms, totalResponses]);
+
+    const {
+        stateCardsData,
+        slicedUsers,
+        slicedForms,
+    } = useDashboard({usersData, formsData});
+
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-purple-50 to-purple-100 pb-20 pt-0 md:pt-0 w-full">
             <DashboardHeader/>
@@ -95,14 +66,7 @@ const AdminDashboard = (props: IProps) => {
                         <Card>
                             <TabHeader title={"User Management"} description={"View and manage all users on the platform"}/>
                             <CardContent>
-
-                                <SearchBar
-                                    placeholder="Search users..."
-                                    setSearch={setSearchUsers}
-                                    search={searchUsers}
-                                />
-
-                                <UsersTable filteredUsers={filteredUsers}/>
+                                <UsersTable users={slicedUsers} isSummary={true}/>
                             </CardContent>
                         </Card>
                     </TabsContent>
@@ -111,7 +75,7 @@ const AdminDashboard = (props: IProps) => {
                         <Card>
                             <TabHeader title={"Form Analytics"} description={"View and analyze all forms on the platform"}/>
                             <CardContent>
-                                <FormsTable forms={filteredForms} role="admin" isSummary={true}/>                            
+                                <FormsTable forms={slicedForms} role="admin" isSummary={true} name="admin"/>                            
                             </CardContent>
                         </Card>
                     </TabsContent>

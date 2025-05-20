@@ -9,6 +9,6 @@ export const getActivesFirst = (users: IUserData[]) => {
             return 1
         }
         return 0
-    })
+    }).slice(0, 5);
     return usersData;
 }
