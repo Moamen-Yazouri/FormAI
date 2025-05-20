@@ -1,5 +1,9 @@
+"use client"
 import { IFormTable, IUserData } from "@/@types"
 import { useCallback, useMemo, useState } from "react"
+import { generateStateCards } from "../utils/generateStateCards";
+import { getActivesFirst } from "../utils/sortArray";
+import { getSortedForms } from "../utils/sortByResponse";
 
 interface IProps {
     usersData: IUserData[],
@@ -11,8 +15,18 @@ const useDashboard = (props: IProps) => {
     const [activeUsers, setActiveUsers] = useState(0);
     const [totalForms, setTotalForms] = useState(0);
     const [totalResponses, setTotalResponses] = useState(0);
-    const [isDialogOpen, setIsDialogOpen] = useState(false);
-        
+    
+    const slicedUsers = useMemo(() => getActivesFirst(usersData), [usersData]);
+
+    const slicedForms = useMemo(() => getSortedForms(formsData), [formsData]);
+
+    const stateCardsData = useMemo(() => generateStateCards(
+            totalUsers,
+            activeUsers,
+            totalForms,
+            totalResponses
+        )
+    , [usersData, formsData]);
 
     useMemo(() => {
         setTotalUsers(usersData.length);
@@ -26,12 +40,9 @@ const useDashboard = (props: IProps) => {
 
 
     return {
-        totalUsers,
-        activeUsers,
-        totalForms,
-        totalResponses,
-        isDialogOpen,
-        setIsDialogOpen,
+        slicedForms,
+        slicedUsers,
+        stateCardsData,
     }
 }
 export default useDashboard
