@@ -1,13 +1,4 @@
-import type { ReactNode } from "react"
 import StateCard from "./stateCard"
-
-
-interface IStateCard {
-  stateTitle: string
-  stateValue: string | number
-  statePercentage: number
-  icon?: ReactNode
-}
 
 interface IProps {
   cards: IStateCard[]

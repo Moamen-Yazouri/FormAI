@@ -1,8 +1,10 @@
+"server-only"
 import mongoose from "mongoose";
 
 const MONGO_URI = process.env.MONGODB_URI as string;
 
 if (!MONGO_URI) {
+    console.log(MONGO_URI)
     throw new Error("⚠️ Error: MONGO_URI environment variable is missing!");
 }
 

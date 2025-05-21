@@ -1,3 +1,5 @@
+import { LucideProps } from "lucide-react"
+import { ForwardRefExoticComponent, RefAttributes } from "react"
 
 export interface IFormCreationData {
     date: string
@@ -29,5 +31,13 @@ export interface ICreatorResponses {
     respondentName: string,
     respondentEmail: string,
     date: string,
+}
+
+export interface IStateCard {
+    stateTitle: string;
+    stateValue: number;
+    statePercentage: number;
+    icon: ForwardRefExoticComponent<Omit<LucideProps, "ref"> 
+            & RefAttributes<SVGSVGElement>>
 }
 

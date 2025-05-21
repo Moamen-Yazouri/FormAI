@@ -8,9 +8,8 @@ import {
     ResponsiveContainer
 } from "recharts";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { IUserData, IUsersActivityData } from "@/@types";
+import { IUsersActivityData } from "@/@types";
 
-  // Sample data
 interface IProps {
     userActivityData: IUsersActivityData[];
 }

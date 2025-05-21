@@ -1,21 +1,21 @@
-import { connection } from "@/DB/connection";
-import userService from "@/module/services/user.service";
-
-class UserAction {
-    async deleteUser(userId: string) {
-        await connection();
-        try {
-            const deletedUser = await userService.deleteUser(userId);
-            return deletedUser;
-        }
-        catch (err) {
-            if (err instanceof Error) {
-                console.error(err.message);
-            }
-            console.error("Failed to delete the user!");
-            return null;
-        }
+export const deleteUser = async(userId: string) => {
+    const localUrl = process.env.NEXT_PUBLIC_URL;
+    try {
+        const res = await fetch(`${localUrl}/api/delete-form`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ userId })
+        });
+        const {usersData} = await res.json();
+        return usersData
+    }
+    catch (err: any) {
+        console.error(err.message || "Failed to delete the user!");
+        return null;
     }
 }
 
-export default new UserAction();
+
+

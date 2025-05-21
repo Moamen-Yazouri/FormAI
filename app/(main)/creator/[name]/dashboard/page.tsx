@@ -1,8 +1,6 @@
-import React from 'react'
 import CreatorDashboard from '../dashboard/components/creatorDashboard';
 import FetchServices from '../dashboard/services/fetchData.service'
-import formsRepo from '@/module/repositories/forms.repo';
-import responseRepo from '@/module/repositories/response.repo';
+
 // export const formData: IFormData[] = [
 //   {
 //     id: "f1",
@@ -112,7 +110,6 @@ const page = async (props: IProps) => {
         FetchServices.creatorActivityData(name),
         FetchServices.creatorResponses(name),
     ]);
-
   return (
     <CreatorDashboard 
       formsData={formData} 

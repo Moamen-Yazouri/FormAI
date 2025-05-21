@@ -1,4 +1,4 @@
-"use client" 
+"use client"
 import {Tabs, TabsContent} from "@/components/ui/tabs"
 import {
     Card,

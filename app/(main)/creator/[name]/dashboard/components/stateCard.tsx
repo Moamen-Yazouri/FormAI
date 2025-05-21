@@ -1,13 +1,16 @@
 import { Card, CardContent } from "@/components/ui/card"
-import { ArrowUpIcon, ArrowDownIcon } from 'lucide-react'
-import type { ReactNode } from "react"
+import { ArrowUpIcon, ArrowDownIcon, LucideProps } from 'lucide-react'
+import type { ForwardRefExoticComponent, ReactNode, RefAttributes } from "react"
+import React from "react"
 
 interface IProps {
     stateTitle: string
     stateValue: string | number
     statePercentage: number
-    icon?: ReactNode
+    icon?: ForwardRefExoticComponent<Omit<LucideProps, "ref"> 
+            & RefAttributes<SVGSVGElement>>
 }
+
 
 const StateCard = (props: IProps) => {
     const { stateTitle, stateValue, statePercentage, icon } = props
@@ -21,7 +24,9 @@ const StateCard = (props: IProps) => {
                 <p className="text-sm font-medium text-muted-foreground">{stateTitle}</p>
                 <h3 className="text-2xl font-bold mt-1">{stateValue}</h3>
             </div>
-            <div className="h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center">{icon}</div>
+            <div className="h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center">
+                {icon && React.createElement(icon, { className: "h-5 w-5 text-purple-600" })}
+            </div>
             </div>
 
             <div className="flex items-center mt-4">

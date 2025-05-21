@@ -3,6 +3,8 @@
 import { useState, useMemo, useEffect } from "react"
 import { ICreatorFormData, ICreatorResponses } from "../types"
 import { IFormTable } from "@/@types"
+import { generateStateCards } from "../utils/generateStateCards"
+import { summarizeForms, summarizeResponses } from "../utils/sliceAndSort"
 
 interface IProps {
     formsData: IFormTable[]
@@ -14,6 +16,12 @@ const useCreatorDashboard = ({ formsData, responses }: IProps) => {
     const [recentResponses, setRecentResponses] = useState<ICreatorResponses[]>([])
     const [searchForms, setSearchForms] = useState("")
     const [searchResponses, setSearchResponses] = useState("")
+    const totalForms = useMemo(() => formsData.length, [formsData])
+    const slicedForms = useMemo(() => summarizeForms(formsData), [formsData]);
+    const slicedResponses = useMemo(() => summarizeResponses(responses), [responses]);
+
+
+    const totalResponses = useMemo(() => formsData.reduce((sum, form) => sum + form.responses, 0), [formsData])
 
     useEffect(() => {
       if(responses.length > 5) {
@@ -23,33 +31,14 @@ const useCreatorDashboard = ({ formsData, responses }: IProps) => {
         setRecentResponses(responses)
       }
     }, [responses])
-    
-    const filteredForms = useMemo(() => {
-        if (!searchForms.trim()) return formsData
 
-        const searchTerm = searchForms.toLowerCase()
-        return formsData.filter(
-            (form) => form.name.toLowerCase().includes(searchTerm)
-        )
-    }, [formsData, searchForms])
+    const stateCardsData = useMemo(
+      () => generateStateCards(totalForms, totalResponses),
+    [totalForms, totalResponses]);
 
 
-    const filteredResponses = useMemo(() => {
-        if (!searchResponses.trim()) return responses
 
-        const searchTerm = searchResponses.toLowerCase()
-        return responses.filter(
-            (response) =>
-            response.formTitle.toLowerCase().includes(searchTerm) ||
-            response.respondentName.toLowerCase().includes(searchTerm) ||
-            response.respondentEmail.toLowerCase().includes(searchTerm),
-        )
-    }, [searchResponses])
-
-    const totalForms = useMemo(() => formsData.length, [formsData])
-
-
-    const totalResponses = useMemo(() => formsData.reduce((sum, form) => sum + form.responses, 0), [formsData])
+  
 
     const topPerformingForms = useMemo(() => {
         return [...formsData]
@@ -70,8 +59,8 @@ const useCreatorDashboard = ({ formsData, responses }: IProps) => {
   const conversionRateGrowth = 5; 
 
   return {
-    filteredForms,
-    filteredResponses,
+    slicedForms,
+    slicedResponses,
     totalForms,
     totalResponses,
     formGrowthRate,
@@ -82,6 +71,7 @@ const useCreatorDashboard = ({ formsData, responses }: IProps) => {
     recentResponses,
     searchForms,
     searchResponses,
+    stateCardsData,
     setSearchForms,
     setSearchResponses,
   }
