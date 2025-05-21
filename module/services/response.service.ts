@@ -46,6 +46,10 @@ class ResponseService {
         }
         return response;
     }
+
+    async deleteFromResponses(formId: string) {
+        return await responseRepo.deleteFormResponses(formId);
+    }
 }
 
 export default new ResponseService();
