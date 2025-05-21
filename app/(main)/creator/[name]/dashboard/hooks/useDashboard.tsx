@@ -36,10 +36,6 @@ const useCreatorDashboard = ({ formsData, responses }: IProps) => {
       () => generateStateCards(totalForms, totalResponses),
     [totalForms, totalResponses]);
 
-
-
-  
-
     const topPerformingForms = useMemo(() => {
         return [...formsData]
         .sort((a, b) => b.responses - a.responses)

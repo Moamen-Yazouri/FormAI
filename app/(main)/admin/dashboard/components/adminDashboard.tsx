@@ -39,7 +39,6 @@ const AdminDashboard = (props: IProps) => {
         slicedForms,
     } = useDashboard({usersData, formsData});
 
-
     return (
         <div className="min-h-screen bg-gradient-to-br from-purple-50 to-purple-100 pb-20 pt-0 md:pt-0 w-full">
             <DashboardHeader/>
