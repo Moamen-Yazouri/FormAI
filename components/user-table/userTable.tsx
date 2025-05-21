@@ -33,6 +33,7 @@ import { getLimitedUsers } from './lib/getLimitedUsers';
 import { useFilter } from './hooks/useFilter';
 import SearchBar from '../text-search-bar/searchBar';
 import { deleteUser } from './actions/user.action';
+import Link from 'next/link';
 
 interface IProps {
     users: IUserData[];
@@ -58,7 +59,7 @@ const UsersTable = (props: IProps) => {
     }
 
     return (
-        <div className="rounded-md border">
+        <div className="rounded-md border w-full m-2">
           <SearchBar
             placeholder="Search Users..."
             search={searchTerm}
@@ -145,6 +146,21 @@ const UsersTable = (props: IProps) => {
                     ))}
                 </TableBody>
             </Table>
+              {
+                props.isSummary && (
+                    <div className="flex justify-center p-4">
+                        <Link 
+                            href= {
+                                `/admin/all-users`
+                            }
+                        >
+                        <Button variant="outline" className="text-purple-700 hover:bg-purple-50 hover:text-purple-900 transition">
+                            View All Forms
+                        </Button>
+                        </Link>
+                    </div>
+                )
+            }
         </div>
     )
 }

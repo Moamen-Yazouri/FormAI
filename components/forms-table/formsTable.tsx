@@ -52,78 +52,78 @@ const FormsTable = (props: IProps) => {
     };
 
     return (
-        <div className="rounded-md border">
-        <SearchBar
-            placeholder="Search Forms..."
-            search={searchTerm}
-            setSearch={setSearchTerm}
-        />
-        <Table>
-            <TableHeader>
-            <TableRow>
-                <TableHead>Form Name</TableHead>
-                <TableHead>Creator</TableHead>
-                <TableHead>Responses</TableHead>
-                <TableHead>Created Date</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-            </TableRow>
-            </TableHeader>
-            <TableBody>
-            {filteredForms.map((form) => (
-                <TableRow key={form.id}>
-                <TableCell>
-                    <div className="flex items-center gap-2">
-                    <FileText className="h-4 w-4 text-purple-600" />
-                    <span className="font-medium">{form.name}</span>
-                    </div>
-                </TableCell>
-
-                <TableCell>{form.creator}</TableCell>
-
-                <TableCell>
-                    <div className="flex items-center gap-2">
-                    <Badge
-                        variant="secondary"
-                        className="bg-purple-100 text-purple-800 hover:bg-purple-100"
-                    >
-                        {form.responses}
-                    </Badge>
-
-                    </div>
-                </TableCell>
-
-                <TableCell>{String(form.createdAt)}</TableCell>
-
-                <TableCell className="text-right">
-                    <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
-                        <MoreVertical className="h-4 w-4" />
-                        <span className="sr-only">Open menu</span>
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-
-                        <ActionsProvider role={role} id={form.id} />
-
-                        <DropdownMenuSeparator />
-
-                        <DeleteDialog
-                        itemToDelete={formToDelete}
-                        item={form}
-                        data={forms}
-                        setItemToDelete={setFormToDelete}
-                        itemsType="Form"
-                        handleDeleteItem={handleFormDelete}
-                        />
-                    </DropdownMenuContent>
-                    </DropdownMenu>
-                </TableCell>
+        <div className="rounded-md border w-full m-2">
+            <SearchBar
+                placeholder="Search Forms..."
+                search={searchTerm}
+                setSearch={setSearchTerm}
+            />
+            <Table>
+                <TableHeader>
+                <TableRow>
+                    <TableHead>Form Name</TableHead>
+                    <TableHead>Creator</TableHead>
+                    <TableHead>Responses</TableHead>
+                    <TableHead>Created Date</TableHead>
+                    <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
-            ))}
-            </TableBody>
-        </Table>
+                </TableHeader>
+                <TableBody>
+                {filteredForms.map((form) => (
+                    <TableRow key={form.id}>
+                    <TableCell>
+                        <div className="flex items-center gap-2">
+                        <FileText className="h-4 w-4 text-purple-600" />
+                        <span className="font-medium">{form.name}</span>
+                        </div>
+                    </TableCell>
+
+                    <TableCell>{form.creator}</TableCell>
+
+                    <TableCell>
+                        <div className="flex items-center gap-2">
+                        <Badge
+                            variant="secondary"
+                            className="bg-purple-100 text-purple-800 hover:bg-purple-100"
+                        >
+                            {form.responses}
+                        </Badge>
+
+                        </div>
+                    </TableCell>
+
+                    <TableCell>{String(form.createdAt)}</TableCell>
+
+                    <TableCell className="text-right">
+                        <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="icon" className="h-8 w-8">
+                            <MoreVertical className="h-4 w-4" />
+                            <span className="sr-only">Open menu</span>
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+
+                            <ActionsProvider role={role} id={form.id} />
+
+                            <DropdownMenuSeparator />
+
+                            <DeleteDialog
+                            itemToDelete={formToDelete}
+                            item={form}
+                            data={forms}
+                            setItemToDelete={setFormToDelete}
+                            itemsType="Form"
+                            handleDeleteItem={handleFormDelete}
+                            />
+                        </DropdownMenuContent>
+                        </DropdownMenu>
+                    </TableCell>
+                    </TableRow>
+                ))}
+                </TableBody>
+            </Table>
             {
                 isSummary && (
                     <div className="flex justify-center p-4">
