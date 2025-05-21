@@ -100,10 +100,5 @@ class DashboardService {
         })
         return formResponseData;
     }
-
-    async deleteForm(formId: string) {
-        const deletedForm: IFormFromDB | null = await dashboardRepo.deleteForm(formId);
-        return deletedForm;
-    }
 }
 export default new DashboardService();

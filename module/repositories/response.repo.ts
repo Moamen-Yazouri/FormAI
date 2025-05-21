@@ -5,6 +5,7 @@ import userRepo from "./user.repo";
 
 import { getDateOnly } from "@/lib/dateUtils";
 import { IResponseDetailsFromDB } from "../services/types";
+import { deleteUser } from "@/components/user-table/actions/user.action";
 
 class ResponseRepo {
     async getResponseById(responseId: string) {
@@ -74,6 +75,10 @@ class ResponseRepo {
     }
     async deleteFormResponses(formId: string) {
         return await responseModel.deleteMany({ formId: formId });
+    }
+
+    async deleteUserResponses(userId: string) {
+        return await responseModel.deleteMany({ userId: userId });
     }
 }
 
