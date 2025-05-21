@@ -1,39 +1,53 @@
 "use client"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow
+} from "@/components/ui/table"
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuSeparator,
-    DropdownMenuTrigger,
+    DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
-import { MoreHorizontal, Eye, Download, Mail, Trash } from 'lucide-react'
-import { ICreatorResponses } from "../types"
+import { MoreHorizontal, Eye, Download, Mail } from 'lucide-react'
+import { ICreatorResponses } from "../../types"
 import Link from "next/link"
 import { useState } from "react"
 import DeleteDialog from "@/components/deleteDialog/deleteDialog"
-import ActionServices from "../services/action.service"
+import ActionServices from "../../services/action.service"
 import { toast } from "sonner"
+import { useFilter } from "./hook/useFilter"
+import SearchBar from "../searchBar"
 
 interface IProps {
-    filteredResponses: ICreatorResponses[]
+    responses: ICreatorResponses[];
+    isSummary?: boolean;
+    name: string;
 }
 
-const ResponsesTable = ({ filteredResponses }: IProps) => {
+const ResponsesTable = ({ responses, isSummary, name }: IProps) => {
     const [responseToDelete, setResponseToDelete] = useState<string | null>(null);
+    const { searchTerm, setSearchTerm, filteredResponses } = useFilter(responses);
+
     const handleDeleteResponse = async (id: string) => {
         const deletedResponse = await ActionServices.deleteResponse(id);
         if (deletedResponse) {
-            toast.success("Response deleted successfully!");
-        }
-        else {
-            toast.error("Failed to delete response!");
+        toast.success("Response deleted successfully!");
+        } else {
+        toast.error("Failed to delete response!");
         }
     }
+
     return (
         <div className="rounded-md border">
+        <SearchBar placeholder="Search A Response..." search={searchTerm} setSearch={setSearchTerm} />
         <Table>
             <TableHeader>
             <TableRow>
@@ -54,10 +68,18 @@ const ResponsesTable = ({ filteredResponses }: IProps) => {
             ) : (
                 filteredResponses.map((response) => (
                 <TableRow key={response.id}>
-                    <TableCell className="font-medium">{response.formTitle}</TableCell>
-                    <TableCell>{response.respondentName}</TableCell>
-                    <TableCell>{response.respondentEmail}</TableCell>
-                    <TableCell>{new Date(response.date).toISOString().split("T")[0]}</TableCell>
+                    <TableCell className="font-medium">
+                    {response.formTitle}
+                    </TableCell>
+                    <TableCell>
+                    {response.respondentName}
+                    </TableCell>
+                    <TableCell>
+                    {response.respondentEmail}
+                    </TableCell>
+                    <TableCell>
+                    {new Date(response.date).toISOString().split("T")[0]}
+                    </TableCell>
                     <TableCell className="text-right">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -71,7 +93,9 @@ const ResponsesTable = ({ filteredResponses }: IProps) => {
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>
                             <Eye className="mr-2 h-4 w-4" />
-                            <Link href={`/review-response/${response.id}`}>{"View Details"}</Link>
+                            <Link href={`/review-response/${response.id}`}>
+                            View Details
+                            </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem>
                             <Download className="mr-2 h-4 w-4" />
@@ -82,10 +106,10 @@ const ResponsesTable = ({ filteredResponses }: IProps) => {
                             <span>Contact Respondent</span>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DeleteDialog
+                        <DeleteDialog 
                             itemToDelete={responseToDelete}
                             item={response}
-                            data={filteredResponses}
+                            data={responses}
                             setItemToDelete={setResponseToDelete}
                             itemsType="Response"
                             handleDeleteItem={handleDeleteResponse}
@@ -98,8 +122,20 @@ const ResponsesTable = ({ filteredResponses }: IProps) => {
             )}
             </TableBody>
         </Table>
+        {isSummary && (
+            <div className="flex justify-center p-4">
+            <Link href={`/creator/${name}/all-forms`}>
+                <Button 
+                variant="outline" 
+                className="text-purple-700 hover:bg-purple-50 hover:text-purple-900 transition"
+                >
+                View All Forms
+                </Button>
+            </Link>
+            </div>
+        )}
         </div>
     )
 }
 
-export default ResponsesTable
+export default ResponsesTable;

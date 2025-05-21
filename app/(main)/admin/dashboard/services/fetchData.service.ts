@@ -1,10 +1,10 @@
 import { 
-            IDashboardForm, 
-            IFormCreationData, 
-            IFormResponseData, 
-            IUserData, 
-            IUsersActivityData 
-        } from "@/@types";
+    IFormTable, 
+    IFormCreationData, 
+    IFormResponseData, 
+    IUserData, 
+    IUsersActivityData 
+} from "@/@types";
 
 class FetchData {
     private baseUrl: string = "http://localhost:3000//api/dashboard";
@@ -89,7 +89,7 @@ class FetchData {
         }    
     }
     
-    async formsData(): Promise<IDashboardForm[]> {
+    async formsData(): Promise<IFormTable[]> {
         try {
             const res = await fetch(`${this.baseUrl}/forms-data`);
             const data = await res.json();
@@ -97,7 +97,7 @@ class FetchData {
                 console.error(data.message);
                 return [];
             }
-            const formsData: IDashboardForm[] = data.formsData;
+            const formsData: IFormTable[] = data.formsData;
             return formsData;
         }
         catch(err) {

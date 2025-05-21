@@ -25,7 +25,9 @@ import { toast } from "sonner";
 import SearchBar from "../text-search-bar/searchBar";
 import { useFilter } from "./hook/useFilter";
 import Link from "next/link";
-import formAction from "./actions/form.action";
+import { deleteForm } from "./actions/form.action";
+
+
 
 interface IProps {
     forms: IFormTable[];
@@ -40,7 +42,7 @@ const FormsTable = (props: IProps) => {
     const { setSearchTerm, searchTerm, filteredForms } = useFilter(forms);
 
     const handleFormDelete = async (formId: string) => {
-        const deletedForm = await formAction.deleteForm(formId);
+        const deletedForm = await deleteForm(formId);
         if (deletedForm) {
             toast.success(`Form: ${deletedForm.title}, deleted successfully`);
         }

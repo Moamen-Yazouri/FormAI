@@ -1,10 +1,5 @@
-import React from 'react';
 import AdminDashboard from './components/adminDashboard';
 import FetchData from "./services/fetchData.service";
-import { connection } from '@/DB/connection';
-import FormModel from '@/DB/models/form.model';
-import responseModel from '@/DB/models/response.model';
-import mongoose from 'mongoose';
 
 const page = async() => {
 

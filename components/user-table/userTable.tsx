@@ -28,10 +28,11 @@ import {
 import {toast} from 'sonner';
 import {useRouter} from 'next/navigation';
 import DeleteDialog from '@/components/deleteDialog/deleteDialog';
-import userAction from './actions/user.action';
+
 import { getLimitedUsers } from './lib/getLimitedUsers';
 import { useFilter } from './hooks/useFilter';
 import SearchBar from '../text-search-bar/searchBar';
+import { deleteUser } from './actions/user.action';
 
 interface IProps {
     users: IUserData[];
@@ -48,7 +49,7 @@ const UsersTable = (props: IProps) => {
         filteredUsers
     } = useFilter(users);
     const handleDeleteUser = async (userId: string) => {
-        const deletedUser = await userAction.deleteUser(userId);
+        const deletedUser = await deleteUser(userId);
         if (deletedUser) {
             toast.success(`User: ${deletedUser.email}, deleted successfully`);
         } else {

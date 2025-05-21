@@ -1,7 +1,6 @@
-import { IStateCard } from '@/@types'
+import React from 'react'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Users, ArrowUpRight } from 'lucide-react'
-import React from 'react'
 interface IProps extends IStateCard {} 
 const StateCard = (props: IProps) => {
     const {

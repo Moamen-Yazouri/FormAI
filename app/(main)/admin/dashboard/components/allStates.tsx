@@ -1,4 +1,3 @@
-import { IStateCard } from '@/@types'
 import React from 'react'
 import StateCard from './stateCard'
 interface IProps {
