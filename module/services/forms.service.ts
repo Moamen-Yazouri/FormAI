@@ -35,19 +35,26 @@ class FormServices {
     }
 
     async deleteForm (formId: string) {
-        if(!formId) {
-            throw new Error("No form id provided");
-        }
         const form = await formsRepo.getFormById(formId);
         if(!form) {
             throw new Error("Form not found");
         }
-        const deleteResponses = await responseService.deleteFromResponses(String(form._id));
-        if(!deleteResponses) {
-            throw new Error("Failed to delete responses");
-        }
+        // const deleteResponses = await responseService.deleteFromResponses(String(form._id));
+        // if(!deleteResponses) {
+        //     throw new Error("Failed to delete responses");
+        // }
         const deletedForm = await formsRepo.deleteForm(formId);
         return deletedForm;
+    }
+    deleteUserForms = async (userId: string) => {
+        const forms = await formsRepo.getCreatorForm(userId);
+        if(forms.length > 0) {
+            const deletedForms = await formsRepo.deleteUserForms(userId);
+            if(!deletedForms) {
+                throw new Error("Error deleting user forms");
+            }
+        }
+        return forms;
     }
 }
 export default new FormServices();

@@ -1,6 +1,7 @@
 import { IFormFromDB, IUserFromDB } from "@/@types";
 import { connection } from "@/DB/connection";
 import dashboardRepo from "@/module/repositories/admin/dashboard.repo";
+import responseRepo from "@/module/repositories/response.repo";
 import formsService from "@/module/services/forms.service";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -11,16 +12,20 @@ export const DELETE = async (req: NextRequest) => {
         if (!formId) {
             return NextResponse.json({ message: "Form ID is required!" }, { status: 401 });
         }
+
+        await responseRepo.deleteFormResponses(formId);
+
         const deletedForm: IFormFromDB | null = await formsService.deleteForm(formId); 
         if (!deletedForm) {
             return NextResponse.json({ message: "Invalid form ID!" }, { status: 401 });
         }
+
         return NextResponse.json({ deletedForm }, { status: 200 });
     }
     catch (err) {
         if (err instanceof Error) {
             return NextResponse.json({ message: err.message }, { status: 401 });
         }
+        return NextResponse.json({ message: "Something went wrong!" }, { status: 500 });
     }
-    return NextResponse.json({ message: "Something went wrong!" }, { status: 500 });
 }

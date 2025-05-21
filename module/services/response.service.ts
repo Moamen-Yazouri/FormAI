@@ -48,7 +48,18 @@ class ResponseService {
     }
 
     async deleteFromResponses(formId: string) {
-        return await responseRepo.deleteFormResponses(formId);
+        const responses = await responseRepo.deleteFormResponses(formId);
+        if(!responses) {
+            throw new Error("Error deleting user responses");
+        }
+        return responses;
+    }
+    async deleteUserResponses(userId: string) {
+        const responses = await responseRepo.deleteUserResponses(userId);
+        if(!responses) {
+            throw new Error("Error deleting user responses");
+        }
+        return responses;
     }
 }
 

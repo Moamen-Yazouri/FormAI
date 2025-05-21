@@ -49,6 +49,9 @@ class FormsRepo {
     async deleteForm (formId: string) {
         return await FormModel.findByIdAndDelete(formId).lean<IFormFromDB>();
     }
+    async deleteUserForms (userId: string) {
+        return await FormModel.deleteMany({creatorId: userId});
+    }
 }
 
 export default new FormsRepo();
