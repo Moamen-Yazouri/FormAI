@@ -26,7 +26,7 @@ const useDashboard = (props: IProps) => {
             totalForms,
             totalResponses
         )
-    , [usersData, formsData]);
+    , [totalUsers, activeUsers, usersData, formsData]);
 
     useMemo(() => {
         setTotalUsers(usersData.length);
