@@ -2,7 +2,7 @@ import { IResponseFromDB, IResponsePopulatedUser, IUserFromDB, IUserResponseTabl
 import responseModel from "@/DB/models/response.model";
 import mongoose from "mongoose";
 import userRepo from "./user.repo";
-import { ICreatorResponses } from "@/app/(main)/creator/dashboard/types";
+
 import { getDateOnly } from "@/lib/dateUtils";
 import { IResponseDetailsFromDB } from "../services/types";
 
@@ -71,6 +71,9 @@ class ResponseRepo {
     }
     async deleteResponse(responseId: string) {
         return await responseModel.findByIdAndDelete(responseId);
+    }
+    async deleteFormResponses(formId: string) {
+        return await responseModel.deleteMany({ formId: formId });
     }
 }
 

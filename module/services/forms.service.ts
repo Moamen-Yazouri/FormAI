@@ -2,6 +2,7 @@ import { IForm, IFormFromDB } from "@/@types";
 import formsRepo from "../repositories/forms.repo";
 
 import userRepo from "../repositories/user.repo";
+import responseService from "./response.service";
 class FormServices {
     async getFormById(formId: string): Promise<IFormFromDB | null> {
             const form = await formsRepo.getFormById(formId);
@@ -40,6 +41,10 @@ class FormServices {
         const form = await formsRepo.getFormById(formId);
         if(!form) {
             throw new Error("Form not found");
+        }
+        const deleteResponses = await responseService.deleteFromResponses(String(form._id));
+        if(!deleteResponses) {
+            throw new Error("Failed to delete responses");
         }
         const deletedForm = await formsRepo.deleteForm(formId);
         return deletedForm;
