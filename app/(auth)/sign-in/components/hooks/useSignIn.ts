@@ -31,7 +31,7 @@ const useSignIn = () => {
                 return;
             }
             toast.success(data.message);
-            const userForContext: IContextUser = {email: data.user.email, role: data.user.role, _id: data.user._id}
+            const userForContext: IContextUser = {name: data.user.name, email: data.user.email, role: data.user.role, _id: data.user._id}
             setUser(userForContext)
             resetForm();
             setTimeout(() => {
