@@ -2,26 +2,21 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { use, useState } from "react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Camera, Check, Loader, X } from "lucide-react"
+import { AuthContext } from "@/providers/auth/authProvider"
 
-interface ProfileHeaderProps {
-    user: {
-        name: string
-        email: string
-        role: string
-        avatar?: string
-    }
-}
 
-export default function ProfileHeader({ user }: ProfileHeaderProps) {
+export default function ProfileHeader() {
+    const {user} = use(AuthContext);
     const [isUploading, setIsUploading] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
     const [avatarPreview, setAvatarPreview] = useState<string | null>(null)
-
+    if(!user) throw new Error("User not found");
+    
     const getInitials = (name: string) => {
         return name
         .split(" ")
@@ -68,7 +63,7 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
                     </div>
                 ) : (
                     <>
-                    <AvatarImage src={avatarPreview || user?.avatar || "/placeholder.svg?height=96&width=96"} />
+                    <AvatarImage src={avatarPreview || "/placeholder.svg?height=96&width=96"} />
                     <AvatarFallback className="bg-purple-200 text-purple-900 text-xl">
                         {getInitials(user?.name || "Moamen Yazouri")}
                     </AvatarFallback>

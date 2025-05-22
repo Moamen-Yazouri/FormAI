@@ -21,7 +21,7 @@ const CustomSelectField: React.FC<ISelectProps> = ({
 }) => {
     const [field, meta, helpers] = useField<string>(name);
     return(
-        <div className="">
+        <div className="flex flex-col gap-2">
             {
                 label && (
                     <Label htmlFor={name}>

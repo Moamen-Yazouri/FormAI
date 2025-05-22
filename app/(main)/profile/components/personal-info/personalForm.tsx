@@ -19,6 +19,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { AlertCircle } from "lucide-react"
+import ConfirmationDialog from "../confirmation-dialog/confirmationDialog"
 
 const PersonalForm = () => {
     const { user } = use(AuthContext)
@@ -40,95 +41,55 @@ const PersonalForm = () => {
         }
     }, [formik.values, formik.isSubmitting, user.name, user.role])
 
-    const handleSubmitClick = (e: React.MouseEvent) => {
-        e.preventDefault()
+    const handleCancle = () => {
+        formik.setValues({
+            name: user!.name,
+            role: user!.role,
+        }) 
+    }
+
+    const handleSubmitClick = () => {
         setShowConfirmDialog(true)
     }
-
-    const handleConfirmSubmit = () => {
-        setShowConfirmDialog(false)
-        formik.submitForm()
-    }
-
     return (
         <>
         <FormikProvider value={formik}>
-            <Form>
-            <MotionField name="name" isPassword={false} label="Name" type="text" placeholder="Enter your name" />
+            <Form className="flex justify-center flex-col w-full gap-6 p-5">
+            <MotionField name="name" isPassword={false} label="Name:" type="text" placeholder="Enter your name" />
 
-            <MotionedSelect name={"role"} options={OPTIONS} />
-            <CardFooter className="flex justify-end space-x-4 border-t px-6 py-4">
+            <MotionedSelect name={"role"} options={OPTIONS} label="Select a new Role: "/>
+            <CardFooter className="flex justify-end space-x-2 border-t px-3 py-2">
+                {
+                    !disabled && (
+                        <Button
+                            type="button"
+                            variant="outline"
+                            onClick={handleCancle}
+                            disabled={formik.isSubmitting}
+                            className="border-purple-200 hover:bg-purple-50"
+                        >
+                            Cancel
+                        </Button>
+                    )
+                }
+
                 <Button
-                type="button"
-                variant="outline"
-                onClick={() => formik.resetForm()}
-                disabled={formik.isSubmitting}
-                className="border-purple-200 hover:bg-purple-50"
+                    type="button"
+                    onClick={handleSubmitClick}
+                    disabled={disabled}
+                    className="bg-purple-600 hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                Cancel
-                </Button>
-                <Button
-                type="button"
-                onClick={handleSubmitClick}
-                disabled={disabled}
-                className="bg-purple-600 hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                {formik.isSubmitting ? <LoadingSpinner className="mr-2" /> : null}
-                Save Changes
+                    {formik.isSubmitting ? <LoadingSpinner className="mr-2" /> : "Save Changes"}
                 </Button>
             </CardFooter>
             </Form>
         </FormikProvider>
-
-        <Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
-            <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-                <DialogTitle className="flex items-center gap-2 text-purple-900">
-                <AlertCircle className="h-5 w-5 text-purple-600" />
-                Confirm Changes
-                </DialogTitle>
-                <DialogDescription>Are you sure you want to update your personal information?</DialogDescription>
-            </DialogHeader>
-
-            <div className="space-y-4 py-4">
-                {formik.values.name !== user.name && (
-                <div className="flex flex-col space-y-1">
-                    <p className="text-sm font-medium text-purple-900">Name</p>
-                    <div className="flex items-center gap-2">
-                    <span className="text-sm text-muted-foreground line-through">{user.name}</span>
-                    <span className="text-sm font-medium text-purple-700">→</span>
-                    <span className="text-sm font-medium text-purple-900">{formik.values.name}</span>
-                    </div>
-                </div>
-                )}
-
-                {formik.values.role !== user.role && (
-                <div className="flex flex-col space-y-1">
-                    <p className="text-sm font-medium text-purple-900">Role</p>
-                    <div className="flex items-center gap-2">
-                    <span className="text-sm text-muted-foreground line-through">{user.role}</span>
-                    <span className="text-sm font-medium text-purple-700">→</span>
-                    <span className="text-sm font-medium text-purple-900">{formik.values.role}</span>
-                    </div>
-                </div>
-                )}
-            </div>
-
-            <DialogFooter className="sm:justify-end">
-                <Button
-                type="button"
-                variant="outline"
-                onClick={() => setShowConfirmDialog(false)}
-                className="border-purple-200 hover:bg-purple-50"
-                >
-                Cancel
-                </Button>
-                <Button type="button" onClick={handleConfirmSubmit} className="bg-purple-600 hover:bg-purple-700">
-                Confirm Changes
-                </Button>
-            </DialogFooter>
-            </DialogContent>
-        </Dialog>
+            <ConfirmationDialog 
+                dialogState={showConfirmDialog} 
+                closeDialog={setShowConfirmDialog} 
+                values={formik.values} 
+                submit={formik.submitForm}
+            />
         </>
     )
 }

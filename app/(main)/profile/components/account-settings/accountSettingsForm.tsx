@@ -37,7 +37,7 @@ const AccountSettingsForm = () => {
     return (
         <>
         <FormikProvider value={formik}>
-            <Form>
+            <Form className="flex justify-center flex-col w-full gap-6 p-4">
                 <div className="space-y-6">
                     <MotionField name="name" 
                         isPassword={false} 
@@ -82,12 +82,12 @@ const AccountSettingsForm = () => {
                 </CardFooter>
             </Form>
         </FormikProvider>
-        <ConfirmationDialog 
-            dialogState={showConfirmDialog} 
-            closeDialog={setShowConfirmDialog} 
-            values={formik.values} 
-            submit={formik.submitForm}
-        />
+            <ConfirmationDialog 
+                dialogState={showConfirmDialog} 
+                closeDialog={setShowConfirmDialog} 
+                values={formik.values} 
+                submit={formik.submitForm}
+            />
         </>
     )
 }
