@@ -1,9 +1,9 @@
 import { useFormik } from "formik"
 import { FormValues } from "../types"
-import { INITIAL_VALUES } from "../constants"
-import { validationSchema } from "../validationSchema"
+import { validationSchema } from "../validationSchems";
 interface IProps extends FormValues{}
-export const useAccountSetingForm = (props: IProps) => {
+
+export const usePersonalInfo = (props: IProps) => {
     const handleSubmit = async(
         values: FormValues,
         resetForm: () => void,
