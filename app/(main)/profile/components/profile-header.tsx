@@ -68,9 +68,9 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
                     </div>
                 ) : (
                     <>
-                    <AvatarImage src={avatarPreview || user.avatar || "/placeholder.svg?height=96&width=96"} />
+                    <AvatarImage src={avatarPreview || user?.avatar || "/placeholder.svg?height=96&width=96"} />
                     <AvatarFallback className="bg-purple-200 text-purple-900 text-xl">
-                        {getInitials(user.name)}
+                        {getInitials(user?.name || "Moamen Yazouri")}
                     </AvatarFallback>
                     </>
                 )}
