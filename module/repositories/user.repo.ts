@@ -1,4 +1,4 @@
-import { IUserFromDB } from "@/@types";
+import { IUserFromDB, UserRoles } from "@/@types";
 import userModel from "@/DB/models/user.model";
 
 class UserRepo {
@@ -15,6 +15,31 @@ class UserRepo {
     
     async deleteUser(userId: string) {
         return await userModel.findByIdAndDelete(userId).lean<IUserFromDB>();
+    }
+
+    async updateEmail (userId: string, newEmail: string) {
+        return await userModel.findOneAndUpdate(
+            {_id: userId},
+            {$set: {email: newEmail}}
+        ).lean<IUserFromDB>();
+    }
+    async updateRole (userId: string, newRole: UserRoles) {
+        return await userModel.findOneAndUpdate(
+            {_id: userId},
+            {$set: {role: newRole}}
+        ).lean<IUserFromDB>();
+    }
+    async updateName (userId: string, newName: string) {
+        return await userModel.findOneAndUpdate(
+            {_id: userId},
+            {$set: {name: newName}}
+        ).lean<IUserFromDB>();
+    }
+    async updatePassword (userId: string, newPassword: string) {
+        return await userModel.findOneAndUpdate(
+            {_id: userId},
+            {$set: {password: newPassword}}
+        ).lean<IUserFromDB>();
     }
 }
 
