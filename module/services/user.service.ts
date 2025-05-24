@@ -35,6 +35,7 @@ class UserService {
         }
         return user;
     }
+
     async updatePassword (userId: string, prevPassword: string, newPassword: string) {
         const user = await userRepo.getUserById(userId);
         if(!user) {
@@ -51,6 +52,7 @@ class UserService {
         }
         return updatedUser;
     }
+
     async updateRole (userId: string, newRole: UserRoles) {
         const user = await userRepo.updateRole(userId, newRole);
         if(!user) {
