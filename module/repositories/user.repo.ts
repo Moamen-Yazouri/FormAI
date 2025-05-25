@@ -20,25 +20,29 @@ class UserRepo {
     async updateEmail (userId: string, newEmail: string) {
         return await userModel.findOneAndUpdate(
             {_id: userId},
-            {$set: {email: newEmail}}
+            {$set: {email: newEmail}},
+            { new: true }
         ).lean<IUserFromDB>();
     }
     async updateRole (userId: string, newRole: UserRoles) {
         return await userModel.findOneAndUpdate(
             {_id: userId},
-            {$set: {role: newRole}}
+            {$set: {role: newRole}},
+            { new: true }
         ).lean<IUserFromDB>();
     }
     async updateName (userId: string, newName: string) {
         return await userModel.findOneAndUpdate(
             {_id: userId},
-            {$set: {name: newName}}
+            {$set: {name: newName}},
+            { new: true }
         ).lean<IUserFromDB>();
     }
     async updatePassword (userId: string, newPassword: string) {
         return await userModel.findOneAndUpdate(
             {_id: userId},
-            {$set: {password: newPassword}}
+            {$set: {password: newPassword}},
+            { new: true }
         ).lean<IUserFromDB>();
     }
 }

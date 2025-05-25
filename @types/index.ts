@@ -105,6 +105,7 @@ export interface IAuthContext {
     user: IContextUser | null;
     setUser: React.Dispatch<React.SetStateAction<IContextUser | null>>;
     isLoading: boolean;
+    revalidateUser: () => Promise<void>;
 }
 
 export interface IUserData {
