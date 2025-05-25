@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { UpdateEmail } from "../types";
 import userService from "@/module/services/user.service";
+import { connection } from "@/DB/connection";
 
 export const POST = async (req: NextRequest) => {
     const newEmail: UpdateEmail | null = await req.json();
@@ -11,6 +12,7 @@ export const POST = async (req: NextRequest) => {
     if (!newEmail?.id || !newEmail?.email) {
         return NextResponse.json({ message: "Invalid request body" }, { status: 400 });
     }
+    await connection();
     try {
         const user = await userService.updateEmail(newEmail.id, newEmail.email);
         if(!user) {
