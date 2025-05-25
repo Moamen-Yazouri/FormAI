@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Loader } from "lucide-react"
 import PersonalInfoForm from "../components/personal-info/personal-info-form"
 import AccountSettings from "../components/account-settings/account-settings"
-import SecuritySettings from "../components/security-settings"
+import SecuritySettings from "../components/security/security-settings"
 import ProfileHeader from "../components/profile-header"
 
 

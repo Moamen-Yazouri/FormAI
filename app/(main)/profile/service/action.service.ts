@@ -18,7 +18,7 @@ class ActionService {
             );
 
             const data = await res.json();
-            return {message: "Email updated successfully", user: data.updatedUser};
+            return {message: `Email updated to: ${data.updatedUser.email}, successfully`, user: data.updatedUser};
         }
         catch(e) {
             if(e instanceof Error) {
@@ -42,7 +42,7 @@ class ActionService {
             );
 
             const data = await res.json();
-            return {message: "Name updated successfully", user: data.updatedUser};
+            return {message: `Name updated to: ${data.updatedUser.name}, successfully`, user: data.updatedUser};
         }
         catch(e) {
             if(e instanceof Error) {
@@ -50,7 +50,55 @@ class ActionService {
             }
             return {message: "Something went wrong", user: undefined};
         }
-    }    
+    }
+
+    async updateRole(id: string, role: string): Promise<{message: string, user: IUserFromDB | undefined}> {
+        await connection();
+        try {
+            const res = await fetch(`${this.urlAddress}/api/update/user-role`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({id, role})
+                }
+            );
+
+            const data = await res.json();
+            return {message: `Role updated to: ${data.updatedUser.role}, successfully`, user: data.updatedUser};
+        }
+        catch(e) {
+            if(e instanceof Error) {
+                return {message: e.message, user: undefined};
+            }
+            return {message: "Something went wrong", user: undefined};
+        }
+    }
+
+    async updatePassword(id: string, prevPassword: string, newPassword: string): Promise<{message: string, user: IUserFromDB | undefined}> {
+        await connection();
+        try {
+            const res = await fetch(`${this.urlAddress}/api/update/user-password`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({id, prevPassword, newPassword})
+                }
+            );
+    
+            const data = await res.json();
+            return {message: `Password updated successfully`, user: data.updatedUser}; 
+        }
+        catch(e) {
+            if(e instanceof Error) {
+                return {message: e.message, user: undefined};
+            }
+            return {message: "Something went wrong", user: undefined};
+        }
+    }
 }
 
 export default new ActionService();
