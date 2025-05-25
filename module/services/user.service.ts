@@ -1,7 +1,5 @@
 import { IUserFromDB, UserRoles } from "@/@types";
 import userRepo from "../repositories/user.repo";
-import formsRepo from "../repositories/forms.repo";
-import responseRepo from "../repositories/response.repo";
 import { comparePassword, hashPassword } from "@/lib/compareAndHash";
 
 class UserService {

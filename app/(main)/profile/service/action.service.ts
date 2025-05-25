@@ -1,13 +1,12 @@
 import { IUserFromDB } from "@/@types";
-import { connection } from "@/DB/connection";
+
 
 class ActionService {
     private urlAddress: string = process.env.NEXT_PUBLIC_URL || ""; 
 
     async updateEmail(id: string, email: string): Promise<{message: string, user: IUserFromDB | undefined}> {
-        await connection();
         try {
-            const res = await fetch(`${this.urlAddress}/api/update/user-email`,
+            const res = await fetch(`${this.urlAddress}/api/auth/aut/update/user-email`,
                 {
                     method: "POST",
                     headers: {
@@ -29,9 +28,9 @@ class ActionService {
     }
 
     async updateName(id: string, name: string): Promise<{message: string, user: IUserFromDB | undefined}> {
-                await connection();
+    
         try {
-            const res = await fetch(`${this.urlAddress}/api/update/user-name`,
+            const res = await fetch(`${this.urlAddress}/api/auth/update/user-name`,
                 {
                     method: "POST",
                     headers: {
@@ -53,9 +52,8 @@ class ActionService {
     }
 
     async updateRole(id: string, role: string): Promise<{message: string, user: IUserFromDB | undefined}> {
-        await connection();
         try {
-            const res = await fetch(`${this.urlAddress}/api/update/user-role`,
+            const res = await fetch(`${this.urlAddress}/api/auth/update/user-role`,
                 {
                     method: "POST",
                     headers: {
@@ -77,9 +75,8 @@ class ActionService {
     }
 
     async updatePassword(id: string, prevPassword: string, newPassword: string): Promise<{message: string, user: IUserFromDB | undefined}> {
-        await connection();
         try {
-            const res = await fetch(`${this.urlAddress}/api/update/user-password`,
+            const res = await fetch(`${this.urlAddress}/api/auth/update/user-password`,
                 {
                     method: "POST",
                     headers: {
@@ -88,9 +85,9 @@ class ActionService {
                     body: JSON.stringify({id, prevPassword, newPassword})
                 }
             );
-    
+
             const data = await res.json();
-            return {message: `Password updated successfully`, user: data.updatedUser}; 
+            return {message: `Password updated successfully!`, user: data.updatedUser}; 
         }
         catch(e) {
             if(e instanceof Error) {

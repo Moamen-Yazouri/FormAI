@@ -3,6 +3,8 @@ import type React from "react"
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import AccountSettingsForm from "./accountSettingsForm"
 import { motion } from "framer-motion"
+import { Suspense } from "react"
+import FullPageLoader from "../profileLoader"
 
 export default function AccountSettings() {
 
@@ -18,7 +20,9 @@ export default function AccountSettings() {
                     <CardDescription>Update your name and email address.</CardDescription>
                 </motion.div>
             </CardHeader>
-            <AccountSettingsForm/>
+            <Suspense fallback= {<FullPageLoader />}>
+                <AccountSettingsForm/>
+            </Suspense>
         </Card>
     )
 }
