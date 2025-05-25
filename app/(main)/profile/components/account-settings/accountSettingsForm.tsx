@@ -16,7 +16,7 @@ const AccountSettingsForm = () => {
         throw new Error("User not found!");
         
     }
-    const { formik } = useAccountSetingForm({ name: user!.name, email: user!.email })
+    const { formik } = useAccountSetingForm()
     const [showConfirmDialog, setShowConfirmDialog] = useState(false)
     const [disabled, setDisabled] = useState(true)
 
