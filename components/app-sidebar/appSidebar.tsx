@@ -21,17 +21,12 @@ import NavItemsProvider from "./navItemsProvider"
 import Loader from "./loader"
 
 export default function AppSidebar() {
-    const {setUser, user, isLoading} = use(AuthContext)
+    const {setUser, user} = use(AuthContext)
     const router = useRouter();
     const pathname = usePathname();
     const {isMobile} = useSidebar();
     const nameForAvatar = user?.name?.split(" ").map((word) => word[0]).join("")
 
-    if(isLoading) {
-        return (
-            <Loader/>
-        )
-    }
 
 
     if(pathname.includes("answer-form")) return null;
