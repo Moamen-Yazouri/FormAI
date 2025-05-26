@@ -1,10 +1,10 @@
-import { IDashboardForm } from '@/@types'
+import { IFormTable } from '@/@types'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 import { ChartTooltip, ResponsiveContainer } from '@/components/ui/chart'
 import React from 'react'
 import { Line, LineChart, XAxis, YAxis } from 'recharts'
 interface IProps {
-    formCreationData: IDashboardForm[]
+    formCreationData: IFormTable[]
 }
 const FromCreation = (props: IProps) => {
     return (

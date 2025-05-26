@@ -12,7 +12,7 @@ import FullPageLoader from "./profileLoader"
 
 
 export default function ProfileHeader() {
-    const {user, isLoading} = use(AuthContext);
+    const {user} = use(AuthContext);
     const [isUploading, setIsUploading] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
     const [avatarPreview, setAvatarPreview] = useState<string | null>(null)
@@ -27,13 +27,6 @@ export default function ProfileHeader() {
         .toUpperCase()
     }
 
-    if(isLoading) {
-        return (
-            <div className="flex items-center justify-center h-full">
-                <FullPageLoader />
-            </div>
-        )
-    }
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0]
         if (file) {
