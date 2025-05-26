@@ -16,12 +16,12 @@ import {
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar"
 import {Button} from "@/components/ui/button"
 import { AuthContext } from "@/providers/auth/authProvider"
-import { useContext } from "react"
+import { use, useContext } from "react"
 import NavItemsProvider from "./navItemsProvider"
 import Loader from "./loader"
 
 export default function AppSidebar() {
-    const {setUser, user, isLoading } = useContext(AuthContext);
+    const {setUser, user, isLoading} = use(AuthContext)
     const router = useRouter();
     const pathname = usePathname();
     const {isMobile} = useSidebar();

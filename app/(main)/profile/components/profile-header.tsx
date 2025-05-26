@@ -6,15 +6,17 @@ import { use, useState } from "react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Camera, Check, Loader, X } from "lucide-react"
+import { Camera, Check, X } from "lucide-react"
 import { AuthContext } from "@/providers/auth/authProvider"
+import FullPageLoader from "./profileLoader"
 
 
 export default function ProfileHeader() {
-    const {user} = use(AuthContext);
+    const {user, isLoading} = use(AuthContext);
     const [isUploading, setIsUploading] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
     const [avatarPreview, setAvatarPreview] = useState<string | null>(null)
+    
     if(!user) throw new Error("User not found");
     
     const getInitials = (name: string) => {
@@ -25,6 +27,13 @@ export default function ProfileHeader() {
         .toUpperCase()
     }
 
+    if(isLoading) {
+        return (
+            <div className="flex items-center justify-center h-full">
+                <FullPageLoader />
+            </div>
+        )
+    }
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0]
         if (file) {
@@ -40,10 +49,9 @@ export default function ProfileHeader() {
     }
 
     const handleSaveAvatar = () => {
-        // Here you would upload the avatar to your server
-        // For now, we'll just simulate a successful upload
+
         setIsEditing(false)
-        // You would update the user's avatar in your auth context here
+
     }
 
     const handleCancelEdit = () => {
@@ -59,7 +67,7 @@ export default function ProfileHeader() {
                 <Avatar className="h-24 w-24 border-2 border-purple-200">
                 {isUploading ? (
                     <div className="flex items-center justify-center w-full h-full bg-purple-100">
-                    <Loader size="sm" />
+                    <FullPageLoader />
                     </div>
                 ) : (
                     <>

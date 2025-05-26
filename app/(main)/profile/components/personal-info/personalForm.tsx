@@ -1,25 +1,16 @@
 "use client"
-import MotionedSelect from "@/components/motionedSelect/motionedSelect"
-import MotionField from "@/components/motionTextField/motionTextField"
-import { Button } from "@/components/ui/button"
-import { CardFooter } from "@/components/ui/card"
-import { Form, FormikProvider } from "formik"
-import type React from "react"
-import { use, useEffect, useState } from "react"
-import { OPTIONS } from "./constants"
-import { AuthContext } from "@/providers/auth/authProvider"
-import { usePersonalInfo } from "./hook/usePersonalForm"
-import LoadingSpinner from "@/app/(main)/form-generator/components/loading-spinner"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
-import { AlertCircle } from "lucide-react"
-import ConfirmationDialog from "../confirmation-dialog/confirmationDialog"
+import MotionedSelect from "@/components/motionedSelect/motionedSelect";
+import MotionField from "@/components/motionTextField/motionTextField";
+import { Button } from "@/components/ui/button";
+import { CardFooter } from "@/components/ui/card";
+import { Form, FormikProvider } from "formik";
+import type React from "react";
+import { use, useEffect, useState } from "react";
+import { OPTIONS } from "./constants";
+import { AuthContext } from "@/providers/auth/authProvider";
+import { usePersonalInfo } from "./hook/usePersonalForm";
+import LoadingSpinner from "@/app/(main)/form-generator/components/loading-spinner";
+import ConfirmationDialog from "../confirmation-dialog/confirmationDialog";
 
 const PersonalForm = () => {
     const { user } = use(AuthContext)

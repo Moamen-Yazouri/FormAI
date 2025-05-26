@@ -1,7 +1,7 @@
 "use client" 
 import type React from "react"
 
-import {use, useState} from "react"
+import {Suspense, use, useState} from "react"
 import {toast} from "sonner"
 import {Button} from "@/components/ui/button"
 import {
@@ -24,6 +24,7 @@ import LoadingSpinner from "../../../form-generator/components/loading-spinner"
 import { AuthContext } from "@/providers/auth/authProvider"
 import PersonalForm from "./personalForm"
 import { motion } from "framer-motion"
+import FullPageLoader from "../profileLoader"
 
 
 
@@ -45,7 +46,9 @@ export default function PersonalInfo() {
                 </div>
                 </motion.div>
             </CardHeader>
-            <PersonalForm/>
+            <Suspense fallback= {<FullPageLoader />}>
+                <PersonalForm/>
+            </Suspense>
         </Card>
     )
 }
