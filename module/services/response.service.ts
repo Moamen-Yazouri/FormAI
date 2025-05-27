@@ -2,6 +2,8 @@ import { IAnswer, IDisplayResponse, IFormResponse } from "@/@types";
 import formsRepo from "../repositories/forms.repo";
 import { generateValidationScehma } from "@/lib/createTheValidationSchema";
 import responseRepo from "../repositories/response.repo";
+import formsService from "./forms.service";
+import { getDateOnly } from "@/lib/dateUtils";
 
 class ResponseService {
         async addResponse (response: IFormResponse) {
@@ -60,6 +62,26 @@ class ResponseService {
             throw new Error("Error deleting user responses");
         }
         return responses;
+    }
+
+    async getFormResponses(formId: string, creatorId: string) {
+        const isOwner = await formsService.ensureFormCreator(formId, creatorId);
+        if(!isOwner) {
+            throw new Error("You are not the owner of this form");
+        }
+        const responses = await responseRepo.getFormResponses(formId);
+        if(!responses) {
+            throw new Error("No responses found");
+        }
+        const responsesData = responses.map(res => {
+            return {
+                id: String(res._id),
+                formTitle: res.formId.title, 
+                respondentName: res.userId.name,
+                respondentEmail: res.userId.email,
+                date: getDateOnly(res.createdAt)}
+        })
+        return responsesData;
     }
 }
 

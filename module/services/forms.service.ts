@@ -56,5 +56,16 @@ class FormServices {
         }
         return forms;
     }
+
+    async ensureFormCreator (formId: string, creatorId: string): Promise<Boolean> {
+        const form = await formsRepo.getFormById(formId);
+        if(!form) {
+            throw new Error("Form not found");
+        }
+        if(String(form.creatorId) !== creatorId) {
+            return false;
+        }
+        return true;
+    }
 }
 export default new FormServices();

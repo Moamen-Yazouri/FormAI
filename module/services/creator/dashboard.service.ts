@@ -94,11 +94,6 @@ class DashboardService {
     async getCreatorForms(name: string) {
         await connection()
         const creator = await userRepo.getUserByName(name);
-    //         id: string,
-    // name: string,
-    // creator: string,
-    // responses: number,
-    // createdAt: Date | string,
         if(!creator) throw new Error("Invalid creator name!");
 
         const forms: IFormFromDB[]  = await formsRepo.getCreatorForm(creator._id);

@@ -21,22 +21,25 @@ import NavItemsProvider from "./navItemsProvider"
 import Loader from "./loader"
 
 export default function AppSidebar() {
-    const {user, isLoading} = use(AuthContext)
+    const {user, isLoading, revalidateUser} = use(AuthContext)
     const router = useRouter();
     const pathname = usePathname();
     const {isMobile} = useSidebar();
     const nameForAvatar = user?.name?.split(" ").map((word) => word[0]).join("");
-    
+
     if(isLoading) return <Loader/>
 
 
     if(pathname.includes("answer-form")) return null;
 
-    const handleLogout = async () => {
-        await fetch("/api/auth/logout", {
-            method: "POST",
-            credentials: "include",
-        });
+    const handleLogout =  async() => {
+        await Promise.all([
+            fetch("/api/auth/logout", {
+                method: "POST",
+                credentials: "include",
+            }),
+            revalidateUser(),
+        ]);
         router.push("/sign-in");
     }
 
