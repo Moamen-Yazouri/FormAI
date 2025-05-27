@@ -1,7 +1,7 @@
 import { IUser } from "@/@types";
 import { connection } from "@/DB/connection";
 import authService from "@/module/services/auth.service";
-import { cookies } from "next/headers";
+
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async(req: NextRequest) => {
@@ -15,11 +15,11 @@ export const POST = async(req: NextRequest) => {
         await connection();
 
         const {token, user}: {token: string, user: IUser} = await authService.signin(data);
-        return NextResponse.json({message: "User logged successfully", token, user}, {status: 201})
+        return NextResponse.json({message: "User logged successfully", token, user}, {status: 200})
     }
     catch(err) {
         if(err instanceof Error) {
-                return Response.json({ message: err.message }, { status: 400 }) 
+                return Response.json({ message: err.message }, { status: 401 }) 
         }
         return NextResponse.json({ message: "Something went wrong!" }, { status: 500 })
     }

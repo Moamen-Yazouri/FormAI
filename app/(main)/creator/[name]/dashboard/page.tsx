@@ -95,7 +95,7 @@ interface IProps {
   params: Promise<{name: string}>; 
 }
 const page = async (props: IProps) => {
-      const {name} = await props.params; 
+      const name = decodeURIComponent((await props.params).name); 
 
       const [
         formData,

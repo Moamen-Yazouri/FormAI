@@ -2,6 +2,7 @@
 import { IAuthContext, IContextUser } from "@/@types";
 import { createContext, useEffect, useState } from "react";
 import { INITIAL_CONTEXT } from "./constants";
+import { provideUser } from "./service/provide-user.service";
 
 interface IProps {
     children: React.ReactNode;
@@ -12,36 +13,15 @@ const AuthContext = createContext<IAuthContext>(INITIAL_CONTEXT);
 const AuthProvider = (props: IProps) => {
     const [user, setUser] = useState<IContextUser | null>(null);
     const [isLoading, setLoading] = useState<boolean>(true);
-    const initUser = async() => {
-        try {
-            const res = await fetch("/api/auth/provide-logged-user", {
-                method: "GET",
-                credentials: "include",
-                headers: {
-                    "content-type": "application/json"
-                }
-            })
-
-            if(res.ok) {
-                const { user }: { user: IContextUser } = await res.json();
-                setUser(user);
-            }
-            
-        }
-        catch {
-            setUser(null);
-        }
-        finally {
-            setLoading(false); 
-        }
-
-    }
 
     const revalidateUser = async() => {
-        initUser();
+        await provideUser();
     }
     useEffect(() => {
-        initUser();
+        provideUser().then((user) => {
+            setUser(user);
+            setLoading(false);
+        })
     }, [])
     
     const value: IAuthContext = {
