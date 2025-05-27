@@ -34,7 +34,7 @@ const DeleteDialog = <T extends ISharedProps>(props: IProps<T>) => {
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
             <DropdownMenuItem
-            className="flex items-center gap-2 text-red-600 focus:text-red-600"
+            className="flex items-center gap-2 text-red-600 focus:text-red-600 cursor-pointer"
             onSelect={(e) => {
                 e.preventDefault()
                 setItemToDelete(item.id)
