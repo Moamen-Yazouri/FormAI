@@ -105,7 +105,7 @@ const FormsTable = (props: IProps) => {
                         <DropdownMenuContent align="end">
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
-                            <ActionsProvider role={role} id={form.id} />
+                            <ActionsProvider  id={form.id} />
 
                             <DropdownMenuSeparator />
 

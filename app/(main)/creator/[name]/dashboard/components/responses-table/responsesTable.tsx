@@ -46,7 +46,7 @@ const ResponsesTable = ({ responses, isSummary, name }: IProps) => {
     }
 
     return (
-        <div className="rounded-md border">
+        <div className="rounded-md border w-full m-2">
         <SearchBar placeholder="Search A Response..." search={searchTerm} setSearch={setSearchTerm} />
         <Table>
             <TableHeader>
