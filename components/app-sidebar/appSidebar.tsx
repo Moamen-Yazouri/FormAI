@@ -27,11 +27,6 @@ export default function AppSidebar() {
     const {isMobile} = useSidebar();
     const nameForAvatar = user?.name?.split(" ").map((word) => word[0]).join("")
 
-    if(isLoading) {
-        return (
-            <Loader/>
-        )
-    }
 
 
     if(pathname.includes("answer-form")) return null;

@@ -1,6 +1,6 @@
 "use client"
 import { IAuthContext, IContextUser } from "@/@types";
-import { createContext, useEffect, useState } from "react";
+import { createContext, use, useEffect, useState } from "react";
 import { INITIAL_CONTEXT } from "./constants";
 import { provideUser } from "./service/provide-user.service";
 
@@ -26,8 +26,8 @@ const AuthProvider = (props: IProps) => {
     
     const value: IAuthContext = {
         user,
-        isLoading,
         setUser,
+        isLoading,
         revalidateUser
     }
     return <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>
