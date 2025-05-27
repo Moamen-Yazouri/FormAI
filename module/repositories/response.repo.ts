@@ -45,6 +45,22 @@ class ResponseRepo {
         return filtered;
     }
 
+    async getFormResponses(formId: string) {
+            const formResponses = await responseModel.find().populate([
+                {
+                    path: "userId",
+                    select: "name email -_id"
+                },
+                {
+                    path: "formId",
+                    match: { _id: formId },
+                    select: "title"
+                }
+            ])
+            const filtered = formResponses.filter(r => r.formId !== null);
+            return filtered;
+    }
+
     async getUserResponses(id: string) {
         const userResponses = await responseModel.find({ userId: id }).populate([
             {

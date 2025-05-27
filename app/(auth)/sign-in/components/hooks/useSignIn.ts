@@ -31,10 +31,15 @@ const useSignIn = () => {
                 return;
             }
             toast.success(data.message);
-            const userForContext: IContextUser = {name: data.user.name, email: data.user.email, role: data.user.role, _id: data.user._id}
+            const userForContext: IContextUser = {
+                name: data.user.name, 
+                email: data.user.email, 
+                role: data.user.role, 
+                _id: data.user._id
+            }
             setUser(userForContext)
-            resetForm();
             setTimeout(() => {
+                resetForm();
                 if(data.user.role === "creator") {
                     router.push("/form-generator");
                     toast.dismiss();
@@ -49,7 +54,7 @@ const useSignIn = () => {
                     router.push("/admin/dashboard");
                     toast.dismiss();
                 }
-            }, 2000);
+            }, 1000);
         }
         catch(err) {
             if(err instanceof Error) {
