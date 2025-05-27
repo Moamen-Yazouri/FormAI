@@ -41,7 +41,7 @@ const AccountSettingsForm = () => {
     if(isLoading) return <FullPageLoader />
     
         if(!user && !isLoading) {
-            throw new Error("User not found!");
+            return null;
         
         }
 

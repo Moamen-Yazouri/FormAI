@@ -6,7 +6,7 @@ class ActionService {
 
     async updateEmail(id: string, email: string): Promise<{message: string, user: IUserFromDB | undefined}> {
         try {
-            const res = await fetch(`${this.urlAddress}/api/auth/aut/update/user-email`,
+            const res = await fetch(`${this.urlAddress}/api/auth/update/user-email`,
                 {
                     method: "POST",
                     headers: {
