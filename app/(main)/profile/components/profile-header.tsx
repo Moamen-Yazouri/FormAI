@@ -12,11 +12,13 @@ import FullPageLoader from "./profileLoader"
 
 
 export default function ProfileHeader() {
-    const {user} = use(AuthContext);
+    const {user, isLoading} = use(AuthContext);
     const [isUploading, setIsUploading] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
-    const [avatarPreview, setAvatarPreview] = useState<string | null>(null)
-    
+    const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+
+    if(isLoading) return <FullPageLoader />
+
     if(!user) throw new Error("User not found");
     
     const getInitials = (name: string) => {

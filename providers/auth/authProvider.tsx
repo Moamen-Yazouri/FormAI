@@ -15,7 +15,8 @@ const AuthProvider = (props: IProps) => {
     const [isLoading, setLoading] = useState<boolean>(true);
 
     const revalidateUser = async() => {
-        await provideUser();
+        const data = await provideUser();
+        setUser(data);
     }
     useEffect(() => {
         provideUser().then((user) => {

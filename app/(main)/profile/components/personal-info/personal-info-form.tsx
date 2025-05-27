@@ -46,9 +46,7 @@ export default function PersonalInfo() {
                 </div>
                 </motion.div>
             </CardHeader>
-            <Suspense fallback= {<FullPageLoader />}>
                 <PersonalForm/>
-            </Suspense>
         </Card>
     )
 }

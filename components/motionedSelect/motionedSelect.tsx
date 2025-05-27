@@ -31,8 +31,9 @@ const CustomSelectField: React.FC<ISelectProps> = ({
             }
             <div>
                 <Select 
+                    name={field.name}
+                    value={field.value} // manually bind value
                     onValueChange={(val) => helpers.setValue(val)}
-                    {...field}
                 >
                     <SelectTrigger>
                         <SelectValue placeholder={label && label.toLocaleLowerCase() === name ? "Select" : name} />

@@ -2,20 +2,20 @@ import MotionField from '@/components/motionTextField/motionTextField'
 import { Button } from '@/components/ui/button'
 import { CardContent, CardFooter } from '@/components/ui/card'
 import { Form, FormikProvider } from 'formik'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { usePasswordUpdate } from '../hook/usePasswordUpdate'
 
 const PasswordUpdate = () => {
     const {formik} = usePasswordUpdate();
     const [disabled, setDisabled] = useState(true);
+    const isEmpty = useMemo(() => Object.values(formik.values).every(value => value === ''), [formik.values])
     useEffect(() => {
-        const isEmpty = Object.values(formik.values).every(value => value !== '');
-        if(!isEmpty) {
-            setDisabled(false);
-        } 
 
         if(formik.isSubmitting) {
             setDisabled(true); 
+        }
+        else {
+            setDisabled(isEmpty);
         }
 
     }, [formik.values, formik.isSubmitting])
@@ -44,7 +44,11 @@ const PasswordUpdate = () => {
                             placeholder="••••••••"
                         />
                         <CardFooter className="flex justify-end space-x-4 border-t px-6 py-4">
-                            <Button type="reset" variant="outline">Cancel</Button>
+                            {
+                                !disabled && (
+                                    <Button type="reset" variant="outline">Cancel</Button>
+                                )
+                            }
                             <Button 
                                 type="submit" 
                                 disabled={disabled} 

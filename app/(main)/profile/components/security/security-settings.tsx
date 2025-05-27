@@ -1,14 +1,10 @@
 "use client"
-
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { motion } from "framer-motion"
 import PasswordUpdate from "./components/password-update"
-import { Suspense } from "react"
-import FullPageLoader from "../profileLoader"
+
 
 export default function SecuritySettings() {
-
-
 
     return (
         <Card className="border-purple-200 shadow-sm">
@@ -22,9 +18,7 @@ export default function SecuritySettings() {
                     <CardDescription>Update your password and manage your account security.</CardDescription>
                 </motion.div>
             </CardHeader>
-            <Suspense fallback= {<FullPageLoader />}>
                 <PasswordUpdate/>
-            </Suspense>
         </Card>
     )
 }
