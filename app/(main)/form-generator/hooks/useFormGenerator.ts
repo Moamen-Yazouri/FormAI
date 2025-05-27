@@ -43,7 +43,6 @@ export const useFormGenerator = () => {
         }
     }
     const handleAddEmail = () => {
-    // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(email)) {
         setEmailError("Please enter a valid email address")

@@ -1,18 +1,19 @@
 import { IContextUser } from "@/@types";
-import { ITokenPayload, verifyToken } from "@/lib/generateAndVerifyToken";
+import { connection } from "@/DB/connection";
 import { getToken } from "@/lib/getToken";
 import userService from "@/module/services/user.service";
 
 
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export const GET = async (): Promise<NextResponse> => {
     const tokenPayload = await getToken();
     if (!tokenPayload) {
         return NextResponse.json({message: "Unauthorized", user: null}, { status: 401 });
     }
-
+    await connection();
     try {
+        
         const user = await userService.findUserById(tokenPayload.userId);
         if (!user) {
             return NextResponse.json({ message: "User not found", user: null }, { status: 404 });

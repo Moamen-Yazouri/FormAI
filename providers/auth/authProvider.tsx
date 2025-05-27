@@ -2,7 +2,7 @@
 import { IAuthContext, IContextUser } from "@/@types";
 import { createContext, use, useEffect, useState } from "react";
 import { INITIAL_CONTEXT } from "./constants";
-import { getLoggedUser } from "./service/authContext.service";
+import { provideUser } from "./service/provide-user.service";
 
 interface IProps {
     children: React.ReactNode;
@@ -11,18 +11,23 @@ interface IProps {
 const AuthContext = createContext<IAuthContext>(INITIAL_CONTEXT);
 
 const AuthProvider = (props: IProps) => {
-    const fetchedUser = use(getLoggedUser());
-    const [user, setUser] = useState<IContextUser | null>(fetchedUser);
-    // const [isLoading, setLoading] = useState<boolean>(true);
+    const [user, setUser] = useState<IContextUser | null>(null);
+    const [isLoading, setLoading] = useState<boolean>(true);
 
     const revalidateUser = async() => {
-        const user = await getLoggedUser();
-        setUser(user);
+        await provideUser();
     }
-
+    useEffect(() => {
+        provideUser().then((user) => {
+            setUser(user);
+            setLoading(false);
+        })
+    }, [])
+    
     const value: IAuthContext = {
         user,
         setUser,
+        isLoading,
         revalidateUser
     }
     return <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>

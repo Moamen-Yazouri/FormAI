@@ -21,7 +21,7 @@ import NavItemsProvider from "./navItemsProvider"
 import Loader from "./loader"
 
 export default function AppSidebar() {
-    const {setUser, user} = use(AuthContext)
+    const {user, isLoading} = use(AuthContext)
     const router = useRouter();
     const pathname = usePathname();
     const {isMobile} = useSidebar();
@@ -32,9 +32,11 @@ export default function AppSidebar() {
     if(pathname.includes("answer-form")) return null;
 
     const handleLogout = async () => {
-        await fetch("api/auth/logout", {method: "POST"});
-        setUser(null);
-        router.push("/sign-in")
+        await fetch("/api/auth/logout", {
+            method: "POST",
+            credentials: "include",
+        });
+        router.push("/sign-in");
     }
 
     return (
@@ -75,7 +77,12 @@ export default function AppSidebar() {
                                 <span className="text-xs text-muted-foreground">{user!.email}</span>
                             </div>
                         </div>
-                        <Button onClick={handleLogout} variant="ghost" size="sm" className="w-full mt-4 text-red-500 hover:text-red-600 hover:bg-red-50">
+                        <Button 
+                            onClick={handleLogout} 
+                            variant="ghost" 
+                            size="sm" 
+                            className="w-full mt-4 text-red-500 hover:text-red-600 hover:bg-red-50 cursor-pointer"
+                        >
                             <LogOut className="h-4 w-4 mr-2"/>
                             <span>Log out</span>
                         </Button>
