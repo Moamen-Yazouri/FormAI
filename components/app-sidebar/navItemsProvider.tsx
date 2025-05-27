@@ -1,19 +1,23 @@
-import { UserRoles } from '@/@types'
-import React from 'react'
+"use client"
+import React, { useContext } from 'react'
 import { getNavItems } from './util/getNavItems';
 import { SidebarContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '../ui/sidebar';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-interface IProps {
-    role: UserRoles;
-    name: string;
-}
-const NavItemsProvider = (props: IProps) => {
-    const navItems = getNavItems(props.role, props.name);
+import { AuthContext } from '@/providers/auth/authProvider';
+
+
+const NavItemsProvider = () => {
+    const {user, isLoading} = useContext(AuthContext);
     const pathname = usePathname();;
     const isActive = (path : string) => {
         return pathname === path
     }
+
+    if(isLoading) return null;
+    if(!user) return null;
+
+    const navItems = getNavItems(user.role, user.name);
     return (
         <SidebarContent>
             <SidebarMenu> 

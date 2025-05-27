@@ -64,8 +64,8 @@ class ResponseService {
         return responses;
     }
 
-    async getFormResponses(formId: string, creatorId: string) {
-        const isOwner = await formsService.ensureFormCreator(formId, creatorId);
+    async getFormResponses(formId: string, creatorName: string) {
+        const isOwner = await formsService.ensureFormCreator(formId, creatorName);
         if(!isOwner) {
             throw new Error("You are not the owner of this form");
         }
