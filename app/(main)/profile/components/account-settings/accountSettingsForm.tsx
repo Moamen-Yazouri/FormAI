@@ -2,29 +2,35 @@
 
 import MotionField from "@/components/motionTextField/motionTextField"
 import { Form, FormikProvider } from "formik"
-import { use, useState, useEffect } from "react"
+import { use, useState, useEffect, useMemo } from "react"
 import { useAccountSetingForm } from "./hook/useAccountSetingForm"
 import { Button } from "@/components/ui/button"
 import { CardFooter } from "@/components/ui/card"
 import LoadingSpinner from "@/app/(main)/form-generator/components/loading-spinner"
 import { AuthContext } from "@/providers/auth/authProvider"
 import ConfirmationDialog from "../confirmation-dialog/confirmationDialog"
+import FullPageLoader from "../profileLoader"
 
 const AccountSettingsForm = () => {
-    const { user } = use(AuthContext);
-    if(!user) {
-        throw new Error("User not found!");
-        
-    }
+    const { user, isLoading } = use(AuthContext);
     const { formik } = useAccountSetingForm()
     const [showConfirmDialog, setShowConfirmDialog] = useState(false)
     const [disabled, setDisabled] = useState(true)
 
+    const hasChanges = useMemo(() => {
+        if (!user) return false;
+        const changed = formik.values.name !== user.name 
+            || formik.values.email !== user.role;
+        return changed;
+    }, [formik.values.name, formik.values.email, user?.name, user?.role]);
+
     useEffect(() => {
-        const isChanged =
-        formik.values.name !== user!.name || formik.values.email !== user!.email
-        setDisabled(!isChanged || formik.isSubmitting)
-    }, [formik.values, formik.isSubmitting, user]);
+        if (formik.isSubmitting) {
+            setDisabled(true);
+        } else {
+            setDisabled(!hasChanges);
+        }
+    }, [hasChanges, formik.isSubmitting]);
 
     const handleCancle = () => {
         formik.setValues({
@@ -32,7 +38,12 @@ const AccountSettingsForm = () => {
             email: user!.email,
         }) 
     }
-
+    if(isLoading) return <FullPageLoader />
+    
+        if(!user && !isLoading) {
+            throw new Error("User not found!");
+        
+        }
 
     return (
         <>

@@ -25,8 +25,9 @@ export default function AppSidebar() {
     const router = useRouter();
     const pathname = usePathname();
     const {isMobile} = useSidebar();
-    const nameForAvatar = user?.name?.split(" ").map((word) => word[0]).join("")
-
+    const nameForAvatar = user?.name?.split(" ").map((word) => word[0]).join("");
+    
+    if(isLoading) return <Loader/>
 
 
     if(pathname.includes("answer-form")) return null;

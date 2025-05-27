@@ -20,9 +20,7 @@ export default function AccountSettings() {
                     <CardDescription>Update your name and email address.</CardDescription>
                 </motion.div>
             </CardHeader>
-            <Suspense fallback= {<FullPageLoader />}>
                 <AccountSettingsForm/>
-            </Suspense>
         </Card>
     )
 }
