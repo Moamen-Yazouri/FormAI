@@ -13,7 +13,7 @@ interface IProps {
 const ConfirmationDialog = (props: IProps) => {
     const {values, submit, dialogState, closeDialog} = props;
     const {user} = use(AuthContext);
-    if(!user) throw new Error("User not found");
+    if(!user) return null;
 
     
 
@@ -35,6 +35,9 @@ const ConfirmationDialog = (props: IProps) => {
                 {
                     Object.keys(values).map((key, index) => {
                         const fitKey = key as keyof IContextUser;
+
+                        if(user[fitKey] === values[fitKey]) return;
+
                         return (
                             <div className="flex flex-col gap-1" key={index}>
                                 <p className="text-sm font-medium text-purple-900">{`${key.toUpperCase()}`}</p>
