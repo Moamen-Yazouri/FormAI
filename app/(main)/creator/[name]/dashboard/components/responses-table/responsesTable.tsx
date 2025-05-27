@@ -25,23 +25,25 @@ import ActionServices from "../../services/action.service"
 import { toast } from "sonner"
 import { useFilter } from "./hook/useFilter"
 import SearchBar from "../searchBar"
+import { UserRoles } from "@/@types"
 
 interface IProps {
     responses: ICreatorResponses[];
     isSummary?: boolean;
     name: string;
+    role?: UserRoles;
 }
 
-const ResponsesTable = ({ responses, isSummary, name }: IProps) => {
+const ResponsesTable = ({ responses, isSummary, name, role }: IProps) => {
     const [responseToDelete, setResponseToDelete] = useState<string | null>(null);
     const { searchTerm, setSearchTerm, filteredResponses } = useFilter(responses);
 
     const handleDeleteResponse = async (id: string) => {
         const deletedResponse = await ActionServices.deleteResponse(id);
         if (deletedResponse) {
-        toast.success("Response deleted successfully!");
+            toast.success("Response deleted successfully!");
         } else {
-        toast.error("Failed to delete response!");
+            toast.error("Failed to delete response!");
         }
     }
 
@@ -124,12 +126,12 @@ const ResponsesTable = ({ responses, isSummary, name }: IProps) => {
         </Table>
         {isSummary && (
             <div className="flex justify-center p-4">
-            <Link href={`/creator/${name}/all-forms`}>
+            <Link href={`/${role || "creator"}/${name}/all-responses`}>
                 <Button 
                 variant="outline" 
                 className="text-purple-700 hover:bg-purple-50 hover:text-purple-900 transition"
                 >
-                View All Forms
+                View All Responses
                 </Button>
             </Link>
             </div>

@@ -152,12 +152,14 @@ const CreatorDashboard = (props : IProps) => {
                             <CardContent>
                                 <SearchBar placeholder="Search responses..."
                                     setSearch={setSearchResponses}
-                                    search={searchResponses}/>
+                                    search={searchResponses}
+                                />
                                 <ResponsesTable responses={slicedResponses}
                                     name={
                                         user!.name
                                     }
-                                    isSummary={true}/>
+                                    isSummary={true}
+                                />
                             </CardContent>
                         </Card>
                     </TabsContent>

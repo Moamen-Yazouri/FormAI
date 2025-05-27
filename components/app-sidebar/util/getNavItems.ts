@@ -46,6 +46,16 @@ export const getNavItems = (role: UserRoles, name: string): INavItem[] => {
                     icon: Sparkles,
                     href: "/form-generator"
                 },
+                {
+                    title: "Created Forms",
+                    icon: Sparkles,
+                    href: `/creator/${name}/all-forms`
+                },
+                {
+                    title: "Form Generator",
+                    icon: Sparkles,
+                    href: "/form-generator"
+                },
             ]
             return navItems;
         }
