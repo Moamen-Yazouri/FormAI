@@ -2,30 +2,30 @@ import { useFormik } from "formik"
 import { FormValues } from "../types"
 import { validationSchema } from "../validationSchems";
 import { AuthContext } from "@/providers/auth/authProvider";
-import { useContext, useEffect, useState } from "react";
+import { use, useContext, useEffect, useState } from "react";
 import { toast } from "sonner";
 import ActionService from "../../../service/action.service"
 import { IContextUser } from "@/@types";
 
 export const usePersonalInfo = () => {
-    const { user,revalidateUser} = useContext(AuthContext);
-    const [userData, setUserData] = useState<IContextUser>({
-        _id: "",
-        name: "",
-        email: "",
-        role: "user",
-    });
-    useEffect(() => {
-        if(user) {
-            setUserData(user); 
-        }
-    }, [user])
+    const { user,revalidateUser} = use(AuthContext);
+    // const [userData, setUserData] = useState<IContextUser>({
+    //     _id: "",
+    //     name: "",
+    //     email: "",
+    //     role: "user",
+    // });
+    // useEffect(() => {
+    //     if(user) {
+    //         setUserData(user); 
+    //     }
+    // }, [user])
     const handleSubmit = async(
         values: FormValues,
         setSubmitting: (isSubmitting: boolean) => void,
     ) => {
-        if(values.name !== userData.name) {
-            const data = await ActionService.updateName(String(userData._id), values.name);
+        if(values.name !== user!.name) {
+            const data = await ActionService.updateName(String(user!._id), values.name);
             if(data.user) {
                 toast.success(`Name updated to: ${values.name} successfully`);
             }
@@ -34,8 +34,8 @@ export const usePersonalInfo = () => {
             }
         }
 
-        if(values.role !== userData.role) {
-            const data = await ActionService.updateEmail(String(userData._id), values.role);
+        if(values.role !== user!.role) {
+            const data = await ActionService.updateEmail(String(user!._id), values.role);
             if(data.user) {
                 toast.success(`Role updated to: ${values.role} successfully`);
             }
@@ -48,7 +48,7 @@ export const usePersonalInfo = () => {
     }
 
     const formik = useFormik<FormValues>({
-        initialValues: {name: "", role: "user"},
+        initialValues: user!,
         onSubmit: (values, {setSubmitting}) => {
             handleSubmit(values, setSubmitting);
         },

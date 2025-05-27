@@ -5,25 +5,24 @@ import { Button } from "@/components/ui/button";
 import { CardFooter } from "@/components/ui/card";
 import { Form, FormikProvider } from "formik";
 import type React from "react";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { use, useEffect, useMemo, useState } from "react";
 import { OPTIONS } from "./constants";
 import { AuthContext } from "@/providers/auth/authProvider";
 import { usePersonalInfo } from "./hook/usePersonalForm";
 import LoadingSpinner from "@/app/(main)/form-generator/components/loading-spinner";
 import ConfirmationDialog from "../confirmation-dialog/confirmationDialog";
-import FullPageLoader from "../profileLoader";
 import { UserRoles } from "@/@types";
 
 const PersonalForm = () => {
     const [disabled, setDisabled] = useState<boolean>(true);
     const [showConfirmDialog, setShowConfirmDialog] = useState<boolean>(false);
-    const { user, isLoading } = useContext(AuthContext);
+    const { user } = use(AuthContext);
     const { formik } = usePersonalInfo();
 
     const hasChanges = useMemo(() => {
-        if (!user) return false;
+        if (!user || !formik.values) return false;
         return formik.values.name !== user.name || formik.values.role !== user.role;
-    }, [formik.values.name, formik.values.role, user?.name, user?.role]);
+    }, [formik.values, user?.name, user?.role]);
 
     useEffect(() => {
         if (formik.isSubmitting) {
@@ -44,13 +43,11 @@ const PersonalForm = () => {
         }
     }, [user]);
 
-    if (!user) {
+    if (!user || !formik.values) {
         return null;
     }
 
-    if (isLoading) {
-        return <FullPageLoader />;
-    }
+
 
     const handleCancel = () => {
         formik.setValues({
