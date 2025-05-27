@@ -19,7 +19,7 @@ export default function ProfileHeader() {
 
     if(isLoading) return <FullPageLoader />
 
-    if(!user) throw new Error("User not found");
+    if(!user) return null;
     
     const getInitials = (name: string) => {
         return name

@@ -12,17 +12,17 @@ import ConfirmationDialog from "../confirmation-dialog/confirmationDialog"
 import FullPageLoader from "../profileLoader"
 
 const AccountSettingsForm = () => {
-    const { user, isLoading } = use(AuthContext);
+    const { user  } = use(AuthContext);
     const { formik } = useAccountSetingForm()
     const [showConfirmDialog, setShowConfirmDialog] = useState(false)
     const [disabled, setDisabled] = useState(true)
 
     const hasChanges = useMemo(() => {
-        if (!user) return false;
+        if (!user || !formik.values) return false;
         const changed = formik.values.name !== user.name 
-            || formik.values.email !== user.role;
+            || formik.values.email !== user.email;
         return changed;
-    }, [formik.values.name, formik.values.email, user?.name, user?.role]);
+    }, [formik.values, user?.name, user?.role]);
 
     useEffect(() => {
         if (formik.isSubmitting) {
@@ -38,9 +38,9 @@ const AccountSettingsForm = () => {
             email: user!.email,
         }) 
     }
-    if(isLoading) return <FullPageLoader />
     
-        if(!user && !isLoading) {
+    
+        if(!user) {
             return null;
         
         }
