@@ -127,8 +127,8 @@ button, a {
   cursor: pointer;
 }
 input, textarea {
-  caret-color: #a855f7;
-  color: #a855f7 /* purple */
+  caret-color: rgb(100 116 139);
+  color: rgb(100 116 139);
 }
 input::placeholder, textarea::placeholder {
   transition: 0.3s; 
