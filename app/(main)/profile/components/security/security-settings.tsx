@@ -7,18 +7,24 @@ import PasswordUpdate from "./components/password-update"
 export default function SecuritySettings() {
 
     return (
-        <Card className="border-purple-200 shadow-sm">
-            <CardHeader>
-                <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4 }}
-                >
-                    <CardTitle className="text-purple-900">Security Settings</CardTitle>
-                    <CardDescription>Update your password and manage your account security.</CardDescription>
-                </motion.div>
-            </CardHeader>
-                <PasswordUpdate/>
-        </Card>
+        <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+        >
+            <Card className="border-purple-200 shadow-sm gap-0 pb-0">
+                <CardHeader>
+                    <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4 }}
+                    >
+                        <CardTitle className="text-purple-900">Security Settings</CardTitle>
+                        <CardDescription>Update your password and manage your account security.</CardDescription>
+                    </motion.div>
+                </CardHeader>
+                    <PasswordUpdate/>
+            </Card>
+        </motion.div>
     )
 }
