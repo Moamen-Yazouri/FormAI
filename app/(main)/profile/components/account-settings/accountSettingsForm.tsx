@@ -48,7 +48,7 @@ const AccountSettingsForm = () => {
     return (
         <>
         <FormikProvider value={formik}>
-            <Form className="flex justify-center flex-col w-full gap-6 p-4">
+            <Form className="flex justify-center flex-col w-full  p-4 mt-0">
                 <div className="space-y-6">
                     <MotionField name="name" 
                         isPassword={false} 

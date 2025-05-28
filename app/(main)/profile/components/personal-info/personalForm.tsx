@@ -71,12 +71,16 @@ const PersonalForm = () => {
                         type="text" 
                         placeholder="Enter your name" 
                     />
-
-                    <MotionedSelect 
-                        name="role" 
-                        options={OPTIONS} 
-                        label="Select a new Role:" 
-                    />
+                    {
+                        user.role !== "admin" && (
+                            
+                            <MotionedSelect 
+                                name="role" 
+                                options={OPTIONS} 
+                                label="Select a new Role:" 
+                            />
+                        )
+                    }
 
                     <CardFooter className="flex justify-end space-x-2 border-t px-3 py-2">
                         {!disabled && (

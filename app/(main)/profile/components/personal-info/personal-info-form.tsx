@@ -33,20 +33,26 @@ export default function PersonalInfo() {
     
 
     return (
-        <Card className="border-purple-200 shadow-sm pb-0">
-            <CardHeader >
-                <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
-                >
-                <div>
-                    <CardTitle className="text-purple-900">Security Settings</CardTitle>
-                    <CardDescription>Update your password and manage your account security.</CardDescription>
-                </div>
-                </motion.div>
-            </CardHeader>
-                <PersonalForm/>
-        </Card>
+        <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+        >
+            <Card className="border-purple-200 shadow-sm pb-0 gap-0">
+                <CardHeader >
+                    <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4 }}
+                    >
+                    <div>
+                        <CardTitle className="text-purple-900">Security Settings</CardTitle>
+                        <CardDescription>Update your password and manage your account security.</CardDescription>
+                    </div>
+                    </motion.div>
+                </CardHeader>
+                    <PersonalForm/>
+            </Card>
+        </motion.div>
     )
 }
