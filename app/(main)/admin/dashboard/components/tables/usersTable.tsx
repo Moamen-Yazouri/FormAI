@@ -107,7 +107,7 @@ const UsersTable = (props: IProps) => {
                                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                                         {user.role === "creator" && (
                                             <DropdownMenuItem 
-                                                className="flex items-center gap-2"
+                                                className="flex items-center gap-2 cursor-pointer"
                                                 onClick={() => router.push(`/admin/creator-forms/${user.name}`)}
                                             >
                                                 <Eye className="h-4 w-4"/>

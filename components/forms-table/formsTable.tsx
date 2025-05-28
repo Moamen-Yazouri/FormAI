@@ -110,12 +110,12 @@ const FormsTable = (props: IProps) => {
                             <DropdownMenuSeparator />
 
                             <DeleteDialog
-                            itemToDelete={formToDelete}
-                            item={form}
-                            data={forms}
-                            setItemToDelete={setFormToDelete}
-                            itemsType="Form"
-                            handleDeleteItem={handleFormDelete}
+                                itemToDelete={formToDelete}
+                                item={form}
+                                data={forms}
+                                setItemToDelete={setFormToDelete}
+                                itemsType="Form"
+                                handleDeleteItem={handleFormDelete}
                             />
                         </DropdownMenuContent>
                         </DropdownMenu>

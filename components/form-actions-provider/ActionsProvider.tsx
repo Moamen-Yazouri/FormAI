@@ -20,15 +20,15 @@ const ActionsProvider = (props: IProps) => {
         case "admin" : {
             return (
                 <>
-                    <DropdownMenuItem className="flex items-center gap-2" onClick={() => router.push(`/view-form/${props.id}`)}>
+                    <DropdownMenuItem className="flex cursor-pointer items-center gap-2" onClick={() => router.push(`/view-form/${props.id}`)}>
                         <Eye className="h-4 w-4" />
                         View Form
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="flex items-center gap-2" onClick={() => router.push(`/answer-form/${props.id}`)}>
+                    <DropdownMenuItem className="flex cursor-pointer items-center gap-2" onClick={() => router.push(`/answer-form/${props.id}`)}>
                         <Eye className="h-4 w-4"/>
                         Answer Form
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="flex items-center gap-2">
+                    <DropdownMenuItem className="flex cursor-pointer items-center gap-2">
                         <MessageSquare className="h-4 w-4" onClick={() => router.push(`/form-answers/${user.name}/${props.id}`)}/>
                         View Responses
                     </DropdownMenuItem>
@@ -38,11 +38,11 @@ const ActionsProvider = (props: IProps) => {
         case "creator" : {
             return(
                 <>
-                    <DropdownMenuItem className="flex items-center gap-2" onClick={() => router.push(`/view-form/${props.id}`)}>
+                    <DropdownMenuItem className="flex cursor-pointer items-center gap-2" onClick={() => router.push(`/view-form/${props.id}`)}>
                         <Eye className="h-4 w-4"/>
                         View Form
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="flex items-center gap-2" onClick={() => router.push(`/form-answers/${user.name}/${props.id}`)}>
+                    <DropdownMenuItem className="flex cursor-pointer items-center gap-2" onClick={() => router.push(`/form-answers/${user.name}/${props.id}`)}>
                         <MessageSquare className="h-4 w-4"/>
                         View Responses
                     </DropdownMenuItem>

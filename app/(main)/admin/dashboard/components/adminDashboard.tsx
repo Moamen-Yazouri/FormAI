@@ -1,26 +1,27 @@
 "use client"
-import {Tabs, TabsContent} from "@/components/ui/tabs"
+import {Tabs, TabsContent} from "@/components/ui/tabs";
 import {
     Card,
     CardContent,
-} from "@/components/ui/card"
-import useDashboard from "../hooks/useDahboard"
-import { IFormTable, IFormCreationData, IFormResponseData, IUserData, IUsersActivityData } from "@/@types"
-import FormsTable from "@/components/forms-table/formsTable"
-import AllTabs from "../components/allTabs"
-import { TABS } from "../constants/constants"
-import TabHeader from "../components/tabHeader"
-import AllCharts from "../components/allCharts"
-import AllCards from "../components/allStates"
-import DashboardHeader from "../components/dashboardHeader"
-import UsersTable from "@/components/user-table/userTable"
+} from "@/components/ui/card";
+import useDashboard from "../hooks/useDahboard";
+import { IFormTable, IFormCreationData, IFormResponseData, IUserData, IUsersActivityData, IActiveUsers } from "@/@types";
+import FormsTable from "@/components/forms-table/formsTable";
+import AllTabs from "../components/allTabs";
+import { TABS } from "../constants/constants";
+import TabHeader from "../components/tabHeader";
+import AllCharts from "../components/allCharts";
+import AllCards from "../components/allStates";
+import DashboardHeader from "../components/dashboardHeader";
+import UsersTable from "@/components/user-table/userTable";
 
 interface IProps {
     usersData: IUserData[],
     formsData: IFormTable[],
     userActivityData: IUsersActivityData[],
     formCreationData: IFormCreationData[],
-    formResponsesData: IFormResponseData[]
+    formResponsesData: IFormResponseData[],
+    activeUsers: IActiveUsers[],
 }
 
 const AdminDashboard = (props: IProps) => {
@@ -30,6 +31,7 @@ const AdminDashboard = (props: IProps) => {
         userActivityData,
         formCreationData,
         formResponsesData,
+        activeUsers
     } = props;
 
 
@@ -54,9 +56,10 @@ const AdminDashboard = (props: IProps) => {
                         <AllCards cards={stateCardsData} />
 
                         <AllCharts
-                            formResponsesData={formResponsesData} 
-                            formCreationData={formCreationData} 
-                            userActivityData={userActivityData}
+                            formResponsesData={formResponsesData}
+                            formCreationData={formCreationData}
+                            userActivityData={userActivityData} 
+                            activeUsersData={activeUsers}                            
                         /> 
 
                     </TabsContent>
