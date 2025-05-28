@@ -1,11 +1,9 @@
-import React from 'react'
+import { Loader2 } from "lucide-react"
 
-const Loader = () => {
-    return (
-        <div className="w-60 h-screen flex items-center justify-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-purple-600" />
-        </div>
-    )
+export default function Loader() {
+  return (
+    <div className="flex h-screen items-center justify-center p-4">
+      <Loader2 className="h-6 w-6 animate-spin text-violet-400" />
+    </div>
+  )
 }
-
-export default Loader
