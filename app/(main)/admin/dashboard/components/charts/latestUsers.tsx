@@ -8,58 +8,13 @@ import {
 } from "@/components/ui/card"
 import {Badge} from "@/components/ui/badge"
 import {Clock, FileText} from "lucide-react"
+import { IActiveUsers } from "@/@types"
 
-interface Iprops {
-    
+interface IProps {
+    activeUsers: IActiveUsers[];
 }
-const activeUsers = [
-    {
-        id: 1,
-        name: "John Doe",
-        email: "john@example.com",
-        avatar: "/placeholder.svg?height=32&width=32",
-        lastActive: "2 minutes ago",
-        status: "online",
-        forms: 12
-    },
-    {
-        id: 2,
-        name: "Emily Davis",
-        email: "emily@example.com",
-        avatar: "/placeholder.svg?height=32&width=32",
-        lastActive: "15 minutes ago",
-        status: "online",
-        forms: 15
-    },
-    {
-        id: 3,
-        name: "Jane Smith",
-        email: "jane@example.com",
-        avatar: "/placeholder.svg?height=32&width=32",
-        lastActive: "1 hour ago",
-        status: "away",
-        forms: 8
-    },
-    {
-        id: 4,
-        name: "Michael Wilson",
-        email: "michael@example.com",
-        avatar: "/placeholder.svg?height=32&width=32",
-        lastActive: "3 hours ago",
-        status: "offline",
-        forms: 6
-    }, {
-        id: 5,
-        name: "Sarah Brown",
-        email: "sarah@example.com",
-        avatar: "/placeholder.svg?height=32&width=32",
-        lastActive: "5 hours ago",
-        status: "offline",
-        forms: 9
-    },
-]
 
-export function ActiveUsersCard() {
+export function ActiveUsersCard(props: IProps) {
     return (
         <Card>
             <CardHeader>
@@ -69,7 +24,7 @@ export function ActiveUsersCard() {
             <CardContent>
                 <div className="space-y-4">
                     {
-                    activeUsers.map((user) => (
+                    props.activeUsers.map((user) => (
                         <div key={
                                 user.id
                             }
@@ -89,7 +44,7 @@ export function ActiveUsersCard() {
                                 </Avatar>
                                 <span className={
                                     `absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white ${
-                                        user.status === "online" ? "bg-green-500" : user.status === "away" ? "bg-yellow-500" : "bg-gray-400"
+                                        user.status === "active" ? "bg-green-500" : user.status === "inactive" ? "bg-yellow-500" : "bg-gray-400"
                                     }`
                                 }/>
                             </div>

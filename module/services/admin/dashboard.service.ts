@@ -11,7 +11,14 @@ class DashboardService {
             return forms.length;
         }
         const usersData: IUserData[] = await Promise.all(
-            users.map(async (user) => {
+            users.sort((a, b) => {
+                const aActive = getActiveStatus(a.updatedAt, new Date().toISOString());
+                const bActive = getActiveStatus(b.updatedAt, new Date().toISOString());
+                if(aActive === "active" && bActive === "inactive") return -1;
+                if(aActive === "inactive" && bActive === "active") return 1;
+                return 0;
+            })
+            .map(async (user) => {
                 return {
                     id: String(user._id),
                     name: user.name,

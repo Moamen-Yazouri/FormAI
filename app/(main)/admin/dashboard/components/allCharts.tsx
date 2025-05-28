@@ -3,17 +3,19 @@ import UserActivityChart from './charts/usersActivity'
 import FormCreationTrend from './formCreationTrend'
 import FormsDistribution from './charts/formsDistribution'
 import { ActiveUsersCard } from './charts/latestUsers'
-import { IFormCreationData, IFormResponseData, IUsersActivityData } from '@/@types'
+import { IActiveUsers, IFormCreationData, IFormResponseData, IUsersActivityData } from '@/@types'
 interface IProps {
     userActivityData: IUsersActivityData[],
     formCreationData: IFormCreationData[],
     formResponsesData: IFormResponseData[],
+    activeUsersData: IActiveUsers[],
 }
 const AllCharts = (props: IProps) => {
     const {
         userActivityData,
         formCreationData,
         formResponsesData,
+        activeUsersData
     } = props
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -23,7 +25,7 @@ const AllCharts = (props: IProps) => {
 
             <FormsDistribution formResponsesData={formResponsesData} />
 
-            <ActiveUsersCard/>
+            <ActiveUsersCard activeUsers={activeUsersData}/>
         </div>
     )
 }
