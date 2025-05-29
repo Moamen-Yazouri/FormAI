@@ -11,82 +11,87 @@ import { AuthContext } from "@/providers/auth/authProvider"
 import ConfirmationDialog from "../confirmation-dialog/confirmationDialog"
 
 const AccountSettingsForm = () => {
-    const { user } = use(AuthContext)
-    const { formik } = useAccountSetingForm()
-    const [showConfirmDialog, setShowConfirmDialog] = useState(false)
-    const [disabled, setDisabled] = useState(true)
+  const { user } = use(AuthContext)
+  const { formik } = useAccountSetingForm()
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false)
+  const [disabled, setDisabled] = useState(true)
 
-    const hasChanges = useMemo(() => {
-        if (!user || !formik.values) return false
-        return formik.values.name !== user.name || formik.values.email !== user.email
-    }, [formik.values, user])
-
-    useEffect(() => {
-        setDisabled(formik.isSubmitting || !hasChanges)
-    }, [hasChanges, formik.isSubmitting])
-
-    const handleCancel = () => {
-        formik.setValues({
-        name: user!.name,
-        email: user!.email
-        })
-    }
-
-    if (!user) return null
-
+  const hasChanges = useMemo(() => {
+    if (!user || !formik.values) return false
     return (
-        <>
-        <FormikProvider value={formik}>
-            <Form className="flex flex-col w-full p-5 gap-6 text-slate-200">
-            <MotionField
-                name="name"
-                isPassword={false}
-                label="Name"
-                type="text"
-                placeholder="Enter your name"
-            />
-            <MotionField
-                name="email"
-                isPassword={false}
-                label="Email Address"
-                type="email"
-                placeholder="Enter your email"
-            />
-
-            <CardFooter className="flex justify-end space-x-4 border-t border-violet-800/30 px-6 py-4 mt-4">
-                {!disabled && (
-                <Button
-                    type="button"
-                    variant="ghost"
-                    onClick={handleCancel}
-                    disabled={formik.isSubmitting}
-                    className="text-slate-300 hover:text-white hover:bg-violet-800/30 transition-all"
-                >
-                    Cancel
-                </Button>
-                )}
-
-                <Button
-                type="button"
-                onClick={() => setShowConfirmDialog(true)}
-                disabled={disabled}
-                className="bg-gradient-to-r from-violet-600 via-indigo-600 to-purple-600 hover:from-violet-500 hover:via-indigo-500 hover:to-purple-500 text-white shadow-xl hover:shadow-2xl transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-xl"
-                >
-                {formik.isSubmitting && <LoadingSpinner className="mr-2" />}
-                Save Changes
-                </Button>
-            </CardFooter>
-            </Form>
-        </FormikProvider>
-
-        <ConfirmationDialog
-            dialogState={showConfirmDialog}
-            closeDialog={setShowConfirmDialog}
-            values={formik.values}
-            submit={formik.submitForm}
-        />
-        </>
+      formik.values.name !== user.name ||
+      formik.values.email !== user.email
     )
+  }, [formik.values, user])
+
+  useEffect(() => {
+    setDisabled(formik.isSubmitting || !hasChanges)
+  }, [hasChanges, formik.isSubmitting])
+
+  const handleCancel = () => {
+    if (user) {
+      formik.setValues({
+        name: user.name,
+        email: user.email,
+      })
+    }
+  }
+
+  if (!user) return null
+
+  return (
+    <>
+      <FormikProvider value={formik}>
+        <Form className="flex flex-col gap-6 px-6 py-4 text-slate-200">
+          <MotionField
+            name="name"
+            label="Name"
+            type="text"
+            isPassword={false}
+            placeholder="Enter your name"
+          />
+          <MotionField
+            name="email"
+            label="Email Address"
+            type="email"
+            isPassword={false}
+            placeholder="Enter your email"
+          />
+
+          <CardFooter className="flex justify-end gap-3 border-t border-cyan-600/30 pt-6">
+            {!disabled && (
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={handleCancel}
+                disabled={formik.isSubmitting}
+                className="text-slate-300 hover:text-cyan-200 hover:bg-cyan-900/20 transition"
+              >
+                Cancel
+              </Button>
+            )}
+
+            <Button
+              type="button"
+              onClick={() => setShowConfirmDialog(true)}
+              disabled={disabled}
+              className="bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white shadow-md hover:shadow-xl transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:pointer-events-none"
+            >
+              {formik.isSubmitting && <LoadingSpinner className="mr-2" />}
+              Save Changes
+            </Button>
+          </CardFooter>
+        </Form>
+      </FormikProvider>
+
+      <ConfirmationDialog
+        dialogState={showConfirmDialog}
+        closeDialog={setShowConfirmDialog}
+        values={formik.values}
+        submit={formik.submitForm}
+      />
+    </>
+  )
 }
 
 export default AccountSettingsForm

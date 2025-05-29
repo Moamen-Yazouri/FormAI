@@ -1,60 +1,217 @@
-import Link from "next/link"
+"use client"
+
+import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { FileText, ArrowLeft } from "lucide-react"
-import Header from "@/components/header/header"
+import { Home, Search, ArrowLeft, Zap, Star, Circle } from "lucide-react"
+import Link from "next/link"
+import { useState, useEffect, useMemo } from "react"
+import { useRouter } from "next/navigation"
 
 export default function NotFound() {
-  return (
-    <div className="flex min-h-screen flex-col">
-      {/* Header */}
-      {/* <Header /> */}
+  const [searchQuery, setSearchQuery] = useState("")
+  const [isMounted, setIsMounted] = useState(false)
+  const router = useRouter()
 
-      {/* Main */}
-      <main className="flex-1 flex items-center justify-center">
-        <div className="w-full max-w-3xl mx-auto px-6 py-20 text-center">
-          <div className="inline-flex items-center justify-center rounded-full bg-purple-100 p-6 mb-6">
-            <FileText className="h-10 w-10 text-purple-500" />
-          </div>
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl mb-6">Page not found</h1>
-          <p className="max-w-[28rem] text-muted-foreground sm:text-xl mb-8 mx-auto">
-            Sorry, we couldn't find the page you're looking for. It might have been moved or deleted.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-md mx-auto">
-            <Button asChild size="lg" className="bg-purple-500 hover:bg-purple-600 w-full sm:w-auto">
-              <Link href="/">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to home
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery)}`)
+    }
+  }
+
+  const floatingShapes = useMemo(() => {
+    if (!isMounted) return []
+    
+    return Array.from({ length: 8 }, (_, i) => {
+      // Use seeded random values for consistency if needed
+      const seed = i * 1000 + 42 // Fixed seed for deterministic randomness
+      const random = (multiplier = 1, offset = 0) => 
+        (Math.sin(seed * (i + 1)) * 0.5 + 0.5) * multiplier + offset
+      
+      return {
+        id: i,
+        size: random(60, 20),
+        x: random(100),
+        y: random(100),
+        duration: random(10, 10),
+        delay: random(5),
+        icon: i % 3 === 0 ? Circle : i % 3 === 1 ? Star : Zap,
+        color: i % 3 === 0 ? "text-cyan-500" : i % 3 === 1 ? "text-blue-400" : "text-indigo-400"
+      }
+    })
+  }, [isMounted])
+
+  const animatedDots = useMemo(() => {
+    if (!isMounted) return []
+    
+    return Array.from({ length: 20 }, (_, i) => {
+      const seed = i * 500 + 123
+      const random = () => (Math.sin(seed) * 0.5 + 0.5)
+      
+      return {
+        id: `dot-${i}`,
+        left: random() * 100,
+        top: random() * 100,
+        duration: random() * 3 + 2,
+        delay: random() * 5
+      }
+      
+    })
+  }, [isMounted])
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-900 to-slate-900 relative overflow-hidden flex items-center justify-center text-slate-200">
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-950/40 via-blue-900/30 to-slate-900/40" />
+
+      {/* Floating shapes - only render when mounted */}
+      {floatingShapes.map((shape) => {
+        const Icon = shape.icon
+        return (
+          <motion.div
+            key={shape.id}
+            className={`absolute opacity-10 ${shape.color}`}
+            style={{
+              left: `${shape.x}%`,
+              top: `${shape.y}%`,
+              width: shape.size,
+              height: shape.size,
+            }}
+            animate={{
+              y: [0, -30, 0],
+              rotate: [0, 180, 360],
+              scale: [1, 1.2, 1],
+            }}
+            transition={{
+              duration: shape.duration,
+              delay: shape.delay,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            <Icon className="w-full h-full" />
+          </motion.div>
+        )
+      })}
+
+      {/* Main content */}
+      <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={isMounted ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="mb-8"
+        >
+          <motion.h1
+            className="text-8xl md:text-9xl lg:text-[12rem] font-bold bg-gradient-to-r from-cyan-300 via-blue-300 to-indigo-300 bg-clip-text text-transparent leading-none"
+            animate={isMounted ? { backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] } : {}}
+            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+            style={{ backgroundSize: "200% 200%" }}
+          >
+            404
+          </motion.h1>
+        </motion.div>
+
+        {isMounted && (
+          <motion.div
+            className="absolute inset-0 pointer-events-none"
+            animate={{ opacity: [0, 0.3, 0], x: [0, 2, -2, 0] }}
+            transition={{ duration: 0.2, repeat: Infinity, repeatDelay: 3 }}
+          >
+            <h1 className="text-8xl md:text-9xl lg:text-[12rem] font-bold text-cyan-400/30 leading-none">404</h1>
+          </motion.div>
+        )}
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isMounted ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.5, duration: 0.6 }}
+          className="mb-8"
+        >
+          <h2 className="text-2xl md:text-3xl font-semibold text-slate-200 mb-4">Oops! Page Not Found</h2>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={isMounted ? { opacity: 1 } : {}}
+            transition={{ delay: 1, duration: 0.8 }}
+            className="text-lg text-slate-400 max-w-2xl mx-auto"
+          >
+            The page you're looking for seems to have drifted into the digital void. Don't worry, even the best
+            explorers sometimes take a wrong turn in cyberspace.
+          </motion.p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isMounted ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 1.4, duration: 0.6 }}
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+        >
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Button
+              asChild
+              size="lg"
+              className="bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500 hover:from-cyan-400 hover:via-blue-400 hover:to-indigo-400 text-white shadow-xl hover:shadow-2xl"
+            >
+              <Link href="/" className="flex items-center gap-2">
+                <Home className="h-5 w-5" />
+                Back to Home
               </Link>
             </Button>
-          </div>
-        </div>
-      </main>
+          </motion.div>
 
-      {/* Footer */}
-      <footer className="w-full border-t bg-white py-12">
-        <div className="w-full max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="flex items-center gap-2 mb-4 md:mb-0">
-              <FileText className="h-6 w-6 text-purple-500" />
-              <span className="text-xl font-bold">FormAI</span>
-            </div>
-            <div className="flex gap-8">
-              <Link href="#" className="text-sm text-muted-foreground hover:text-purple-500 transition-colors">
-                Terms
-              </Link>
-              <Link href="#" className="text-sm text-muted-foreground hover:text-purple-500 transition-colors">
-                Privacy
-              </Link>
-              <Link href="#" className="text-sm text-muted-foreground hover:text-purple-500 transition-colors">
-                Contact
-              </Link>
-            </div>
-          </div>
-          <div className="mt-8 text-center text-sm text-muted-foreground">
-            © {new Date().getFullYear()} FormAI. All rights reserved.
-          </div>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => router.back()}
+              className="border-cyan-500/30 text-slate-300 hover:bg-slate-800/30 hover:text-cyan-200 hover:border-cyan-400/60"
+            >
+              <ArrowLeft className="h-5 w-5 mr-2" />
+              Go Back
+            </Button>
+          </motion.div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={isMounted ? { opacity: 1 } : {}}
+          transition={{ delay: 2, duration: 0.8 }}
+          className="mt-12 p-4 rounded-lg bg-gradient-to-r from-slate-900/40 via-blue-900/30 to-slate-800/40 border border-cyan-500/20 backdrop-blur-md"
+        >
+          <motion.p
+            animate={isMounted ? { opacity: [0.7, 1, 0.7] } : {}}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="text-sm text-slate-400"
+          >
+            💡 Fun fact: The first 404 error was discovered at CERN in 1992. You're now part of internet history!
+          </motion.p>
+        </motion.div>
+      </div>
+
+      {/* Animated dots - only render when mounted */}
+      {isMounted && (
+        <div className="absolute inset-0 pointer-events-none">
+          {animatedDots.map((dot) => (
+            <motion.div
+              key={dot.id}
+              className="absolute w-1 h-1 bg-cyan-400 rounded-full"
+              style={{
+                left: `${dot.left}%`,
+                top: `${dot.top}%`,
+              }}
+              animate={{ opacity: [0, 1, 0], scale: [0, 1, 0] }}
+              transition={{
+                duration: dot.duration,
+                delay: dot.delay,
+                repeat: Infinity,
+              }}
+            />
+          ))}
         </div>
-      </footer>
+      )}
     </div>
   )
 }

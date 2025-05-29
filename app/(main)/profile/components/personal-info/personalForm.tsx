@@ -14,8 +14,8 @@ import ConfirmationDialog from "../confirmation-dialog/confirmationDialog"
 import type { UserRoles } from "@/@types"
 
 const PersonalForm = () => {
-  const [disabled, setDisabled] = useState<boolean>(true)
-  const [showConfirmDialog, setShowConfirmDialog] = useState<boolean>(false)
+  const [disabled, setDisabled] = useState(true)
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false)
   const { user } = use(AuthContext)
   const { formik } = usePersonalInfo()
 
@@ -25,11 +25,7 @@ const PersonalForm = () => {
   }, [formik.values, user])
 
   useEffect(() => {
-    if (formik.isSubmitting) {
-      setDisabled(true)
-    } else {
-      setDisabled(!hasChanges)
-    }
+    setDisabled(formik.isSubmitting || !hasChanges)
   }, [hasChanges, formik.isSubmitting])
 
   useEffect(() => {
@@ -43,9 +39,7 @@ const PersonalForm = () => {
     }
   }, [user])
 
-  if (!user || !formik.values) {
-    return null
-  }
+  if (!user || !formik.values) return null
 
   const handleCancel = () => {
     formik.setValues({
@@ -54,25 +48,30 @@ const PersonalForm = () => {
     })
   }
 
-  const handleSubmitClick = () => {
-    setShowConfirmDialog(true)
-  }
-
   return (
     <>
       <FormikProvider value={formik}>
-        <Form className="flex justify-center flex-col w-full gap-6 p-5">
-          <MotionField name="name" isPassword={false} label="Name:" type="text" placeholder="Enter your name" />
-          {user.role !== "admin" && <MotionedSelect name="role" options={OPTIONS} label="Select a new Role:" />}
+        <Form className="flex flex-col gap-6 w-full p-5">
+          <MotionField
+            name="name"
+            type="text"
+            isPassword={false}
+            label="Name:"
+            placeholder="Enter your name"
+          />
 
-          <CardFooter className="flex justify-end space-x-2 border-t border-violet-800/30 px-3 py-4">
+          {user.role !== "admin" && (
+            <MotionedSelect name="role" options={OPTIONS} label="Select a new Role:" />
+          )}
+
+          <CardFooter className="flex justify-end gap-2 border-t border-cyan-700/20 px-3 py-4">
             {!disabled && (
               <Button
                 type="button"
                 variant="outline"
                 onClick={handleCancel}
                 disabled={formik.isSubmitting}
-                className="border-violet-600/50 text-slate-300 hover:bg-violet-800/30 hover:text-violet-200 hover:border-violet-500 transition-all duration-200"
+                className="text-cyan-200 border-cyan-600/40 hover:bg-cyan-900/20 hover:border-cyan-500 hover:text-cyan-100 transition-all duration-200"
               >
                 Cancel
               </Button>
@@ -80,9 +79,9 @@ const PersonalForm = () => {
 
             <Button
               type="button"
-              onClick={handleSubmitClick}
+              onClick={() => setShowConfirmDialog(true)}
               disabled={disabled}
-              className="bg-gradient-to-r from-violet-600 via-indigo-600 to-purple-600 hover:from-violet-500 hover:via-indigo-500 hover:to-purple-500 text-white shadow-xl hover:shadow-2xl transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-xl"
+              className="bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 hover:from-blue-500 hover:via-indigo-500 hover:to-cyan-500 text-white shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-lg"
             >
               {formik.isSubmitting ? (
                 <>

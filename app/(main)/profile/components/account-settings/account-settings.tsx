@@ -6,21 +6,22 @@ import { motion } from "framer-motion"
 
 export default function AccountSettings() {
     return (
-        <Card className="bg-gradient-to-br from-slate-900/60 via-violet-900/40 to-indigo-900/40 border border-violet-800/30 shadow-xl backdrop-blur-sm pb-0 gap-0">
+        <Card className="bg-gradient-to-br from-blue-950 via-indigo-950 to-cyan-900 border border-cyan-700/20 shadow-2xl backdrop-blur-md pb-0">
         <CardHeader>
             <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
             >
-            <CardTitle className="bg-gradient-to-r from-violet-300 via-indigo-300 to-purple-300 bg-clip-text text-transparent">
+            <CardTitle className="bg-gradient-to-r from-cyan-300 via-blue-300 to-indigo-300 bg-clip-text text-transparent">
                 Account Settings
             </CardTitle>
-            <CardDescription className="text-slate-400">
+            <CardDescription className="text-slate-300">
                 Update your name and email address.
             </CardDescription>
             </motion.div>
         </CardHeader>
+
         <AccountSettingsForm />
         </Card>
     )
