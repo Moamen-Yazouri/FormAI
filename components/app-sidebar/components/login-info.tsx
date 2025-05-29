@@ -33,20 +33,20 @@ const LoginInfo = () => {
   }
 
   return (
-    <SidebarFooter className="border-t border-violet-800/30 p-0">
-      <div className="p-4 bg-gradient-to-r from-slate-800/60 via-violet-900/40 to-indigo-900/40 backdrop-blur-md">
+    <SidebarFooter className="border-t border-cyan-800/30 p-0">
+      <div className="p-4 bg-gradient-to-r from-slate-900/60 via-blue-900/40 to-cyan-900/40 backdrop-blur-md">
         <div className="flex items-center gap-3">
-          <Avatar className="ring-2 ring-violet-500/30">
+          <Avatar className="ring-2 ring-cyan-500/30">
             <AvatarImage src="/placeholder.svg?height=32&width=32" />
-            <AvatarFallback className="bg-gradient-to-r from-violet-500 to-indigo-500 text-white font-semibold">
+            <AvatarFallback className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-semibold">
               {nameForAvatar}
             </AvatarFallback>
           </Avatar>
           <div className="flex flex-col">
-            <span className="text-sm font-medium bg-gradient-to-r from-violet-300 to-indigo-300 bg-clip-text text-transparent">
+            <span className="text-sm font-medium bg-gradient-to-r from-cyan-300 to-blue-300 bg-clip-text text-transparent">
               {user.name}
             </span>
-            <span className="text-xs text-slate-400">{user.email}</span>
+            <span className="text-xs text-slate-300">{user.email}</span>
           </div>
         </div>
         <Button
