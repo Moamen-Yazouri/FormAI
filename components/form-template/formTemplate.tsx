@@ -4,9 +4,12 @@ import { Card, CardHeader } from "@/components/ui/card";
 import clsx from "clsx";
 import { IForm } from "@/@types";
 import FormGenerator from "../formGenerator/formGenerator";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import LoadingPage from "../loadingPage/loadingPage";
 import { motion } from "framer-motion";
+import { getForm } from "./service/form.service";
+import { AuthContext } from "@/providers/auth/authProvider";
+import { useRouter } from "next/navigation";
 
 interface IProps {
   isPreview: boolean;
@@ -23,32 +26,30 @@ const FormTemplate = (props: IProps) => {
   } = props;
   const [data, setData] = useState<IForm | null>(null);
   const [loading, setLoading] = useState(true);
-  const fetcForm = async(id: string) => {
-      const res = await fetch("http://localhost:3000/api/get-form",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        }, 
-        body: JSON.stringify({ id })
-      }
-    )
-    const {form} = await res.json();
-    console.log(form);
-    setData(form);
-    setLoading(false);
-  }
+  const {user, isLoading} = useContext(AuthContext);
+  const router = useRouter();
+
   useEffect(() => {
-    if(id) {
-      fetcForm(id);
+    if(id && user) {
+      getForm(id, user)
+
+      .then(form => {
+        setData(form);
+      })
+
+      .finally(() => {
+        setLoading(false);
+      });
+
     }
     else {
-      setData(form!)
+      setData(form || null)
       setLoading(false);
     }
-  }, [id, form])
+  }, [id, form, user]);
+
   if(!data && isPreview) {
-    return null; 
+    router.back(); 
   }
   return (
     <div
@@ -59,10 +60,12 @@ const FormTemplate = (props: IProps) => {
     >
       
       {        
-        loading  ? (
+        loading || isLoading && (
           <LoadingPage/>
           ) 
-        : (
+      }
+      {
+        data && (
             <motion.div
               className="flex items-center justify-center w-full"
               layout
@@ -93,7 +96,8 @@ const FormTemplate = (props: IProps) => {
                     }
               </Card>
             </motion.div>
-        )}
+        )
+      }
     </div>
   );
 };
