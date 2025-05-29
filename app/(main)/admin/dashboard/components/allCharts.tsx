@@ -1,6 +1,6 @@
 import React from 'react'
 import UserActivityChart from './charts/usersActivity'
-import FormCreationTrend from './formCreationTrend'
+import FormCreationTrend from './charts/formCreationTrend'
 import FormsDistribution from './charts/formsDistribution'
 import { ActiveUsersCard } from './charts/latestUsers'
 import { IActiveUsers, IFormCreationData, IFormResponseData, IUsersActivityData } from '@/@types'
