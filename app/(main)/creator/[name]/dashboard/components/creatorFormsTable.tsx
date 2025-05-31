@@ -5,12 +5,11 @@ import { IFormTable } from "@/@types"
 
 interface IProps {
     forms: IFormTable[];
-    name: string;
 }
 
-const CreatorFormsTable = ({ forms, name }: IProps) => {
+const CreatorFormsTable = ({ forms }: IProps) => {
     return (
-        <FormsTable forms={forms} role="creator" name={name} isSummary={true}/>
+        <FormsTable forms={forms} isSummary={true}/>
     )
 }
 

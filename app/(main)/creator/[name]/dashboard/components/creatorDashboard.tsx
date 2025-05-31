@@ -139,7 +139,7 @@ const CreatorDashboard = (props : IProps) => {
                 <TabHeader title="My Forms" description="View and manage all your created forms" />
                 <CardContent>
                 <SearchBar placeholder="Search forms..." setSearch={setSearchForms} search={searchForms} />
-                <CreatorFormsTable forms={slicedForms} name={user!.name} />
+                <CreatorFormsTable forms={slicedForms} />
                 </CardContent>
             </Card>
             </TabsContent>
