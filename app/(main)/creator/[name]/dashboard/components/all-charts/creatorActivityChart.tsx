@@ -30,9 +30,9 @@ interface IProps {
 
 const CreatorActivityChart = ({ creatorActivityData }: IProps) => {
   return (
-    <Card className="bg-gradient-to-br from-slate-900/60 via-violet-900/40 to-indigo-900/40 border border-violet-800/30 shadow-xl backdrop-blur-md">
+    <Card className="bg-gradient-to-br from-slate-950 via-blue-900/30 to-indigo-800/30 border border-blue-700/30 shadow-xl backdrop-blur-md text-[#93c1ff]">
       <CardHeader>
-        <CardTitle className="text-lg font-semibold bg-gradient-to-r from-violet-300 via-indigo-300 to-purple-300 bg-clip-text text-transparent">
+        <CardTitle className="text-lg font-semibold bg-gradient-to-r from-cyan-400 via-blue-300 to-indigo-300 bg-clip-text text-transparent">
           Creator Activity
         </CardTitle>
         <CardDescription className="text-slate-400">
@@ -46,48 +46,43 @@ const CreatorActivityChart = ({ creatorActivityData }: IProps) => {
             <AreaChart data={creatorActivityData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
               <defs>
                 <linearGradient id="formsGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#8b5cf6" stopOpacity={0.6} />
-                  <stop offset="100%" stopColor="#8b5cf6" stopOpacity={0.05} />
+                  <stop offset="0%" stopColor="#06b6d4" stopOpacity={0.6} /> {/* cyan-500 */}
+                  <stop offset="100%" stopColor="#06b6d4" stopOpacity={0.05} />
                 </linearGradient>
                 <linearGradient id="responsesGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#6366f1" stopOpacity={0.6} />
-                  <stop offset="100%" stopColor="#6366f1" stopOpacity={0.05} />
+                  <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.6} /> {/* blue-500 */}
+                  <stop offset="100%" stopColor="#3b82f6" stopOpacity={0.05} />
                 </linearGradient>
               </defs>
 
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(139, 92, 246, 0.15)" />
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(59, 130, 246, 0.15)" />
               <XAxis
                 dataKey="date"
-                stroke="#a1a1aa"
-                tick={{ fontSize: 12, fill: "#a1a1aa" }}
+                stroke="#cbd5e1"
+                tick={{ fontSize: 12, fill: "#cbd5e1" }}
                 tickFormatter={(value) => {
                   const date = new Date(value)
                   return `${date.getDate()}/${date.getMonth() + 1}`
                 }}
               />
-              <YAxis
-                stroke="#a1a1aa"
-                tick={{ fontSize: 12, fill: "#a1a1aa" }}
-              />
+              <YAxis stroke="#cbd5e1" tick={{ fontSize: 12, fill: "#cbd5e1" }} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "rgba(30, 27, 75, 0.95)",
-                  borderColor: "rgba(139, 92, 246, 0.4)",
+                  backgroundColor: "rgba(15, 23, 42, 0.95)", // slate-950
+                  borderColor: "rgba(6, 182, 212, 0.4)", // cyan-500
                   borderRadius: "0.5rem",
                   backdropFilter: "blur(8px)"
                 }}
-                labelStyle={{ color: "#c4b5fd" }}
-                itemStyle={{ color: "#e0e7ff" }}
+                labelStyle={{ color: "#67e8f9" }} // cyan-300
+                itemStyle={{ color: "#bae6fd" }} // cyan-100
               />
-              <Legend
-                wrapperStyle={{ color: "#c4b5fd", fontSize: "14px", paddingTop: "8px" }}
-              />
+              <Legend wrapperStyle={{ color: "#67e8f9", fontSize: "14px", paddingTop: "8px" }} />
               <Area
                 type="monotone"
                 dataKey="formsCreated"
                 name="Forms Created"
                 stackId="1"
-                stroke="#c084fc"
+                stroke="#06b6d4"
                 fill="url(#formsGradient)"
                 strokeWidth={2}
               />
@@ -96,7 +91,7 @@ const CreatorActivityChart = ({ creatorActivityData }: IProps) => {
                 dataKey="responsesReceived"
                 name="Responses Received"
                 stackId="2"
-                stroke="#818cf8"
+                stroke="#3b82f6"
                 fill="url(#responsesGradient)"
                 strokeWidth={2}
               />
