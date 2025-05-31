@@ -18,7 +18,7 @@ const AnswerFormPage = async (props: IProps) => {
   if(accessRight === "notFound") {
     return notFound();
   }
-
+  
   return (
     <FormTemplate id={id} isPreview={false}  isView={false}/>
     

@@ -1,4 +1,5 @@
 "use client"
+
 import {
     Table,
     TableBody,
@@ -16,7 +17,7 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
-import { MoreHorizontal, Eye, Download, Mail } from 'lucide-react'
+import { MoreHorizontal, Eye, Download, Mail } from "lucide-react"
 import { ICreatorResponses } from "../../types"
 import Link from "next/link"
 import { useState } from "react"
@@ -28,87 +29,93 @@ import SearchBar from "../searchBar"
 import { UserRoles } from "@/@types"
 
 interface IProps {
-    responses: ICreatorResponses[];
-    isSummary?: boolean;
-    name: string;
-    role?: UserRoles;
+    responses: ICreatorResponses[]
+    isSummary?: boolean
+    name: string
+    role?: UserRoles
 }
 
 const ResponsesTable = ({ responses, isSummary, name, role }: IProps) => {
-    const [responseToDelete, setResponseToDelete] = useState<string | null>(null);
-    const { searchTerm, setSearchTerm, filteredResponses } = useFilter(responses);
+    const [responseToDelete, setResponseToDelete] = useState<string | null>(null)
+    const { searchTerm, setSearchTerm, filteredResponses } = useFilter(responses)
 
     const handleDeleteResponse = async (id: string) => {
-        const deletedResponse = await ActionServices.deleteResponse(id);
+        const deletedResponse = await ActionServices.deleteResponse(id)
         if (deletedResponse) {
-            toast.success("Response deleted successfully!");
+        toast.success("Response deleted successfully!")
         } else {
-            toast.error("Failed to delete response!");
+        toast.error("Failed to delete response!")
         }
     }
 
     return (
-        <div className="rounded-md border w-full m-2">
+        <div className="rounded-lg border border-cyan-500/30 bg-gradient-to-br from-blue-900/40 via-indigo-800/30 to-cyan-600/40 backdrop-blur-md shadow-2xl w-full m-2 ring-1 ring-cyan-500/20">
         <SearchBar placeholder="Search A Response..." search={searchTerm} setSearch={setSearchTerm} />
         <Table>
             <TableHeader>
-            <TableRow>
-                <TableHead>Form</TableHead>
-                <TableHead>Respondent</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Submitted</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
+            <TableRow className="border-b border-cyan-500/20 hover:bg-blue-800/10">
+                <TableHead className="text-cyan-300 font-semibold">Form</TableHead>
+                <TableHead className="text-cyan-300 font-semibold">Respondent</TableHead>
+                <TableHead className="text-cyan-300 font-semibold">Email</TableHead>
+                <TableHead className="text-cyan-300 font-semibold">Submitted</TableHead>
+                <TableHead className="text-cyan-300 font-semibold text-right">Actions</TableHead>
             </TableRow>
             </TableHeader>
             <TableBody>
             {filteredResponses.length === 0 ? (
                 <TableRow>
-                <TableCell colSpan={6} className="h-24 text-center">
+                <TableCell colSpan={5} className="h-24 text-center text-slate-300">
                     No responses found.
                 </TableCell>
                 </TableRow>
             ) : (
                 filteredResponses.map((response) => (
-                <TableRow key={response.id}>
-                    <TableCell className="font-medium">
-                    {response.formTitle}
-                    </TableCell>
-                    <TableCell>
-                    {response.respondentName}
-                    </TableCell>
-                    <TableCell>
-                    {response.respondentEmail}
-                    </TableCell>
-                    <TableCell>
+                <TableRow
+                    key={response.id}
+                    className="border-b border-cyan-500/10 hover:bg-gradient-to-r from-blue-800/20 via-indigo-700/15 to-cyan-600/20 transition-colors"
+                >
+                    <TableCell className="font-medium text-slate-100">{response.formTitle}</TableCell>
+                    <TableCell className="text-slate-100">{response.respondentName}</TableCell>
+                    <TableCell className="text-slate-100">{response.respondentEmail}</TableCell>
+                    <TableCell className="text-slate-400">
                     {new Date(response.date).toISOString().split("T")[0]}
                     </TableCell>
                     <TableCell className="text-right">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
+                        <Button
+                            variant="ghost"
+                            className="h-8 w-8 p-0 text-slate-400 hover:text-cyan-300 hover:bg-blue-800/30 transition"
+                        >
                             <span className="sr-only">Open menu</span>
                             <MoreHorizontal className="h-4 w-4" />
                         </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>
-                            <Eye className="mr-2 h-4 w-4" />
-                            <Link href={`/review-response/${response.id}`}>
-                            View Details
-                            </Link>
+                        <DropdownMenuContent
+                        align="end"
+                        className="bg-gradient-to-br from-blue-900/90 via-indigo-800/85 to-cyan-700/80 backdrop-blur-md shadow-xl"
+                        >
+                        <DropdownMenuLabel className="text-blue-300">Actions</DropdownMenuLabel>
+                        <DropdownMenuSeparator className="bg-cyan-500/20" />
+
+                        <DropdownMenuItem className="text-slate-200 hover:bg-cyan-800/40 transition">
+                            <Eye className="mr-2 h-4 w-4 text-cyan-400" />
+                            <Link href={`/review-response/${response.id}`}>View Details</Link>
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <Download className="mr-2 h-4 w-4" />
+
+                        <DropdownMenuItem className="text-slate-200 hover:bg-cyan-800/40 transition">
+                            <Download className="mr-2 h-4 w-4 text-cyan-400" />
                             <span>Download</span>
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <Mail className="mr-2 h-4 w-4" />
+
+                        <DropdownMenuItem className="text-slate-200 hover:bg-cyan-800/40 transition">
+                            <Mail className="mr-2 h-4 w-4 text-cyan-400" />
                             <span>Contact Respondent</span>
                         </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DeleteDialog 
+
+                        <DropdownMenuSeparator className="bg-cyan-500/20" />
+
+                        <DeleteDialog
                             itemToDelete={responseToDelete}
                             item={response}
                             data={responses}
@@ -124,12 +131,13 @@ const ResponsesTable = ({ responses, isSummary, name, role }: IProps) => {
             )}
             </TableBody>
         </Table>
+
         {isSummary && (
             <div className="flex justify-center p-4">
             <Link href={`/${role || "creator"}/${name}/all-responses`}>
-                <Button 
-                variant="outline" 
-                className="text-purple-700 hover:bg-purple-50 hover:text-purple-900 transition"
+                <Button
+                variant="outline"
+                className="text-cyan-400 border-cyan-400/40 hover:bg-gradient-to-r hover:from-blue-700/20 hover:to-cyan-600/20 transition"
                 >
                 View All Responses
                 </Button>
@@ -140,4 +148,4 @@ const ResponsesTable = ({ responses, isSummary, name, role }: IProps) => {
     )
 }
 
-export default ResponsesTable;
+export default ResponsesTable

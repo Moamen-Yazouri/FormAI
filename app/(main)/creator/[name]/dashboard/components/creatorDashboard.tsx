@@ -116,57 +116,49 @@ const CreatorDashboard = (props : IProps) => {
         )
     }
     return (
-        <div className="min-h-screen bg-gradient-to-br from-purple-50 to-purple-100 pb-20 pt-0 md:pt-0 w-full">
-            <DashboardHeader/>
-            <div className="container mx-auto px-4 py-8">
-                <Tabs defaultValue="overview" className="space-y-6">
-                    <AllTabs tabs={CREATOR_TABS}/>
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-900 to-indigo-900 text-slate-200 pb-20 pt-0 w-full">
+        <DashboardHeader />
 
-                    <TabsContent value="overview" className="space-y-6">
-                        <AllCards cards={stateCardsData}/>
+        <div className="container mx-auto px-4 py-8">
+        <Tabs defaultValue="overview" className="space-y-6">
+            <AllTabs tabs={CREATOR_TABS} />
 
-                        <AllCharts formResponsesData={formResponsesData}
-                            formCreationData={formCreationData}
-                            creatorActivityData={creatorActivityData}
-                            recentResponses={recentResponses}/>
-                    </TabsContent>
+            <TabsContent value="overview" className="space-y-6">
+            <AllCards cards={stateCardsData} />
 
-                    <TabsContent value="forms" className="space-y-6">
-                        <Card>
-                            <TabHeader title="My Forms" description="View and manage all your created forms"/>
-                            <CardContent>
-                                <SearchBar placeholder="Search forms..."
-                                    setSearch={setSearchForms}
-                                    search={searchForms}/>
-                                <CreatorFormsTable forms={slicedForms}
-                                    name={
-                                        user!.name
-                                    }/>
-                            </CardContent>
-                        </Card>
-                    </TabsContent>
+            <AllCharts
+                formResponsesData={formResponsesData}
+                formCreationData={formCreationData}
+                creatorActivityData={creatorActivityData}
+                recentResponses={recentResponses}
+            />
+            </TabsContent>
 
-                    <TabsContent value="responses" className="space-y-6">
-                        <Card>
-                            <TabHeader title="Form Responses" description="View and analyze responses to your forms"/>
-                            <CardContent>
-                                <SearchBar placeholder="Search responses..."
-                                    setSearch={setSearchResponses}
-                                    search={searchResponses}
-                                />
-                                <ResponsesTable responses={slicedResponses}
-                                    name={
-                                        user!.name
-                                    }
-                                    isSummary={true}
-                                />
-                            </CardContent>
-                        </Card>
-                    </TabsContent>
-                </Tabs>
-            </div>
+            <TabsContent value="forms" className="space-y-6">
+            <Card className="bg-gradient-to-br from-slate-950/60 via-blue-900/40 to-indigo-900/40 border border-blue-700/30 shadow-xl backdrop-blur-sm text-[#93c1ff]">
+                <TabHeader title="My Forms" description="View and manage all your created forms" />
+                <CardContent>
+                <SearchBar placeholder="Search forms..." setSearch={setSearchForms} search={searchForms} />
+                <CreatorFormsTable forms={slicedForms} name={user!.name} />
+                </CardContent>
+            </Card>
+            </TabsContent>
+
+            <TabsContent value="responses" className="space-y-6">
+            <Card className="bg-gradient-to-br from-slate-950/60 via-blue-900/40 to-indigo-900/40 border border-blue-700/30 shadow-xl backdrop-blur-sm text-[#93c1ff]">
+                <TabHeader title="Form Responses" description="View and analyze responses to your forms" />
+                <CardContent>
+                <SearchBar placeholder="Search responses..." setSearch={setSearchResponses} search={searchResponses} />
+                <ResponsesTable responses={slicedResponses} name={user!.name} isSummary={true} />
+                </CardContent>
+            </Card>
+            </TabsContent>
+        </Tabs>
         </div>
+    </div>
     )
+
+
 }
 
 export default CreatorDashboard
