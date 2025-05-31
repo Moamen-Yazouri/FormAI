@@ -10,9 +10,6 @@ interface IProps {
 const page = async(props: IProps) => {
     const {id, name} = await props.params;
     const validName = decodeURIComponent(name);
-    await connection();
-    const form = await responseService.getFormResponses(id, validName);
-    console.log(form)
     const {message, answers} = await getFormAnswers(id, validName);
     return (
         <ResponsesTable responses={answers} name={validName}/>
