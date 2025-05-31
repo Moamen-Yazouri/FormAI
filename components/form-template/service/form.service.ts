@@ -1,15 +1,23 @@
-"server-only"
 import { IContextUser } from "@/@types";
-import formsService from "@/module/services/forms.service";
 import { notFound, unauthorized } from "next/navigation";
 
 export const getForm = async(id: string, user: IContextUser) => {
-    // await connection();
+    const localURL = process.env.NEXT_PUBLIC_URL;
     try {
-        const form = await formsService.getFormById(id);
-        if(user._id !== id && user.role !== "admin") {
+        const formRes = await fetch(`${localURL}/api/get-form`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({id})
+            }
+        )
+        const {form} = await formRes.json();
+        if(String(form.creatorId) !== user._id && user.role !== "admin") {
             unauthorized();
         }
+        console.log(form);
         return form;
     }
     catch(err) {

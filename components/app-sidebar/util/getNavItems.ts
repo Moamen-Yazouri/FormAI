@@ -25,7 +25,7 @@ export const getNavItems = (role: UserRoles, name: string): INavItem[] => {
                 {
                     title: "My Forms",
                     icon: FileText,
-                    href: `my-forms/${name}`
+                    href: `/admin/my-forms`
                 },
                 {
                     title: "All Forms",
