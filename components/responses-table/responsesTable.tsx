@@ -18,15 +18,14 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import { MoreHorizontal, Eye, Download, Mail } from "lucide-react"
-import { ICreatorResponses } from "../../types"
 import Link from "next/link"
 import { useState } from "react"
 import DeleteDialog from "@/components/deleteDialog/deleteDialog"
-import ActionServices from "../../services/action.service"
 import { toast } from "sonner"
 import { useFilter } from "./hook/useFilter"
-import SearchBar from "../searchBar"
 import { UserRoles } from "@/@types"
+import { ICreatorResponses } from "@/app/(main)/creator/[name]/dashboard/types"
+import SearchBar from "../text-search-bar/searchBar"
 
 interface IProps {
     responses: ICreatorResponses[]
@@ -40,12 +39,12 @@ const ResponsesTable = ({ responses, isSummary, name, role }: IProps) => {
     const { searchTerm, setSearchTerm, filteredResponses } = useFilter(responses)
 
     const handleDeleteResponse = async (id: string) => {
-        const deletedResponse = await ActionServices.deleteResponse(id)
-        if (deletedResponse) {
-        toast.success("Response deleted successfully!")
-        } else {
-        toast.error("Failed to delete response!")
-        }
+        // const deletedResponse = await ActionServices.deleteResponse(id)
+        // if (deletedResponse) {
+        // toast.success("Response deleted successfully!")
+        // } else {
+        // toast.error("Failed to delete response!")
+        // }
     }
 
     return (

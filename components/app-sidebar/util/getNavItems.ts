@@ -37,11 +37,6 @@ export const getNavItems = (role: UserRoles, name: string): INavItem[] => {
                     icon: User,
                     href: "/admin/all-users"
                 },
-                {
-                    title: "Available Forms",
-                    icon: FileText,
-                    href: `/available-forms/${name}`
-                },
             ]
             return navItems;
         }
