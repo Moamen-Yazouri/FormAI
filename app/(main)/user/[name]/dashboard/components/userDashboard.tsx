@@ -4,17 +4,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { motion } from "framer-motion";
 import { CheckCircle, ClipboardList, Clock } from "lucide-react";
-import { IUserForm } from "@/@types";
-import AvailableForms from "./availableForms";
+import { IFormTable, IUserForm } from "@/@types";
 import CompletedForms from "./completedForms";
 import { IAnsweredForms } from "../types";
+import FormsTable from "@/components/forms-table/formsTable";
 
 interface IProps {
     formsCompleted: number;
     formsAvailable: number;
     averageCompletionTime: string;
     completedForms: IAnsweredForms[];
-    availableForms: IUserForm[];
+    availableForms: IFormTable[];
     name: string;
 }
 
@@ -133,7 +133,7 @@ export default function UserDashboard(props: IProps) {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="mb-8"
             >
-            <AvailableForms availableForms={availableForms} name={name} />
+            <FormsTable forms={availableForms} name={name} role="user"/>
             </motion.div>
 
             {/* Completed Forms */}

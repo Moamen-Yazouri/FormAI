@@ -43,8 +43,10 @@ class DashboardService {
                         id: String(form._id),
                         name: form.title,
                         creator: user.name,
+                        description: form.description,
                         responses: form.answeredBy?.length || 0,
                         createdAt: getDateOnly(form.createdAt),
+                        deadline: form.expiredAt ? getDateOnly(form.expiredAt) : "No deadline",
                     }
                 })
                 return formsData;
@@ -65,9 +67,11 @@ class DashboardService {
             return {
                 id: String(form._id),
                 name: form.title,
+                description: form.description,
                 creator: form.creatorId.name,
                 responses: form.answeredBy?.length || 0,
                 createdAt: getDateOnly(form.createdAt),
+                deadline: form.expiredAt? getDateOnly(form.expiredAt) : "No deadline",
             }
         })
         return formsData;

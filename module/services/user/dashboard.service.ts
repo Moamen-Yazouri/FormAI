@@ -1,4 +1,4 @@
-import { IUserForm, IUserFromDB, IFormPopulatedByCreator, IUserResponseTable, IResponsePopulatedUser, IUserResponseDetails } from "@/@types";
+import { IUserForm, IUserFromDB, IFormPopulatedByCreator, IUserResponseTable, IResponsePopulatedUser, IUserResponseDetails, IFormTable } from "@/@types";
 import { getDateOnly } from "@/lib/dateUtils";
 
 import userRepo from "@/module/repositories/user.repo";
@@ -9,7 +9,7 @@ import { IAnsweredForms } from "@/app/(main)/user/[name]/dashboard/types";
 
 
 class DashboardService {
-        async getUserForms(username: string): Promise<IUserForm[] | []> {
+        async getUserForms(username: string): Promise<IFormTable[] | []> {
             const user = await userRepo.getUserByName(username);
             if(!user) {
                 throw new Error("User not found");
@@ -18,12 +18,14 @@ class DashboardService {
             if(forms.length == 0){
                 throw new Error("No forms found!"); 
             } ;
-            const allowedForms: IUserForm[] = forms.map(form => {
+            const allowedForms: IFormTable[] = forms.map(form => {
                     return {
                         id: String(form._id),
-                        formTitle: form.title,
+                        name: form.title,
                         description: form.description,
                         creator: form.creatorId.name,
+                        responses: form.answeredBy.length || 0,
+                        createdAt: getDateOnly(form.createdAt),
                         deadline: form.expiredAt ? getDateOnly(form.expiredAt) : "No deadline",
                     }
                 })

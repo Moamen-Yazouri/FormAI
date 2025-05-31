@@ -5,13 +5,13 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
+    DropdownMenu,
+    DropdownMenuTrigger,
+    DropdownMenuContent,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu"
-import { FileText, MoreVertical } from "lucide-react"
+import { Calendar, FileText, MoreVertical } from "lucide-react"
 import { useState } from "react"
 import DeleteDialog from "../deleteDialog/deleteDialog"
 import ActionsProvider from "@/components/form-actions-provider/ActionsProvider"
@@ -20,19 +20,21 @@ import SearchBar from "../text-search-bar/searchBar"
 import { useFilter } from "./hook/useFilter"
 import Link from "next/link"
 import { deleteForm } from "./actions/form.action"
+import { usePathname } from "next/navigation"
 
 interface IProps {
-  forms: IFormTable[]
-  role: UserRoles
-  name: string
-  isSummary?: boolean
+    forms: IFormTable[]
+    role: UserRoles
+    name: string
+    isSummary?: boolean
 }
 
 const FormsTable = (props: IProps) => {
     const { forms, role, name, isSummary } = props
     const [formToDelete, setFormToDelete] = useState<string | null>(null)
     const { setSearchTerm, searchTerm, filteredForms } = useFilter(forms)
-
+    const pathname = usePathname();
+    
     const handleFormDelete = async (formId: string) => {
         const deletedForm = await deleteForm(formId)
         if (deletedForm) {
@@ -52,11 +54,14 @@ const FormsTable = (props: IProps) => {
                 <TableHead className="text-cyan-300 font-semibold">Creator</TableHead>
                 <TableHead className="text-cyan-300 font-semibold">Responses</TableHead>
                 <TableHead className="text-cyan-300 font-semibold">Created Date</TableHead>
+                <TableHead className="text-cyan-300 font-semibold">Deadline</TableHead>
                 <TableHead className="text-cyan-300 font-semibold text-right">Actions</TableHead>
             </TableRow>
             </TableHeader>
             <TableBody>
-            {filteredForms.map((form) => (
+            {
+                filteredForms.length > 0 ? (
+                    filteredForms.map((form) => (
                 <TableRow
                 key={form.id}
                 className="border-b border-cyan-500/10 hover:bg-gradient-to-r from-blue-800/20 via-indigo-700/15 to-cyan-600/20 transition-colors"
@@ -75,13 +80,18 @@ const FormsTable = (props: IProps) => {
                 <TableCell>
                     <Badge
                     variant="secondary"
-                    className="bg-gradient-to-r from-blue-500/70 to-cyan-400/70 text-white border-cyan-500/50 shadow-sm"
+                    className=" bg-gradient-to-r from-blue-500/70 to-cyan-400/70 text-white border-cyan-500/50 shadow-sm"
                     >
                     {form.responses}
                     </Badge>
                 </TableCell>
-
                 <TableCell className="text-slate-400">{String(form.createdAt)}</TableCell>
+                <TableCell className="text-cyan-300 font-medium">
+                    <div className="inline-flex items-center justify-center gap-1 bg-cyan-800/30 px-2 py-1 rounded-md border border-cyan-500/30 text-xs">
+                        <Calendar className="w-3.5 h-3.5 text-cyan-400" />
+                        {form.deadline}
+                    </div>
+                </TableCell>
 
                 <TableCell className="text-right">
                     <DropdownMenu>
@@ -106,32 +116,44 @@ const FormsTable = (props: IProps) => {
                         <DropdownMenuSeparator className="bg-cyan-500/20" />
 
                         <DeleteDialog
-                        itemToDelete={formToDelete}
-                        item={form}
-                        data={forms}
-                        setItemToDelete={setFormToDelete}
-                        itemsType="Form"
-                        handleDeleteItem={handleFormDelete}
+                            itemToDelete={formToDelete}
+                            item={form}
+                            data={forms}
+                            setItemToDelete={setFormToDelete}
+                            itemsType="Form"
+                            handleDeleteItem={handleFormDelete}
                         />
                     </DropdownMenuContent>
                     </DropdownMenu>
                 </TableCell>
                 </TableRow>
-            ))}
+                )
+                )
+            )
+            :   (
+                    <TableRow>
+                        <TableCell colSpan={5} className="h-24 text-center text-slate-300">
+                            No responses found.
+                        </TableCell>
+                    </TableRow>
+                )
+            }
             </TableBody>
         </Table>
-        {isSummary && (
-            <div className="flex justify-center p-4">
-            <Link href={role === "admin" ? `/${name}/all-forms` : `/creator/${name}/my-forms`}>
-                <Button
-                variant="outline"
-                className="text-cyan-400 border-cyan-400/40 hover:bg-gradient-to-r hover:from-blue-700/20 hover:to-cyan-600/20 transition"
-                >
-                View All Forms
-                </Button>
-            </Link>
-            </div>
-        )}
+        {
+            isSummary && forms.length > 0  &&(
+                <div className="flex justify-center p-4">
+                <Link href={role === "admin" ? `/${name}/all-forms` : `/creator/${name}/my-forms`}>
+                    <Button
+                    variant="outline"
+                    className="text-cyan-400 border-cyan-400/40 hover:bg-gradient-to-r hover:from-blue-700/20 hover:to-cyan-600/20 transition"
+                    >
+                    View All Forms
+                    </Button>
+                </Link>
+                </div>
+            )
+        }
         </div>
     )
 }

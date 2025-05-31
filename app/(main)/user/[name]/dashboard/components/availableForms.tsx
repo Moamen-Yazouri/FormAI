@@ -31,7 +31,7 @@ const AvailableForms = (props: IProps) => {
         ) : (
             <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {availableForms.slice(0, 4).map((form) => (
+                {availableForms.map((form) => (
                 <Card
                     key={form.id}
                     className="overflow-hidden bg-slate-900 border-cyan-500 text-slate-200"
