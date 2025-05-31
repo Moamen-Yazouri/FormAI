@@ -15,7 +15,6 @@ export const POST = async (req: NextRequest) => {
       }
 
       const form = await formsService.getFormById(id);
-      console.log(form);
       if (!form) {
         return NextResponse.json(
           { error: "Form not found!" },
