@@ -2,10 +2,10 @@ import { connection } from "@/DB/connection";
 import { toast } from "sonner";
 import { IAnsweredForms, IAvailableForms } from "../types";
 import dashboardService from "@/module/services/user/dashboard.service";
-import { IUserForm, IUserResponseDetails } from "@/@types";
+import { IFormTable, IUserForm, IUserResponseDetails } from "@/@types";
 
 class FetchDataService {
-    async availableForms(username: string): Promise<IUserForm[]> {
+    async availableForms(username: string): Promise<IFormTable[]> {
         await connection();
         try {
             const forms = await dashboardService.getUserForms(username);

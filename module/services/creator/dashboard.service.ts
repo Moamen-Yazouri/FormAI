@@ -104,8 +104,10 @@ class DashboardService {
                     id: String(form._id),
                     name: form.title,
                     creator: creator.name,
+                    description: form.description,
                     createdAt: getDateOnly(form.createdAt),
                     responses: form.answeredBy?.length || 0,
+                    deadline: form.expiredAt ? getDateOnly(form.expiredAt) : "No deadline",
                 }
             })
             return formsData;

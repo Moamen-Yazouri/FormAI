@@ -122,8 +122,10 @@ export interface IFormTable {
     id: string,
     name: string,
     creator: string,
+    description: string,
     responses: number,
     createdAt: Date | string,
+    deadline: string;
 }
 
 export interface IUserForm {
