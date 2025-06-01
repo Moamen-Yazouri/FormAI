@@ -1,7 +1,7 @@
 import dashboardService from '@/module/services/creator/dashboard.service';
 import React from 'react'
 import fetchDataService from '../dashboard/services/fetchData.service';
-import ResponsesTable from '../dashboard/components/responses-table/responsesTable';
+import ResponsesTable from '@/components/responses-table/responsesTable';
 interface IProps {
     params: Promise<{name: string}>
 }

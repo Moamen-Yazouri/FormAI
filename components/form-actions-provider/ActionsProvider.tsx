@@ -64,7 +64,7 @@ const ActionsProvider = (props: IProps) => {
         }
         default: {
         return (
-                        <>
+        <>
             <DropdownMenuItem
                 className="flex cursor-pointer items-center gap-2 text-slate-300 hover:bg-gradient-to-r from-cyan-600/30 to-blue-600/30 hover:text-cyan-200"
                 onClick={() => router.push(`/answer-form/${props.id}`)}
@@ -72,7 +72,7 @@ const ActionsProvider = (props: IProps) => {
                 <Eye className="h-4 w-4" />
                 Answer Form
             </DropdownMenuItem>
-            </>
+        </>
         )
         }
         

@@ -6,7 +6,7 @@ import FormsTable from '@/components/forms-table/formsTable';
 const page = async() => {
     const forms: IFormTable[] = await fetchDataService.formsData();
     return (
-        <FormsTable role='admin' name='admin' forms={forms}/>
+        <FormsTable forms={forms}/>
     )
 }
 

@@ -8,7 +8,7 @@ const page = async (props: IProps) => {
     const name = decodeURIComponent((await props.params).name);
     const forms = await fetchDataService.formsData(name)
     return (
-        <FormsTable role='creator' name={name} forms={forms}/>
+        <FormsTable forms={forms}/>
     )
 }
 

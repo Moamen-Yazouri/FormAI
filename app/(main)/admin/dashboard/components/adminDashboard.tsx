@@ -66,7 +66,7 @@ const AdminDashboard = (props: IProps) => {
                 <Card className="bg-gradient-to-br from-slate-950/60 via-blue-900/40 to-indigo-900/40 border border-blue-700/30 shadow-xl backdrop-blur-sm text-[#93c1ff]">
                 <TabHeader title="Form Analytics" description="View and analyze all forms on the platform" />
                 <CardContent>
-                    <FormsTable forms={slicedForms} role="admin" isSummary={true} name="admin" />
+                    <FormsTable forms={slicedForms}  isSummary={true} />
                 </CardContent>
                 </Card>
             </TabsContent>

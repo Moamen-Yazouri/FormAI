@@ -1,9 +1,7 @@
 import React from 'react'
 import { getFormAnswers } from '../../service/answers.service';
-import ResponsesTable from '@/app/(main)/creator/[name]/dashboard/components/responses-table/responsesTable';
-import { connection } from '@/DB/connection';
-import formsService from '@/module/services/forms.service';
-import responseService from '@/module/services/response.service';
+import ResponsesTable from '@/components/responses-table/responsesTable';
+
 interface IProps {
     params: Promise<{id: string, name: string}>
 }
