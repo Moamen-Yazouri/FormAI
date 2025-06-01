@@ -13,7 +13,8 @@ import {
 import { Github } from "lucide-react"
 import SignInForm from "./components/signin-form"
 import { motion } from "framer-motion"
-import Logo from "@/components/logo/Logo"
+import Logo from "@/components/header/logo"
+
 
 const SignIn = () => {
   const containerVariants = {
