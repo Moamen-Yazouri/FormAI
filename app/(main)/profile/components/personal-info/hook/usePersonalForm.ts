@@ -35,7 +35,7 @@ export const usePersonalInfo = () => {
         }
 
         if(values.role !== user!.role) {
-            const data = await ActionService.updateEmail(String(user!._id), values.role);
+            const data = await ActionService.updateRole(String(user!._id), values.role);
             if(data.user) {
                 toast.success(`Role updated to: ${values.role} successfully`);
             }
