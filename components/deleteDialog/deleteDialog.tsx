@@ -1,17 +1,16 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
 } from "@/components/ui/dialog"
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu"
 import { AlertCircle, Trash2 } from "lucide-react"
@@ -39,16 +38,15 @@ const DeleteDialog = <T extends ISharedProps>({
     itemToDelete,
     setItemToDelete,
     handleDeleteItem,
-}: IProps<T>) => {
+    }: IProps<T>) => {
     const [isDialogOpen, setIsDialogOpen] = useState(false)
-
     const itemData = data.find((u) => u.id === itemToDelete)
 
     return (
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
             <DropdownMenuItem
-            className="flex items-center gap-2 text-red-400 hover:!text-white hover:bg-red-900/30 focus:bg-red-900/40 cursor-pointer transition"
+            className="flex items-center gap-2 text-red-400 hover:!text-white hover:bg-red-700/30 focus:bg-red-800/40 cursor-pointer transition"
             onSelect={(e) => {
                 e.preventDefault()
                 setItemToDelete(item.id)
@@ -60,18 +58,18 @@ const DeleteDialog = <T extends ISharedProps>({
             </DropdownMenuItem>
         </DialogTrigger>
 
-        <DialogContent className="bg-gradient-to-br from-blue-900/90 via-indigo-800/85 to-cyan-700/80 backdrop-blur-md border border-red-500/30 shadow-2xl ring-1 ring-red-500/20">
+        <DialogContent className="bg-gradient-to-br from-slate-950 via-blue-950 to-cyan-950 backdrop-blur-sm border border-red-500/20 shadow-2xl ring-1 ring-red-500/10">
             <DialogHeader>
             <DialogTitle className="bg-gradient-to-r from-red-400 to-red-300 bg-clip-text text-transparent">
                 {`Delete ${itemsType}`}
             </DialogTitle>
-            <DialogDescription className="text-slate-300">
+            <DialogDescription className="text-slate-200">
                 Are you sure you want to delete this {itemsType}? This action cannot be undone.
             </DialogDescription>
             </DialogHeader>
 
             <div className="flex items-center gap-3 py-4">
-            <div className="bg-gradient-to-r from-red-600/30 to-red-500/30 border border-red-500/40 p-2 rounded-full backdrop-blur-sm">
+            <div className="bg-gradient-to-r from-red-600/20 to-red-500/20 border border-red-500/30 p-2 rounded-full backdrop-blur-sm">
                 <AlertCircle className="h-5 w-5 text-red-400" />
             </div>
             <div>
@@ -83,8 +81,8 @@ const DeleteDialog = <T extends ISharedProps>({
 
             <DialogFooter>
             <Button
-                variant="outline"
-                className="border-cyan-500/40 text-slate-300 hover:bg-blue-800/30 hover:text-cyan-200 hover:border-cyan-400/60 transition-all duration-200"
+                variant="ghost"
+                className="text-slate-300 hover:text-cyan-200 hover:bg-cyan-900/20 transition"
                 onClick={() => {
                 setIsDialogOpen(false)
                 setItemToDelete(null)

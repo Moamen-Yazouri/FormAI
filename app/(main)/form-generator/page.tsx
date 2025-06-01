@@ -58,7 +58,7 @@ export default function FormGeneratorPage() {
   } = useFormGenerator()
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-slate-950 via-blue-900 to-indigo-900 relative overflow-hidden flex flex-col">
+    <div className="min-h-screen w-full  bg-gradient-to-r from-slate-900/60 via-blue-900/40 to-cyan-900/40 relative overflow-hidden flex flex-col">
       {/* Background decorative elements */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 via-indigo-900/30 to-cyan-900/40"></div>
       <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-br from-blue-600/20 to-indigo-600/20 rounded-full blur-3xl"></div>

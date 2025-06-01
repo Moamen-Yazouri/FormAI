@@ -17,7 +17,8 @@ const page = async() => {
         FetchData.usersData(),
         FetchData.formsData(),
     ]);
-    const activeUsers = getActives(usersData)
+    const activeUsers = getActives(usersData);
+    console.log(activeUsers);
     return (
         <AdminDashboard 
             usersData={usersData}
