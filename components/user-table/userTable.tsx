@@ -22,6 +22,7 @@ import { useFilter } from "./hooks/useFilter"
 import SearchBar from "../text-search-bar/searchBar"
 import { deleteUser } from "./actions/user.action"
 import Link from "next/link"
+import TablesLoader from "../tables-loader/tablesLoader"
 
 interface IProps {
   users: IUserData[]
@@ -32,12 +33,16 @@ const UsersTable = (props: IProps) => {
   const [userToDelete, setUserToDelete] = useState<string | null>(null)
   const { users } = props
   const router = useRouter()
-  const { searchTerm, setSearchTerm, filteredUsers } = useFilter(users)
+  const { searchTerm, setSearchTerm, filteredUsers, handleDelete } = useFilter(users);
+  const [deleting, setDeleting] = useState(false);
 
   const handleDeleteUser = async (userId: string) => {
-    const deletedUser = await deleteUser(userId)
+    setDeleting(true);
+    const deletedUser = await deleteUser(userId);
+    setDeleting(false);
     if (deletedUser) {
-      toast.success(`User: ${deletedUser.email}, deleted successfully`)
+      handleDelete(userId);
+      toast.success(`User: ${deletedUser.email}, deleted successfully`);
     } else {
       toast.error(`Failed to delete user`)
     }
@@ -49,7 +54,7 @@ const UsersTable = (props: IProps) => {
       .map((n) => n[0])
       .join("")
       .toUpperCase()
-
+  if(deleting) return <TablesLoader itemName="User"/>
   return (
     <div className="rounded-lg border border-cyan-500/30 bg-gradient-to-br from-blue-900/40 via-indigo-800/30 to-cyan-600/40 backdrop-blur-md shadow-2xl w-full m-2 ring-1 ring-cyan-500/20">
       <SearchBar placeholder="Search Users..." search={searchTerm} setSearch={setSearchTerm} />

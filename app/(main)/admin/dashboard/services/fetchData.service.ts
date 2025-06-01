@@ -7,7 +7,7 @@ import {
 } from "@/@types";
 
 class FetchData {
-    private baseUrl: string = "http://localhost:3000//api/dashboard";
+    private baseUrl: string = "http://localhost:3000//api/admin";
 
     async usersActivity(): Promise<IUsersActivityData[]> {
         try {

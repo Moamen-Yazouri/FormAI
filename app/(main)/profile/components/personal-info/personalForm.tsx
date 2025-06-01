@@ -68,10 +68,10 @@ const PersonalForm = () => {
             {!disabled && (
               <Button
                 type="button"
-                variant="outline"
+                variant="ghost"
                 onClick={handleCancel}
                 disabled={formik.isSubmitting}
-                className="text-cyan-200 border-cyan-600/40 hover:bg-cyan-900/20 hover:border-cyan-500 hover:text-cyan-100 transition-all duration-200"
+                className="text-slate-300 hover:text-cyan-200 hover:bg-cyan-900/20 transition-all duration-200"
               >
                 Cancel
               </Button>

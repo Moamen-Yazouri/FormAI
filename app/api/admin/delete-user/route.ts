@@ -1,6 +1,5 @@
 import { IUserFromDB } from "@/@types";
 import { connection } from "@/DB/connection";
-import dashboardRepo from "@/module/repositories/admin/dashboard.repo";
 import formsService from "@/module/services/forms.service";
 import responseService from "@/module/services/response.service";
 import userService from "@/module/services/user.service";
@@ -10,6 +9,7 @@ export const DELETE = async (req: NextRequest) => {
     await connection();
     try {
         const userId = (await req.json()).userId;
+        console.log(userId);
         if (!userId) {
             return NextResponse.json({ message: "User ID is required!" }, { status: 401 });
         }
