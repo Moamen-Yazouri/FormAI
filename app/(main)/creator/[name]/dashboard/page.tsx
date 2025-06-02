@@ -1,5 +1,7 @@
+import authService from '@/module/services/auth.service';
 import CreatorDashboard from '../dashboard/components/creatorDashboard';
 import FetchServices from '../dashboard/services/fetchData.service'
+import { unauthorized } from 'next/navigation';
 
 // export const formData: IFormData[] = [
 //   {
@@ -96,7 +98,10 @@ interface IProps {
 }
 const page = async (props: IProps) => {
       const name = decodeURIComponent((await props.params).name); 
-
+      const access = await authService.validateUser(name);
+      if(!access) {
+          unauthorized();
+      }
       const [
         formData,
         formCreationData,

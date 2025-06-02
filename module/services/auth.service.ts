@@ -6,6 +6,7 @@ import { comparePassword, hashPassword } from "@/lib/compareAndHash";
 import xss from "xss";
 import { generateToken } from "@/lib/generateAndVerifyToken";
 import { cookies } from "next/headers";
+import { getToken } from "@/lib/getToken";
 
 class AuthService {
     async signUp(user: IUser) {
@@ -66,6 +67,17 @@ class AuthService {
             user,
             token,
         };
-    }   
+    }
+    
+    async validateUser (username: string)  {
+        const token = await getToken();
+        if(!token) {
+            return false;
+        }
+        if(token.name === username) {
+            return true;
+        }
+        return false;
+    }
 }
 export default new AuthService();

@@ -1,20 +1,26 @@
 "seerver-only";
+import { AccessRightsType } from "@/@types/access";
 import { connection } from "@/DB/connection";
 import { getToken } from "@/lib/getToken"
 import formsService from "@/module/services/forms.service";
 
-export const  getAccessRights = async (formId: string) => {
+export const  getAccessRights = async (formId: string, name: string): Promise<AccessRightsType> => {
     const token = await getToken();
     if(!token) {
-        return false;
+        return "unauthorized";
     }
-    if(token.role === "admin") {
-        return true;
+
+    if(token.role === "admin" || token.name !== name) {
+        return "unauthorized";
     }
+
     else {
         await connection();
         const form = await formsService.getFormById(formId);
-        if(!form || String(form.creatorId) !== token.userId) return false;
-        return true;
+        if(!form) {
+            return "notFound";
+        }
+        if( String(form.creatorId) !== token.userId) return "unauthorized";
+        return "allowed";
     }
 }
