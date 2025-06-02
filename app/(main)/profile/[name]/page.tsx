@@ -1,12 +1,11 @@
 "use client"
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import PersonalInfoForm from "../components/personal-info/personal-info-form"
-import AccountSettings from "../components/account-settings/account-settings"
-import SecuritySettings from "../components/security/security-settings"
-import ProfileHeader from "../components/profile-header"
-import FullPageLoader from "../components/profileLoader"
-import { Suspense } from "react"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import PersonalInfoForm from "../components/personal-info/personal-info-form";
+import AccountSettings from "../components/account-settings/account-settings";
+import SecuritySettings from "../components/security/security-settings";
+import ProfileHeader from "../components/profile-header";
+
 
 export default function ProfilePage() {
     return (
