@@ -19,25 +19,25 @@ import {
 import { Button } from "@/components/ui/button"
 import { MoreHorizontal, Eye, Download, Mail } from "lucide-react"
 import Link from "next/link"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import DeleteDialog from "@/components/deleteDialog/deleteDialog"
 import { toast } from "sonner"
 import { useFilter } from "./hook/useFilter"
 import { UserRoles } from "@/@types"
 import { ICreatorResponses } from "@/app/(main)/creator/[name]/dashboard/types"
 import SearchBar from "../text-search-bar/searchBar"
+import { AuthContext } from "@/providers/auth/authProvider"
+import TablesLoader from "../tables-loader/tablesLoader"
 
 interface IProps {
     responses: ICreatorResponses[]
     isSummary?: boolean
-    name: string
-    role?: UserRoles
 }
 
-const ResponsesTable = ({ responses, isSummary, name, role }: IProps) => {
+const ResponsesTable = ({ responses, isSummary }: IProps) => {
     const [responseToDelete, setResponseToDelete] = useState<string | null>(null)
     const { searchTerm, setSearchTerm, filteredResponses } = useFilter(responses)
-
+    const {user, isLoading} = useContext(AuthContext);
     const handleDeleteResponse = async (id: string) => {
         // const deletedResponse = await ActionServices.deleteResponse(id)
         // if (deletedResponse) {
@@ -46,7 +46,12 @@ const ResponsesTable = ({ responses, isSummary, name, role }: IProps) => {
         // toast.error("Failed to delete response!")
         // }
     }
-
+    if(isLoading) {
+        return <TablesLoader itemName={"Response"}/>
+    }
+    if(!user) {
+        return null;
+    }
     return (
         <div className="rounded-lg border border-cyan-500/30 bg-gradient-to-br from-blue-900/40 via-indigo-800/30 to-cyan-600/40 backdrop-blur-md shadow-2xl w-full m-2 ring-1 ring-cyan-500/20">
         <SearchBar placeholder="Search A Response..." search={searchTerm} setSearch={setSearchTerm} />
@@ -133,7 +138,7 @@ const ResponsesTable = ({ responses, isSummary, name, role }: IProps) => {
 
         {isSummary && (
             <div className="flex justify-center p-4">
-            <Link href={`/${role || "creator"}/${name}/all-responses`}>
+            <Link href={`/${user.role || "creator"}/${user.name}/all-responses`}>
                 <Button
                 variant="outline"
                 className="text-cyan-400 border-cyan-400/40 hover:bg-gradient-to-r hover:from-blue-700/20 hover:to-cyan-600/20 transition"
