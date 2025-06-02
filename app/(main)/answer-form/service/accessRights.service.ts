@@ -20,10 +20,13 @@ import { AccessRightsType } from "@/@types/access";
                 if(!form) return "notFound";
                 const allowed = form.allowedUsers?.map(userId => String(userId)) || [];
                 if(form.isPublic || allowed.includes(token.userId)) return "allowed";
-                return "unauthorized";
+                return "forbidden";
             }
             catch(e) {
-                return "notFound";
+                if(e instanceof Error) {
+                    throw new Error(e.message);
+                }
+                throw new Error("Something went wrong!");
             }
         }
     }

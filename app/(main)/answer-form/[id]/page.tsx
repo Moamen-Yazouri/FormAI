@@ -2,6 +2,7 @@
 import FormTemplate from "@/components/form-template/formTemplate";
 import { notFound, redirect, unauthorized } from "next/navigation";
 import { getAccessRights } from "../service/accessRights.service";
+import { handleAccess } from "@/lib/triggerCoventions";
 
 interface IProps {
   params: Promise<{id: string}>
@@ -10,14 +11,7 @@ interface IProps {
 const AnswerFormPage = async (props: IProps) => {
   const id = (await props.params).id;
   const accessRight = await getAccessRights(id);
-
-  if(accessRight === "unauthorized") {
-    return unauthorized();
-  }
-
-  if(accessRight === "notFound") {
-    return notFound();
-  }
+  handleAccess(accessRight);
   
   return (
     <FormTemplate id={id} isPreview={false}  isView={false}/>

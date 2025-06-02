@@ -1,4 +1,5 @@
 export enum AccessRights {
+        "forbidden",
         "unauthorized",
         "allowed",
         "notFound"

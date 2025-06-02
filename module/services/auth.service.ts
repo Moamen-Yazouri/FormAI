@@ -7,6 +7,7 @@ import xss from "xss";
 import { generateToken } from "@/lib/generateAndVerifyToken";
 import { cookies } from "next/headers";
 import { getToken } from "@/lib/getToken";
+import { AccessRightsType } from "@/@types/access";
 
 class AuthService {
     async signUp(user: IUser) {
@@ -69,15 +70,15 @@ class AuthService {
         };
     }
     
-    async validateUser (username: string)  {
+    async validateUser (username: string): Promise<AccessRightsType>  {
         const token = await getToken();
         if(!token) {
-            return false;
+            return "unauthorized";
         }
         if(token.name === username) {
-            return true;
+            return "allowed";
         }
-        return false;
+        return "forbidden";
     }
 }
 export default new AuthService();
