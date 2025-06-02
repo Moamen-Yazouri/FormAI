@@ -17,7 +17,13 @@ class ResponseService {
         }
         return await formsRepo.addResponse(response);
     }
-
+    async getResponseById(id: string) {
+        const response = await responseRepo.getResponseById(id);
+        if(!response) {
+            throw new Error("No response found");
+        }
+        return response;
+    }
     async getResponse(id: string) {
         const response = await responseRepo.getResponseData(id);
         const answers: IAnswer[] = response.answers;

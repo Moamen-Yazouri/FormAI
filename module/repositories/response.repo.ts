@@ -1,15 +1,11 @@
 import { IResponseFromDB, IResponsePopulatedUser, IUserFromDB, IUserResponseTable } from "@/@types";
 import responseModel from "@/DB/models/response.model";
-import mongoose from "mongoose";
-import userRepo from "./user.repo";
-
-import { getDateOnly } from "@/lib/dateUtils";
 import { IResponseDetailsFromDB } from "../services/types";
-import { deleteUser } from "@/components/user-table/actions/user.action";
+
 
 class ResponseRepo {
     async getResponseById(responseId: string) {
-        return await responseModel.findById(responseId);
+        return await responseModel.findById(responseId).lean<IResponseFromDB>() ;
     }
 
     async getResponseData(responseId: string) {
