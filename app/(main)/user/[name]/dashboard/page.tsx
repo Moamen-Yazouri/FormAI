@@ -9,9 +9,6 @@ interface IProps {
 
 export default async function UserFormActivityPage(props: IProps) {
     const name = decodeURIComponent((await props.params).name);
-    const access = await authService.validateUser(name);
-    handleAccess(access);
-
     const [
         responses,
         availableForms,

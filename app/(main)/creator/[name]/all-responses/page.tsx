@@ -10,8 +10,6 @@ interface IProps {
 }
 const page = async (props: IProps) => {
     const name = decodeURIComponent((await props.params).name);
-    const access = await authService.validateUser(name);
-    handleAccess(access);
     const responses = await fetchDataService.creatorResponses(name)
     return (
         <ResponsesTable responses={responses} />

@@ -9,27 +9,20 @@ export const  getAccessRights = async (formId: string, name: string): Promise<Ac
     if(!token) {
         return "unauthorized";
     }
-
-    if(token.role === "user" || token.name !== name) {
-        return "forbidden";
+    try {
+        await connection();
+        const form = await formsService.getFormById(formId);
+        if(!form) {
+            return "notFound";
+        }
+        if( String(form.creatorId) !== token.userId) return "forbidden";
+        return "allowed";
     }
-
-    else {
-        try {
-            await connection();
-            const form = await formsService.getFormById(formId);
-            if(!form) {
-                return "notFound";
-            }
-            if( String(form.creatorId) !== token.userId) return "forbidden";
-            return "allowed";
+    catch (error) {
+        if(error instanceof Error) {
+            throw new Error(error.message);
+            ;
         }
-        catch (error) {
-            if(error instanceof Error) {
-                throw new Error(error.message);
-                ;
-            }
-            throw new Error("Something went wrong!");
-        }
+        throw new Error("Something went wrong!");
     }
 }

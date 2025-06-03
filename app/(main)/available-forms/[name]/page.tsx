@@ -9,8 +9,6 @@ interface IProps {
 }
 const AvailableForms = async(props: IProps) => {
     const name = decodeURIComponent((await props.params).name);
-    const access = await authService.validateUser(name);
-    handleAccess(access);
     const availableForms = await fetchDataService.getAvailableForms(name);
     return (
         <FormsTable forms= {availableForms} />

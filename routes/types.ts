@@ -1,4 +1,5 @@
 import { UserRoles } from "@/@types";
+import { routesAccess } from "./pageAccessRights";
 
 export type PageAccessName = 
     | "/sign-in"
@@ -16,7 +17,7 @@ export type PageAccessName =
     | "/profile"
     | "/view-form"
 
-export const protectedRoutes = Array.from([]);
+export const protectedRoutes = Array.from(routesAccess.keys());
 
 export interface IPageAccessRights {
     role: UserRoles[]

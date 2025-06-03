@@ -15,6 +15,9 @@ import {
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { Input } from "@/components/ui/input"
+import { MATCHERS } from "@/routes/constans"
+import { protectedRoutes } from "@/routes/types"
+import { routesAccess } from "@/routes/pageAccessRights"
 
 const formTemplates = [
   "Contact Form",
@@ -28,6 +31,7 @@ const formTemplates = [
 ]
 
 export default function FormGeneratorPage() {
+  console.log(Array.from(routesAccess.keys()))
   const {
     prompt,
     loading,
