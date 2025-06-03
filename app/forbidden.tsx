@@ -6,7 +6,7 @@ import { Home, ArrowLeft, Shield, Lock, AlertTriangle } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 
-export default function Unauthorized() {
+export default function Forbidden() {
   const router = useRouter()
 
   const floatingShapes = Array.from({ length: 8 }, (_, i) => ({
