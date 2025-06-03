@@ -18,8 +18,7 @@ class FetchDataService {
             if(error instanceof Error) {
                 console.error(error.message);
                 return [];
-            }
-            console.error("Something went wrong!");
+            }   
             return [];
         }
     }
