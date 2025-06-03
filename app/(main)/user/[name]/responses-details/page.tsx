@@ -7,7 +7,6 @@ interface IProps {
 const page = async(props: IProps) => {
     const nameParam = (await props.params);
     const name = decodeURIComponent(nameParam.name); 
-    console.log((await props.params).name)
     const responseDetails = await fetchDataService.getUserResponseDetails(name);
     return (
         <CompletedFormsPage responsesDetails={responseDetails} />

@@ -1,6 +1,6 @@
 import { IPageAccessRights, PageAccessName } from "./types";
 
-const routesAccess = new Map<PageAccessName, IPageAccessRights>([
+export const routesAccess = new Map<PageAccessName, IPageAccessRights>([
     [
         "/admin",
         {

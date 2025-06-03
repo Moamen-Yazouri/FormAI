@@ -70,15 +70,5 @@ class AuthService {
         };
     }
     
-    async validateUser (username: string): Promise<AccessRightsType>  {
-        const token = await getToken();
-        if(!token) {
-            return "unauthorized";
-        }
-        if(token.name === username) {
-            return "allowed";
-        }
-        return "forbidden";
-    }
 }
 export default new AuthService();
