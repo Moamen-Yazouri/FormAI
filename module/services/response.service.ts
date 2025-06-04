@@ -23,7 +23,10 @@ class ResponseService {
         if(!isValid) {
             throw new Error("Invalid response");
         }
-        await formsRepo.addRespondant(String(response.formId), String(response.userId));
+        const responded = form.answeredBy.some(res => response.userId === response.userId);
+        if(!responded) {
+            await formsRepo.addRespondant(String(response.formId), String(response.userId));
+        }
         return await responseRepo.addResponse(response);
     }
     async getResponseById(id: string) {
@@ -41,7 +44,7 @@ class ResponseService {
         }
         const responseData: IDisplayResponse = {
             formTitle: response.formId.title,
-            respondentName: response.userId.name,
+            respondentName: response.userId.name || "Anonymous",
             respondentEmail: response.userId.email,
             submittedAt: response.createdAt,
             responses: answers.map(answer => {

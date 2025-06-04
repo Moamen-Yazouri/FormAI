@@ -25,7 +25,7 @@ const TextArea = (props: TProps) => {
             {label && (
             <Label
                 htmlFor={name}
-                className={clsx("text-slate-200", style?.label || "my-2")}
+                className={clsx( style?.label || "my-2")}
             >
                 {label}
             </Label>

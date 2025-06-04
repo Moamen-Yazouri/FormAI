@@ -81,7 +81,7 @@ export type IAnswer = {
 
 export interface IFormResponse {
     formId: mongoose.Types.ObjectId;
-    userId?: mongoose.Types.ObjectId;
+    userId: mongoose.Types.ObjectId | String;
     answers: IAnswer[]; 
 }
 
