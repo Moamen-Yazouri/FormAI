@@ -4,12 +4,12 @@ import { Tabs, TabsContent } from "@/components/ui/tabs"
 import { Card, CardContent } from "@/components/ui/card"
 import useDashboard from "../hooks/useDahboard"
 import type {
-  IFormTable,
-  IFormCreationData,
-  IFormResponseData,
-  IUserData,
-  IUsersActivityData,
-  IActiveUsers,
+    IFormTable,
+    IFormCreationData,
+    IFormResponseData,
+    IUserData,
+    IUsersActivityData,
+    IActiveUsers,
 } from "@/@types"
 import FormsTable from "@/components/forms-table/formsTable"
 import AllTabs from "../components/allTabs"
@@ -30,7 +30,14 @@ interface IProps {
 }
 
 const AdminDashboard = (props: IProps) => {
-    const { usersData, formsData, userActivityData, formCreationData, formResponsesData, activeUsers } = props
+    const { 
+        usersData, 
+        formsData, 
+        userActivityData,   
+        formCreationData, 
+        formResponsesData, 
+        activeUsers 
+    } = props
 
     const { stateCardsData, slicedUsers, slicedForms } = useDashboard({ usersData, formsData })
 

@@ -5,8 +5,10 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, FileText } from "lucide-react"
 import Header from "@/components/header/header"
+import mongoose from "mongoose"
 
 export default function LandingPage() {
+
   return (
     <div className="flex min-h-screen flex-col from-slate-950 via-blue-900 to-indigo-900">
       <Header />

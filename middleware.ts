@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { MATCHERS } from "./routes/constans";
-import { getNamePath, getPaths, getRoutePath } from "./routes/utils/handlePaths";
+import {  getNamePath, getPaths, getRoutePath } from "./routes/utils/handlePaths";
 import { getToken } from "./lib/getToken";
 import { PageAccessName, protectedRoutes } from "./routes/types";
 import { routesAccess } from "./routes/pageAccessRights";
 export default async function middleware(req: NextRequest) {
     const fullPath: string = req.nextUrl.pathname;
     const routePath: PageAccessName = getRoutePath(fullPath);
-    const name: string | null = getNamePath(fullPath);
+    const name = getNamePath(fullPath);
+    console.log(name)
     const token = await getToken();
     console.log(routePath);
     const { role } = routesAccess.get(routePath) || { role: [] };
@@ -23,7 +23,7 @@ export default async function middleware(req: NextRequest) {
         }
         if (!role.includes(token.role)) {
             return NextResponse.redirect(new URL("/forbidden", req.url));
-        }
+        }   
     }
     
     return NextResponse.next();

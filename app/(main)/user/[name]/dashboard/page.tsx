@@ -1,7 +1,5 @@
-import authService from "@/module/services/auth.service";
 import UserDashboard from "./components/userDashboard";
 import fetchDataService from "./service/fetchData.service";
-import { handleAccess } from "@/lib/triggerCoventions";
 interface IProps {
     params: Promise<{name: string}>
 }
@@ -16,7 +14,6 @@ export default async function UserFormActivityPage(props: IProps) {
         fetchDataService.answeredForms(name),
         fetchDataService.availableForms(name),
     ]) 
-    console.log(availableForms);
     const data = {
         formsCompleted: responses.length,
         formsAvailable: availableForms.length,
