@@ -25,7 +25,6 @@ export default function FormGeneratorPage() {
     prompt,
     loading,
     error,
-    isSent,
     generatedForm,
     isEmpty,
     areaRef,

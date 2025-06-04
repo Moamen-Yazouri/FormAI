@@ -9,6 +9,7 @@ export const POST = async (request: NextRequest ) => {
     }
     await connection();
     try {
+        console.log(formData);
         await formsService.addNewForm(formData);
         return NextResponse.json({message: "Form added successfully!"}, {status: 201})
     }
