@@ -60,7 +60,7 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({
                 htmlFor={name}
                 className={clsx(
                     style?.label ??
-                    "text-slate-300 hover:text-cyan-300 transition-colors duration-200 cursor-pointer",
+                    "!text-slate-300 hover:text-cyan-300 transition-colors duration-200 cursor-pointer",
                 )}
                 >
                 {label}

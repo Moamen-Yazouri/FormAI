@@ -1,4 +1,4 @@
-import { IResponseFromDB, IResponsePopulatedUser, IUserFromDB, IUserResponseTable } from "@/@types";
+import { IFormResponse, IResponseFromDB, IResponsePopulatedUser, IUserFromDB, IUserResponseTable } from "@/@types";
 import responseModel from "@/DB/models/response.model";
 import { IResponseDetailsFromDB } from "../services/types";
 
@@ -21,7 +21,9 @@ class ResponseRepo {
         ]);
     }
 
-
+    async addResponse(response: IFormResponse) {
+        return await responseModel.create(response);
+    }
     async getCreatorResponses(creator: IUserFromDB) {
         if (!creator) {
             throw new Error("Invalid Creator name!")

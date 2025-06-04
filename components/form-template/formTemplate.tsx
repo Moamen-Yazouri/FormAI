@@ -23,8 +23,7 @@ const FormTemplate = (props: IProps) => {
   const [loading, setLoading] = useState(true)
   const { user, isLoading } = useContext(AuthContext)
   const router = useRouter()
-  console.log(id)
-
+  console.log("FormTemplate")
   useEffect(() => {
     if (id && user) {
       getForm(id, user)

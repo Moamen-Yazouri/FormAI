@@ -1,71 +1,88 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { Home, ArrowLeft, Shield, Lock, AlertTriangle } from "lucide-react"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Home, ArrowLeft, Shield, Lock, AlertTriangle } from "lucide-react";
+interface IShape {
+  id: number,
+  size: number,
+  x: number,
+  y: number,
+  duration: number,
+  delay: number,
+}
 export default function Forbidden() {
-  const router = useRouter()
+  const router = useRouter();
+  const [floatingShapes, setFloatingShapes] = useState<IShape[]>([]);
 
-  const floatingShapes = Array.from({ length: 8 }, (_, i) => ({
-    id: i,
-    size: Math.random() * 60 + 40,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    duration: Math.random() * 10 + 15,
-    delay: Math.random() * 4,
-  }))
+  useEffect(() => {
+    const shapes = Array.from({ length: 8 }, (_, i) => ({
+      id: i,
+      size: Math.random() * 60 + 40,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      duration: Math.random() * 10 + 15,
+      delay: Math.random() * 4,
+    }));
+    setFloatingShapes(shapes);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-800 via-indigo-700 to-cyan-500 relative overflow-hidden flex items-center justify-center">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-800/30 via-indigo-700/20 to-cyan-500/25"></div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-cyan-950 relative overflow-hidden flex items-center justify-center">
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900/20 via-blue-900/20 to-cyan-800/20"></div>
 
-      {/* Additional blur shapes */}
       <div className="absolute top-20 left-20 w-96 h-96 bg-gradient-to-br from-cyan-500/20 to-blue-800/20 rounded-full blur-3xl"></div>
       <div className="absolute bottom-20 right-20 w-80 h-80 bg-gradient-to-bl from-indigo-700/20 to-cyan-500/20 rounded-full blur-3xl"></div>
 
-      {/* Floating icons */}
       {floatingShapes.map((shape) => (
         <motion.div
           key={shape.id}
           className="absolute opacity-10"
-          style={{ left: `${shape.x}%`, top: `${shape.y}%`, width: shape.size, height: shape.size }}
+          style={{
+            left: `${shape.x}%`,
+            top: `${shape.y}%`,
+            width: shape.size,
+            height: shape.size,
+          }}
           animate={{ y: [0, -30, 0], rotate: [0, 360], scale: [1, 1.2, 1] }}
-          transition={{ duration: shape.duration, delay: shape.delay, repeat: Infinity, ease: "easeInOut" }}
+          transition={{
+            duration: shape.duration,
+            delay: shape.delay,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
         >
           {shape.id % 3 === 0 ? (
-            <Shield className="w-full h-full text-cyan-500/40" />
+            <Shield className="w-full h-full text-cyan-400/30" />
           ) : shape.id % 3 === 1 ? (
-            <Lock className="w-full h-full text-indigo-700/40" />
+            <Lock className="w-full h-full text-indigo-400/30" />
           ) : (
-            <AlertTriangle className="w-full h-full text-blue-800/40" />
+            <AlertTriangle className="w-full h-full text-blue-400/30" />
           )}
         </motion.div>
       ))}
 
-      {/* Main content */}
-      <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-        {/* Title */}
+      <div className="relative z-10 text-center px-4 max-w-4xl mx-auto text-slate-200">
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="mb-8 relative"
+          transition={{ duration: 0.8 }}
+          className="mb-8"
         >
           <motion.div
             className="flex items-center justify-center gap-4 mb-6"
             animate={{ scale: [1, 1.05, 1] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            transition={{ duration: 3, repeat: Infinity }}
           >
             <motion.div
               animate={{ rotate: [0, 15, -15, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="p-6 rounded-full bg-gradient-to-br from-blue-800/30 to-cyan-500/30 border-2 border-blue-800/40 backdrop-blur-sm"
+              transition={{ duration: 4, repeat: Infinity }}
+              className="p-6 rounded-full bg-gradient-to-br from-cyan-500/10 to-blue-700/10 border-2 border-cyan-500/20 backdrop-blur-sm"
             >
-              <Lock className="h-20 w-20 md:h-24 md:w-24 text-blue-800" />
+              <Lock className="h-20 w-20 md:h-24 md:w-24 text-cyan-400" />
             </motion.div>
           </motion.div>
 
@@ -96,7 +113,6 @@ export default function Forbidden() {
           </motion.p>
         </motion.div>
 
-        {/* CTA Buttons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -114,26 +130,16 @@ export default function Forbidden() {
           </Button>
 
           <Button
-            asChild
-            variant="outline"
-            size="lg"
-            className="border border-indigo-700 text-slate-200 hover:bg-indigo-700/30"
-          >
-            <Link href="/sign-in" className="flex items-center gap-2">
-              <Shield className="h-5 w-5" /> Sign In
-            </Link>
-          </Button>
-
-          <Button
+            
             variant="outline"
             size="lg"
             onClick={() => router.back()}
-            className="border border-blue-800 text-slate-200 hover:bg-blue-800/30"
+            className="text-blue-300 border border-blue-700  hover:bg-blue-900/20 hover:text-white transition"
           >
             <ArrowLeft className="h-5 w-5 mr-2" /> Go Back
           </Button>
         </motion.div>
       </div>
     </div>
-  )
+  );
 }

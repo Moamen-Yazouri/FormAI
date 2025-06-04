@@ -14,7 +14,6 @@ export const generateValidationScehma = (formData: IFormField[]) => {
         if (field.type === "checkbox") {
             let validator = yup.boolean();
 
-            // If it's required, enforce it must be `true`
             if (field.required) {
                 validator = validator.oneOf([true], "required field");
             }

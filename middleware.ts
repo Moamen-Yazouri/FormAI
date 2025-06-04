@@ -21,12 +21,27 @@ export default async function middleware(req: NextRequest) {
         if (!token) {
             return NextResponse.redirect(new URL("/unauthorized", req.nextUrl));
         }
-        if (!role.includes(token.role) || name !== token.name) {
+        if (!role.includes(token.role)) {
             return NextResponse.redirect(new URL("/forbidden", req.url));
         }
     }
+    
     return NextResponse.next();
 }
 export const config = {
-    matcher: MATCHERS
+    matcher: [
+        "/sign-in/:path*",
+        "/sign-up/:path*",
+        "/admin/:path*",
+        "/creator/:path*",
+        "/user/:path*",
+        "/answer-form/:path*",
+        "/available-forms/:path*",
+        "/review-response/:path*",
+        "/form-answers/:path*",
+        "/form-generator/:path*",
+        "/my-forms/:path*",
+        "/profile/:path*",
+        "/view-form/:path*"
+    ]
 };

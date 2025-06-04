@@ -1,11 +1,8 @@
 import { IUserForm } from '@/@types';
 import { Button } from '@/components/ui/button';
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
+    Card,
+    CardContent,
 } from '@/components/ui/card';
 import { ArrowRight, User } from 'lucide-react';
 import { useRouter } from 'next/navigation';

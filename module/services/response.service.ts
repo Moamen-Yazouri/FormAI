@@ -11,11 +11,20 @@ class ResponseService {
         if(!form) {
             throw new Error("No form found");
         }
-        const isValid = generateValidationScehma(form.fields).validate(response, {abortEarly: true});
+        console.log(response.answers);
+
+        const validation: {[key: string]: any} = {};
+        response.answers.forEach(answer => {
+            validation[String(answer.fieldId)] = answer.answer;
+        })
+
+        const isValid = await generateValidationScehma(form.fields).isValid(validation);
+
         if(!isValid) {
             throw new Error("Invalid response");
         }
-        return await formsRepo.addResponse(response);
+        await formsRepo.addRespondant(String(response.formId), String(response.userId));
+        return await responseRepo.addResponse(response);
     }
     async getResponseById(id: string) {
         const response = await responseRepo.getResponseById(id);

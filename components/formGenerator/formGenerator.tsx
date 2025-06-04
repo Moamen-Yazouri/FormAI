@@ -1,3 +1,4 @@
+"use client";
 import { IFormField } from '@/@types'
 import { Form, FormikProvider } from 'formik'
 import React, { useContext, useEffect, useState } from 'react'
@@ -24,8 +25,7 @@ const FormGenerator = (props: IProps) => {
   const { formik, submitted } = useForm({ ...props })
   const { user, isLoading } = useContext(AuthContext)
   const [isSub, setIsSub] = useState(formik.isSubmitting)
-  const router = useRouter()
-
+  const router = useRouter();
   useEffect(() => {
     setIsSub(formik.isSubmitting)
   }, [formik.isSubmitting])

@@ -18,7 +18,12 @@ class DashboardService {
             if(forms.length == 0){
                 throw new Error("No forms found!"); 
             } ;
-            const allowedForms: IFormTable[] = forms.map(form => {
+            const allowedForms: IFormTable[] = forms
+                .filter(form => {
+                    const answerd = form.answeredBy.map((id) => String(id));
+                    return !answerd.includes(String(user._id));
+                })
+                .map(form => {
                     return {
                         id: String(form._id),
                         name: form.title,
