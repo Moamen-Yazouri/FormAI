@@ -11,7 +11,7 @@ export const useFormGenerator = () => {
     const [isEmpty, setIsEmpty] = useState(true)
     const [error, setError] = useState<string | null>(null)
     const [isSent, setIsSent] = useState(false)
-    const [generatedForm, setGeneratedForm] = useState<any>(null)
+    const [generatedForm, setGeneratedForm] = useState< IForm | null >(null)
     const [showPublishDialog, setShowPublishDialog] = useState(false)
     const [isPublishing, setIsPublishing] = useState(false)
     const [allowAnonymous, setAllowAnonymous] = useState(false)
@@ -101,14 +101,14 @@ const handleRemoveEmail = (emailToRemove: string) => {
             toast.error("You must be logged in to publish a form")
             return;
         }
-        const fields = generatedForm.fields as Omit<IFormField[], "name">;
+        const fields = generatedForm!.fields as Omit<IFormField[], "name">;
         const validFields: IFormField[] = fields.map((field) => ({
             ...field,
             name: field.fieldId.toLowerCase(),
         }));
         const formData: IForm = {
-            title: generatedForm.title as string,
-            description: generatedForm.description as string,
+            title: generatedForm!.title as string,
+            description: generatedForm!.description as string,
             fields: validFields,
             answeredBy: [],
             creatorId: new mongoose.Types.ObjectId(user._id),
