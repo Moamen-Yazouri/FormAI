@@ -143,6 +143,7 @@ const handleRemoveEmail = (emailToRemove: string) => {
         }
         finally {
             setIsPublishing(false);
+            setEmails([]);
         }
     }
     return {
