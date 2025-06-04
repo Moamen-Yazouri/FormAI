@@ -23,12 +23,13 @@ const FormTemplate = (props: IProps) => {
   const [loading, setLoading] = useState(true)
   const { user, isLoading } = useContext(AuthContext)
   const router = useRouter()
-  console.log("FormTemplate")
+  const [responded, setResponded] = useState<boolean>(false);
   useEffect(() => {
     if (id && user) {
       getForm(id, user)
         .then((form) => {
-          setData(form)
+          setData(form);
+          setResponded(form.answeredBy.includes(user._id) || false)
         })
         .finally(() => setLoading(false))
     } else {
@@ -104,7 +105,29 @@ const FormTemplate = (props: IProps) => {
                 )}
               </div>
             </CardHeader>
-            <FormGenerator fields={data.fields} formId={String(id)} isPreview={props.isPreview} isView={props.isView} />
+              {
+                responded ? (
+                  <div className="w-full max-w-xl mx-auto rounded-lg bg-slate-900 mb-2  text-slate-200 p-6 shadow-md flex flex-col items-start gap-4">
+                    <p className="text-base font-medium text-cyan-400">
+                      You’ve already responded this form.
+                    </p>
+                    <button
+                      onClick={() => setResponded(false)} // replace with your actual handler
+                      className="px-4 py-2 rounded-md text-sm font-medium bg-cyan-500 hover:bg-cyan-400 text-slate-950 transition-colors"
+                    >
+                      Send another response
+                    </button>
+                  </div>
+                ) : (
+                  <FormGenerator
+                    fields={data.fields}
+                    formId={String(id)}
+                    isPreview={props.isPreview}
+                    isView={props.isView}
+                  />
+                )
+              }
+
           </Card>
         </motion.div>
       )}
