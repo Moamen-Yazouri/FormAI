@@ -17,12 +17,15 @@ export const generateMatchers = () => {
 
 export const getNamePath = (pathname: string) => {
     const paths = getPaths(pathname);
+    if(paths[0] === "admin") return null;
+    if(["user", "creator"].includes(paths[0])) {
+        return paths[1];
+    }
     if(paths.length > 1) {
         const isValid = mongoose.Types.ObjectId.isValid(paths[1]);
         if(!isValid) {
             return paths[1];
         }
-        paths.length > 2 ? paths[2] : null;
     }
     return null;
 }
