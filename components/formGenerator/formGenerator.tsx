@@ -27,7 +27,6 @@ const FormGenerator = (props: IProps) => {
   const { user, isLoading } = useContext(AuthContext);
   const [isSub, setIsSub] = useState(formik.isSubmitting);
   const router = useRouter();
-
   useEffect(() => {
     setIsSub(formik.isSubmitting);
   }, [formik.isSubmitting]);

@@ -44,7 +44,7 @@ class ResponseService {
         }
         const responseData: IDisplayResponse = {
             formTitle: response.formId.title,
-            respondentName: response.userId.name,
+            respondentName: response.userId.name || "Anonymous",
             respondentEmail: response.userId.email,
             submittedAt: response.createdAt,
             responses: answers.map(answer => {

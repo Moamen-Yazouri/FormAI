@@ -85,6 +85,7 @@ const FormTemplate = (props: IProps) => {
               <FormGenerator
                 fields={data.fields}
                 formId={String(id)}
+                allowAnonymous={data.allowAnonymous}
                 isPreview={props.isPreview}
                 isView={props.isView}
               />

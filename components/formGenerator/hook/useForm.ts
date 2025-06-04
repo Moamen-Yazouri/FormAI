@@ -54,40 +54,39 @@ export const useForm = (props: IProps) => {
             const formResponse: IFormResponse = {
                 formId: new mongoose.Types.ObjectId(props.formId),
                 answers: answers,
-                userId: new mongoose.Types.ObjectId(user._id),
+                userId: formik.values.allowAnonymous ? "Anonymous" : new mongoose.Types.ObjectId(user._id),
             }
             console.log(formResponse);
-        try{
+            try{
+                const res = await fetch("http://localhost:3000/api/add-response",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(formResponse),
+                    }
+                )
 
-            const res = await fetch("http://localhost:3000/api/add-response",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(formResponse),
+                const data = await res.json();
+                if(!res.ok) {
+                    console.error(data.message);
+                    toast.error(data.message);
+                    return;
                 }
-            )
-
-            const data = await res.json();
-            if(!res.ok) {
-                console.error(data.message);
-                toast.error(data.message);
-                return;
+                resetForm();
+                toast.success("Response recorded successfully!");
+                setSubmitted(true)
             }
-            resetForm();
-            toast.success("Response recorded successfully!");
-            setSubmitted(true)
-        }
-        catch(err){
-            if(err instanceof Error) {
-                toast.error(err.message)
+            catch(err){
+                if(err instanceof Error) {
+                    toast.error(err.message)
+                }
+                toast.error("Something went wrong!")
             }
-            toast.error("Something went wrong!")
-        }
-        finally{
-            setSubmitting(false);
-        }
+            finally{
+                setSubmitting(false);
+            }
     }
     const formik = useFormik<IFormValues>({
         initialValues: initialValues,
