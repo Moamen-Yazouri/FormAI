@@ -152,7 +152,7 @@ const FormsTable = (props: IProps) => {
         {
             isSummary && forms.length > 0  &&(
                 <div className="flex justify-center p-4">
-                <Link href={user.role === "admin" ? `/${user.name}/all-forms` : `/creator/${user.name}/my-forms`}>
+                <Link href={user.role === "admin" ? `/admin/all-forms` : `/creator/${user.name}/my-forms`}>
                     <Button
                     variant="outline"
                     className="text-cyan-400 border-cyan-400/40 hover:bg-gradient-to-r hover:from-blue-700/20 hover:to-cyan-600/20 transition"

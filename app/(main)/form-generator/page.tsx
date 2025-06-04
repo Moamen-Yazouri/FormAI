@@ -15,23 +15,12 @@ import {
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { Input } from "@/components/ui/input"
-import { MATCHERS } from "@/routes/constans"
-import { protectedRoutes } from "@/routes/types"
-import { routesAccess } from "@/routes/pageAccessRights"
+import FormTemplate from "@/components/form-template/formTemplate"
 
-const formTemplates = [
-  "Contact Form",
-  "Survey Form",
-  "Registration Form",
-  "Feedback Form",
-  "Job Application",
-  "Event Registration",
-  "Newsletter Signup",
-  "Custom Form",
-]
+
+
 
 export default function FormGeneratorPage() {
-  console.log(Array.from(routesAccess.keys()))
   const {
     prompt,
     loading,
@@ -89,8 +78,8 @@ export default function FormGeneratorPage() {
                 Regenerate
               </Button>
             </div>
-            {/* Your generated form component would go here */}
-            {/* <FormTemplate isPreview={true} form={generatedForm} isView={false}/> */}
+              Your generated form component would go here
+              <FormTemplate isPreview={true} form={generatedForm} isView={false}/> 
           </div>
         )}
 

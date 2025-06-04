@@ -23,7 +23,10 @@ class ResponseService {
         if(!isValid) {
             throw new Error("Invalid response");
         }
-        await formsRepo.addRespondant(String(response.formId), String(response.userId));
+        const responded = form.answeredBy.some(res => response.userId === response.userId);
+        if(!responded) {
+            await formsRepo.addRespondant(String(response.formId), String(response.userId));
+        }
         return await responseRepo.addResponse(response);
     }
     async getResponseById(id: string) {

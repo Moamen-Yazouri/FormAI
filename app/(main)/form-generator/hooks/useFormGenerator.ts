@@ -83,14 +83,12 @@ const handleRemoveEmail = (emailToRemove: string) => {
             setPrompt("")
 
         const formData = await res.json();
-        console.log(formData)
         if(!res.ok) {
             toast.error(formData.message || "Failed to generate form!");
             return;
         }
             setGeneratedForm(formData)
         } catch (error) {
-        console.error("Error generating form:", error)
         setError(error instanceof Error ? error.message : "Failed to generate form")
         } finally {
         setLoading(false)
