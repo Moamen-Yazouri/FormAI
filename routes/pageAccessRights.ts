@@ -28,43 +28,43 @@ export const routesAccess = new Map<PageAccessName, IPageAccessRights>([
     [
         "/answer-form",
         {
-            role: ["creator", "user", "creator"]
+            role: ["creator", "user", "admin"]
         }
     ],
     [
         "/form-answers",
         {
-            role: ["creator", "creator"]
+            role: ["admin", "creator"]
         }
     ],
     [
         "/form-generator",
         {
-            role: ["creator", "creator"]
+            role: ["admin", "creator"]
         }
     ],
     [
         "/my-forms",
         {
-            role: ["creator", "creator"]
+            role: ["admin", "creator"]
         }
     ],
     [
         "/profile",
         {
-            role: ["creator", "creator", "user"]
+            role: ["admin", "creator", "user"]
         }
     ],
     [
         "/review-response",
         {
-            role: ["creator", "creator", "user"]
+            role: ["admin", "creator", "user"]
         }
     ],
     [
         "/view-form",
         {
-            role: ["creator", "creator"]
+            role: ["creator", "admin"]
         }
     ],
 

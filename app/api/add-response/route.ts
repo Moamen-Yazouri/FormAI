@@ -8,7 +8,9 @@ export const POST = async(req: NextRequest) => {
     }
     await connection();
     try {
+        
         const response = await responseService.addResponse(formResponse);
+        
         return Response.json({response}, {status: 200});
     }
     catch(error) {

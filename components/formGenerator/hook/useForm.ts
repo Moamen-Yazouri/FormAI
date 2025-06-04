@@ -33,6 +33,7 @@ export const useForm = (props: IProps) => {
             resetForm: () => void,
             setSubmitting: (isSubmitting: boolean) => void
         ) => {
+            console.log(values);
             if(props.isPreview || props.isView) {
                 resetForm();
                 toast.success("Form submission works correctly!");

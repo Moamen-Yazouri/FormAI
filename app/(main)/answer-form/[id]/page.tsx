@@ -1,6 +1,4 @@
-
 import FormTemplate from "@/components/form-template/formTemplate";
-import { notFound, redirect, unauthorized } from "next/navigation";
 import { getAccessRights } from "../service/accessRights.service";
 import { handleAccess } from "@/lib/triggerCoventions";
 
