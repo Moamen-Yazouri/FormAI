@@ -17,14 +17,14 @@ const formSchema = new Schema<IFormDocument>(
         },
         ],
         answeredBy: {
-        type: [mongoose.Schema.Types.ObjectId],
-        ref: "User",
-        default: [],
+            type: [mongoose.Schema.Types.ObjectId],
+            ref: "User",
+            default: [],
         },
         creatorId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: true,
         },
         allowedUsers: {
             type: [String],

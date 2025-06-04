@@ -22,6 +22,7 @@ import { deleteForm } from "./actions/form.action"
 import { usePathname } from "next/navigation"
 import { AuthContext } from "@/providers/auth/authProvider"
 import Loader from "../app-sidebar/loader"
+import TablesLoader from "../tables-loader/tablesLoader"
 
 interface IProps {
     forms: IFormTable[]
@@ -44,7 +45,7 @@ const FormsTable = (props: IProps) => {
         toast.error("Failed to delete the form!")
         }
     }
-    if(isLoading) return <Loader/>
+    if(isLoading) return <TablesLoader itemName={"Forms"}/>
     if(!user) return null; 
     return (
         <div className="rounded-lg border border-cyan-500/30 bg-gradient-to-br from-blue-900/40 via-indigo-800/30 to-cyan-600/40 backdrop-blur-md shadow-2xl w-full m-2 ring-1 ring-cyan-500/20">
