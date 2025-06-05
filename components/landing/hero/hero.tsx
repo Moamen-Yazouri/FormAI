@@ -7,6 +7,7 @@ import { FormDataFlow } from "./form-data-flow"
 import { FloatingFormElements } from "./floating-form-elements"
 import { ContainerTextFlip } from "@/components/ui/container-text-flip"
 import { TextGenerateEffect } from "@/components/ui/text-gemerate-effect"
+import Image from "next/image"
 
 export default function EnhancedHero() {
   const [hasMounted, setHasMounted] = useState(false)
@@ -134,10 +135,12 @@ export default function EnhancedHero() {
 
               <div className="relative rounded-xl border border-cyan-700/30 shadow-[0_0_50px_-12px] shadow-cyan-700/30 transition-all duration-500 group-hover:shadow-[0_0_80px_-6px] group-hover:shadow-sky-700/40 group-hover:border-cyan-600/50">
                 <div className="absolute inset-0 bg-gradient-to-br from-cyan-800/5 to-sky-800/5 rounded-xl"></div>
-                <img
+                <Image
                   src="/hero.png"
-                  alt="FormAI Dashboard"
-                  className="w-full h-auto rounded-xl ring-1 ring-cyan-700/20 relative z-10"
+                  alt="Hero Section"
+                  className="rounded-xl ring-1 ring-cyan-700/20 relative z-10 object-cover"
+                  width={600}
+                  height={400}
                 />
 
                 <div className="absolute top-4 right-4 bg-slate-900/80 backdrop-blur-sm rounded-lg p-3 border border-cyan-700/20 z-20">
