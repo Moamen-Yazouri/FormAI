@@ -7,6 +7,7 @@ import Header from "@/components/header/header"
 import Hero from "@/components/landing/hero/hero"
 import FeaturesSection from "@/components/landing/features"
 import CTASection from "@/components/landing/CTA"
+import AboutSection from "@/components/landing/about-us"
 
 
 export default function LandingPage() {
@@ -21,7 +22,7 @@ export default function LandingPage() {
         <FeaturesSection />
         {/* CTA Section */}
         <CTASection />
-
+        <AboutSection/>
       </main>
 
       {/* Footer */}
