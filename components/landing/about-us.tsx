@@ -55,7 +55,7 @@ export default function AboutSection() {
     }
 
     return (
-        <section id="about" className="relative py-20 md:py-28 bg-gradient-to-tr from-slate-950 via-blue-950 to-cyan-950 overflow-hidden">
+        <section id="about" className="relative py-20 md:py-28 bg-gradient-to-br from-slate-800 via-blue-950 to-cyan-950 overflow-hidden">
         <div className="absolute inset-0 bg-grid-white/[0.02]" />
         <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-cyan-600/15 to-blue-600/15 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-cyan-600/10 to-blue-600/10 rounded-full blur-3xl animate-pulse [animation-delay:2s]" />
