@@ -1,11 +1,6 @@
 "use client"
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Loader2, Menu, ChevronDown } from "lucide-react"
 import { useContext, useState } from "react"
 import { Button } from "@/components/ui/button"
@@ -32,19 +27,18 @@ const Header = () => {
   ]
 
   return (
-    <header className="
+    <header
+      className="
       sticky top-2 z-50 w-[99%] max-w-[1600px] mx-auto rounded-xl p-2 border 
-        border-cyan-400/20 bg-gradient-to-r from-slate-950/60 
-        via-cyan-950/50 to-blue-950/60 shadow-xl backdrop-blur-lg overflow-hidden"
-      >
-
+        border-cyan-400/20 shadow-xl backdrop-blur-lg overflow-hidden"
+    >
+      {/* Background gradients - removed the black bg */}
       <div className="absolute inset-0 bg-gradient-to-br from-cyan-900/60 via-blue-900/50 to-sky-900/60"></div>
       <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-cyan-600/30 to-blue-600/30 rounded-full blur-xl -translate-x-16 -translate-y-16"></div>
       <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-sky-600/30 to-cyan-600/30 rounded-full blur-xl translate-x-20 -translate-y-20"></div>
       <div className="absolute bottom-0 left-1/2 w-24 h-24 bg-gradient-to-t from-blue-600/25 to-cyan-600/25 rounded-full blur-lg transform -translate-x-12 translate-y-12"></div>
 
       <div className="relative w-full px-6 flex h-16 items-center justify-between">
-        
         <Link href="/" className="flex items-center gap-3">
           <motion.div whileHover={{ scale: 1.05 }} transition={{ type: "spring", stiffness: 300 }}>
             <Logo size={48} showGlow={false} />
@@ -59,7 +53,6 @@ const Header = () => {
           </motion.span>
         </Link>
 
-        
         <nav className="hidden md:flex gap-6">
           {navItems.map((item) => (
             <Link
@@ -73,7 +66,6 @@ const Header = () => {
           ))}
         </nav>
 
-        
         <div className="flex items-center gap-4">
           {user ? (
             <DropdownMenu>
@@ -93,9 +85,9 @@ const Header = () => {
                 <DropdownMenuItem
                   className="cursor-pointer hover:bg-cyan-800/50 text-slate-200 hover:text-white"
                   onClick={() => {
-                    user.role === "admin" ?
-                      router.push(`/${user.role}/dashboard`) :
-                      router.push(`/${user.role}/${user.name}/dashboard`)
+                    user.role === "admin"
+                      ? router.push(`/${user.role}/dashboard`)
+                      : router.push(`/${user.role}/${user.name}/dashboard`)
                   }}
                 >
                   Dashboard
@@ -127,7 +119,6 @@ const Header = () => {
           </Button>
         </div>
 
-        
         <Button
           variant="ghost"
           size="icon"
@@ -138,10 +129,9 @@ const Header = () => {
         </Button>
       </div>
 
-      
       {mobileOpen && (
         <motion.div
-          className="md:hidden px-6 pb-4 space-y-2 bg-gradient-to-b from-slate-900/95 to-cyan-900/95 border-t border-cyan-700/30 backdrop-blur-sm"
+          className="md:hidden px-6 pb-4 space-y-2 border-t border-cyan-700/30 backdrop-blur-sm"
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
           transition={{ duration: 0.3 }}
