@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { FileText } from "lucide-react"
 import Header from "@/components/header/header"
 import Hero from "@/components/landing/hero/hero"
+import FeaturesSection from "@/components/landing/features"
 
 
 export default function LandingPage() {
@@ -16,7 +17,7 @@ export default function LandingPage() {
       <main className="flex-1">
         {/* Hero Section */}
         <Hero/>
-
+        <FeaturesSection />
         {/* CTA Section */}
         <section className="w-full py-20 relative overflow-hidden">
           {/* Decorative elements */}

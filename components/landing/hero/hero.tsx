@@ -5,6 +5,8 @@ import { ArrowRight, Sparkles, Zap, Bot } from "lucide-react"
 import { motion } from "framer-motion"
 import { FormDataFlow } from "./form-data-flow"
 import { FloatingFormElements } from "./floating-form-elements"
+import { ContainerTextFlip } from "@/components/ui/container-text-flip"
+import { TextGenerateEffect } from "@/components/ui/text-gemerate-effect"
 
 export default function EnhancedHero() {
   const [hasMounted, setHasMounted] = useState(false)
@@ -43,9 +45,9 @@ export default function EnhancedHero() {
               className="flex-1 text-center lg:text-left"
             >
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
+                  initial={{ opacity: 0, x: 100 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, ease: "easeInOut" }}
                 className="inline-flex items-center rounded-full border border-cyan-700/30 bg-slate-900/50 backdrop-blur-sm px-4 py-1.5 text-sm font-medium mb-6 shadow-lg"
               >
                 <span className="bg-gradient-to-r from-cyan-600 to-sky-600 text-white rounded-full px-3 py-0.5 text-xs font-semibold mr-2 shadow-md">
@@ -62,7 +64,7 @@ export default function EnhancedHero() {
                 transition={{ duration: 0.8, delay: 0.3 }}
                 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-6xl mb-6 text-white"
               >
-                Create forms
+                <ContainerTextFlip words={["Generate Forms", "Deploy Forms", "Answer Forms"]}  className="text-white"/>
                 <br className="hidden sm:inline" />
                 <span className="bg-gradient-to-r from-cyan-300 via-blue-300 to-sky-300 bg-clip-text text-transparent animate-gradient-x">
                   powered by AI
@@ -70,10 +72,10 @@ export default function EnhancedHero() {
               </motion.h1>
 
               <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-                className="max-w-[42rem] text-slate-300 sm:text-xl mb-8 leading-relaxed"
+                  initial={{ opacity: 0, x: 100 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6,delay:0.2, ease: "easeInOut" }}
+                  className="max-w-[42rem] text-slate-300 sm:text-xl mb-8 leading-relaxed"
               >
                 Build, deploy, and analyze forms with the help of artificial intelligence. Transform user interactions
                 into actionable insights with real-time data flow visualization.
