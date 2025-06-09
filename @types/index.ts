@@ -215,3 +215,7 @@ export interface IUserResponseDetails {
     createdAt: string,
     completedAt: string,
 }
+export interface IActive {
+    userId: mongoose.Types.ObjectId,
+    lastActive: Date,
+}
