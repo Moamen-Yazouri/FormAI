@@ -10,8 +10,8 @@ export const deleteForm = async (formId: string) => {
         body: JSON.stringify({ formId }),
         });
 
-        const { formsData } = await res.json();
-        return formsData;
+        const { deletedForm } = await res.json();
+        return deletedForm;
     } catch (err: any) {
         console.error(err.message || "Failed to delete the form!");
         return null;
