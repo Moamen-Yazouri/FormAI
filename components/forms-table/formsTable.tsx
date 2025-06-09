@@ -23,6 +23,7 @@ import { usePathname } from "next/navigation"
 import { AuthContext } from "@/providers/auth/authProvider"
 import Loader from "../app-sidebar/loader"
 import TablesLoader from "../tables-loader/tablesLoader"
+import clsx from "clsx"
 
 interface IProps {
     forms: IFormTable[]
@@ -30,22 +31,31 @@ interface IProps {
 }
 
 const FormsTable = (props: IProps) => {
-    const { forms, isSummary } = props
-    const {user, isLoading} = useContext(AuthContext)
+    const { forms, isSummary } = props;
+    const {user, isLoading} = useContext(AuthContext);
+    const [deleting, setDeleting] = useState<boolean>(false)
     const [formToDelete, setFormToDelete] = useState<string | null>(null)
-    const { setSearchTerm, searchTerm, filteredForms } = useFilter(forms)
+    const { setSearchTerm, searchTerm, filteredForms, handleDelete } = useFilter(forms)
     const pathname = usePathname();
     const isAvailable = pathname.includes("available-forms")
 
     const handleFormDelete = async (formId: string) => {
         const deletedForm = await deleteForm(formId);
+        setDeleting(false);
         if (deletedForm) {
-            toast.success(`Form: ${deletedForm.title}, deleted successfully`)
+            toast.success(`Form: ${deletedForm.title}, deleted successfully`);
+
+            setTimeout(() => {
+                handleDelete(formId);
+            }, 500);
+
         } else {
             toast.error("Failed to delete the form!")
         }
+
+        setFormToDelete(null)   
     }
-    if(isLoading) return <TablesLoader itemName={"Forms"}/>
+    if(isLoading || deleting) return <TablesLoader itemName={"Forms"}/>
     if(!user) return null; 
     return (
         <div className="rounded-lg border border-cyan-500/30 bg-gradient-to-br from-blue-900/40 via-indigo-800/30 to-cyan-600/40 backdrop-blur-md shadow-2xl w-full m-2 ring-1 ring-cyan-500/20">
@@ -67,7 +77,9 @@ const FormsTable = (props: IProps) => {
                     filteredForms.map((form) => (
                 <TableRow
                 key={form.id}
-                className="border-b border-cyan-500/10 hover:bg-gradient-to-r from-blue-800/20 via-indigo-700/15 to-cyan-600/20 transition-colors"
+                className={clsx("border-b border-cyan-500/10 hover:bg-gradient-to-r from-blue-800/20 via-indigo-700/15 to-cyan-600/20 transition-colors",
+                    formToDelete === form.id && "bg-red-900/30"
+                )}
                 >
                 <TableCell>
                     <div className="flex items-center gap-2">

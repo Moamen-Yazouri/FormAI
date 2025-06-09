@@ -28,6 +28,8 @@ import { ICreatorResponses } from "@/app/(main)/creator/[name]/dashboard/types"
 import SearchBar from "../text-search-bar/searchBar"
 import { AuthContext } from "@/providers/auth/authProvider"
 import TablesLoader from "../tables-loader/tablesLoader"
+import { deleteResponse } from "./service/deleteResponse.service"
+import clsx from "clsx"
 
 interface IProps {
     responses: ICreatorResponses[]
@@ -35,18 +37,27 @@ interface IProps {
 }
 
 const ResponsesTable = ({ responses, isSummary }: IProps) => {
-    const [responseToDelete, setResponseToDelete] = useState<string | null>(null)
-    const { searchTerm, setSearchTerm, filteredResponses } = useFilter(responses)
+    const [responseToDelete, setResponseToDelete] = useState<string | null>(null);
+    const { searchTerm, setSearchTerm, filteredResponses, handleDelete } = useFilter(responses);
+    const [deleting, setDeleting] = useState<boolean>(false);
     const {user, isLoading} = useContext(AuthContext);
     const handleDeleteResponse = async (id: string) => {
-        // const deletedResponse = await ActionServices.deleteResponse(id)
-        // if (deletedResponse) {
-        // toast.success("Response deleted successfully!")
-        // } else {
-        // toast.error("Failed to delete response!")
-        // }
+        setDeleting(true);
+        const deletedResponse = await deleteResponse(id);
+        setDeleting(false);
+        if (deletedResponse) {
+            toast.success("Response deleted successfully!");
+            setTimeout(() => {
+                setResponseToDelete(null);
+                handleDelete(id);
+            }, 1000);
+        } else {
+            toast.error("Failed to delete response!")
+            setResponseToDelete(null);
+        }
+        
     }
-    if(isLoading) {
+    if(isLoading || deleting) {
         return <TablesLoader itemName={"Response"}/>
     }
     if(!user) {
@@ -76,7 +87,12 @@ const ResponsesTable = ({ responses, isSummary }: IProps) => {
                 filteredResponses.map((response) => (
                 <TableRow
                     key={response.id}
-                    className="border-b border-cyan-500/10 hover:bg-gradient-to-r from-blue-800/20 via-indigo-700/15 to-cyan-600/20 transition-colors"
+                    className={
+                        clsx(
+                            "border-b border-cyan-500/10 hover:bg-gradient-to-r from-blue-800/20 via-indigo-700/15 to-cyan-600/20 transition-colors",
+                            responseToDelete === response.id && "bg-red-500/30"
+                        )
+                    }
                 >
                     <TableCell className="font-medium text-slate-100">{response.formTitle}</TableCell>
                     <TableCell className="text-slate-100">{response.respondentName}</TableCell>

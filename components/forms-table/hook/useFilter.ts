@@ -7,6 +7,10 @@ export const useFilter = (forms: IFormTable[]) => {
     const [filteredForms, setFilteredForms] = useState<IFormTable[]>(forms);
     const [searchTerm, setSearchTerm] = useState("");
     const debounceTimer = useRef<NodeJS.Timeout | null>(null);
+    const handleDelete = (formId: string) => {
+        const updatedForms = filteredForms.filter((form) => form.id !== formId);
+        setFilteredForms(updatedForms);
+    }
     useEffect(() => {
         debounceTimer.current = setTimeout(() => {
             if(searchTerm && searchTerm.length > 0) {
@@ -27,6 +31,7 @@ export const useFilter = (forms: IFormTable[]) => {
     return{
         filteredForms,
         searchTerm,
+        handleDelete,
         setSearchTerm,
     }
 }
