@@ -41,6 +41,14 @@ const ResponsesTable = ({ responses, isSummary }: IProps) => {
     const { searchTerm, setSearchTerm, filteredResponses, handleDelete } = useFilter(responses);
     const [deleting, setDeleting] = useState<boolean>(false);
     const {user, isLoading} = useContext(AuthContext);
+        const handleCopy = async (response: ICreatorResponses) => {  
+        try {
+            await navigator.clipboard.writeText(JSON.stringify([response], null, 2))
+            toast.success("Response copied to clipboard!")
+        } catch (err) {
+            toast.error("Failed to copy response to clipboard!")
+        }
+    }
     const handleDeleteResponse = async (id: string) => {
         setDeleting(true);
         const deletedResponse = await deleteResponse(id);
@@ -123,15 +131,19 @@ const ResponsesTable = ({ responses, isSummary }: IProps) => {
                             <Link href={`/review-response/${response.id}`}>View Details</Link>
                         </DropdownMenuItem>
 
-                        <DropdownMenuItem className="text-slate-200 hover:bg-cyan-800/40 transition">
+                        <DropdownMenuItem 
+                            className="text-slate-200 hover:bg-cyan-800/40 transition"
+                            onClick={ () => handleCopy(response)}
+                        >
                             <Download className="mr-2 h-4 w-4 text-cyan-400" />
-                            <span>Download</span>
+                            <span>Copy</span>
                         </DropdownMenuItem>
-
-                        <DropdownMenuItem className="text-slate-200 hover:bg-cyan-800/40 transition">
-                            <Mail className="mr-2 h-4 w-4 text-cyan-400" />
-                            <span>Contact Respondent</span>
-                        </DropdownMenuItem>
+                        <a href={`mailto:${response.respondentEmail}`}>
+                            <DropdownMenuItem className="text-slate-200 hover:bg-cyan-800/40 transition">
+                                <Mail className="mr-2 h-4 w-4 text-cyan-400" />
+                                <span>Contact Respondent</span>
+                            </DropdownMenuItem>
+                        </a>
 
                         <DropdownMenuSeparator className="bg-cyan-500/20" />
 

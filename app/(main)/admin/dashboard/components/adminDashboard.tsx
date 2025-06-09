@@ -37,8 +37,8 @@ const AdminDashboard = (props: IProps) => {
         formCreationData, 
         formResponsesData, 
         activeUsers 
-    } = props
-    console.log(usersData)
+    } = props;
+
     const { stateCardsData, slicedUsers, slicedForms } = useDashboard({ usersData, formsData })
 
     return (
