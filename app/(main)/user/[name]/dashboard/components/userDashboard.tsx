@@ -1,10 +1,9 @@
 "use client";
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { motion } from "framer-motion";
 import { CheckCircle, ClipboardList, Clock } from "lucide-react";
-import { IFormTable, IUserForm } from "@/@types";
+import { IFormTable } from "@/@types";
 import CompletedForms from "./completedForms";
 import { IAnsweredForms } from "../types";
 import FormsTable from "@/components/forms-table/formsTable";
@@ -45,7 +44,7 @@ export default function UserDashboard(props: IProps) {
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            {/* Forms Completed */}
+            
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -72,7 +71,7 @@ export default function UserDashboard(props: IProps) {
                 </Card>
             </motion.div>
 
-            {/* Forms Available */}
+            
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -100,7 +99,7 @@ export default function UserDashboard(props: IProps) {
                 </Card>
             </motion.div>
 
-            {/* Average Time */}
+            
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -126,17 +125,17 @@ export default function UserDashboard(props: IProps) {
             </motion.div>
             </div>
 
-            {/* Available Forms */}
+
             <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
             className="mb-8"
             >
-            <FormsTable forms={availableForms} name={name} role="user"/>
+            <FormsTable forms={availableForms} />
             </motion.div>
 
-            {/* Completed Forms */}
+
             <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

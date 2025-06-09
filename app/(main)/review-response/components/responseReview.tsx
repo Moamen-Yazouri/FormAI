@@ -29,12 +29,17 @@ export default function ResponseDetailsPage(props: IProps) {
         }, 500)
         return null
     }
-
+    const handleCopy = async () => {  
+        try {
+            await navigator.clipboard.writeText(JSON.stringify([props.response], null, 2))
+            toast.success("Response copied to clipboard!")
+        } catch (err) {
+            toast.error("Failed to copy response to clipboard!")
+        }
+    }
     const { responses, ...info } = props.response
 
-    const handleExport = (format: string) => {
-        console.log(`Exporting in ${format} format`)
-    }
+    
 
     const handleBack = () => {
         router.back()
@@ -54,30 +59,13 @@ export default function ResponseDetailsPage(props: IProps) {
                 Back to Responses
             </Button>
 
-            <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                <Button className="flex items-center gap-2 bg-gradient-to-r from-blue-700 via-indigo-700 to-cyan-500 text-white hover:from-blue-600 hover:to-cyan-400">
-                    <Download className="h-4 w-4" />
-                    Export Response
-                </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                align="end"
-                className="bg-slate-900 border border-cyan-600/20 text-slate-200 shadow-lg backdrop-blur-md"
-                >
-                <DropdownMenuItem onClick={() => handleExport("pdf")}>Export as PDF</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleExport("csv")}>Export as CSV</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleExport("json")}>Export as JSON</DropdownMenuItem>
-                </DropdownMenuContent>
-            </DropdownMenu>
             </div>
 
-            {/* Info Card */}
+            
             <div className="mb-6">
             <ResponseInfoCard info={info} />
             </div>
 
-            {/* Questions */}
             <div className="mb-6">
             <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
                 <FileText className="h-5 w-5 text-cyan-400" />
@@ -95,7 +83,6 @@ export default function ResponseDetailsPage(props: IProps) {
 
             <Separator className="my-6 bg-cyan-700/20" />
 
-            {/* Footer Actions */}
             <div className="flex justify-between items-center mt-8">
             <Button
                 variant="outline"
@@ -106,16 +93,23 @@ export default function ResponseDetailsPage(props: IProps) {
             </Button>
 
             <div className="flex gap-2">
-                <Button
-                variant="outline"
-                className="flex items-center gap-2 text-slate-300 border-cyan-400/40 hover:bg-slate-800/30 hover:text-cyan-300"
-                >
-                <Mail className="h-4 w-4" />
-                Contact Respondent
-                </Button>
-                <Button className="flex items-center gap-2 bg-gradient-to-r from-blue-800 via-indigo-700 to-cyan-500 text-white hover:from-blue-700 hover:to-cyan-400">
+                <a href= {`mailto:${info.respondentEmail}`}>
+                    <Button
+                    variant="outline"
+                    className="flex items-center gap-2 text-slate-300 border-cyan-400/40 hover:bg-slate-800/30 hover:text-cyan-300"
+                    >
+                    <Mail className="h-4 w-4" />
+                    Contact Respondent
+                    </Button>
+                </a>
+                <Button 
+                    className="flex items-center gap-2 
+                        bg-gradient-to-r from-blue-800 via-indigo-700 to-cyan-500 
+                        text-white hover:from-blue-700 hover:to-cyan-400"
+                        onClick={handleCopy}
+                    >
                 <Download className="h-4 w-4" />
-                Export Response
+                    Copy Response
                 </Button>
             </div>
             </div>
@@ -123,3 +117,4 @@ export default function ResponseDetailsPage(props: IProps) {
         </div>
     )
 }
+
