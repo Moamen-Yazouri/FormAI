@@ -39,14 +39,11 @@ class FormServices {
         if(!form) {
             throw new Error("Form not found");
         }
-        // const deleteResponses = await responseService.deleteFromResponses(String(form._id));
-        // if(!deleteResponses) {
-        //     throw new Error("Failed to delete responses");
-        // }
+
         const deletedForm = await formsRepo.deleteForm(formId);
         return deletedForm;
     }
-    deleteUserForms = async (userId: string) => {
+    deleteUserForms  = async (userId: string) => {
         const forms = await formsRepo.getCreatorForm(userId);
         if(forms.length > 0) {
             const deletedForms = await formsRepo.deleteUserForms(userId);
