@@ -12,8 +12,8 @@ class DashboardService {
         }
         const usersData: IUserData[] = await Promise.all(
             users.sort((a, b) => {
-                const aActive = getActiveStatus(a.updatedAt);
-                const bActive = getActiveStatus(b.updatedAt);
+                const aActive = getActiveStatus(a.lastActive);
+                const bActive = getActiveStatus(b.lastActive);
                 if(aActive === "active" && bActive === "inactive") return -1;
                 if(aActive === "inactive" && bActive === "active") return 1;
                 return 0;
@@ -24,9 +24,9 @@ class DashboardService {
                     name: user.name,
                     email: user.email,
                     role: user.role,
-                    status: getActiveStatus(user.updatedAt),
+                    status: getActiveStatus(user.lastActive),
                     forms: await formsCount(String(user._id)),
-                    lastActive: getDateOnly(user.updatedAt),
+                    lastActive: getDateOnly(user.lastActive),
                 }
             })
         )
@@ -83,7 +83,7 @@ class DashboardService {
         const userActivityData: IUsersActivityData[] = dates.map((date) => {
             return {
                 name: date.day,
-                active: users.filter(user => (getActiveStatus(user.updatedAt) === "active")).length || 0,
+                active: users.filter(user => (getActiveStatus(user.lastActive) === "active")).length || 0,
                 new: users.filter(user => getDateOnly(user.createdAt) === getDateOnly(date.date)).length || 0,
             }
         })

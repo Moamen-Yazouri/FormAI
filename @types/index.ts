@@ -7,6 +7,7 @@ export interface IUserFromDB {
     role: UserRoles;  
     createdAt: string;    
     updatedAt: string;
+    lastActive: string;
 }
 
 export interface IFormFromDB extends IForm {
@@ -38,6 +39,7 @@ export interface IUser {
     role: UserRoles;
     email: string;
     password: string;
+    lastActive: Date;
 }
 export enum EType {
     text = "text",

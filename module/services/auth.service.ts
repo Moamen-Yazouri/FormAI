@@ -8,6 +8,7 @@ import { generateToken } from "@/lib/generateAndVerifyToken";
 import { cookies } from "next/headers";
 import { getToken } from "@/lib/getToken";
 import { AccessRightsType } from "@/@types/access";
+import userService from "./user.service";
 
 class AuthService {
     async signUp(user: IUser) {
@@ -29,6 +30,7 @@ class AuthService {
             password: hashedPass,
             name: xss(user.name),
             role: user.role,
+            lastActive: new Date(),
         }
 
         const newUser = await authRepo.createUser(data);
@@ -57,13 +59,14 @@ class AuthService {
             name: user.name,
             role: user.role
         }
-        console.log(payload);
+        
         const token = await generateToken(payload);
         (await cookies()).set("auth-token", token, {
             httpOnly: true,
             secure: true,
             expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
         });
+        await userService.updateLastActive(user._id, new Date());
         return {
             user,
             token,

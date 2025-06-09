@@ -58,5 +58,13 @@ class UserService {
         }
         return user;
     }
+
+    async updateLastActive (userId: string, date: Date) {
+        const user = await userRepo.setLastActive(userId, date);
+        if(!user) {
+            throw new Error("User not found");
+        }
+        return user;
+    }
 }
 export default new UserService();
