@@ -38,11 +38,11 @@ const FormsTable = (props: IProps) => {
     const isAvailable = pathname.includes("available-forms")
 
     const handleFormDelete = async (formId: string) => {
-        const deletedForm = await deleteForm(formId)
+        const deletedForm = await deleteForm(formId);
         if (deletedForm) {
-        toast.success(`Form: ${deletedForm.title}, deleted successfully`)
+            toast.success(`Form: ${deletedForm.title}, deleted successfully`)
         } else {
-        toast.error("Failed to delete the form!")
+            toast.error("Failed to delete the form!")
         }
     }
     if(isLoading) return <TablesLoader itemName={"Forms"}/>
