@@ -21,6 +21,9 @@ export const useFilter = (users: IUserData[] ) => {
                 setFilteredUsers(filteredUsers);
             }, 500);
         }
+        else {
+            setFilteredUsers(users);
+        }
         return () => {
             if(debounceRef.current) {
                 clearTimeout(debounceRef.current);

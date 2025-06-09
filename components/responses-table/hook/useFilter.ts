@@ -1,11 +1,16 @@
+import { ICreatorResponses } from "@/app/(main)/creator/[name]/dashboard/types";
 import { useEffect, useRef, useState } from "react";
-import { ICreatorResponses } from "../../../types";
 
 export const useFilter = (responses: ICreatorResponses[]) => {
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [filteredResponses, setFilteredResponses] = useState<ICreatorResponses[]>(responses);
     const debounceRef = useRef<NodeJS.Timeout | null>(null);
-
+    const handleDelete = (responseId: string) => {
+        const filteredResponses = responses.filter((response) => {
+            return response.id !== responseId;
+        });
+        setFilteredResponses(filteredResponses);
+    }
     useEffect(() => {
         if(searchTerm) {
             debounceRef.current = setTimeout(() => {
@@ -15,6 +20,9 @@ export const useFilter = (responses: ICreatorResponses[]) => {
                 });
                 setFilteredResponses(filtered);
             }, 500) 
+        }
+        else {
+            setFilteredResponses(responses);
         }
     
         return () => {
@@ -26,7 +34,8 @@ export const useFilter = (responses: ICreatorResponses[]) => {
     
     return {
         searchTerm,
-        setSearchTerm,
         filteredResponses,
+        handleDelete,
+        setSearchTerm,
     }
 }

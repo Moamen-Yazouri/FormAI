@@ -23,6 +23,7 @@ import SearchBar from "../text-search-bar/searchBar"
 import { deleteUser } from "./actions/user.action"
 import Link from "next/link"
 import TablesLoader from "../tables-loader/tablesLoader"
+import clsx from "clsx"
 
 interface IProps {
   users: IUserData[]
@@ -30,22 +31,27 @@ interface IProps {
 }
 
 const UsersTable = (props: IProps) => {
-  const [userToDelete, setUserToDelete] = useState<string | null>(null)
-  const { users } = props
-  const router = useRouter()
+  const [userToDelete, setUserToDelete] = useState<string | null>(null);
+  const { users } = props;
+  const router = useRouter();
+  const [deleteing, setDeleting] = useState<boolean>(false);
   const { searchTerm, setSearchTerm, filteredUsers, handleDelete } = useFilter(users);
-  const [deleting, setDeleting] = useState(false);
 
   const handleDeleteUser = async (userId: string) => {
     setDeleting(true);
     const deletedUser = await deleteUser(userId);
     setDeleting(false);
     if (deletedUser) {
-      handleDelete(userId);
       toast.success(`User: ${deletedUser.email}, deleted successfully`);
+      setTimeout(() => {
+        setUserToDelete(null);
+        handleDelete(userId);
+      }, 1000);
     } else {
-      toast.error(`Failed to delete user`)
+      toast.error(`Failed to delete user`);
+      setUserToDelete(null);
     }
+    
   }
 
   const getInitials = (name: string) =>
@@ -54,7 +60,7 @@ const UsersTable = (props: IProps) => {
       .map((n) => n[0])
       .join("")
       .toUpperCase()
-  if(deleting) return <TablesLoader itemName="User"/>
+  if(deleteing) return <TablesLoader itemName="User"/>
   return (
     <div className="rounded-lg border border-cyan-500/30 bg-gradient-to-br from-blue-900/40 via-indigo-800/30 to-cyan-600/40 backdrop-blur-md shadow-2xl w-full m-2 ring-1 ring-cyan-500/20">
       <SearchBar placeholder="Search Users..." search={searchTerm} setSearch={setSearchTerm} />
@@ -73,7 +79,12 @@ const UsersTable = (props: IProps) => {
           {filteredUsers.map((user) => (
             <TableRow
               key={user.id}
-              className="border-b border-cyan-500/10 hover:bg-gradient-to-r from-blue-800/20 via-indigo-700/15 to-cyan-600/20 transition-colors"
+              className= {
+                clsx(
+                  "border-b border-cyan-500/10 hover:bg-gradient-to-r from-blue-800/20 via-indigo-700/15 to-cyan-600/20 transition-colors",
+                  userToDelete === user.id && "!bg-red-900/30"
+                )
+              }
             >
               <TableCell>
                 <div className="flex items-center gap-3">

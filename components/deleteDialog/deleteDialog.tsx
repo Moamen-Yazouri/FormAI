@@ -84,8 +84,7 @@ const DeleteDialog = <T extends ISharedProps>({
                 variant="ghost"
                 className="text-slate-300 hover:text-cyan-200 hover:bg-cyan-900/20 transition"
                 onClick={() => {
-                setIsDialogOpen(false)
-                setItemToDelete(null)
+                    setIsDialogOpen(false)
                 }}
             >
                 Cancel
@@ -94,9 +93,8 @@ const DeleteDialog = <T extends ISharedProps>({
                 variant="destructive"
                 className="bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105"
                 onClick={() => {
-                handleDeleteItem(itemToDelete!)
-                setIsDialogOpen(false)
-                setItemToDelete(null)
+                    handleDeleteItem(itemToDelete!)
+                    setIsDialogOpen(false)
                 }}
             >
                 Delete
