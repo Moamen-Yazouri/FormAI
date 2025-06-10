@@ -1,29 +1,35 @@
 "use client"
-import type { IFormTable, UserRoles } from "@/@types"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import type { IFormTable } from "@/@types";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { 
+    Table, 
+    TableBody, 
+    TableCell, 
+    TableHead, 
+    TableHeader, 
+    TableRow 
+} from "@/components/ui/table";
 import {
     DropdownMenu,
     DropdownMenuTrigger,
     DropdownMenuContent,
     DropdownMenuLabel,
     DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu"
-import { Calendar, FileText, MoreVertical } from "lucide-react"
-import { useContext, useState } from "react"
-import DeleteDialog from "../deleteDialog/deleteDialog"
-import ActionsProvider from "@/components/form-actions-provider/ActionsProvider"
-import { toast } from "sonner"
-import SearchBar from "../text-search-bar/searchBar"
-import { useFilter } from "./hook/useFilter"
-import Link from "next/link"
-import { deleteForm } from "./actions/form.action"
-import { usePathname } from "next/navigation"
-import { AuthContext } from "@/providers/auth/authProvider"
-import Loader from "../app-sidebar/loader"
-import TablesLoader from "../tables-loader/tablesLoader"
-import clsx from "clsx"
+} from "@/components/ui/dropdown-menu";
+import { Calendar, FileText, MoreVertical } from "lucide-react";
+import { useContext, useState } from "react";
+import DeleteDialog from "../deleteDialog/deleteDialog";
+import ActionsProvider from "@/components/form-actions-provider/ActionsProvider";
+import { toast } from "sonner";
+import SearchBar from "../text-search-bar/searchBar";
+import { useFilter } from "./hook/useFilter";
+import Link from "next/link";
+import { deleteForm } from "./actions/form.action";
+import { usePathname } from "next/navigation";
+import { AuthContext } from "@/providers/auth/authProvider";
+import TablesLoader from "../tables-loader/tablesLoader";
+import clsx from "clsx";
 
 interface IProps {
     forms: IFormTable[]
@@ -35,9 +41,14 @@ const FormsTable = (props: IProps) => {
     const {user, isLoading} = useContext(AuthContext);
     const [deleting, setDeleting] = useState<boolean>(false)
     const [formToDelete, setFormToDelete] = useState<string | null>(null)
-    const { setSearchTerm, searchTerm, filteredForms, handleDelete } = useFilter(forms)
+    const { 
+        setSearchTerm, 
+        searchTerm, 
+        filteredForms, 
+        handleDelete 
+    } = useFilter(forms)
     const pathname = usePathname();
-    const isAvailable = pathname.includes("available-forms")
+    const isAvailable = pathname.includes("available-forms");
 
     const handleFormDelete = async (formId: string) => {
         const deletedForm = await deleteForm(formId);

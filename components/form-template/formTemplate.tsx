@@ -1,6 +1,5 @@
 "use client";
 import { Card, CardHeader } from "@/components/ui/card";
-import clsx from "clsx";
 import type { IForm } from "@/@types";
 import FormGenerator from "../formGenerator/formGenerator";
 import { useContext, useEffect, useState } from "react";
@@ -9,7 +8,7 @@ import { motion } from "framer-motion";
 import { getForm } from "./service/form.service";
 import { AuthContext } from "@/providers/auth/authProvider";
 import { useRouter } from "next/navigation";
-import { ScrollableContainer } from "../scroll-container/scroll-container";
+
 
 interface IProps {
   isPreview: boolean;
@@ -45,8 +44,8 @@ const FormTemplate = (props: IProps) => {
   }
 
   return (
-    <ScrollableContainer maxHeight="90vh">
-      <div className="w-full p-5 min-h-screen flex items-center justify-center relative overflow-hidden custom-scrollbar">
+        
+      <div className="w-full p-5 min-h-screen relative overflow-hidden custom-scrollbar">
         {(loading || isLoading) && <LoadingPage />}
 
         {data && (
@@ -57,7 +56,7 @@ const FormTemplate = (props: IProps) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <Card className="w-full rounded-2xl shadow-2xl overflow-hidden py-0 gap-0">
+            <Card className="w-full rounded-2xl shadow-2xl overflow-hidden py-0 gap-0 bg-transparent">
               <CardHeader className="px-8 py-6 border-b bg-slate-900 border-cyan-700/20">
                 <div className="space-y-2">
                   <div className="flex items-center gap-4">
@@ -72,7 +71,7 @@ const FormTemplate = (props: IProps) => {
               </CardHeader>
 
               {responded ? (
-                <div className="w-full max-w-xl mx-auto rounded-lg bg-slate-900 mb-2 text-slate-200 p-6 shadow-md flex flex-col items-start gap-4">
+                <div className="w-full max-w-xl mx-auto rounded-lg bg-slate-900 my-4 text-slate-200 p-6 shadow-md flex flex-col items-start gap-4">
                   <p className="text-base font-medium text-cyan-400">
                     You’ve already responded to this form.
                   </p>
@@ -96,7 +95,6 @@ const FormTemplate = (props: IProps) => {
           </motion.div>
         )}
       </div>
-    </ScrollableContainer>
   );
 };
 

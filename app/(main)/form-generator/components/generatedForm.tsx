@@ -2,6 +2,7 @@
 
 import type { IForm } from "@/@types";
 import FormTemplate from "@/components/form-template/formTemplate";
+import { ScrollableContainer } from "@/components/scroll-container/scroll-container";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
@@ -40,11 +41,13 @@ const GeneratedForm = (props: IProps) => {
             transition={{ duration: 0.3, ease: "easeOut" }}
             className="w-full h-full max-w-4xl overflow-auto  backdrop-blur-md flex flex-col  justify-center p-0"
             >
-            <FormTemplate
-                isPreview={true}
-                form={generatedForm}
-                isView={false}
-            />
+            <ScrollableContainer maxHeight="90vh">
+                <FormTemplate
+                    isPreview={true}
+                    form={generatedForm}
+                    isView={false}
+                />
+            </ScrollableContainer>
 
             <div className="w-full flex justify-end gap-3 mt-6">
                 <Button
