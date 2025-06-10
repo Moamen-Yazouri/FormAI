@@ -1,49 +1,43 @@
 "use client"
 
-import { useRouter } from "next/navigation"
-import { ArrowLeft, Download, Mail, FileText } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu"
-import { Separator } from "@/components/ui/separator"
-import { IDisplayResponse } from "@/@types"
-import ResponseInfoCard from "./responseInfoCard"
-import QuestionCard from "./questionCard"
-import { toast } from "sonner"
+import { useRouter } from "next/navigation";
+import { ArrowLeft, Download, Mail, FileText } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { IDisplayResponse } from "@/@types";
+import ResponseInfoCard from "./responseInfoCard";
+import QuestionCard from "./questionCard";
+import { toast } from "sonner";
 
 interface IProps {
     response: IDisplayResponse | null
 }
 
-export default function ResponseDetailsPage(props: IProps) {
+export default function ResponseDetailsPage({ response }: IProps) {
     const router = useRouter()
 
-    if (!props.response) {
+    if (!response) {
         toast.error("Response not found")
         setTimeout(() => {
         router.back()
         }, 500)
         return null
     }
-    const handleCopy = async () => {  
+
+    const handleCopy = async () => {
         try {
-            await navigator.clipboard.writeText(JSON.stringify([props.response], null, 2))
-            toast.success("Response copied to clipboard!")
+        await navigator.clipboard.writeText(JSON.stringify([response], null, 2))
+        toast.success("Response copied to clipboard!")
         } catch (err) {
-            toast.error("Failed to copy response to clipboard!")
+        toast.error("Failed to copy response to clipboard!")
         }
     }
-    const { responses, ...info } = props.response
-
-    
 
     const handleBack = () => {
         router.back()
     }
+
+    const { responses, ...info } = response
 
     return (
         <div className="min-h-screen w-full bg-gradient-to-br from-slate-950 via-blue-900 to-indigo-900 text-slate-200">
@@ -53,19 +47,19 @@ export default function ResponseDetailsPage(props: IProps) {
             <Button
                 variant="ghost"
                 onClick={handleBack}
-                className="flex items-center gap-2 text-cyan-400 hover:text-cyan-300 hover:bg-slate-800/40"
+                className="flex items-center gap-2 text-cyan-400 hover:text-white hover:bg-cyan-800/20 transition-colors"
             >
                 <ArrowLeft className="h-4 w-4" />
                 Back to Responses
             </Button>
-
             </div>
 
-            
+            {/* Response Info */}
             <div className="mb-6">
             <ResponseInfoCard info={info} />
             </div>
 
+            {/* Questions */}
             <div className="mb-6">
             <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
                 <FileText className="h-5 w-5 text-cyan-400" />
@@ -83,38 +77,37 @@ export default function ResponseDetailsPage(props: IProps) {
 
             <Separator className="my-6 bg-cyan-700/20" />
 
+            {/* Actions */}
             <div className="flex justify-between items-center mt-8">
             <Button
                 variant="outline"
                 onClick={handleBack}
-                className="text-cyan-400 border-cyan-500/40 hover:bg-slate-800/30 hover:text-cyan-300"
+                className="text-cyan-300 border-cyan-500/30 bg-slate-900/20 hover:bg-cyan-800/10 hover:text-white transition-colors"
             >
                 Back to Responses
             </Button>
 
             <div className="flex gap-2">
-                <a href= {`mailto:${info.respondentEmail}`}>
-                    <Button
+                <a href={`mailto:${info.respondentEmail}`}>
+                <Button
                     variant="outline"
-                    className="flex items-center gap-2 text-slate-300 border-cyan-400/40 hover:bg-slate-800/30 hover:text-cyan-300"
-                    >
+                    className="flex items-center gap-2 text-cyan-300 border-cyan-400/30 bg-slate-900/30 hover:bg-cyan-800/20 hover:text-white transition-colors"
+                >
                     <Mail className="h-4 w-4" />
                     Contact Respondent
-                    </Button>
+                </Button>
                 </a>
-                <Button 
-                    className="flex items-center gap-2 
-                        bg-gradient-to-r from-blue-800 via-indigo-700 to-cyan-500 
-                        text-white hover:from-blue-700 hover:to-cyan-400"
-                        onClick={handleCopy}
-                    >
+
+                <Button
+                onClick={handleCopy}
+                className="flex items-center gap-2 bg-gradient-to-r from-blue-700 via-indigo-600 to-cyan-500 text-white hover:from-blue-600 hover:to-cyan-400 hover:shadow-md transition-all duration-200"
+                >
                 <Download className="h-4 w-4" />
-                    Copy Response
+                Copy Response
                 </Button>
             </div>
             </div>
         </div>
         </div>
-    )
+  )
 }
-
