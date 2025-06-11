@@ -2,15 +2,20 @@
 
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { Home, RefreshCcw, AlertCircle, ServerCrash, Wifi, WifiOff } from "lucide-react"
+import { 
+    Home, 
+    RefreshCcw, 
+    AlertCircle, 
+    ServerCrash, 
+    Wifi, 
+    WifiOff 
+} from "lucide-react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { useState, useEffect } from "react"
-import Logo from "@/components/header/logo"
+
 
 
 export default function ErrorPage() {
-    const router = useRouter()
     const [isOnline, setIsOnline] = useState(true)
     const [countdown, setCountdown] = useState(15)
 
@@ -52,7 +57,7 @@ export default function ErrorPage() {
     }))
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-cyan-950 relative overflow-hidden flex items-center justify-center">
+        <div className=" p-4 w-full min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-cyan-950 relative overflow-hidden flex items-center justify-center">
         
             <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 via-indigo-800/20 to-cyan-600/25"></div>
 
@@ -95,15 +100,7 @@ export default function ErrorPage() {
 
             
             <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-                {/* Logo */}
-                <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="mb-8 flex justify-center"
-                >
-                <Logo size={80} showGlow={true} />
-                </motion.div>
+
 
                 <motion.div
                     initial={{ opacity: 0, scale: 0.5 }}
@@ -112,7 +109,7 @@ export default function ErrorPage() {
                     className="mb-8 relative"
                 >
                 <motion.div
-                    className="flex items-center justify-center gap-4 mb-6"
+                    className="flex items-center justify-center gap-4 my-6"
                     animate={{
                     scale: [1, 1.05, 1],
                     }}
@@ -254,7 +251,7 @@ export default function ErrorPage() {
                     variant="outline"
                     size="lg"
                     onClick={() => window.location.reload()}
-                    className="border-cyan-500/50 text-slate-200 hover:bg-cyan-800/30 hover:text-cyan-100 hover:border-cyan-400/70 transition-all duration-300 px-8 py-3"
+                    className="border-cyan-500/50 text-[#0c5e90] hover:bg-cyan-800/30 hover:text-cyan-100 hover:border-cyan-400/70 transition-all duration-300 px-8 py-3"
                     >
                     <RefreshCcw className="h-5 w-5 mr-2" />
                     Try Again

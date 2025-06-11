@@ -1,6 +1,6 @@
 "use client"
 import { IAuthContext, IContextUser } from "@/@types";
-import { createContext, use, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { INITIAL_CONTEXT } from "./constants";
 import { provideUser } from "./service/provide-user.service";
 

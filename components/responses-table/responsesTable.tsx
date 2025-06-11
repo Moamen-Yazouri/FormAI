@@ -7,7 +7,8 @@ import {
     TableHead,
     TableHeader,
     TableRow
-} from "@/components/ui/table"
+} from "@/components/ui/table";
+
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -15,21 +16,22 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
-import { MoreHorizontal, Eye, Download, Mail } from "lucide-react"
-import Link from "next/link"
-import { useContext, useState } from "react"
-import DeleteDialog from "@/components/deleteDialog/deleteDialog"
-import { toast } from "sonner"
-import { useFilter } from "./hook/useFilter"
-import { UserRoles } from "@/@types"
-import { ICreatorResponses } from "@/app/(main)/creator/[name]/dashboard/types"
-import SearchBar from "../text-search-bar/searchBar"
-import { AuthContext } from "@/providers/auth/authProvider"
-import TablesLoader from "../tables-loader/tablesLoader"
-import { deleteResponse } from "./service/deleteResponse.service"
-import clsx from "clsx"
+} from "@/components/ui/dropdown-menu";
+
+import { Button } from "@/components/ui/button";
+import { MoreHorizontal, Eye, Download, Mail } from "lucide-react";
+import Link from "next/link";
+import { useContext, useState } from "react";
+import DeleteDialog from "@/components/deleteDialog/deleteDialog";
+import { toast } from "sonner";
+import { useFilter } from "./hook/useFilter";
+
+import { ICreatorResponses } from "@/app/(main)/creator/[name]/dashboard/types";
+import SearchBar from "../text-search-bar/searchBar";
+import { AuthContext } from "@/providers/auth/authProvider";
+import TablesLoader from "../tables-loader/tablesLoader";
+import { deleteResponse } from "./service/deleteResponse.service";
+import clsx from "clsx";
 
 interface IProps {
     responses: ICreatorResponses[]

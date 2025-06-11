@@ -1,9 +1,9 @@
 "use client"
 
-import {  Linkedin, Github, Mail } from "lucide-react"
-import Link from "next/link"
-import { motion } from "framer-motion"
-import Logo from "../header/logo"
+import {  Linkedin, Github, Mail } from "lucide-react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import Logo from "../header/logo";
 
 export default function Footer() {
     const currentYear = new Date().getFullYear()

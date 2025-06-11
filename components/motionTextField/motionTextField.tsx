@@ -13,10 +13,10 @@ import type { IStyle } from "@/@types"
 import { Checkbox } from "../ui/checkbox"
 
 type CustomTextFieldProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, "name"> & {
-  name: string
-  label?: string
-  isPassword?: boolean
-  style?: IStyle
+    name: string
+    label?: string
+    isPassword?: boolean
+    style?: IStyle
 }
 
 const CustomTextField: React.FC<CustomTextFieldProps> = ({

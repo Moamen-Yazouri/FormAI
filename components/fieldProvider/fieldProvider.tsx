@@ -1,9 +1,9 @@
 import { IFormField } from '@/@types'
-import React from 'react'
-import MotionedTextArea from '../motionTextarea/MotionTextarea'
-import MotionedSelect from '../motionedSelect/motionedSelect'
-import MotionedRadio from '../morionedRadio/MotionedRadio'
-import MotionField from '../motionTextField/motionTextField'
+import React from 'react';
+import MotionedTextArea from '../motionTextarea/MotionTextarea';
+import MotionedSelect from '../motionedSelect/motionedSelect';
+import MotionedRadio from '../morionedRadio/MotionedRadio';
+import MotionField from '../motionTextField/motionTextField';
 interface IProps {
     field: IFormField
 }

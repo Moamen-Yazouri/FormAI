@@ -3,7 +3,7 @@
 import type { IUserData } from "@/@types"
 import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { MoreVertical, Eye } from "lucide-react"
 import { useState } from "react"
 import { Badge } from "@/components/ui/badge"

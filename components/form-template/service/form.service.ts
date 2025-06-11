@@ -1,6 +1,6 @@
 import { IContextUser } from "@/@types";
 
-export const getForm = async(id: string, user: IContextUser) => {
+export const getForm = async(id: string) => {
     const localURL = process.env.NEXT_PUBLIC_URL;
     try {
         const formRes = await fetch(`${localURL}/api/get-form`,

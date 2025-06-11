@@ -1,4 +1,9 @@
-import { IUserForm, IUserFromDB, IFormPopulatedByCreator, IUserResponseTable, IResponsePopulatedUser, IUserResponseDetails, IFormTable } from "@/@types";
+import { 
+    IUserFromDB,   
+    IResponsePopulatedUser, 
+    IUserResponseDetails, 
+    IFormTable 
+} from "@/@types";
 import { getDateOnly } from "@/lib/dateUtils";
 
 import userRepo from "@/module/repositories/user.repo";

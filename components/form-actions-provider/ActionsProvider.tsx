@@ -1,10 +1,10 @@
-"use client"
-import { DropdownMenuItem } from "../ui/dropdown-menu"
-import { Eye, MessageSquare } from "lucide-react"
-import { AuthContext } from "@/providers/auth/authProvider"
-import { useContext } from "react"
-import Loader from "../app-sidebar/loader"
-import { useRouter } from "next/navigation"
+"use client";
+import { DropdownMenuItem } from "../ui/dropdown-menu";
+import { Eye, MessageSquare } from "lucide-react";
+import { AuthContext } from "@/providers/auth/authProvider";
+import { useContext } from "react";
+import Loader from "../app-sidebar/loader";
+import { useRouter } from "next/navigation";
 
 interface IProps {
     id: string

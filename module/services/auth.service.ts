@@ -6,8 +6,6 @@ import { comparePassword, hashPassword } from "@/lib/compareAndHash";
 import xss from "xss";
 import { generateToken } from "@/lib/generateAndVerifyToken";
 import { cookies } from "next/headers";
-import { getToken } from "@/lib/getToken";
-import { AccessRightsType } from "@/@types/access";
 import userService from "./user.service";
 
 class AuthService {

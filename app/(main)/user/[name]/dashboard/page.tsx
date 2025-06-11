@@ -40,6 +40,7 @@ interface IProps {
     params: Promise<{name: string}>
 }
 export default async function UserFormActivityPage(props: IProps) {
+    
     const name = decodeURIComponent((await props.params).name);
     const [
         responses,

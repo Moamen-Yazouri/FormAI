@@ -29,8 +29,6 @@ export const generateValidationScehma = (formData: IFormField[]) => {
         field.min && (validator = validator.min(field.min, `The min length is ${field.min}`));
         field.max && (validator = validator.max(field.max, `The max length is ${field.max}`));
         acc[field.fieldId.toLowerCase()] = validator;
-        // allowAnonymous && (acc["allowAnonymous"] = yup.boolean());
-        
         return acc;
     }, {} as Record<string, yup.Schema<any>>);
     return  yup.object(dynamicValidationSchema);

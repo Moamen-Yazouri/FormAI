@@ -27,7 +27,7 @@ const FormTemplate = (props: IProps) => {
 
   useEffect(() => {
     if (id && user) {
-      getForm(id, user)
+      getForm(id)
         .then((form) => {
           setData(form);
           setResponded(form.answeredBy.includes(user._id) || false);
