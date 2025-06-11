@@ -38,7 +38,6 @@ const useSignIn = () => {
                 _id: data.user._id
             }
             setUser(userForContext)
-            setTimeout(() => {
                 resetForm();
                 if(data.user.role === "creator") {
                     router.push("/form-generator");
@@ -46,7 +45,7 @@ const useSignIn = () => {
                 }
                 
                 else if(data.user.role === "user") {
-                    router.push("/");
+                    router.push(`/avai;able-forms/${data.user.name}`);
                     toast.dismiss();
                 }
 
@@ -54,7 +53,7 @@ const useSignIn = () => {
                     router.push("/admin/dashboard");
                     toast.dismiss();
                 }
-            }, 1000);
+            
         }
         catch(err) {
             if(err instanceof Error) {

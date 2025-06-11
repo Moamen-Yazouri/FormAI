@@ -46,8 +46,8 @@
 @layer base {
   :root {
     --radius: 0.625rem;
-    --background: oklch(0.98 0.01 240); /* bluish-light */
-    --foreground: oklch(0.2 0.02 250);  /* deep slate */
+    --background: oklch(0.98 0.01 240); 
+    --foreground: oklch(0.2 0.02 250);  
 
     --card: oklch(0.97 0.01 240);
     --card-foreground: oklch(0.2 0.02 250);
@@ -55,7 +55,7 @@
     --popover: oklch(0.97 0.01 240);
     --popover-foreground: oklch(0.2 0.02 250);
 
-    --primary: oklch(0.6 0.24 250); /* Indigo/Blue tone */
+    --primary: oklch(0.6 0.24 250); 
     --primary-foreground: oklch(0.98 0.01 240);
 
     --secondary: oklch(0.92 0.03 250);
@@ -93,7 +93,7 @@
   }
 
   .dark {
-    --background: oklch(0.1 0.02 250); /* deep indigo slate */
+    --background: oklch(0.1 0.02 250); 
     --foreground: oklch(0.95 0.01 240);
 
     --card: oklch(0.15 0.03 250);

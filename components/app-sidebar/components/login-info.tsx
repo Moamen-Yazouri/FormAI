@@ -1,14 +1,14 @@
 "use client"
 
 import { AuthContext } from "@/providers/auth/authProvider"
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import Loader from "../loader"
 import { SidebarFooter } from "@/components/ui/sidebar"
 import { Button } from "@/components/ui/button"
 import { LogOut } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useRouter } from "next/navigation"
-import LoadingPage from "@/components/loadingPage/loadingPage"
+
 
 const LoginInfo = () => {
   const { user, isLoading, revalidateUser } = useContext(AuthContext)

@@ -5,10 +5,11 @@ import {
   SidebarHeader,
   SidebarTrigger,
   useSidebar
-} from "@/components/ui/sidebar"
-import { Sparkles, Menu } from "lucide-react"
-import NavItemsProvider from "./navItemsProvider"
-import LoginInfo from "./components/login-info"
+} from "@/components/ui/sidebar";
+import { Sparkles, Menu } from "lucide-react";
+import NavItemsProvider from "./navItemsProvider";
+import LoginInfo from "./components/login-info";
+import Logo from "../header/logo";
 
 export default function AppSidebar() {
   const { isMobile } = useSidebar()
@@ -41,9 +42,7 @@ export default function AppSidebar() {
       >
         <SidebarHeader className="p-4 border-b !border-cyan-800/20 bg-gradient-to-r from-slate-800/40 to-cyan-800/40">
           <div className="flex items-center gap-2">
-            <div className="p-1 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-500 shadow-lg">
-              <Sparkles className="h-6 w-6 text-white" />
-            </div>
+            <Logo size={40}/>
             <span className="font-bold text-xl bg-gradient-to-r from-cyan-300 via-blue-300 to-sky-300 bg-clip-text text-transparent">
               FormAI
             </span>
