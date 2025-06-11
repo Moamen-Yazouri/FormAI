@@ -1,6 +1,13 @@
 "use client"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { 
+  Card, 
+  CardContent, 
+  CardDescription, 
+  CardHeader, 
+  CardTitle 
+} from "@/components/ui/card";
+
 import { 
   PieChart, 
   Pie, 
@@ -8,7 +15,7 @@ import {
   Tooltip, 
   Legend, 
   ResponsiveContainer 
-} from "recharts"
+} from "recharts";
 
 interface IFormResponseData {
   formId: string
@@ -20,7 +27,15 @@ interface IProps {
   formResponsesData: IFormResponseData[]
 }
 
-const COLORS = ["#06b6d4", "#3b82f6", "#6366f1", "#0ea5e9", "#2563eb", "#818cf8", "#7dd3fc"]
+const COLORS = [
+  "#06b6d4", 
+  "#3b82f6", 
+  "#6366f1", 
+  "#0ea5e9", 
+  "#2563eb", 
+  "#818cf8", 
+  "#7dd3fc"
+]
 
 const FormsDistribution = ({ formResponsesData }: IProps) => {
   const topForms = [...formResponsesData].sort((a, b) => b.responsesCount - a.responsesCount).slice(0, 5)

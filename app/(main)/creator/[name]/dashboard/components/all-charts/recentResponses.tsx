@@ -6,13 +6,12 @@ import {
   CardDescription,
   CardHeader,
   CardTitle
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   Avatar,
   AvatarFallback,
-  AvatarImage
-} from "@/components/ui/avatar"
-import { ICreatorResponses } from "../../types"
+} from "@/components/ui/avatar";
+import { ICreatorResponses } from "../../types";
 
 interface IProps {
   recentResponses: ICreatorResponses[]
@@ -66,4 +65,4 @@ const RecentResponses = ({ recentResponses }: IProps) => {
   )
 }
 
-export default RecentResponses
+export default RecentResponses;

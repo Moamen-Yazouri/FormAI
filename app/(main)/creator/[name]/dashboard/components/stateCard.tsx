@@ -1,7 +1,7 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { ArrowUpIcon, ArrowDownIcon, LucideProps } from 'lucide-react'
-import type { ForwardRefExoticComponent, ReactNode, RefAttributes } from "react"
-import React from "react"
+import { Card, CardContent } from "@/components/ui/card";
+import { ArrowUpIcon, ArrowDownIcon, LucideProps } from 'lucide-react';
+import type { ForwardRefExoticComponent, RefAttributes } from "react";
+import React from "react";
 
 interface IProps {
     stateTitle: string
@@ -11,7 +11,12 @@ interface IProps {
 }
 
 const StateCard = (props: IProps) => {
-    const { stateTitle, stateValue, statePercentage, icon } = props
+    const { 
+        stateTitle, 
+        stateValue, 
+        statePercentage, 
+        icon 
+    } = props;
     const isPositive = statePercentage >= 0
 
     return (

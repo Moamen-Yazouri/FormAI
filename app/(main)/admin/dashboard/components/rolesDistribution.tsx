@@ -1,14 +1,20 @@
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
-import { ChartTooltip } from '@/components/ui/chart'
-import { PieChart } from 'lucide-react'
-import React from 'react'
-import { ResponsiveContainer, Pie, Cell } from 'recharts'
+import { 
+    Card, 
+    CardHeader, 
+    CardTitle, 
+    CardDescription, 
+    CardContent 
+} from '@/components/ui/card';
+import { ChartTooltip } from '@/components/ui/chart';
+import { PieChart } from 'lucide-react';
+import React from 'react';
+import { ResponsiveContainer, Pie, Cell } from 'recharts';
 
 const RolesDistribution = () => {
     const formResponsesData = [
         {
             name: "Contact Form",
-            value: 145
+            value: 14
         },
         {
             name: "Job Application",

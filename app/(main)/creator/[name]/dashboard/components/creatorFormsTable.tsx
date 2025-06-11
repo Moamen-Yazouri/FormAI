@@ -1,7 +1,7 @@
 "use client"
 
-import FormsTable from "@/components/forms-table/formsTable"
-import { IFormTable } from "@/@types"
+import FormsTable from "@/components/forms-table/formsTable";
+import { IFormTable } from "@/@types";
 
 interface IProps {
     forms: IFormTable[];

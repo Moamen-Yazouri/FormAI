@@ -45,4 +45,4 @@ const page = async() => {
     )
 }
 
-export default page
+export default page;

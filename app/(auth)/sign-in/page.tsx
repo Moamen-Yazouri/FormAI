@@ -1,4 +1,4 @@
-import SignIn from "./components/signin-page"
+import SignIn from "./components/signin-page";
 
 export const metadata = {
     title: "Sign-In | FormAI",
@@ -39,9 +39,9 @@ export const metadata = {
 };
 
 const page = () => {
-  return (
-    <SignIn />
-  )
+    return (
+        <SignIn />
+    )
 }
 
 export default page

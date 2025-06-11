@@ -1,5 +1,6 @@
 import CreatorDashboard from '../dashboard/components/creatorDashboard';
 import FetchServices from '../dashboard/services/fetchData.service';
+
 export const metadata = {
     title: "Creator Dashboard | FormAI",
     description:
@@ -36,6 +37,7 @@ export const metadata = {
         charSet: "utf-8", 
     },
 };
+
 interface IProps {
   params: Promise<{name: string}>; 
 }

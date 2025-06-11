@@ -1,4 +1,4 @@
-import { IFormTable, IUserForm, IUserResponseDetails } from "@/@types";
+import { IFormTable } from "@/@types";
 import { connection } from "@/DB/connection";
 import dashboardService from "@/module/services/user/dashboard.service";
 import { toast } from "sonner";

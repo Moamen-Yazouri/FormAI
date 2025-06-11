@@ -6,7 +6,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   AreaChart,
   Area,
@@ -16,7 +16,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer
-} from "recharts"
+} from "recharts";
 
 interface ICreatorActivityData {
   date: string
@@ -46,11 +46,11 @@ const CreatorActivityChart = ({ creatorActivityData }: IProps) => {
             <AreaChart data={creatorActivityData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
               <defs>
                 <linearGradient id="formsGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#06b6d4" stopOpacity={0.6} /> {/* cyan-500 */}
+                  <stop offset="0%" stopColor="#06b6d4" stopOpacity={0.6} /> 
                   <stop offset="100%" stopColor="#06b6d4" stopOpacity={0.05} />
                 </linearGradient>
                 <linearGradient id="responsesGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.6} /> {/* blue-500 */}
+                  <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.6} /> 
                   <stop offset="100%" stopColor="#3b82f6" stopOpacity={0.05} />
                 </linearGradient>
               </defs>
@@ -68,13 +68,13 @@ const CreatorActivityChart = ({ creatorActivityData }: IProps) => {
               <YAxis stroke="#cbd5e1" tick={{ fontSize: 12, fill: "#cbd5e1" }} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "rgba(15, 23, 42, 0.95)", // slate-950
-                  borderColor: "rgba(6, 182, 212, 0.4)", // cyan-500
+                  backgroundColor: "rgba(15, 23, 42, 0.95)", 
+                  borderColor: "rgba(6, 182, 212, 0.4)", 
                   borderRadius: "0.5rem",
                   backdropFilter: "blur(8px)"
                 }}
-                labelStyle={{ color: "#67e8f9" }} // cyan-300
-                itemStyle={{ color: "#bae6fd" }} // cyan-100
+                labelStyle={{ color: "#67e8f9" }} 
+                itemStyle={{ color: "#bae6fd" }} 
               />
               <Legend wrapperStyle={{ color: "#67e8f9", fontSize: "14px", paddingTop: "8px" }} />
               <Area

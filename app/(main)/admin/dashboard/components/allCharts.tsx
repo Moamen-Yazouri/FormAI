@@ -1,9 +1,14 @@
-import React from 'react'
-import UserActivityChart from './charts/usersActivity'
-import FormCreationTrend from './charts/formCreationTrend'
-import FormsDistribution from './charts/formsDistribution'
-import { ActiveUsersCard } from './charts/latestUsers'
-import { IActiveUsers, IFormCreationData, IFormResponseData, IUsersActivityData } from '@/@types'
+import React from 'react';
+import UserActivityChart from './charts/usersActivity';
+import FormCreationTrend from './charts/formCreationTrend';
+import FormsDistribution from './charts/formsDistribution';
+import { ActiveUsersCard } from './charts/latestUsers';
+import { 
+    IActiveUsers, 
+    IFormCreationData, 
+    IFormResponseData, 
+    IUsersActivityData 
+} from '@/@types';
 interface IProps {
     userActivityData: IUsersActivityData[],
     formCreationData: IFormCreationData[],
@@ -16,7 +21,7 @@ const AllCharts = (props: IProps) => {
         formCreationData,
         formResponsesData,
         activeUsersData
-    } = props
+    } = props;
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <UserActivityChart userActivityData={userActivityData}/>

@@ -1,8 +1,8 @@
 "use client"
 
-import { Tabs, TabsContent } from "@/components/ui/tabs"
-import { Card, CardContent } from "@/components/ui/card"
-import useDashboard from "../hooks/useDahboard"
+import { Tabs, TabsContent } from "@/components/ui/tabs";
+import { Card, CardContent } from "@/components/ui/card";
+import useDashboard from "../hooks/useDahboard";
 import type {
     IFormTable,
     IFormCreationData,
@@ -10,15 +10,15 @@ import type {
     IUserData,
     IUsersActivityData,
     IActiveUsers,
-} from "@/@types"
-import FormsTable from "@/components/forms-table/formsTable"
-import AllTabs from "../components/allTabs"
-import { TABS } from "../constants/constants"
-import TabHeader from "../components/tabHeader"
-import AllCharts from "../components/allCharts"
-import AllCards from "../components/allStates"
-import DashboardHeader from "../components/dashboardHeader"
-import UsersTable from "@/components/user-table/userTable"
+} from "@/@types";
+import FormsTable from "@/components/forms-table/formsTable";
+import AllTabs from "../components/allTabs";
+import { TABS } from "../constants/constants";
+import TabHeader from "../components/tabHeader";
+import AllCharts from "../components/allCharts";
+import AllCards from "../components/allStates";
+import DashboardHeader from "../components/dashboardHeader";
+import UsersTable from "@/components/user-table/userTable";
 
 interface IProps {
     usersData: IUserData[]
@@ -46,7 +46,7 @@ const AdminDashboard = (props: IProps) => {
         <DashboardHeader />
 
         <div className="container mx-auto px-4 py-8">
-            {/* Dashboard Tabs */}
+
             <Tabs defaultValue="overview" className="space-y-6">
             <AllTabs tabs={TABS} />
 

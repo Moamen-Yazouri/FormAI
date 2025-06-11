@@ -1,6 +1,6 @@
-import { IFormTable } from '@/@types'
-import React from 'react'
-import fetchDataService from '../dashboard/services/fetchData.service'
+import { IFormTable } from '@/@types';
+import React from 'react';
+import fetchDataService from '../dashboard/services/fetchData.service';
 import FormsTable from '@/components/forms-table/formsTable';
 
 export const metadata = {

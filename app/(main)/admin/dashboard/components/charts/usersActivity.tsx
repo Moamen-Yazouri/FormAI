@@ -8,15 +8,15 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer
-} from "recharts"
+} from "recharts";
 import {
   Card,
   CardHeader,
   CardTitle,
   CardDescription,
   CardContent
-} from "@/components/ui/card"
-import { IUsersActivityData } from "@/@types"
+} from "@/components/ui/card";
+import { IUsersActivityData } from "@/@types";
 
 interface IProps {
   userActivityData: IUsersActivityData[]
@@ -41,22 +41,22 @@ const UserActivityChart = ({ userActivityData }: IProps) => {
               <XAxis
                 dataKey="name"
                 interval={0}
-                tick={{ fill: "#cbd5e1", fontSize: 12 }} // slate-300
+                tick={{ fill: "#cbd5e1", fontSize: 12 }} 
               />
               <YAxis tick={{ fill: "#cbd5e1", fontSize: 12 }} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "rgba(15, 23, 42, 0.95)", // slate-950
-                  borderColor: "rgba(59, 130, 246, 0.5)", // blue-500
+                  backgroundColor: "rgba(15, 23, 42, 0.95)", 
+                  borderColor: "rgba(59, 130, 246, 0.5)", 
                   borderRadius: "0.5rem",
                   backdropFilter: "blur(8px)"
                 }}
-                labelStyle={{ color: "#67e8f9" }} // cyan-300
-                itemStyle={{ color: "#bae6fd" }} // cyan-100
+                labelStyle={{ color: "#67e8f9" }} 
+                itemStyle={{ color: "#bae6fd" }} 
               />
               <Legend
                 wrapperStyle={{
-                  color: "#67e8f9", // cyan-300
+                  color: "#67e8f9", 
                   fontSize: "14px",
                   paddingTop: "8px"
                 }}
@@ -64,13 +64,13 @@ const UserActivityChart = ({ userActivityData }: IProps) => {
               <Bar
                 dataKey="new"
                 name="New Users"
-                fill="#06b6d4" // cyan-500
+                fill="#06b6d4" 
                 radius={[4, 4, 0, 0]}
               />
               <Bar
                 dataKey="active"
                 name="Active Users"
-                fill="#3b82f6" // blue-500
+                fill="#3b82f6" 
                 radius={[4, 4, 0, 0]}
               />
             </BarChart>

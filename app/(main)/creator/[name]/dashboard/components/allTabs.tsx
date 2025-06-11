@@ -1,5 +1,5 @@
-import { TabsList, TabsTrigger } from "@/components/ui/tabs"
-import type { ReactNode } from "react"
+import { TabsList, TabsTrigger } from "@/components/ui/tabs";
+import type { ReactNode } from "react";
 
 interface ITab {
     value: string

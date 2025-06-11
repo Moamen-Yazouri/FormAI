@@ -1,4 +1,4 @@
-import { IUser } from "@/@types";
+
 import { FormValues } from "./types";
 
 export const INITIAL_VALUES: FormValues= {
@@ -7,4 +7,4 @@ export const INITIAL_VALUES: FormValues= {
     password: "",
     confirmedPassword: "",
     role: "user",
-}
+};

@@ -1,10 +1,10 @@
 "use client"
 
-import { useState, useMemo, useEffect } from "react"
-import { ICreatorFormData, ICreatorResponses } from "../types"
-import { IFormTable } from "@/@types"
-import { generateStateCards } from "../utils/generateStateCards"
-import { summarizeForms, summarizeResponses } from "../utils/sliceAndSort"
+import { useState, useMemo, useEffect } from "react";
+import { ICreatorResponses } from "../types";
+import { IFormTable } from "@/@types";
+import { generateStateCards } from "../utils/generateStateCards";
+import { summarizeForms, summarizeResponses } from "../utils/sliceAndSort";
 
 interface IProps {
     formsData: IFormTable[]
@@ -73,4 +73,4 @@ const useCreatorDashboard = ({ formsData, responses }: IProps) => {
   }
 }
 
-export default useCreatorDashboard
+export default useCreatorDashboard;

@@ -4,7 +4,7 @@ import { FormValues } from "../types";
 import { INITIAL_VALUES } from "../constants";
 import { validationSchema } from "../validationSchema";
 import { toast } from "sonner";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { AuthContext } from "@/providers/auth/authProvider";
 import { IContextUser } from "@/@types";

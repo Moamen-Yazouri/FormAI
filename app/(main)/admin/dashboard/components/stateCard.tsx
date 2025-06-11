@@ -1,5 +1,10 @@
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
-import { Users, ArrowUpRight } from "lucide-react"
+import { 
+  Card, 
+  CardHeader, 
+  CardTitle, 
+  CardContent } 
+from "@/components/ui/card";
+import { Users, ArrowUpRight } from "lucide-react";
 
 interface IStateCard {
   stateTitle: string

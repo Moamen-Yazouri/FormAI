@@ -1,5 +1,5 @@
-import React from 'react'
-import StateCard from './stateCard'
+import React from 'react';
+import StateCard from './stateCard';
 interface IProps {
     cards: IStateCard[]
 }
