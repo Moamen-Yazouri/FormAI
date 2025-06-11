@@ -1,5 +1,6 @@
 import type React from "react"
 import Image from "next/image"
+import { redirect } from "next/navigation"
 
 interface LogoProps {
   size?: number
@@ -9,7 +10,10 @@ interface LogoProps {
 
 const Logo = ({ size = 120, className = "", showGlow = true }: LogoProps) => {
   return (
-    <div className={`flex items-center justify-center ${className}`}>
+    <div 
+      className={`flex items-center justify-center cursor-pointer ${className}`}
+      onClick={() => redirect("/")}
+    >
       <div className="relative">
 
         {showGlow && (
@@ -32,7 +36,7 @@ const Logo = ({ size = 120, className = "", showGlow = true }: LogoProps) => {
               alt="FormAI Logo"
               width={size - 8}
               height={size - 8}
-              className="object-cover rounded-full drop-shadow-lg"
+              className="object-cover rounded-full drop-shadow-lg "
               priority
             />
           </div>

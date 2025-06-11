@@ -1,6 +1,6 @@
 import { connection } from "@/DB/connection";
 import { toast } from "sonner";
-import { IAnsweredForms, IAvailableForms } from "../types";
+import { IAnsweredForms } from "../types";
 import dashboardService from "@/module/services/user/dashboard.service";
 import { IFormTable, IUserForm, IUserResponseDetails } from "@/@types";
 
@@ -46,7 +46,6 @@ class FetchDataService {
         try {
             const responsesDetails: IUserResponseDetails[] = await dashboardService.getUserResponsesDetails(username);
             if(responsesDetails.length == 0) {
-                toast.warning("You do not have answered any forms");
                 return [];
             }
             return responsesDetails
