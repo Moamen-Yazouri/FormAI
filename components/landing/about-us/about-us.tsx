@@ -1,38 +1,13 @@
-"use client"
-
-import { motion } from "framer-motion"
-import { Users, Target, Lightbulb, Award, ArrowRight, Sparkles } from "lucide-react"
-import { Card, CardContent } from "@/components/ui/card"
-import Image from "next/image"
+"use client";
+import { motion } from "framer-motion";
+import { ArrowRight, Sparkles } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import Image from "next/image";
+import { values } from "./constants";
 
 export default function AboutSection() {
-    const stats = [
-        { number: "10K+", label: "Active Users", icon: Users },
-        { number: "99.9%", label: "Uptime", icon: Target },
-        { number: "50M+", label: "Forms Created", icon: Lightbulb },
-        { number: "150+", label: "Countries", icon: Award },
-    ]
 
-    const values = [
-        {
-        icon: Lightbulb,
-        title: "Innovation First",
-        description: "We push the boundaries of what's possible with AI-powered form technology.",
-        gradient: "from-cyan-500 to-blue-600",
-        },
-        {
-        icon: Users,
-        title: "User-Centric",
-        description: "Every feature we build starts with understanding our users' real needs.",
-        gradient: "from-blue-500 to-sky-600",
-        },
-        {
-        icon: Target,
-        title: "Results Driven",
-        description: "We measure success by the conversion rates and insights our users achieve.",
-        gradient: "from-sky-500 to-cyan-600",
-        },
-    ]
+
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -128,24 +103,6 @@ export default function AboutSection() {
             </motion.div>
             </div>
 
-            <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20">
-            {stats.map((stat) => {
-                const Icon = stat.icon
-                return (
-                <motion.div key={stat.label} variants={itemVariants} className="text-center group">
-                    <div className="bg-slate-900/60 backdrop-blur-sm border border-cyan-600/30 rounded-xl p-6 hover:border-cyan-400 transition-all duration-300 group-hover:bg-slate-900/70">
-                    <Icon className="w-8 h-8 text-cyan-400 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300" />
-                    <div className="text-3xl font-bold text-white mb-2 group-hover:text-cyan-100 transition-colors duration-300">
-                        {stat.number}
-                    </div>
-                    <div className="text-slate-400 text-sm group-hover:text-slate-300 transition-colors duration-300">
-                        {stat.label}
-                    </div>
-                    </div>
-                </motion.div>
-                )
-            })}
-            </motion.div>
 
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="text-center mb-12">
             <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">Our Values</h3>

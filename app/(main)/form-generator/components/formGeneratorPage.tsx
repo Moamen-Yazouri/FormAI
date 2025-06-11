@@ -34,7 +34,7 @@ export default function FormGeneratorPage() {
     } = useFormGenerator()
 
     return (
-            <div className="min-h-screen w-full bg-gradient-to-r from-slate-900/60 via-blue-900/40 to-cyan-900/40 relative overflow-hidden flex flex-col">
+        <div className="min-h-screen w-full bg-gradient-to-r from-slate-900/60 via-blue-900/40 to-cyan-900/40 relative overflow-hidden flex flex-col">
 
 
             <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 via-indigo-900/30 to-cyan-900/40"></div>
@@ -82,7 +82,6 @@ export default function FormGeneratorPage() {
                 handleAddEmail={handleAddEmail}
                 handlePublishForm={handlePublishForm}
             />
-            </div>
-
+        </div>
     )
 }

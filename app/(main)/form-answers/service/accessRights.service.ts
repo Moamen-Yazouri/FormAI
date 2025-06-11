@@ -4,7 +4,7 @@ import { connection } from "@/DB/connection";
 import { getToken } from "@/lib/getToken"
 import formsService from "@/module/services/forms.service";
 
-export const  getAccessRights = async (formId: string, name: string): Promise<AccessRightsType> => {
+export const  getAccessRights = async (formId: string): Promise<AccessRightsType> => {
     const token = await getToken();
     if(!token) {
         return "unauthorized";

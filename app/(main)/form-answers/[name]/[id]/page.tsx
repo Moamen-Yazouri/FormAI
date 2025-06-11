@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { getFormAnswers } from '../../service/answers.service';
 import ResponsesTable from '@/components/responses-table/responsesTable';
 import { getAccessRights } from '../../service/accessRights.service';
@@ -48,7 +48,7 @@ interface IProps {
 const page = async(props: IProps) => {
     const {id, name} = await props.params;
     const validName = decodeURIComponent(name);
-    const access = await getAccessRights(id, name);
+    const access = await getAccessRights(id);
     handleAccess(access);
 
     const { answers} = await getFormAnswers(id, validName);

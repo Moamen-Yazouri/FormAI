@@ -60,13 +60,13 @@ export const FormDataFlow = ({ id = "form-data-flow", className = "h-full w-full
         this.y += this.speedY
         this.pulsePhase += 0.02
         if(!canvas) return
-        // Wrap around edges
+        
         if (this.x > canvas.width) this.x = 0
         if (this.x < 0) this.x = canvas.width
         if (this.y > canvas.height) this.y = 0
         if (this.y < 0) this.y = canvas.height
 
-        // Mouse interaction
+        
         const dx = mousePosition.x - this.x
         const dy = mousePosition.y - this.y
         const distance = Math.sqrt(dx * dx + dy * dy)
@@ -89,25 +89,25 @@ export const FormDataFlow = ({ id = "form-data-flow", className = "h-full w-full
 
         switch (this.type) {
           case "input":
-            // Draw input field
-            ctx.strokeStyle = "#22D3EE" // cyan-400
+            
+            ctx.strokeStyle = "#22D3EE" 
             ctx.lineWidth = 1
             ctx.strokeRect(this.x - 8, this.y - 3, 16, 6)
-            ctx.fillStyle = "#0891B2" // cyan-600
+            ctx.fillStyle = "#0891B2" 
             ctx.fillRect(this.x - 6, this.y - 1, 4, 2)
             break
 
           case "checkbox":
-            // Draw checkbox
-            ctx.strokeStyle = "#0EA5E9" // sky-500
+            
+            ctx.strokeStyle = "#0EA5E9" 
             ctx.lineWidth = 1
             ctx.strokeRect(this.x - 3, this.y - 3, 6, 6)
-            ctx.fillStyle = "#0284C7" // sky-600
+            ctx.fillStyle = "#0284C7" 
             ctx.fillRect(this.x - 1, this.y - 1, 2, 2)
             break
 
           case "select":
-            // Draw dropdown
+            
             ctx.strokeStyle = "#22D3EE" // cyan-400
             ctx.lineWidth = 1
             ctx.strokeRect(this.x - 6, this.y - 3, 12, 6)

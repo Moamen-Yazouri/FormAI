@@ -1,8 +1,12 @@
-import { IForm, IFormField } from "@/@types"
-import { AuthContext } from "@/providers/auth/authProvider"
-import mongoose from "mongoose"
-import { useContext, useRef, useState } from "react"
-import { toast } from "sonner"
+import { IForm, IFormField } from "@/@types";
+import { AuthContext } from "@/providers/auth/authProvider";
+import mongoose from "mongoose";
+import { 
+    useContext, 
+    useRef, 
+    useState 
+} from "react";
+import { toast } from "sonner";
 
 export const useFormGenerator = () => {
     const {user} = useContext(AuthContext);
