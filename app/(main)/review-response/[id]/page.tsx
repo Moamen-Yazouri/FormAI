@@ -6,7 +6,7 @@ import { handleAccess } from '@/lib/triggerCoventions';
 export const metadata = {
     title: "Review Response | FormAI",
     description:
-        "Powerful admin dashboard to oversee form submissions, manage users, and control platform settings in one centralized interface.",
+        "Review and analyze a specific response submitted to your form. Access detailed answers and insights with Form AI Builder.",
     keywords: [
         "review response",
         "view response",
@@ -19,7 +19,7 @@ export const metadata = {
     openGraph: {
         title: "Review Response | FormAI",
         description:
-        "Access the admin dashboard to manage users, forms, and platform activity. Monitor submissions, enforce policies, and maintain control over your application's operations.",
+        "Examine individual form submissions in detail. Review answers, assess input quality, and take action if needed.",
         url: "/review-response/[id]",
         siteName: "FormAI",
         images: ["/logo.png"],
@@ -31,7 +31,7 @@ export const metadata = {
         creator: "@Moamen-Yazouri",
         title: "Review Response | FormAI",
         description:
-            "Access the admin dashboard to manage users, forms, and platform activity. Monitor submissions, enforce policies, and maintain control over your application's operations.",
+            "Examine individual form submissions in detail. Review answers, assess input quality, and take action if needed.",
         images: ["/logo.png"],
     },
     other: {

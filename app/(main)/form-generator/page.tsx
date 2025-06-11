@@ -2,7 +2,7 @@ import FormGeneratorPage from './components/formGeneratorPage';
 export const metadata = {
     title: "Form Generator | FormAI",
     description:
-        "Powerful admin dashboard to oversee form submissions, manage users, and control platform settings in one centralized interface.",
+        "Build smart forms using our AI-powered generator. Customize layouts, set conditions, and launch dynamic forms in minutes.",
     keywords: [
         "generate forms",
         "build forms",
@@ -14,7 +14,7 @@ export const metadata = {
     openGraph: {
         title: "All forms | FormAI",
         description:
-        "Access the admin dashboard to manage users, forms, and platform activity. Monitor submissions, enforce policies, and maintain control over your application's operations.",
+            "Create intelligent, responsive forms with our AI-powered builder. Customize fields, logic, and design effortlessly.",
         url: "/form-generator",
         siteName: "FormAI",
         images: ["/logo.png"],
@@ -26,7 +26,7 @@ export const metadata = {
         creator: "@Moamen-Yazouri",
         title: "Form Generator | FormAI",
         description:
-            "Access the admin dashboard to manage users, forms, and platform activity. Monitor submissions, enforce policies, and maintain control over your application's operations.",
+            "Create intelligent, responsive forms with our AI-powered builder. Customize fields, logic, and design effortlessly.",
         images: ["/logo.png"],
     },
     other: {
@@ -36,9 +36,9 @@ export const metadata = {
 };
 
 const page = () => {
-  return (
-    <FormGeneratorPage />
-  )
+    return (
+        <FormGeneratorPage />
+    )
 }
 
 export default page;

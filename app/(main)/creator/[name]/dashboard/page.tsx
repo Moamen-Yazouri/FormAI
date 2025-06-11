@@ -3,7 +3,7 @@ import FetchServices from '../dashboard/services/fetchData.service';
 export const metadata = {
     title: "Creator Dashboard | FormAI",
     description:
-        "Powerful admin dashboard to oversee form submissions, manage users, and control platform settings in one centralized interface.",
+        "Access your creator dashboard to build new forms, view response metrics, and manage your published forms—all in one place.",
     keywords: [
         "creator management",
         "view creator forms",
@@ -16,7 +16,7 @@ export const metadata = {
     openGraph: {
         title: "Creator Dashboard | FormAI",
         description:
-        "Access the admin dashboard to manage users, forms, and platform activity. Monitor submissions, enforce policies, and maintain control over your application's operations.",
+          "Manage your forms, track response data, and build smarter user experiences with your personalized dashboard.",
         url: "/creator/[name]/dashboard",
         siteName: "FormAI",
         images: ["/logo.png"],
@@ -28,7 +28,7 @@ export const metadata = {
         creator: "@Moamen-Yazouri",
         title: "Creator Dashboard | FormAI",
         description:
-            "Access the admin dashboard to manage users, forms, and platform activity. Monitor submissions, enforce policies, and maintain control over your application's operations.",
+            "Manage your forms, track response data, and build smarter user experiences with your personalized dashboard.",
         images: ["/logo.png"],
     },
     other: {

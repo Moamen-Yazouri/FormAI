@@ -3,7 +3,7 @@ import fetchDataService from '../dashboard/service/fetchData.service';
 export const metadata = {
     title: "Responses Details | FormAI",
     description:
-        "Powerful admin dashboard to oversee form submissions, manage users, and control platform settings in one centralized interface.",
+        "Access all the responses you’ve submitted through Form AI Builder. Review your answers and track form participation history easily.",
     keywords: [
         "responses table",
         "view all responses",
@@ -16,7 +16,7 @@ export const metadata = {
     openGraph: {
         title: "Responses Details | FormAI",
         description:
-        "Access the admin dashboard to manage users, forms, and platform activity. Monitor submissions, enforce policies, and maintain control over your application's operations.",
+        "View and manage the responses you’ve submitted to forms. Keep track of your activity and submissions in one place.",
         url: "/user/[name]/responses-details",
         siteName: "FormAI",
         images: ["/logo.png"],
@@ -28,7 +28,7 @@ export const metadata = {
         creator: "@Moamen-Yazouri",
         title: "Responses Details | FormAI",
         description:
-            "Access the admin dashboard to manage users, forms, and platform activity. Monitor submissions, enforce policies, and maintain control over your application's operations.",
+            "View and manage the responses you’ve submitted to forms. Keep track of your activity and submissions in one place.",
         images: ["/logo.png"],
     },
     other: {

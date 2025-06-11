@@ -4,7 +4,7 @@ import ResponsesTable from '@/components/responses-table/responsesTable';
 export const metadata = {
     title: "Creator Forms Responses | FormAI",
     description:
-        "Powerful admin dashboard to oversee form submissions, manage users, and control platform settings in one centralized interface.",
+        "Access all responses submitted to your forms. Track feedback, export data, and extract insights using our intuitive AI-powered dashboard.",
     keywords: [
         "creator responses management",
         "view all responses",
@@ -16,7 +16,7 @@ export const metadata = {
     openGraph: {
         title: "All forms | FormAI",
         description:
-        "Access the admin dashboard to manage users, forms, and platform activity. Monitor submissions, enforce policies, and maintain control over your application's operations.",
+        "View and analyze responses submitted to your forms. Gain insights and manage data effortlessly with Form AI Builder.",
         url: "/creator/[name]/all-responses",
         siteName: "FormAI",
         images: ["/logo.png"],
@@ -28,7 +28,7 @@ export const metadata = {
         creator: "@Moamen-Yazouri",
         title: "Creator Forms Responses | FormAI",
         description:
-            "Access the admin dashboard to manage users, forms, and platform activity. Monitor submissions, enforce policies, and maintain control over your application's operations.",
+            "View and analyze responses submitted to your forms. Gain insights and manage data effortlessly with Form AI Builder.",
         images: ["/logo.png"],
     },
     other: {

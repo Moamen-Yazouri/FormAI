@@ -4,7 +4,7 @@ import { handleAccess } from "@/lib/triggerCoventions";
 export const metadata = {
     title: "Answer Form | FormAI",
     description:
-        "Powerful admin dashboard to oversee form submissions, manage users, and control platform settings in one centralized interface.",
+        "Answer AI-enhanced forms designed for speed and accuracy. Submit your responses with ease using Form AI Builder.",
     keywords: [
         "Answer Form",
     ],
@@ -13,7 +13,7 @@ export const metadata = {
     openGraph: {
         title: "Answer Form | FormAI",
         description:
-        "Access the admin dashboard to manage users, forms, and platform activity. Monitor submissions, enforce policies, and maintain control over your application's operations.",
+            "Fill out this AI-powered form to provide your input. Fast, responsive, and tailored to your needs.",
         url: "/answer-form/[id]",
         siteName: "FormAI",
         images: ["/logo.png"],
@@ -25,7 +25,7 @@ export const metadata = {
         creator: "@Moamen-Yazouri",
         title: "Answer Form | FormAI",
         description:
-            "Access the admin dashboard to manage users, forms, and platform activity. Monitor submissions, enforce policies, and maintain control over your application's operations.",
+            "Fill out this AI-powered form to provide your input. Fast, responsive, and tailored to your needs.",
         images: ["/logo.png"],
     },
     other: {
@@ -34,19 +34,19 @@ export const metadata = {
     },
 };
 interface IProps {
-  params: Promise<{id: string}>
+    params: Promise<{id: string}>
 }
 
 
 const AnswerFormPage = async (props: IProps) => {
-  const id = (await props.params).id;
-  const accessRight = await getAccessRights(id);
-  handleAccess(accessRight);
-  
-  return (
-    <FormTemplate id={id} isPreview={false}  isView={false}/>
+    const id = (await props.params).id;
+    const accessRight = await getAccessRights(id);
+    handleAccess(accessRight);
     
-  );
+    return (
+        <FormTemplate id={id} isPreview={false}  isView={false}/>
+
+    );
 };
 
 export default AnswerFormPage;

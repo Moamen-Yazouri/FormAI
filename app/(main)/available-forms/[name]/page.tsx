@@ -4,7 +4,7 @@ import FormsTable from '@/components/forms-table/formsTable';
 export const metadata = {
     title: "Available Forms | FormAI",
     description:
-        "Powerful admin dashboard to oversee form submissions, manage users, and control platform settings in one centralized interface.",
+        "Discover and access a wide range of available forms created using Form AI Builder. Join surveys, provide feedback, or submit responses easily.",
     keywords: [
         "view forms",
         "available forms",
@@ -15,7 +15,7 @@ export const metadata = {
     openGraph: {
         title: "Available Forms | FormAI",
         description:
-        "Access the admin dashboard to manage users, forms, and platform activity. Monitor submissions, enforce policies, and maintain control over your application's operations.",
+        "Explore all available forms created by the community. Browse, preview, and participate in AI-enhanced data collection.",
         url: "/available-forms/[name]",
         siteName: "FormAI",
         images: ["/logo.png"],
@@ -27,7 +27,7 @@ export const metadata = {
         creator: "@Moamen-Yazouri",
         title: "Available Forms | FormAI",
         description:
-            "Access the admin dashboard to manage users, forms, and platform activity. Monitor submissions, enforce policies, and maintain control over your application's operations.",
+            "Explore all available forms created by the community. Browse, preview, and participate in AI-enhanced data collection.",
         images: ["/logo.png"],
     },
     other: {
