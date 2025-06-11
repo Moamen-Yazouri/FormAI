@@ -1,5 +1,5 @@
-import { BarChart, FileText, Users } from "lucide-react"
-import { IStateCard } from "../types"
+import { BarChart, FileText, Users } from "lucide-react";
+import { IStateCard } from "../types";
 
 export const generateStateCards = (totalForms: number, totalResponses: number): IStateCard[] => {
     const stateCards: IStateCard[] = [

@@ -1,4 +1,4 @@
-import StateCard from "./stateCard"
+import StateCard from "./stateCard";
 
 interface IProps {
   cards: IStateCard[]

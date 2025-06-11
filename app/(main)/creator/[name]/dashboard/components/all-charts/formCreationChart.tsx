@@ -52,8 +52,8 @@ const FormCreationTrend = ({ formCreationData }: IProps) => {
               <YAxis tick={{ fontSize: 12, fill: "#cbd5e1" }} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "rgba(15, 23, 42, 0.95)", // slate-950
-                  borderColor: "rgba(6, 182, 212, 0.4)",     // cyan-500
+                  backgroundColor: "rgba(15, 23, 42, 0.95)", 
+                  borderColor: "rgba(6, 182, 212, 0.4)",     
                   borderRadius: "0.5rem",
                   backdropFilter: "blur(8px)",
                 }}
@@ -64,7 +64,7 @@ const FormCreationTrend = ({ formCreationData }: IProps) => {
               <Bar
                 dataKey="count"
                 name="Forms Created"
-                fill="#06b6d4" // cyan-500
+                fill="#06b6d4" 
                 radius={[4, 4, 0, 0]}
               />
             </BarChart>

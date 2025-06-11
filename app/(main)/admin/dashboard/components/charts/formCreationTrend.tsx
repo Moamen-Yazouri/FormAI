@@ -41,14 +41,14 @@ const FormCreationTrend = ({ formCreationData }: IProps) => {
                 <YAxis stroke="#94a3b8" tick={{ fontSize: 12, fill: "#94a3b8" }} />
                 <Tooltip
                     contentStyle={{
-                    backgroundColor: "rgba(15, 23, 42, 0.95)", // slate-950
-                    borderColor: "rgba(6, 182, 212, 0.5)", // cyan-500
+                    backgroundColor: "rgba(15, 23, 42, 0.95)", 
+                    borderColor: "rgba(6, 182, 212, 0.5)", 
                     borderRadius: "8px",
                     backdropFilter: "blur(8px)",
                     boxShadow: "0 10px 25px rgba(0, 0, 0, 0.3)",
                     }}
-                    labelStyle={{ color: "#67e8f9" }} // cyan-300
-                    itemStyle={{ color: "#bae6fd" }} // cyan-100
+                    labelStyle={{ color: "#67e8f9" }} 
+                    itemStyle={{ color: "#bae6fd" }} 
                     formatter={(value: number) => [value, "Forms Created"]}
                     labelFormatter={(label) => `Month: ${label}`}
                 />

@@ -1,4 +1,8 @@
-import { CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { 
+    CardDescription, 
+    CardHeader, 
+    CardTitle 
+} from "@/components/ui/card";
 
 interface IProps {
     title: string
@@ -8,8 +12,8 @@ interface IProps {
 const TabHeader = (props: IProps) => {
     return (
         <CardHeader>
-        <CardTitle>{props.title}</CardTitle>
-        <CardDescription>{props.description}</CardDescription>
+            <CardTitle>{props.title}</CardTitle>
+            <CardDescription>{props.description}</CardDescription>
         </CardHeader>
     )
 }

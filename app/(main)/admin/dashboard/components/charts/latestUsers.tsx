@@ -1,10 +1,16 @@
 "use client"
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Clock, FileText } from "lucide-react"
-import type { IActiveUsers } from "@/@types"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { 
+  Card, 
+  CardContent, 
+  CardDescription, 
+  CardHeader, 
+  CardTitle 
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Clock, FileText } from "lucide-react";
+import type { IActiveUsers } from "@/@types";
 
 interface IProps {
   activeUsers: IActiveUsers[]

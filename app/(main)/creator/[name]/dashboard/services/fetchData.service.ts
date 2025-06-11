@@ -1,6 +1,6 @@
 import { connection } from "@/DB/connection";
 import dashboardService from "@/module/services/creator/dashboard.service";
-import { ICreatorFormData, ICreatorResponses, IFormCreationData } from "../types";
+import { ICreatorResponses, IFormCreationData } from "../types";
 import { IFormTable } from "@/@types";
 
 class FetchServices {

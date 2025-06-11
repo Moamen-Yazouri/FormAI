@@ -5,6 +5,7 @@ import { INITIAL_VALUES } from "../constatnts";
 import { validationSchema } from "../validationSchema";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
+import { IUser } from "@/@types";
 
 const useSignIn = () => {
     const handleSignUp = async(
@@ -12,6 +13,10 @@ const useSignIn = () => {
         resetForm: () => void,
         setSubmitting: (isSubmitting: boolean) => void
     ) => {
+        const newUser: IUser = {
+            ...values,
+            lastActive: new Date(),
+        }
         try{
             const res = await fetch("/api/auth/sign-up",
                 {
@@ -19,7 +24,7 @@ const useSignIn = () => {
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify(values),
+                    body: JSON.stringify(newUser),
                 }
             )
 

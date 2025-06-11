@@ -1,5 +1,10 @@
-import { CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import React from 'react'
+import { 
+    CardHeader, 
+    CardTitle, 
+    CardDescription 
+} from '@/components/ui/card';
+
 interface IProps {
     title: string,
     description: string,
@@ -13,4 +18,4 @@ const TabHeader = (props: IProps) => {
     )
 }
 
-export default TabHeader
+export default TabHeader;
