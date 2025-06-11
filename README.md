@@ -49,3 +49,18 @@ SALT_ROUNDS=10
 SESSION_SECRET=your_session_secret
 NEXT_PUBLIC_URL=http://localhost:3000
 GEMINI_API_KEY=your_gemini_api_key
+
+🚀 Getting Started
+🔧 Install & Run Locally
+Copy
+# 1. Clone the repository
+git clone https://github.com/your-username/formai.git
+
+# 2. Navigate to the project folder
+cd formai
+
+# 3. Install dependencies
+npm install
+
+# 4. Start the development server
+npm run dev
