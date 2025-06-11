@@ -1,23 +1,30 @@
-import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Switch } from '@/components/ui/switch'
-import { Mail, X } from 'lucide-react'
-import React, { Dispatch, SetStateAction } from 'react'
+import { Button } from '@/components/ui/button';
+import { 
+    Dialog, 
+    DialogContent, 
+    DialogDescription, 
+    DialogFooter, 
+    DialogHeader, 
+    DialogTitle 
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
+import { Mail, X } from 'lucide-react';
+import React, { Dispatch, SetStateAction } from 'react';
 interface IProps {
     setIsPublic: Dispatch<SetStateAction<boolean>>,
     setAllowAnonymous: Dispatch<SetStateAction<boolean>>,
-    allowAnonymous: boolean,
     setShowPublishDialog: Dispatch<SetStateAction<boolean>>,
-    showPublishDialog: boolean,
     handleRemoveEmail: (emailToRemove: string) => void,
-    emails: string[],
-    emailError: string,
     handleAddEmail: () => void,
     handlePublishForm: () => Promise<void>,
-    isPublic: boolean,
     setEmail: Dispatch<SetStateAction<string>>,
+    showPublishDialog: boolean,
+    emails: string[],
+    emailError: string,
+    isPublic: boolean,
+    allowAnonymous: boolean,
     email: string,
 }
 const PublishDialog = (props: IProps) => {
