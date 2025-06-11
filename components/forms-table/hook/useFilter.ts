@@ -1,6 +1,5 @@
 "use client";
 import { IFormTable } from "@/@types";
-import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 export const useFilter = (forms: IFormTable[]) => {
