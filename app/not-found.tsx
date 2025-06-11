@@ -1,3 +1,4 @@
+"use client";
 import NotFoundPage from '@/components/404/notFound'
 
 const notFound = () => {
