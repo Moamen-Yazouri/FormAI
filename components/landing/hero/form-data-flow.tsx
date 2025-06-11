@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { useEffect, useRef, useState } from "react"
-import { useMousePosition } from "./hook/use-mouse-position"
+import { useEffect, useRef, useState } from "react";
+import { useMousePosition } from "./hook/use-mouse-position";
 
 interface FormDataFlowProps {
   id?: string

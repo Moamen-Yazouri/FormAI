@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import {  getNamePath, getPaths, getRoutePath } from "./routes/utils/handlePaths";
+import {  getNamePath, getRoutePath } from "./routes/utils/handlePaths";
 import { getToken } from "./lib/getToken";
 import { PageAccessName, protectedRoutes } from "./routes/types";
 import { routesAccess } from "./routes/pageAccessRights";
+
 export default async function middleware(req: NextRequest) {
     const fullPath: string = req.nextUrl.pathname;
     const routePath: PageAccessName = getRoutePath(fullPath);

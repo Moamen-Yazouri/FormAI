@@ -1,14 +1,19 @@
-"use client"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Loader2, Menu, ChevronDown } from "lucide-react"
-import { useContext, useState } from "react"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import { motion } from "framer-motion"
-import { AuthContext } from "@/providers/auth/authProvider"
-import { useRouter } from "next/navigation"
-import Logo from "./logo"
-import { navItems } from "./constants"
+"use client";
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuTrigger 
+} from "@/components/ui/dropdown-menu";
+import { Loader2, Menu, ChevronDown } from "lucide-react";
+import { useContext, useState } from "react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { AuthContext } from "@/providers/auth/authProvider";
+import { useRouter } from "next/navigation";
+import Logo from "./logo";
+import { navItems } from "./constants";
 
 const Header = () => {
   const { user, isLoading } = useContext(AuthContext)

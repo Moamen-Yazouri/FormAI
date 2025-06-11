@@ -2,7 +2,6 @@
 import { UserRoles } from "@/@types";
 import { JwtPayload } from "jsonwebtoken";
 import { SignJWT, jwtVerify } from "jose";
-import { cookies } from "next/headers";
 const secretKey = process.env.SESSION_SECRET;
 const encodedKey = new TextEncoder().encode(secretKey);
 export interface ITokenPayload extends JwtPayload {

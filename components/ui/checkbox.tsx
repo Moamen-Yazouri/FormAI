@@ -13,22 +13,18 @@ function Checkbox({
     <CheckboxPrimitive.Root
       data-slot="checkbox"
       className={cn(
-        // Base shape & layout
+        
         "size-4 shrink-0 rounded-[4px] border transition-shadow shadow-xs outline-none",
 
-        // Background & border (dark-friendly)
         "bg-slate-950 border-slate-700",
 
-        // Checked state
         "data-[state=checked]:bg-cyan-500 data-[state=checked]:border-cyan-500 data-[state=checked]:text-white",
 
-        // Focus ring
         "focus-visible:ring-2 focus-visible:ring-cyan-500/40 focus-visible:border-cyan-500",
 
-        // Error state (aria-invalid)
+        
         "aria-invalid:border-red-500 dark:aria-invalid:ring-red-600/30",
 
-        // Disabled state
         "disabled:cursor-not-allowed disabled:opacity-50",
 
         className

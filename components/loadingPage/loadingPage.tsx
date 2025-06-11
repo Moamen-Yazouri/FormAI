@@ -1,7 +1,7 @@
 "use client"
 
-import { FileText } from "lucide-react"
-import { useEffect, useState } from "react"
+import { FileText } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export default function LoadingPage() {
   const [rotation, setRotation] = useState(0)
@@ -17,11 +17,11 @@ export default function LoadingPage() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center relative overflow-hidden">
-      {/* Gradient Background Layer */}
+      
       <div className="absolute inset-0 -z-10 bg-gradient-to-br from-slate-950 via-blue-950 to-cyan-950 animate-gradient-x opacity-90" />
       <div className="absolute inset-0 bg-grid-white/[0.02] -z-10" />
 
-      {/* Loader */}
+      
       <div className="relative w-24 h-24 mb-8">
         <div
           className="absolute inset-0 rounded-full border-4 border-t-blue-800 border-r-indigo-700 border-b-cyan-500 border-l-slate-200"
@@ -47,7 +47,7 @@ export default function LoadingPage() {
         ))}
       </div>
 
-      {/* Branding */}
+      
       <div className="flex items-center gap-2">
         <FileText className="h-6 w-6 text-cyan-500" />
         <span className="text-2xl font-bold text-slate-200">FormAI</span>
