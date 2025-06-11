@@ -1,9 +1,9 @@
 import React from 'react'
-import Forbidden from '../forbidden'
+import ForbiddenPage from '@/components/forbidden/forbiddenPage'
 
 const page = () => {
     return (
-        <Forbidden />
+        <ForbiddenPage />
     )
 }
 

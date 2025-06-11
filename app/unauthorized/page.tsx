@@ -1,9 +1,8 @@
-import React from 'react'
-import Unauthorized from '../unauthorized'
+import UnauthorizedPage from '@/components/unauthorizedPage/unauthorizedPage'
 
 const page = () => {
     return (
-        <Unauthorized />
+        <UnauthorizedPage />
     )
 }
 
