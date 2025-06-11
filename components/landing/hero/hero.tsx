@@ -1,23 +1,35 @@
 "use client" 
-import {useEffect, useState} from "react"
+import {useContext, useEffect, useState} from "react"
 import {ArrowRight, Sparkles, Zap, Bot} from "lucide-react"
 import {motion} from "framer-motion"
 import {FormDataFlow} from "../hero/form-data-flow"
 import {FloatingFormElements} from "../hero/floating-form-elements"
 import {ContainerTextFlip} from "@/components/ui/container-text-flip"
-import {TextGenerateEffect} from "@/components/ui/text-gemerate-effect"
 import Image from "next/image"
+import { AuthContext } from "@/providers/auth/authProvider"
+import { useRouter } from "next/navigation"
 
 export default function EnhancedHero() {
-    const [hasMounted, setHasMounted] = useState(false)
-
+    const [hasMounted, setHasMounted] = useState(false);
+    const {user} = useContext(AuthContext);
+    const router = useRouter();
     useEffect(() => {
         setHasMounted(true)
-    }, [])
+    }, []);
 
+    if(!user) return;
+
+    const handleStart = () => {
+        if(user) {
+            router.push("/form-generator")
+        } 
+        else {
+            router.push("/sign-in")
+        }
+    }
     return (
         <div className="bg-slate-950 relative overflow-hidden pt-20 pb-10">
-            {/* Background Effects Layer */}
+            
             <div className="absolute inset-0 z-0">
                 <div className="absolute inset-0 bg-gradient-to-br from-cyan-900/60 via-blue-900/50 to-sky-900/60 -z-10"></div>
                 <div className="absolute inset-0 bg-grid-white/[0.02] -z-10"/>
@@ -26,7 +38,7 @@ export default function EnhancedHero() {
                 <div className="absolute top-1/2 left-1/2 w-48 h-48 bg-gradient-to-t from-blue-600/25 to-cyan-600/25 rounded-full blur-2xl transform -translate-x-1/2 -translate-y-1/2 animate-pulse [animation-delay:2s] -z-10"/>
             </div>
 
-            {/* Hydration-safe interactive elements */}
+            
             {
             hasMounted && (
                 <div className="absolute inset-0 z-0 pointer-events-none">
@@ -36,7 +48,7 @@ export default function EnhancedHero() {
             )
         }
 
-            {/* Content */}
+        
             <section className="relative py-8 md:py-12 w-full z-10">
                 <div className="relative w-full max-w-7xl mx-auto px-6">
                     <div className="flex flex-col lg:flex-row items-center gap-12">
@@ -157,7 +169,10 @@ export default function EnhancedHero() {
                                     }
                                 }
                                 className="flex flex-col sm:flex-row items-center lg:justify-start justify-center gap-4 w-full max-w-md mx-auto lg:mx-0">
-                                <button className="group bg-gradient-to-r from-cyan-600 via-blue-600 to-sky-600 hover:from-cyan-500 hover:via-blue-500 hover:to-sky-500 text-white px-8 py-3 rounded-lg font-medium shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 w-full sm:w-auto relative overflow-hidden">
+                                <button 
+                                    className="group bg-gradient-to-r from-cyan-600 via-blue-600 to-sky-600 hover:from-cyan-500 hover:via-blue-500 hover:to-sky-500 text-white px-8 py-3 rounded-lg font-medium shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 w-full sm:w-auto relative overflow-hidden"
+                                    onClick={handleStart}
+                                >
                                     <span className="relative z-10 flex items-center justify-center">
                                         <Bot className="mr-2 h-4 w-4"/>
                                         Start Building
@@ -192,18 +207,6 @@ export default function EnhancedHero() {
                                     }
                                 }
                                 className="flex items-center justify-center lg:justify-start gap-8 mt-12 text-sm text-slate-400">
-                                <div className="text-center">
-                                    <div className="text-2xl font-bold text-white">10K+</div>
-                                    <div>Forms created</div>
-                                </div>
-                                <div className="text-center">
-                                    <div className="text-2xl font-bold text-white">99.9%</div>
-                                    <div>Uptime</div>
-                                </div>
-                                <div className="text-center">
-                                    <div className="text-2xl font-bold text-white">24/7</div>
-                                    <div>AI Support</div>
-                                </div>
                             </motion.div>
                         </motion.div>
 
@@ -225,14 +228,16 @@ export default function EnhancedHero() {
                                     delay: 0.4
                                 }
                             }
-                            className="flex-1 relative w-full group">
+                            className="flex-1 relative w-full group flex items-center justify-center">
                             <div className="absolute inset-0 -z-10 bg-gradient-to-b from-cyan-900/20 via-blue-900/20 to-sky-900/20 rounded-3xl blur-3xl animate-pulse"></div>
 
-                            <div className="relative rounded-xl border border-cyan-700/30 shadow-[0_0_50px_-12px] shadow-cyan-700/30 transition-all duration-500 group-hover:shadow-[0_0_80px_-6px] group-hover:shadow-sky-700/40 group-hover:border-cyan-600/50">
+                            <div className="relative w-fit rounded-xl border border-cyan-700/30 shadow-[0_0_50px_-12px] shadow-cyan-700/30 transition-all duration-500 group-hover:shadow-[0_0_80px_-6px] group-hover:shadow-sky-700/40 group-hover:border-cyan-600/50">
                                 <div className="absolute inset-0 bg-gradient-to-br from-cyan-800/5 to-sky-800/5 rounded-xl"></div>
                                 <Image src="/hero.png" alt="Hero Section" className="rounded-xl ring-1 ring-cyan-700/20 relative z-10 object-cover"
                                     width={600}
-                                    height={400}/>
+                                    height={400}
+                                    loading="lazy"
+                                />
 
                                 <div className="absolute top-4 right-4 bg-slate-900/80 backdrop-blur-sm rounded-lg p-3 border border-cyan-700/20 z-20">
                                     <div className="flex items-center gap-2">

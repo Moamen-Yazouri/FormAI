@@ -6,7 +6,7 @@ import { AuthProvider } from "@/providers/auth/authProvider";
 
 
 export const metadata: Metadata = {
-  title: "FormAI AI forms builder",
+  title: "FormAI | AI Forms Builder",
   description: "Build smart forms effortlessly with AI assistance. Create, customize, and deploy intelligent forms with automated responses and data collection.",
   icons: {
     icon: "/public/logo.png"

@@ -4,10 +4,21 @@ import { ArrowRight, Sparkles } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 import { values } from "./constants";
+import { AuthContext } from "@/providers/auth/authProvider";
+import { useContext } from "react";
+import { useRouter } from "next/navigation";
 
 export default function AboutSection() {
-
-
+    const {user} = useContext(AuthContext);
+    const router = useRouter();
+    const handleStart = () => {
+        if(user) {
+            router.push("/form-generator")
+        } 
+        else {
+            router.push("/sign-in")
+        }
+    }
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -90,7 +101,7 @@ export default function AboutSection() {
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
                     <div className="absolute bottom-6 left-6 right-6 grid grid-cols-2 gap-4">
                     <div className="bg-slate-900/80 backdrop-blur-sm rounded-lg p-3 border border-cyan-600/20">
-                        <div className="text-cyan-400 font-bold text-lg">2023</div>
+                        <div className="text-cyan-400 font-bold text-lg">2025</div>
                         <div className="text-slate-300 text-sm">Founded</div>
                     </div>
                     <div className="bg-slate-900/80 backdrop-blur-sm rounded-lg p-3 border border-cyan-600/20">
@@ -135,7 +146,12 @@ export default function AboutSection() {
             </motion.div>
 
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="text-center">
-            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="group bg-gradient-to-r from-cyan-600 via-blue-600 to-sky-600 hover:from-cyan-500 hover:via-blue-500 hover:to-sky-500 text-white px-8 py-4 rounded-lg font-medium shadow-xl hover:shadow-2xl transition-all duration-300 relative overflow-hidden">
+            <motion.button 
+                whileHover={{ scale: 1.05 }} 
+                whileTap={{ scale: 0.95 }} 
+                className="group bg-gradient-to-r from-cyan-600 via-blue-600 to-sky-600 hover:from-cyan-500 hover:via-blue-500 hover:to-sky-500 text-white px-8 py-4 rounded-lg font-medium shadow-xl hover:shadow-2xl transition-all duration-300 relative overflow-hidden"
+                onClick={handleStart}
+            >
                 <span className="relative z-10 flex items-center">
                 Join Our Journey
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
