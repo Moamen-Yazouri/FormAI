@@ -1,5 +1,4 @@
 "use client"
-
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Loader2, Menu, ChevronDown } from "lucide-react"
 import { useContext, useState } from "react"
@@ -9,6 +8,7 @@ import { motion } from "framer-motion"
 import { AuthContext } from "@/providers/auth/authProvider"
 import { useRouter } from "next/navigation"
 import Logo from "./logo"
+import { navItems } from "./constants"
 
 const Header = () => {
   const { user, isLoading } = useContext(AuthContext)
@@ -20,19 +20,13 @@ const Header = () => {
     router.push("/sign-in")
   }
 
-  const navItems = [
-    { name: "Features", href: "#features" },
-    { name: "How It Works", href: "#how-it-works" },
-    { name: "Pricing", href: "#pricing" },
-  ]
-
   return (
     <header
       className="
       sticky top-2 z-50 w-[99%] max-w-[1600px] mx-auto rounded-xl p-2 border 
         border-cyan-400/20 shadow-xl backdrop-blur-lg overflow-hidden"
     >
-      {/* Background gradients - removed the black bg */}
+      
       <div className="absolute inset-0 bg-gradient-to-br from-cyan-900/60 via-blue-900/50 to-sky-900/60"></div>
       <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-cyan-600/30 to-blue-600/30 rounded-full blur-xl -translate-x-16 -translate-y-16"></div>
       <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-sky-600/30 to-cyan-600/30 rounded-full blur-xl translate-x-20 -translate-y-20"></div>
@@ -67,7 +61,7 @@ const Header = () => {
         </nav>
 
         <div className="flex items-center gap-4">
-          {user ? (
+          {user  ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild className="cursor-pointer">
                 <Button
@@ -107,16 +101,25 @@ const Header = () => {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Link
-              href="/sign-in"
-              className="text-sm font-medium text-slate-300 hover:text-cyan-300 transition-all duration-200 hover:scale-105 px-4 py-2"
-            >
-              {isLoading ? <Loader2 className="animate-spin text-cyan-400" /> : "Login"}
-            </Link>
+            <>
+              <Link
+                href="/sign-in"
+                className="text-sm font-medium text-slate-300 hover:text-cyan-300 transition-all duration-200 hover:scale-105 px-4 py-2"
+              >
+                {isLoading ? <Loader2 className="animate-spin text-cyan-400" /> : "Login"}
+              </Link>
+              {
+                !isLoading && (
+                  <Button 
+                    className="bg-gradient-to-r from-cyan-600 via-blue-600 to-sky-600 hover:from-cyan-500 hover:via-blue-500 hover:to-sky-500 text-white shadow-xl hover:shadow-cyan-900/20 transition-all duration-300 hover:scale-105 border-0 ring-1 ring-cyan-500/30"
+                    onClick={() => router.push("/sign-up")}
+                  >
+                    Get Started
+                  </Button>
+                )
+              }
+            </>
           )}
-          <Button className="bg-gradient-to-r from-cyan-600 via-blue-600 to-sky-600 hover:from-cyan-500 hover:via-blue-500 hover:to-sky-500 text-white shadow-xl hover:shadow-cyan-900/20 transition-all duration-300 hover:scale-105 border-0 ring-1 ring-cyan-500/30">
-            Get Started
-          </Button>
         </div>
 
         <Button
