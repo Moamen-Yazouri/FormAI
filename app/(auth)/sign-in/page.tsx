@@ -3,7 +3,7 @@ import SignIn from "./components/signin-page"
 export const metadata = {
     title: "Sign-In | FormAI",
     description:
-        "Powerful admin dashboard to oversee form submissions, manage users, and control platform settings in one centralized interface.",
+        "Sign in to your Form AI Builder account and take control of your intelligent forms. Secure and seamless access to your dashboard.",
     keywords: [
         "Login",
         "signin",
@@ -17,7 +17,7 @@ export const metadata = {
     openGraph: {
         title: "Sign-In | FormAI",
         description:
-        "Access the admin dashboard to manage users, forms, and platform activity. Monitor submissions, enforce policies, and maintain control over your application's operations.",
+        "Access your Form AI Builder account to create, manage, and analyze smart forms powered by AI.",
         url: "/sign-in",
         siteName: "FormAI",
         images: ["/logo.png"],
@@ -29,7 +29,7 @@ export const metadata = {
         creator: "@Moamen-Yazouri",
         title: "Sign-In | FormAI",
         description:
-            "Access the admin dashboard to manage users, forms, and platform activity. Monitor submissions, enforce policies, and maintain control over your application's operations.",
+            "Access your Form AI Builder account to create, manage, and analyze smart forms powered by AI.",
         images: ["/logo.png"],
     },
     other: {

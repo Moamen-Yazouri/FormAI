@@ -2,7 +2,7 @@ import ProfilePage from "../components/profile-Page";
 export const metadata = {
     title: "Profile | FormAI",
     description:
-        "Powerful admin dashboard to oversee form submissions, manage users, and control platform settings in one centralized interface.",
+        "Manage your account settings. Edit your profile information and update your password securely with Form AI Builder.",
     keywords: [
         "profile",
         "account",
@@ -17,7 +17,7 @@ export const metadata = {
     openGraph: {
         title: "Profile | FormAI",
         description:
-        "Access the admin dashboard to manage users, forms, and platform activity. Monitor submissions, enforce policies, and maintain control over your application's operations.",
+        "Update your personal information and change your password securely. Manage your account settings with ease.",
         url: "/profile/[name]",
         siteName: "FormAI",
         images: ["/logo.png"],
@@ -29,7 +29,7 @@ export const metadata = {
         creator: "@Moamen-Yazouri",
         title: "Profile | FormAI",
         description:
-            "Access the admin dashboard to manage users, forms, and platform activity. Monitor submissions, enforce policies, and maintain control over your application's operations.",
+            "Update your personal information and change your password securely. Manage your account settings with ease.",        
         images: ["/logo.png"],
     },
     other: {

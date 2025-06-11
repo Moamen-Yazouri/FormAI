@@ -3,7 +3,7 @@ import SignUp from "./components/signup-form/signup-page";
 export const metadata = {
     title: "Sign-Up | FormAI",
     description:
-        "Powerful admin dashboard to oversee form submissions, manage users, and control platform settings in one centralized interface.",
+        "Sign up for Form AI Builder to unlock powerful tools for creating, sharing, and analyzing intelligent forms tailored to your business needs.",
     keywords: [
         "signup",
         "sign-up",
@@ -15,7 +15,7 @@ export const metadata = {
     openGraph: {
         title: "Sign-Up | FormAI",
         description:
-        "Access the admin dashboard to manage users, forms, and platform activity. Monitor submissions, enforce policies, and maintain control over your application's operations.",
+        "Create your Form AI Builder account and start building intelligent, dynamic forms powered by AI.",
         url: "/sign-up",
         siteName: "FormAI",
         images: ["/logo.png"],
@@ -27,7 +27,7 @@ export const metadata = {
         creator: "@Moamen-Yazouri",
         title: "Sign-Up | FormAI",
         description:
-            "Access the admin dashboard to manage users, forms, and platform activity. Monitor submissions, enforce policies, and maintain control over your application's operations.",
+            "Create your Form AI Builder account and start building intelligent, dynamic forms powered by AI.",
         images: ["/logo.png"],
     },
     other: {

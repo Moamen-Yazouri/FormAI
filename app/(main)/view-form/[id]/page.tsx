@@ -4,7 +4,7 @@ import { getAccessRights } from '../service/accessRight.service';
 export const metadata = {
     title: "View Form | FormAI",
     description:
-        "Powerful admin dashboard to oversee form submissions, manage users, and control platform settings in one centralized interface.",
+        "Review the layout, logic, and content of your form as a creator or admin. Ensure everything is correct before sharing or analyzing responses.",
     keywords: [
         "See Form",
         "view form",
@@ -17,7 +17,7 @@ export const metadata = {
     openGraph: {
         title: "View Forms | FormAI",
         description:
-        "Access the admin dashboard to manage users, forms, and platform activity. Monitor submissions, enforce policies, and maintain control over your application's operations.",
+            "Preview and inspect the structure of your form. Ensure accuracy, logic, and design before publishing or reviewing responses.",
         url: "/view-forms/[id]",
         siteName: "FormAI",
         images: ["/logo.png"],
@@ -29,7 +29,7 @@ export const metadata = {
         creator: "@Moamen-Yazouri",
         title: "View Forms | FormAI",
         description:
-            "Access the admin dashboard to manage users, forms, and platform activity. Monitor submissions, enforce policies, and maintain control over your application's operations.",
+            "Preview and inspect the structure of your form. Ensure accuracy, logic, and design before publishing or reviewing responses.",
         images: ["/logo.png"],
     },
     other: {

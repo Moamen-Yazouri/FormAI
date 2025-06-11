@@ -4,7 +4,7 @@ import { getCreatorForms } from '../service/fetchData.service';
 export const metadata = {
     title: "My Forms | FormAI",
     description:
-        "Powerful admin dashboard to oversee form submissions, manage users, and control platform settings in one centralized interface.",
+        "Access and manage all your forms in one place. Edit, share, or analyze form performance with the Form AI Builder page.",
     keywords: [
         "creator forms",
         "admin forms",
@@ -16,7 +16,7 @@ export const metadata = {
     openGraph: {
         title: "My Forms | FormAI",
         description:
-        "Access the admin dashboard to manage users, forms, and platform activity. Monitor submissions, enforce policies, and maintain control over your application's operations.",
+        "View and manage all the forms you’ve created. Edit, duplicate, or track performance from one centralized page.",
         url: "/my-forms/[name]",
         siteName: "FormAI",
         images: ["/logo.png"],
@@ -28,7 +28,7 @@ export const metadata = {
         creator: "@Moamen-Yazouri",
         title: "My Forms | FormAI",
         description:
-            "Access the admin dashboard to manage users, forms, and platform activity. Monitor submissions, enforce policies, and maintain control over your application's operations.",
+            "View and manage all the forms you’ve created. Edit, duplicate, or track performance from one centralized page.",
         images: ["/logo.png"],
     },
     other: {

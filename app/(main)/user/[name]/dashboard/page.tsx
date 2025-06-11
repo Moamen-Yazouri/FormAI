@@ -3,7 +3,7 @@ import fetchDataService from "./service/fetchData.service";
 export const metadata = {
     title: "User Dashboard | FormAI",
     description:
-        "Powerful admin dashboard to oversee form submissions, manage users, and control platform settings in one centralized interface.",
+        "Your personal dashboard to manage form submissions, update profile settings, and monitor your activity across Form AI Builder.",
     keywords: [
         "user management",
         "user responses",
@@ -16,7 +16,7 @@ export const metadata = {
     openGraph: {
         title: "User Dashboard | FormAI",
         description:
-        "Access the admin dashboard to manage users, forms, and platform activity. Monitor submissions, enforce policies, and maintain control over your application's operations.",
+            "Access your dashboard to view submitted forms, manage account settings, and track your activity in one place.",
         url: "/user/[name]",
         siteName: "FormAI",
         images: ["/logo.png"],
@@ -28,7 +28,7 @@ export const metadata = {
         creator: "@Moamen-Yazouri",
         title: "User Dashboard | FormAI",
         description:
-            "Access the admin dashboard to manage users, forms, and platform activity. Monitor submissions, enforce policies, and maintain control over your application's operations.",
+            "Access your dashboard to view submitted forms, manage account settings, and track your activity in one place.",
         images: ["/logo.png"],
     },
     other: {
