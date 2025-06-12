@@ -25,7 +25,7 @@ const Header = () => {
     router.push("/sign-in")
   }
 
-  if(!user) return;
+  if(!user) return null;
 
   const handleDashboard = () => {
       user.role === "admin"
