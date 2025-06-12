@@ -19,7 +19,8 @@ export const generateToken = async (
                     .setProtectedHeader({ alg: "HS256" })
                     .setIssuedAt()
                     .setExpirationTime(expirationTime)
-    const token = await t.sign(encodedKey);
+    const token = await t.sign(encodedKey); 
+
     return token;
 }
 

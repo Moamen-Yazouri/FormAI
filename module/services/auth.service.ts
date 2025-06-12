@@ -5,6 +5,8 @@ import authRepo from "../repositories/auth.repo";
 import { comparePassword, hashPassword } from "@/lib/compareAndHash";
 import xss from "xss";
 import { generateToken } from "@/lib/generateAndVerifyToken";
+import { cookies } from "next/headers";
+import userService from "./user.service";
 
 class AuthService {
     async signUp(user: IUser) {
@@ -26,6 +28,7 @@ class AuthService {
             password: hashedPass,
             name: xss(user.name),
             role: user.role,
+            lastActive: new Date(),
         }
 
         const newUser = await authRepo.createUser(data);
@@ -48,12 +51,25 @@ class AuthService {
         if(!isMatch) {
             throw new Error("Invalid credentials");
         }
-
-        const token = await generateToken({email: user.email, userId: user._id, name: user.name, role: user.role});
+        const payload = {
+            email: user.email,
+            userId: String(user._id),
+            name: user.name,
+            role: user.role
+        }
+        
+        const token = await generateToken(payload);
+        (await cookies()).set("auth-token", token, {
+            httpOnly: true,
+            secure: true,
+            expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+        });
+        await userService.updateLastActive(user._id, new Date());
         return {
             user,
             token,
         };
-    }   
+    }
+    
 }
 export default new AuthService();

@@ -10,15 +10,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body>
-        <SidebarProvider>
-          <div className="flex min-h-screen">
-            <AppSidebar />
-            <main className="flex-1">{children}</main>
-          </div>
+
+        <SidebarProvider className="w-full">
+              <AppSidebar />
+          {children}
         </SidebarProvider>
-      </body>
-    </html>
   )
 }
