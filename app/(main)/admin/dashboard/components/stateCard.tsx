@@ -6,13 +6,12 @@ import {
 from "@/components/ui/card";
 import { Users, ArrowUpRight } from "lucide-react";
 
-interface IStateCard {
+
+interface IProps {
   stateTitle: string
   stateValue: string | number
   statePercentage: string | number
 }
-
-interface IProps extends IStateCard {}
 
 const StateCard = (props: IProps) => {
   const { stateTitle, stateValue, statePercentage } = props

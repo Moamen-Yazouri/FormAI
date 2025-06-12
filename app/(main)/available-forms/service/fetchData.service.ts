@@ -4,7 +4,7 @@ import dashboardService from "@/module/services/user/dashboard.service";
 import { toast } from "sonner";
 
 class FetchDataService {
-        async getAvailableForms(username: string) {
+    async getAvailableForms(username: string) {
         await connection();
         try {
             const forms: IFormTable[] = await dashboardService.getUserForms(username);

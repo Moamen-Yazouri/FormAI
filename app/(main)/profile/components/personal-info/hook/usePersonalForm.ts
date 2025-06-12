@@ -2,24 +2,14 @@ import { useFormik } from "formik"
 import { FormValues } from "../types"
 import { validationSchema } from "../validationSchems";
 import { AuthContext } from "@/providers/auth/authProvider";
-import { use, useContext, useEffect, useState } from "react";
+import {  useContext } from "react";
 import { toast } from "sonner";
 import ActionService from "../../../service/action.service"
-import { IContextUser } from "@/@types";
+
 
 export const usePersonalInfo = () => {
-    const { user,revalidateUser} = use(AuthContext);
-    // const [userData, setUserData] = useState<IContextUser>({
-    //     _id: "",
-    //     name: "",
-    //     email: "",
-    //     role: "user",
-    // });
-    // useEffect(() => {
-    //     if(user) {
-    //         setUserData(user); 
-    //     }
-    // }, [user])
+    const { user,revalidateUser} = useContext(AuthContext);
+
     const handleSubmit = async(
         values: FormValues,
         setSubmitting: (isSubmitting: boolean) => void,

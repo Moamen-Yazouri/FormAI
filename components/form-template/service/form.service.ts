@@ -1,7 +1,6 @@
-import { IContextUser } from "@/@types";
 
 export const getForm = async(id: string) => {
-    const localURL = process.env.NEXT_PUBLIC_URL;
+    const localURL = process.env.NEXT_PUBLIC_URL || "";
     try {
         const formRes = await fetch(`${localURL}/api/get-form`,
             {
@@ -15,7 +14,7 @@ export const getForm = async(id: string) => {
         const {form} = await formRes.json();
         return form;
     }
-    catch(err) {
+    catch {
         return null;
     }
 }

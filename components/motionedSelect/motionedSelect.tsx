@@ -30,7 +30,6 @@ const CustomSelectField: React.FC<ISelectProps> = ({
   name,
   label,
   options,
-  ...rest
 }) => {
   const [field, meta, helpers] = useField<string>(name)
 
