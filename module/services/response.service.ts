@@ -1,9 +1,9 @@
 import { IAnswer, IDisplayResponse, IFormResponse } from "@/@types";
 import formsRepo from "../repositories/forms.repo";
-import { generateValidationScehma } from "@/lib/createTheValidationSchema";
 import responseRepo from "../repositories/response.repo";
 import formsService from "./forms.service";
 import { getDateOnly } from "@/lib/dateUtils";
+import { generateValidationSchema } from "@/lib/createTheValidationSchema";
 
 class ResponseService {
         async addResponse (response: IFormResponse) {
@@ -18,7 +18,7 @@ class ResponseService {
             validation[String(answer.fieldId)] = answer.answer;
         })
 
-        const isValid = await generateValidationScehma(form.fields).isValid(validation);
+        const isValid = await generateValidationSchema(form.fields).isValid(validation);
 
         if(!isValid) {
             throw new Error("Invalid response");

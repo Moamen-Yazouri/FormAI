@@ -16,13 +16,21 @@ import Logo from "./logo";
 import { navItems } from "./constants";
 
 const Header = () => {
-  const { user, isLoading } = useContext(AuthContext)
-  const [mobileOpen, setMobileOpen] = useState(false)
-  const router = useRouter()
+  const { user, isLoading } = useContext(AuthContext);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const router = useRouter();
 
   const handleLogout = async () => {
     await fetch("/api/auth/logout", { method: "POST" })
     router.push("/sign-in")
+  }
+
+  if(!user) return;
+
+  const handleDashboard = () => {
+      user.role === "admin"
+        ? router.push(`/${user.role}/dashboard`)
+        : router.push(`/${user.role}/${user.name}/dashboard`)
   }
 
   return (
@@ -83,11 +91,7 @@ const Header = () => {
               <DropdownMenuContent align="end" className="bg-slate-800/95 backdrop-blur-sm border-cyan-700/50 w-48">
                 <DropdownMenuItem
                   className="cursor-pointer hover:bg-cyan-800/50 text-slate-200 hover:text-white"
-                  onClick={() => {
-                    user.role === "admin"
-                      ? router.push(`/${user.role}/dashboard`)
-                      : router.push(`/${user.role}/${user.name}/dashboard`)
-                  }}
+                  onClick={handleDashboard}
                 >
                   Dashboard
                 </DropdownMenuItem>

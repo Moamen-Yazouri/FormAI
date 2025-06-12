@@ -1,6 +1,5 @@
 import { useFormik } from "formik"
 import { FormValues } from "../types"
-import { INITIAL_VALUES } from "../constants"
 import { validationSchema } from "../validationSchema"
 import { use } from "react"
 import { AuthContext } from "@/providers/auth/authProvider"

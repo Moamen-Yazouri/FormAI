@@ -1,3 +1,8 @@
+interface IStateCard {
+    stateTitle: string,
+    stateValue: number,
+    statePercentage: number,
+}
 export const generateStateCards = (
     totalUsers: number,
     activeUsers: number,

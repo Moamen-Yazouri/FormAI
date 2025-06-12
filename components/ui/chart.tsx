@@ -32,8 +32,6 @@ const ChartTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<H
 )
 ChartTitle.displayName = "ChartTitle"
 
-export const Title = ChartTitle
-
 const ChartDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
   ({ className, ...props }, ref) => (
     <p ref={ref} className={cn("text-sm text-muted-foreground", className)} {...props} />
@@ -44,21 +42,19 @@ ChartDescription.displayName = "ChartDescription"
 const ChartLegend = React.forwardRef<
   React.ElementRef<typeof RechartsLegend>,
   React.ComponentPropsWithoutRef<typeof RechartsLegend>
->(({ className, ...props }, ref) => <RechartsLegend verticalAlign="top" height={60} {...props} />)
+>(({ ...props }) => <RechartsLegend verticalAlign="top" height={60} {...props} />)
 ChartLegend.displayName = "ChartLegend"
 
 const ChartTooltip = React.forwardRef<
   React.ElementRef<typeof RechartsTooltip>,
   React.ComponentPropsWithoutRef<typeof RechartsTooltip>
->(({...props }, ref) => <RechartsTooltip cursor={false} {...props} />)
+>(({ ...props }) => <RechartsTooltip cursor={false} {...props} />)
 ChartTooltip.displayName = "ChartTooltip"
-
-export { ChartTooltip }
 
 const ChartXAxis = React.forwardRef<
   React.ElementRef<typeof RechartsXAxis>,
   React.ComponentPropsWithoutRef<typeof RechartsXAxis>
->(({ className, ...props }, ref) => (
+>(({ ...props }) => (
   <RechartsXAxis axisLine={false} tickLine={false} tick={{ fontSize: 12 }} {...props} />
 ))
 ChartXAxis.displayName = "ChartXAxis"
@@ -66,7 +62,7 @@ ChartXAxis.displayName = "ChartXAxis"
 const ChartYAxis = React.forwardRef<
   React.ElementRef<typeof RechartsYAxis>,
   React.ComponentPropsWithoutRef<typeof RechartsYAxis>
->(({ className, ...props }, ref) => (
+>(({ ...props }) => (
   <RechartsYAxis axisLine={false} tickLine={false} tick={{ fontSize: 12 }} {...props} />
 ))
 ChartYAxis.displayName = "ChartYAxis"
@@ -74,14 +70,15 @@ ChartYAxis.displayName = "ChartYAxis"
 const ChartGrid = React.forwardRef<
   React.ElementRef<typeof CartesianGrid>,
   React.ComponentPropsWithoutRef<typeof CartesianGrid>
->(({ className, ...props }, ref) => <CartesianGrid strokeDasharray="3 3" {...props} />)
+>(({ ...props }) => <CartesianGrid strokeDasharray="3 3" {...props} />)
 ChartGrid.displayName = "ChartGrid"
 
 export {
   ChartContainer,
-  ChartTitle,
+  ChartTitle as Title,
   ChartDescription,
   ChartLegend as Legend,
+  ChartTooltip,
   ChartXAxis as XAxis,
   ChartYAxis as YAxis,
   ChartGrid as Grid,
@@ -90,10 +87,10 @@ export {
   RechartsPieChart as PieChart,
   RadialBarChart,
   ComposedChart,
+  Cell,
+  ResponsiveContainer,
   Bar,
   Line,
   Pie,
-  Cell,
   RadialBar,
-  ResponsiveContainer,
 }

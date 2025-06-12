@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { AuthContext } from '@/providers/auth/authProvider'
 import { AlertCircle } from 'lucide-react'
-import React, { Dispatch, SetStateAction, use, useEffect, useState } from 'react'
+import React, { Dispatch, SetStateAction, useContext } from 'react'
 interface IProps {
     submit: () => Promise<any>;
     values: Partial<IContextUser>;
@@ -12,7 +12,7 @@ interface IProps {
 }
 const ConfirmationDialog = (props: IProps) => {
     const {values, submit, dialogState, closeDialog} = props;
-    const {user} = use(AuthContext);
+    const {user} = useContext(AuthContext);
     if(!user) return null;
 
     

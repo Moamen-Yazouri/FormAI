@@ -1,4 +1,4 @@
-import { FormValues } from "./types"
+import { IOptions } from "./types";
 
 export const OPTIONS: IOptions[] = [
     {
