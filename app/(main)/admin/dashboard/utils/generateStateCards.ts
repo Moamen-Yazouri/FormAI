@@ -1,8 +1,5 @@
-interface IStateCard {
-    stateTitle: string,
-    stateValue: number,
-    statePercentage: number,
-}
+import { IStateCard } from "../types"
+
 export const generateStateCards = (
     totalUsers: number,
     activeUsers: number,
