@@ -1,3 +1,4 @@
+import { IStateCard } from "../types";
 import StateCard from "./stateCard";
 
 interface IProps {
