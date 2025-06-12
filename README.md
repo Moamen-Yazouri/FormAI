@@ -47,7 +47,9 @@ FormAI is a modern, intelligent platform that enables creators to generate smart
 MONGODB_URI=your_mongodb_connection_string
 SALT_ROUNDS=10
 SESSION_SECRET=your_session_secret
+
 NEXT_PUBLIC_URL= your local host link
+
 GEMINI_API_KEY=your_gemini_api_key
 
 🚀 Getting Started
