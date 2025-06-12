@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Github } from "lucide-react";
 import { motion } from "framer-motion";
-import Logo from "@/components/logo/Logo";
 import SignUpForm from "./signup-form";
+import Logo from "@/components/header/logo";
 
 export default function SignUp() {
     return (
