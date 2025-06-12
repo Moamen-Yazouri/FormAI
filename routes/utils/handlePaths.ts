@@ -1,3 +1,4 @@
+"server-only";
 import mongoose from "mongoose";
 import { PageAccessName, protectedRoutes } from "../types";
 
