@@ -1,6 +1,6 @@
 "server-only";
-import mongoose from "mongoose";
 import { PageAccessName, protectedRoutes } from "../types";
+import { isInteger } from "formik";
 
 export const getPaths = (pathname: string) => {
     return pathname.split("/").filter((path) => path !== "");
@@ -23,7 +23,9 @@ export const getNamePath = (pathname: string) => {
         return paths[1];
     }
     if(paths.length > 1) {
-        const isValid = mongoose.Types.ObjectId.isValid(paths[1]);
+        const isValid = paths[1].split("").every((char) => {
+            !Number(char) && char !== "-"
+        })
         if(!isValid) {
             return paths[1];
         }
