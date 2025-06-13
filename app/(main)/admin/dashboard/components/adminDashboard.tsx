@@ -39,7 +39,16 @@ const AdminDashboard = (props: IProps) => {
         activeUsers 
     } = props;
 
-    const { stateCardsData, slicedUsers, slicedForms } = useDashboard({ usersData, formsData })
+    const { 
+        stateCardsData, 
+        slicedUsers, 
+        slicedForms 
+    } = useDashboard(
+        { 
+            usersData, 
+            formsData 
+        }
+    )
 
     return (
         <div className="min-h-screen bg-gradient-to-r from-slate-900/60 via-blue-900/40 to-cyan-900/40 text-slate-200 pb-20 pt-0 w-full">

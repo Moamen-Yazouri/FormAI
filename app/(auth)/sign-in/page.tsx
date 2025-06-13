@@ -12,7 +12,6 @@ export const metadata = {
         "Credentials",
         "authentication",
     ],
-    viewport: "width=device-width, initial-scale=1",
     metadataBase: new URL(new URL("https://formai.vercel.app"),),
     openGraph: {
         title: "Sign-In | FormAI",
@@ -38,6 +37,10 @@ export const metadata = {
     },
 };
 
+export const viewport = {
+    width: "device-width",
+    initialScale: 1
+}
 const page = () => {
     return (
         <SignIn />

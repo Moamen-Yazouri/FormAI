@@ -9,7 +9,6 @@ export const metadata = {
         "create forms",
         "AI generator",
     ],
-    viewport: "width=device-width, initial-scale=1",
     metadataBase: new URL(new URL("https://formai.vercel.app"),),
     openGraph: {
         title: "All forms | FormAI",
@@ -34,6 +33,11 @@ export const metadata = {
         charSet: "utf-8", 
     },
 };
+
+export const viewport = {
+    width: "device-width",
+    initialScale: 1
+}
 
 const page = () => {
     return (

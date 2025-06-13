@@ -11,7 +11,6 @@ export const metadata = {
         "my forms",
         "created forms",
     ],
-    viewport: "width=device-width, initial-scale=1",
     metadataBase: new URL(new URL("https://formai.vercel.app"),),
     openGraph: {
         title: "My Forms | FormAI",
@@ -36,6 +35,12 @@ export const metadata = {
         charSet: "utf-8", 
     },
 };
+
+export const viewport = {
+    width: "device-width",
+    initialScale: 1
+}
+
 interface IProps {
     params: Promise<{name: string}>
 }
