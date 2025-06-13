@@ -17,7 +17,6 @@ export default function EnhancedHero() {
         setHasMounted(true)
     }, []);
 
-    if(!user) return;
 
     const handleStart = () => {
         if(user) {

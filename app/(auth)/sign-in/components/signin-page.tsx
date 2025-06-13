@@ -1,7 +1,6 @@
 "use client"
-
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+
 import {
     Card,
     CardContent,
@@ -10,7 +9,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { Github } from "lucide-react";
+
 import SignInForm from "./signin-form";
 import { motion } from "framer-motion";
 import Logo from "@/components/header/logo";
@@ -68,17 +67,7 @@ const SignIn = () => {
                         <div className="absolute inset-0 flex items-center">
                         <span className="w-full border-t border-slate-700" />
                         </div>
-                        <div className="relative flex justify-center text-xs uppercase">
-                        <span className="bg-slate-900 px-2 text-slate-500">
-                            Or continue with
-                        </span>
-                        </div>
                     </div>
-
-                    <Button variant="outline" className="w-full border-slate-700 text-slate-300 hover:bg-slate-800/40">
-                        <Github className="mr-2 h-4 w-4" />
-                        GitHub
-                    </Button>
                     </motion.div>
                 </CardContent>
 
