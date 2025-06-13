@@ -10,11 +10,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select"
+import { IOptions } from "@/@types"
 
-type IOptions = {
-  label: string
-  value: string
-}
 
 type ISelectProps = Omit<
   React.SelectHTMLAttributes<HTMLSelectElement>,
