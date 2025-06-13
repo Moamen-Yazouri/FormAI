@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { use, useState } from "react"
+import { useContext, useState } from "react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -10,7 +10,7 @@ import { AuthContext } from "@/providers/auth/authProvider"
 import FullPageLoader from "./profileLoader"
 
 export default function ProfileHeader() {
-    const { user, isLoading } = use(AuthContext)
+    const { user, isLoading } = useContext(AuthContext)
     const [isUploading, setIsUploading] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
     const [avatarPreview, setAvatarPreview] = useState<string | null>(null)

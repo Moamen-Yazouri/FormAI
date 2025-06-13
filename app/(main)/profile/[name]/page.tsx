@@ -12,7 +12,6 @@ export const metadata = {
         "change email",
         "change role"
     ],
-    viewport: "width=device-width, initial-scale=1",
     metadataBase: new URL(new URL("https://formai.vercel.app"),),
     openGraph: {
         title: "Profile | FormAI",
@@ -37,6 +36,12 @@ export const metadata = {
         charSet: "utf-8", 
     },
 };
+
+export const viewport = {
+    width: "device-width",
+    initialScale: 1
+}
+
 export default async function Page() {
     return (
         <ProfilePage />

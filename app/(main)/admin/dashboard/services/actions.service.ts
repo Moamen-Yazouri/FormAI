@@ -1,9 +1,12 @@
 import { IFormFromDB, IUserFromDB } from "@/@types";
 
 class ActionsService {
-    private baseUrl: string = "/api/dashboard";
+    private publicNext: string = process.env.NEXT_PUBLIC_URL || "";
+
+    private baseUrl: string = `${this.publicNext}/api/dashboard`;
 
     async deleteForm(formId: string): Promise<IFormFromDB | null> {
+        
         try {
             const res = await fetch(`${this.baseUrl}/delete-from`,
                 {

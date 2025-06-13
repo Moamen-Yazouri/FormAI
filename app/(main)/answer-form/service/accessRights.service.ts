@@ -1,4 +1,4 @@
-    "server-only";
+"server-only";
 import { AccessRightsType } from "@/@types/access";
     import { connection } from "@/DB/connection";
     import { getToken } from "@/lib/getToken"

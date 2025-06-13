@@ -29,7 +29,6 @@ export const useAccountSetingForm = () => {
                 toast.success(`Email updated to: ${user.email} successfully`);
             }
             else {
-                console.log("HHH", data.message);
                 toast.error(data.message);
             }
         }
