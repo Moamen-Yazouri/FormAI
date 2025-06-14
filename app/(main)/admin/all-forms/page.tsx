@@ -3,6 +3,8 @@ import React from 'react';
 import fetchDataService from '../dashboard/services/fetchData.service';
 import FormsTable from '@/components/forms-table/formsTable';
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
     title: "All forms | FormAI",
     description:

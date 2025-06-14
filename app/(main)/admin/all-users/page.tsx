@@ -1,6 +1,7 @@
 import React from 'react';
 import fetchDataService from '../dashboard/services/fetchData.service';
 import UsersTable from '@/components/user-table/userTable';
+export const dynamic = "force-dynamic";
 
 export const metadata = {
     title: "All users | FormAI",

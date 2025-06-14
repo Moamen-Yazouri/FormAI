@@ -6,7 +6,7 @@ import Loader from "../loader"
 import { SidebarFooter } from "@/components/ui/sidebar"
 import { Button } from "@/components/ui/button"
 import { LogOut } from "lucide-react"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar } from "@/components/ui/avatar"
 import { useRouter } from "next/navigation"
 
 
@@ -38,10 +38,9 @@ const LoginInfo = () => {
       <div className="p-4 bg-gradient-to-r from-slate-900/60 via-blue-900/40 to-cyan-900/40 backdrop-blur-md">
         <div className="flex items-center gap-3">
           <Avatar className="ring-2 ring-cyan-500/30">
-            <AvatarImage src="/placeholder.svg?height=32&width=32" />
-            <AvatarFallback className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-semibold">
+            <div className=" w-full flex items-center justify-center bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-semibold">
               {nameForAvatar}
-            </AvatarFallback>
+            </div>
           </Avatar>
           <div className="flex flex-col">
             <span className="text-sm font-medium bg-gradient-to-r from-cyan-300 to-blue-300 bg-clip-text text-transparent">

@@ -1,7 +1,7 @@
 import AdminDashboard from './components/adminDashboard';
 import FetchData from "./services/fetchData.service";
 import { getActives } from './utils/getActives';
-
+export const dynamic = "force-dynamic";
 export const metadata = {
     title: "Admin Dashboard | FormAI",
     description:
