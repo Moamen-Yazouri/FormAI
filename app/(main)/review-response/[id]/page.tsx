@@ -3,6 +3,7 @@ import ResponseDetailsPage from '../components/responseReview';
 import FetchDataService from '../service/FetchData.service';
 import { getAccessRight } from '../service/accessRight.service';
 import { handleAccess } from '@/lib/triggerCoventions';
+export const dynamic = "force-dynamic";
 export const metadata = {
     title: "Review Response | FormAI",
     description:

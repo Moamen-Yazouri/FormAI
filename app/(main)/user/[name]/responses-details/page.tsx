@@ -1,5 +1,6 @@
 import CompletedFormsPage from './components/userResponses';
 import fetchDataService from '../dashboard/service/fetchData.service';
+export const dynamic = "force-dynamic";
 export const metadata = {
     title: "Responses Details | FormAI",
     description:

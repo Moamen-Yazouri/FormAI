@@ -1,6 +1,7 @@
 import React from 'react';
 import FormsTable from '@/components/forms-table/formsTable';
 import { getCreatorForms } from '../service/fetchData.service';
+export const dynamic = "force-dynamic";
 export const metadata = {
     title: "My Forms | FormAI",
     description:
