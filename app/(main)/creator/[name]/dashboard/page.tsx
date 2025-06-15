@@ -1,5 +1,8 @@
+import { Suspense } from 'react';
 import CreatorDashboard from '../dashboard/components/creatorDashboard';
 import FetchServices from '../dashboard/services/fetchData.service';
+import DashboardContent from './components/dashboardContent';
+import LoadingPage from '@/components/loadingPage/loadingPage';
 export const metadata = {
     title: "Creator Dashboard | FormAI",
     description:
@@ -45,29 +48,11 @@ interface IProps {
   params: Promise<{name: string}>; 
 }
 const page = async (props: IProps) => {
-      const name = decodeURIComponent((await props.params).name); 
-
-      const [
-        formData,
-        formCreationData,
-        formResponseData,
-        creatorActivityData,
-        responses,
-    ] = await Promise.all([
-        FetchServices.formsData(name),      
-        FetchServices.formCreationData(name),
-        FetchServices.formResponseData(name),
-        FetchServices.creatorActivityData(name),
-        FetchServices.creatorResponses(name),
-    ]);
+  const name = decodeURIComponent((await props.params).name); 
   return (
-    <CreatorDashboard 
-      formsData={formData} 
-      formCreationData={formCreationData} 
-      formResponsesData={formResponseData} 
-      creatorActivityData={creatorActivityData}
-      responses={responses}
-    />
+    <Suspense fallback={<LoadingPage />}>
+      <DashboardContent name={name} />
+    </Suspense>
   )
 }
 

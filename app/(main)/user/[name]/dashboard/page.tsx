@@ -1,5 +1,6 @@
-import UserDashboard from "./components/userDashboard";
-import fetchDataService from "./service/fetchData.service";
+import { Suspense } from "react";
+import DashboardContent from "./components/dashboardContent";
+import LoadingPage from "@/components/loadingPage/loadingPage";
 export const metadata = {
     title: "User Dashboard | FormAI",
     description:
@@ -47,21 +48,10 @@ interface IProps {
 export default async function UserFormActivityPage(props: IProps) {
     
     const name = decodeURIComponent((await props.params).name);
-    const [
-        responses,
-        availableForms,
-    ] = await Promise.all([
-        fetchDataService.answeredForms(name),
-        fetchDataService.availableForms(name),
-    ]) 
-    const data = {
-        formsCompleted: responses.length,
-        formsAvailable: availableForms.length,
-        averageCompletionTime: "3m 45s",
-        availableForms,
-        completedForms: responses,
-    }
+
     return (
-        <UserDashboard {...data} name={name}/>
+        <Suspense fallback={<LoadingPage/>}>
+            <DashboardContent name={name} />
+        </Suspense>
     )
 }
