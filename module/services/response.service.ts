@@ -15,15 +15,15 @@ class ResponseService {
         }
         const validation: {[key: string]: any} = {};
         response.answers.forEach(answer => {
-            validation[String(answer.fieldId).toLowerCase()] = answer.answer;
+            validation[String(answer.fieldId)] = answer.answer;
         })
-        console.log(generateValidationSchema(form.fields));
         const isValid = await generateValidationSchema(form.fields).isValid(validation);
 
         if(!isValid) {
             throw new Error("Invalid response");
         }
-        const responded = form.answeredBy.some(res => res === response.userId);
+        const responded = form.answeredBy.some(res => String(res) === String(response.userId));
+        console.log(validation);
         if(!responded) {
             let idToSend = String(response.userId);
             if(response.anonymous) {
