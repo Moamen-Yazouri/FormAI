@@ -68,12 +68,13 @@ const handleRemoveEmail = (emailToRemove: string) => {
 }
 
     const generateForm = async () => {
+        const publicNext: string = process.env.NEXT_PUBLIC_URL || ""; 
         try {
             setIsSent(true)
             setError(null)
             setLoading(true)
             resetTextareaHeight()
-            const res = await fetch("http://localhost:3000/api/generate-form",
+            const res = await fetch(`${publicNext}/api/generate-form`,
             {
                 method: "POST",
                 headers: {
