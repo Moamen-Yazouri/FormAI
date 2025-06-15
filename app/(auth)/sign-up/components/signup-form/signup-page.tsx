@@ -1,8 +1,6 @@
 "use client"
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Github } from "lucide-react";
 import { motion } from "framer-motion";
 import SignUpForm from "./signup-form";
 import Logo from "@/components/header/logo";
@@ -44,14 +42,6 @@ export default function SignUp() {
                     </span>
                 </div>
                 </div>
-
-                <Button
-                variant="outline"
-                className="w-full border-slate-700 text-slate-300 hover:bg-slate-800/40 text-sm py-1.5"
-                >
-                <Github className="mr-2 h-4 w-4" />
-                GitHub
-                </Button>
             </CardContent>
 
             <CardFooter className="flex justify-center pt-1 pb-3">
