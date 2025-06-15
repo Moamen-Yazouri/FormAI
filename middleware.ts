@@ -3,6 +3,7 @@ import {  getNamePath, getRoutePath } from "./routes/utils/handlePaths";
 import { getToken } from "./lib/getToken";
 import { PageAccessName, protectedRoutes } from "./routes/types";
 import { routesAccess } from "./routes/pageAccessRights";
+import { withCORS } from "./routes/utils/withCORS";
 
 export default async function middleware(req: NextRequest) {
     const fullPath: string = req.nextUrl.pathname;
@@ -26,8 +27,7 @@ export default async function middleware(req: NextRequest) {
             return NextResponse.redirect(new URL("/forbidden", req.url));
         }   
     }
-    
-    return NextResponse.next();
+    return withCORS(NextResponse.next());
 }
 export const config = {
     matcher: [
