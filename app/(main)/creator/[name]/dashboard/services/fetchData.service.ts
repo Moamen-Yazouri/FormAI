@@ -9,15 +9,13 @@ class FetchServices {
         try {
             const formCreationData: IFormCreationData[]  = await dashboardService.formCreationData(name);
             if (!formCreationData || formCreationData.length === 0) {
-            console.warn(`No form creation data found for "${name}".`);
-            return [];
+                return [];
             }
 
             return formCreationData;
         }
         catch (error) {
             if(error instanceof Error) {
-                console.error(error.message);
                 return[];
             }
             console.error("Failed to fetch form creation data!");
@@ -30,7 +28,6 @@ class FetchServices {
         try {
             const formResponseData = await dashboardService.getFormResponseData(name);
             if (!formResponseData || formResponseData.length === 0) {
-            console.warn(`No form response data found for "${name}".`);
             return [];
             }
 
@@ -51,8 +48,7 @@ class FetchServices {
         try {
             const creatorActivityData = await dashboardService.getCreatorActivityData(name);
             if (!creatorActivityData || creatorActivityData.length === 0) {
-            console.warn(`No creator activity data found for "${name}".`);
-            return [];
+                return [];
             }
 
             return creatorActivityData;
@@ -71,8 +67,7 @@ class FetchServices {
         try {
             const formsData: IFormTable[] = await dashboardService.getCreatorForms(name);
             if (!formsData || formsData.length === 0) {
-            console.warn(`No forms found for "${name}".`);
-            return [];
+                return [];
             }
 
             return formsData;
@@ -91,14 +86,12 @@ class FetchServices {
         try {
             const responses: ICreatorResponses[] = await dashboardService.getCreatorResponses(name);
             if (!responses || responses.length === 0) {
-                console.warn(`No responses found for "${name}".`);
                 return []; 
             }
             return responses;
         }
         catch (error) {
             if(error instanceof Error) {
-                console.error(error.message);
                 return[];
             }
             console.error("Failed to fetch creator responses!");

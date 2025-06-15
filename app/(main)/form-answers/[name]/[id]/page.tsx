@@ -3,7 +3,6 @@ import { getFormAnswers } from '../../service/answers.service';
 import ResponsesTable from '@/components/responses-table/responsesTable';
 import { getAccessRights } from '../../service/accessRights.service';
 import { handleAccess } from '@/lib/triggerCoventions';
-export const dynamic = "force-dynamic";
 export const metadata = {
     title: "Form Answers | FormAI",
     description:

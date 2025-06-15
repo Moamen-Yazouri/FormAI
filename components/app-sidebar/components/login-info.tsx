@@ -1,18 +1,20 @@
 "use client"
 
 import { AuthContext } from "@/providers/auth/authProvider"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import Loader from "../loader"
 import { SidebarFooter } from "@/components/ui/sidebar"
 import { Button } from "@/components/ui/button"
 import { LogOut } from "lucide-react"
 import { Avatar } from "@/components/ui/avatar"
 import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 
 const LoginInfo = () => {
   const { user, isLoading, revalidateUser } = useContext(AuthContext)
   const router = useRouter();
+  const [loggingOut, setLoggingOut] = useState(false);
 
   if (isLoading) return <Loader />
   if (!user) return null
@@ -23,13 +25,22 @@ const LoginInfo = () => {
     .join("")
 
   const handleLogout = async () => {
-    await Promise.all([
-      fetch("/api/auth/logout", {
-        method: "POST",
-        credentials: "include",
-      }),
-      revalidateUser(),
-    ])
+    setLoggingOut(true);
+    try{
+      await Promise.all([
+        fetch("/api/auth/logout", {
+          method: "POST",
+          credentials: "include",
+        }),
+        revalidateUser(),
+      ]);
+    }
+    catch {
+      toast.error("Something went wrong")
+    }
+    finally {
+      setLoggingOut(false)
+    }
     router.push("/sign-in")
   }
 
@@ -56,7 +67,11 @@ const LoginInfo = () => {
           className="w-full mt-4 text-red-300 hover:text-red-200 hover:bg-red-900/30 border border-red-700/30 hover:border-red-600/50 transition-all duration-200"
         >
           <LogOut className="h-4 w-4 mr-2" />
-          <span>Log out</span>
+            {
+              loggingOut ? (<Loader />) : (
+                <span>Log out</span>
+              )
+            }
         </Button>
       </div>
     </SidebarFooter>

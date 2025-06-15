@@ -1,7 +1,9 @@
+import { Suspense } from 'react';
 import AdminDashboard from './components/adminDashboard';
+import DashboardContent from './components/dashboardContent';
 import FetchData from "./services/fetchData.service";
 import { getActives } from './utils/getActives';
-export const dynamic = "force-dynamic";
+import LoadingPage from '@/components/loadingPage/loadingPage';
 export const metadata = {
     title: "Admin Dashboard | FormAI",
     description:
@@ -43,31 +45,11 @@ export const viewport = {
     initialScale: 1
 }
 
-const page = async() => {
-
-    const [
-        userActivityData,
-        formCreationData,
-        formResponsesData,
-        usersData,
-        formsData,
-    ] = await Promise.all([
-        FetchData.usersActivity(),      
-        FetchData.formCreationData(),
-        FetchData.formResponsesData(),
-        FetchData.usersData(),
-        FetchData.formsData(),
-    ]);
-    const activeUsers = getActives(usersData);
+const page = () => {
     return (
-        <AdminDashboard 
-            usersData={usersData}
-            formsData={formsData}
-            userActivityData={userActivityData}
-            formCreationData={formCreationData}
-            formResponsesData={formResponsesData} 
-            activeUsers={activeUsers}        
-        />
+        <Suspense fallback={<LoadingPage/>}>
+            <DashboardContent />
+        </Suspense>
     )
 }
 

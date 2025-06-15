@@ -1,7 +1,7 @@
 import {connection} from '@/DB/connection';
 import dashboardService from '@/module/services/admin/dashboard.service';
 import FormsTable from '@/components/forms-table/formsTable';
-export const dynamic = "force-dynamic";
+
 export const metadata = {
     title: "Creator forms | FormAI",
     description:
