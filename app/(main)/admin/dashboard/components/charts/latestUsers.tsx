@@ -1,6 +1,6 @@
 "use client"
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { 
   Card, 
   CardContent, 
@@ -31,7 +31,6 @@ export function ActiveUsersCard({ activeUsers }: IProps) {
             <div key={user.id} className="flex items-center gap-3">
               <div className="relative">
                 <Avatar className="h-10 w-10 border-2 border-blue-700/50">
-                  <AvatarImage src={user.avatar || "/placeholder.svg"} alt={user.name} />
                   <AvatarFallback className="bg-gradient-to-r from-blue-600 to-cyan-500 text-slate-200">
                     {user.name
                       .split(" ")

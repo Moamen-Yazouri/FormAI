@@ -5,3 +5,7 @@ export type FormValues = {
     role: UserRoles;
 }
 
+export interface IOptions {
+    value: string;
+    label: string;
+}
