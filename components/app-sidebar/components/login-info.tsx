@@ -66,10 +66,13 @@ const LoginInfo = () => {
           size="sm"
           className="w-full mt-4 text-red-300 hover:text-red-200 hover:bg-red-900/30 border border-red-700/30 hover:border-red-600/50 transition-all duration-200"
         >
-          <LogOut className="h-4 w-4 mr-2" />
+          
             {
               loggingOut ? (<Loader />) : (
-                <span>Log out</span>
+                <>
+                  <LogOut className="h-4 w-4 mr-2" />
+                  <span>Log out</span>
+                </>
               )
             }
         </Button>
