@@ -13,7 +13,7 @@ const ResponseSchema = new Schema<IResponseDocument>(
             answer: { type: Schema.Types.Mixed, required: true },
         }
         ],
-        anonymous: { type: Boolean, default: false },
+        anonymous: { type: Boolean, default: false, required: true },
     }, 
     { timestamps: true }
 );
