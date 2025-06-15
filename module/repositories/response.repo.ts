@@ -7,7 +7,17 @@ class ResponseRepo {
     async getResponseById(responseId: string) {
         return await responseModel.findById(responseId).lean<IResponseFromDB>() ;
     }
-
+    async updateResponse(response: IFormResponse) {
+        const { formId, userId } = response;
+        return await responseModel.findOneAndUpdate(
+            {
+                formId,
+                userId
+            },
+            response, 
+            { new: true }
+        );
+    }
     async getResponseData(responseId: string) {
         return await responseModel.findById(responseId).populate([
             {

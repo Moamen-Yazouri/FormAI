@@ -3,31 +3,25 @@ import formsRepo from "../repositories/forms.repo";
 import responseRepo from "../repositories/response.repo";
 import formsService from "./forms.service";
 import { getDateOnly } from "@/lib/dateUtils";
-import { generateValidationSchema } from "@/lib/createTheValidationSchema";
+
 
 class ResponseService {
         async addResponse (response: IFormResponse) {
         const form = await formsRepo.getFormById(String(response.formId));
+
         if(!form) {
             throw new Error("No form found");
         }
-        console.log(response.answers);
-
-        const validation: {[key: string]: any} = {};
-        response.answers.forEach(answer => {
-            validation[String(answer.fieldId)] = answer.answer;
-        })
-
-        const isValid = await generateValidationSchema(form.fields).isValid(validation);
-
-        if(!isValid) {
-            throw new Error("Invalid response");
-        }
+        
         const responded = form.answeredBy.some(res => response.userId === response.userId);
         if(!responded) {
             await formsRepo.addRespondant(String(response.formId), String(response.userId));
+            return await responseRepo.addResponse(response);
         }
-        return await responseRepo.addResponse(response);
+        else {
+            
+            return await responseRepo.updateResponse(response);
+        }
     }
     async getResponseById(id: string) {
         const response = await responseRepo.getResponseById(id);

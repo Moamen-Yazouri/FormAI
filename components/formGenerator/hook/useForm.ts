@@ -56,7 +56,6 @@ export const useForm = (props: IProps) => {
                 answers: answers,
                 userId: formik.values.allowAnonymous ? "Anonymous" : new mongoose.Types.ObjectId(user._id),
             }
-            console.log(formResponse);
             try{
                 const res = await fetch("/api/add-response",
                     {

@@ -23,10 +23,17 @@ export const generateValidationSchema = (formData: IFormField[]) => {
         }
         
         if (field.type === "checkbox") {
-            let validator = yup.boolean();
-
+            let validator = yup.string();
+            
             if (field.required) {
-                validator = validator.oneOf([true], "required field");
+                if(field.options?.length) {
+                    const trimmedOptions = field.options.map((option) => option.trim());
+                    validator = validator.oneOf(
+                        trimmedOptions,
+                        "Please select a valid option"
+                        );
+
+                }
             }
 
             acc[field.fieldId.toLowerCase()] = validator;
