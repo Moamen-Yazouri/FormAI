@@ -15,15 +15,33 @@ import { AuthContext } from "@/providers/auth/authProvider";
 import { useRouter } from "next/navigation";
 import Logo from "./logo";
 import { navItems } from "./constants";
+import { toast } from "sonner";
 
 const Header = () => {
-  const { user, isLoading } = useContext(AuthContext);
+  const { user, isLoading, revalidateUser } = useContext(AuthContext);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
   const router = useRouter();
-
   const handleLogout = async () => {
-    await fetch("/api/auth/logout", { method: "POST" });
-    router.push("/sign-in");
+    setLoggingOut(true);
+    try{
+      await Promise.all([
+        fetch("/api/auth/logout", {
+          method: "POST",
+          credentials: "include",
+        }),
+        revalidateUser(),
+      ]);
+    }
+    catch {
+      toast.error("Something went wrong")
+    }
+    finally {
+      setTimeout(() => {
+        setLoggingOut(false)
+      }, 1000);
+    }
+    router.push("/sign-in")
   };
 
   const handleDashboard = () => {
@@ -75,7 +93,7 @@ const Header = () => {
 
         
         <div className="flex items-center gap-4">
-          {user ? (
+          {user && !loggingOut ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild className="cursor-pointer">
                 <Button
@@ -119,10 +137,10 @@ const Header = () => {
                 href="/sign-in"
                 className="text-sm font-medium text-slate-300 hover:text-cyan-300 transition-all duration-200 hover:scale-105 px-4 py-2"
               >
-                {isLoading ? <Loader2 className="animate-spin text-cyan-400" /> : "Login"}
+                {isLoading || loggingOut ? <Loader2 className="animate-spin text-cyan-400" /> : "Login"}
               </Link>
 
-              {!isLoading && (
+              {!isLoading && !loggingOut && (
                 <Button
                   className="bg-gradient-to-r from-cyan-600 via-blue-600 to-sky-600 hover:from-cyan-500 hover:via-blue-500 hover:to-sky-500 text-white shadow-xl hover:shadow-cyan-900/20 transition-all duration-300 hover:scale-105 border-0 ring-1 ring-cyan-500/30"
                   onClick={() => router.push("/sign-up")}

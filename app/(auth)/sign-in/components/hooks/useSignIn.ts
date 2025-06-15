@@ -45,7 +45,7 @@ const useSignIn = () => {
                 }
                 
                 else if(data.user.role === "user") {
-                    router.push(`/avai;able-forms/${data.user.name}`);
+                    router.push(`/available-forms/${data.user.name}`);
                     toast.dismiss();
                 }
 
