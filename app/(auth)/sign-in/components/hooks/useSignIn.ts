@@ -71,8 +71,9 @@ const useSignIn = () => {
             handleSignIn(values, resetForm, setSubmitting)
         },
         validationSchema,
-        validateOnMount: true,
+        validateOnMount: false,
         validateOnChange: false,
+        validateOnBlur: false,
     })
     return {formik}
 }

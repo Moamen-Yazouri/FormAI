@@ -44,14 +44,6 @@ export default function SignUp() {
                     </span>
                 </div>
                 </div>
-
-                <Button
-                variant="outline"
-                className="w-full border-slate-700 text-slate-300 hover:bg-slate-800/40 text-sm py-1.5"
-                >
-                <Github className="mr-2 h-4 w-4" />
-                GitHub
-                </Button>
             </CardContent>
 
             <CardFooter className="flex justify-center pt-1 pb-3">
