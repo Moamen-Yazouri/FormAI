@@ -1,8 +1,5 @@
 import { Suspense } from 'react';
-import AdminDashboard from './components/adminDashboard';
 import DashboardContent from './components/dashboardContent';
-import FetchData from "./services/fetchData.service";
-import { getActives } from './utils/getActives';
 import LoadingPage from '@/components/loadingPage/loadingPage';
 export const metadata = {
     title: "Admin Dashboard | FormAI",

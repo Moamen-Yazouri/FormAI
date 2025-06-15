@@ -1,6 +1,4 @@
 import { Suspense } from 'react';
-import CreatorDashboard from '../dashboard/components/creatorDashboard';
-import FetchServices from '../dashboard/services/fetchData.service';
 import DashboardContent from './components/dashboardContent';
 import LoadingPage from '@/components/loadingPage/loadingPage';
 export const metadata = {
