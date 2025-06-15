@@ -1,8 +1,8 @@
 "use client"
 
 import type React from "react"
-import { useContext, useState } from "react"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { use, useState } from "react"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Camera, Check, X } from "lucide-react"
@@ -10,10 +10,10 @@ import { AuthContext } from "@/providers/auth/authProvider"
 import FullPageLoader from "./profileLoader"
 
 export default function ProfileHeader() {
-    const { user, isLoading } = useContext(AuthContext)
+    const { user, isLoading } = use(AuthContext)
     const [isUploading, setIsUploading] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
-    const [avatarPreview, setAvatarPreview] = useState<string | null>(null)
+    
 
     if (isLoading) return <FullPageLoader />
     if (!user) return null
@@ -31,7 +31,6 @@ export default function ProfileHeader() {
         setIsUploading(true)
         const reader = new FileReader()
         reader.onloadend = () => {
-            setAvatarPreview(reader.result as string)
             setIsUploading(false)
             setIsEditing(true)
         }
@@ -45,7 +44,6 @@ export default function ProfileHeader() {
 
     const handleCancelEdit = () => {
         setIsEditing(false)
-        setAvatarPreview(null)
     }
 
     return (
@@ -60,7 +58,6 @@ export default function ProfileHeader() {
                     </div>
                 ) : (
                     <>
-                    <AvatarImage src={avatarPreview || "/placeholder.svg?height=96&width=96"} />
                     <AvatarFallback className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-xl font-bold">
                         {getInitials(user.name)}
                     </AvatarFallback>

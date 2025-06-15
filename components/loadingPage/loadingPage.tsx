@@ -16,7 +16,7 @@ export default function LoadingPage() {
   }, [])
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center relative overflow-hidden">
+    <div className="flex min-h-screen w-full flex-col items-center justify-center relative overflow-hidden">
       
       <div className="absolute inset-0 -z-10 bg-gradient-to-br from-slate-950 via-blue-950 to-cyan-950 animate-gradient-x opacity-90" />
       <div className="absolute inset-0 bg-grid-white/[0.02] -z-10" />

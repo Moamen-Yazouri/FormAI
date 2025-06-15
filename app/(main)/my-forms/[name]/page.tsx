@@ -1,7 +1,6 @@
 import React from 'react';
 import FormsTable from '@/components/forms-table/formsTable';
 import { getCreatorForms } from '../service/fetchData.service';
-export const dynamic = "force-dynamic";
 export const metadata = {
     title: "My Forms | FormAI",
     description:
@@ -39,9 +38,8 @@ export const metadata = {
 
 export const viewport = {
     width: "device-width",
-    initialScale: 1
+    initialScale: 1,
 }
-
 interface IProps {
     params: Promise<{name: string}>
 }

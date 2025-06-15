@@ -1,6 +1,5 @@
 import CreatorDashboard from '../dashboard/components/creatorDashboard';
 import FetchServices from '../dashboard/services/fetchData.service';
-export const dynamic = "force-dynamic";
 export const metadata = {
     title: "Creator Dashboard | FormAI",
     description:

@@ -1,6 +1,5 @@
 import UserDashboard from "./components/userDashboard";
 import fetchDataService from "./service/fetchData.service";
-export const dynamic = "force-dynamic";
 export const metadata = {
     title: "User Dashboard | FormAI",
     description:

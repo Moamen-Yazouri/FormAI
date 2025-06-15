@@ -66,7 +66,7 @@ const FormsTable = (props: IProps) => {
 
         setFormToDelete(null)   
     }
-    if(isLoading || deleting) return <TablesLoader itemName={"Forms"}/>
+    if(isLoading || deleting) return <TablesLoader itemName={"Forms"} action="Loading"/>
     if(!user) return null; 
     return (
         <div className="rounded-lg border border-cyan-500/30 bg-gradient-to-br from-blue-900/40 via-indigo-800/30 to-cyan-600/40 backdrop-blur-md shadow-2xl w-full m-2 ring-1 ring-cyan-500/20">
@@ -136,8 +136,17 @@ const FormsTable = (props: IProps) => {
                         className="bg-gradient-to-br from-blue-900/90 via-indigo-800/85 to-cyan-700/80 backdrop-blur-md shadow-xl"
                     >
                         <DropdownMenuLabel className="text-blue-300">Actions</DropdownMenuLabel>
-
-                        <ActionsProvider id={form.id} />
+                        {
+                            user.role === "creator" && form.creator === user.name  ? (
+                                <ActionsProvider id={form.id} actionsRights="creator"/>
+                            ) : (
+                                user.role === "admin" ? (
+                                    <ActionsProvider id={form.id} actionsRights="admin"/>
+                                ) : (
+                                    <ActionsProvider id={form.id} actionsRights="user"/>
+                                )
+                            )
+                        }
                     {
                         !isAvailable && user.role !== "user" && ( 
                         <>

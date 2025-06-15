@@ -5,60 +5,62 @@ import { AuthContext } from "@/providers/auth/authProvider";
 import { useContext } from "react";
 import Loader from "../app-sidebar/loader";
 import { useRouter } from "next/navigation";
+import { UserRoles } from "@/@types";
 
 interface IProps {
     id: string
+    actionsRights: UserRoles
 }
 const ActionsProvider = (props: IProps) => {
     const { user, isLoading } = useContext(AuthContext)
     const router = useRouter()
     if (isLoading) return <Loader />
     if (!user) return null
-    switch (user.role) {
+    switch (props.actionsRights) {
         case "admin": {
         return (
             <>
-            <DropdownMenuItem
-                className="flex cursor-pointer items-center gap-2 text-slate-300 hover:!bg-gradient-to-r from-cyan-600/30 to-blue-600/30 hover:text-cyan-200"
-                onClick={() => router.push(`/view-form/${props.id}`)}
-            >
-                <Eye className="h-4 w-4" />
-                View Form
-            </DropdownMenuItem>
-            <DropdownMenuItem
-                className="flex cursor-pointer items-center gap-2 text-slate-300 hover:bg-gradient-to-r from-cyan-600/30 to-blue-600/30 hover:text-cyan-200"
-                onClick={() => router.push(`/answer-form/${props.id}`)}
-            >
-                <Eye className="h-4 w-4" />
-                Answer Form
-            </DropdownMenuItem>
-            <DropdownMenuItem
-                className="flex cursor-pointer items-center gap-2 text-slate-300 hover:bg-gradient-to-r from-cyan-600/30 to-blue-600/30 hover:text-cyan-200"
-                onClick={() => router.push(`/form-answers/${user.name}/${props.id}`)}
-            >
-                <MessageSquare className="h-4 w-4" />
-                View Responses
-            </DropdownMenuItem>
+                <DropdownMenuItem
+                    className="flex cursor-pointer items-center gap-2 text-slate-300 hover:!bg-gradient-to-r from-cyan-600/30 to-blue-600/30 hover:text-cyan-200"
+                    onClick={() => router.push(`/view-form/${props.id}`)}
+                >
+                    <Eye className="h-4 w-4" />
+                    View Form
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                    className="flex cursor-pointer items-center gap-2 text-slate-300 hover:bg-gradient-to-r from-cyan-600/30 to-blue-600/30 hover:text-cyan-200"
+                    onClick={() => router.push(`/answer-form/${props.id}`)}
+                >
+                    <Eye className="h-4 w-4" />
+                    Answer Form
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                    className="flex cursor-pointer items-center gap-2 text-slate-300 hover:bg-gradient-to-r from-cyan-600/30 to-blue-600/30 hover:text-cyan-200"
+                    onClick={() => router.push(`/form-answers/${user.name}/${props.id}`)}
+                >
+                    <MessageSquare className="h-4 w-4" />
+                    View Responses
+                </DropdownMenuItem>
             </>
         )
         }
         case "creator": {
         return (
             <>
-            <DropdownMenuItem
-                className="flex cursor-pointer items-center gap-2 text-slate-300 hover:bg-gradient-to-r from-cyan-600/30 to-blue-600/30 hover:text-cyan-200"
-                onClick={() => router.push(`/view-form/${props.id}`)}
-            >
-                <Eye className="h-4 w-4" />
-                View Form
-            </DropdownMenuItem>
-            <DropdownMenuItem
-                className="flex cursor-pointer items-center gap-2 text-slate-300 hover:bg-gradient-to-r from-cyan-600/30 to-blue-600/30 hover:text-cyan-200"
-                onClick={() => router.push(`/form-answers/${user.name}/${props.id}`)}
-            >
-                <MessageSquare className="h-4 w-4" />
-                View Responses
-            </DropdownMenuItem>
+                <DropdownMenuItem
+                    className="flex cursor-pointer items-center gap-2 text-slate-300 hover:bg-gradient-to-r from-cyan-600/30 to-blue-600/30 hover:text-cyan-200"
+                    onClick={() => router.push(`/view-form/${props.id}`)}
+                >
+                    <Eye className="h-4 w-4" />
+                    View Form
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                    className="flex cursor-pointer items-center gap-2 text-slate-300 hover:bg-gradient-to-r from-cyan-600/30 to-blue-600/30 hover:text-cyan-200"
+                    onClick={() => router.push(`/form-answers/${user.name}/${props.id}`)}
+                >
+                    <MessageSquare className="h-4 w-4" />
+                    View Responses
+                </DropdownMenuItem>
             </>
         )
         }
