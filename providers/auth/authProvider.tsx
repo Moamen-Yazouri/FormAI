@@ -27,8 +27,8 @@ const AuthProvider = (props: IProps) => {
     
     const value: IAuthContext = {
         user,
-        setUser,
         isLoading,
+        setUser,
         revalidateUser
     }
     return <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>
