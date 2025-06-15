@@ -15,7 +15,7 @@ class ResponseService {
         }
         const validation: {[key: string]: any} = {};
         response.answers.forEach(answer => {
-            validation[String(answer.fieldId)] = answer.answer;
+            validation[String(answer.fieldId).toLowerCase()] = answer.answer;
         })
         const isValid = await generateValidationSchema(form.fields).isValid(validation);
 
