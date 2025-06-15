@@ -21,12 +21,28 @@ export const generateValidationSchema = (formData: IFormField[]) => {
             acc[field.fieldId.toLowerCase()] = validator;
             return acc;
         }
-        
-        if (field.type === "checkbox") {
+        if(field.type === "checkbox") {
             let validator = yup.boolean();
 
+            // if (field.required) {
+            //     validator = validator.required("This field is required");
+            // }
+
+            acc[field.fieldId.toLowerCase()] = validator;
+            return acc;
+        }
+        if (field.type === "radio") {
+            let validator = yup.string();
+
             if (field.required) {
-                validator = validator.oneOf([true], "required field");
+                if(field.options?.length) {
+                    const trimmedOptions = field.options.map((option) => option.trim());
+                    validator = validator.oneOf(
+                        trimmedOptions,
+                        "Please select a valid option"
+                        );
+
+                }
             }
 
             acc[field.fieldId.toLowerCase()] = validator;

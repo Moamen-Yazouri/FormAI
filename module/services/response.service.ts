@@ -5,29 +5,37 @@ import formsService from "./forms.service";
 import { getDateOnly } from "@/lib/dateUtils";
 import { generateValidationSchema } from "@/lib/createTheValidationSchema";
 
+
 class ResponseService {
         async addResponse (response: IFormResponse) {
         const form = await formsRepo.getFormById(String(response.formId));
+
         if(!form) {
             throw new Error("No form found");
         }
-        console.log(response.answers);
-
         const validation: {[key: string]: any} = {};
         response.answers.forEach(answer => {
-            validation[String(answer.fieldId)] = answer.answer;
+            validation[String(answer.fieldId).toLowerCase()] = answer.answer;
         })
-
+        console.log(generateValidationSchema(form.fields));
         const isValid = await generateValidationSchema(form.fields).isValid(validation);
 
         if(!isValid) {
             throw new Error("Invalid response");
         }
-        const responded = form.answeredBy.some(res => response.userId === response.userId);
+        const responded = form.answeredBy.some(res => res === response.userId);
         if(!responded) {
-            await formsRepo.addRespondant(String(response.formId), String(response.userId));
+            let idToSend = String(response.userId);
+            if(response.anonymous) {
+                idToSend = "Anonymous";
+            }
+            await formsRepo.addRespondant(String(response.formId), idToSend);
+            return await responseRepo.addResponse(response);
         }
-        return await responseRepo.addResponse(response);
+        else {
+            console.log("Already responded");
+            return await responseRepo.updateResponse(response);
+        }
     }
     async getResponseById(id: string) {
         const response = await responseRepo.getResponseById(id);

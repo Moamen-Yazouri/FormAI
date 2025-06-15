@@ -1,4 +1,4 @@
-import { IFormResponse, IResponseFromDB, IResponsePopulatedUser, IUserFromDB, IUserResponseTable } from "@/@types";
+import { IFormResponse, IResponseFromDB, IResponsePopulatedUser, IUserFromDB } from "@/@types";
 import responseModel from "@/DB/models/response.model";
 import { IResponseDetailsFromDB } from "../services/types";
 
@@ -7,7 +7,17 @@ class ResponseRepo {
     async getResponseById(responseId: string) {
         return await responseModel.findById(responseId).lean<IResponseFromDB>() ;
     }
-
+    async updateResponse(response: IFormResponse) {
+        const { formId, userId } = response;
+        return await responseModel.findOneAndUpdate(
+            {
+                formId,
+                userId
+            },
+            response, 
+            { new: true }
+        );
+    }
     async getResponseData(responseId: string) {
         return await responseModel.findById(responseId).populate([
             {
@@ -39,7 +49,17 @@ class ResponseRepo {
                 select: "title"
             }
         ])
-        const filtered = creatorResponses.filter(r => r.formId !== null);
+        const filtered = creatorResponses.filter(r => r.formId !== null).map(res => {
+            if(res.anonymous) {
+                return {...res, userId: {
+                    name: "Anonymous",
+                    email: "Anonymous"
+                }}
+            }
+            else {
+                return res;
+            }
+        });
         return filtered;
     }
 

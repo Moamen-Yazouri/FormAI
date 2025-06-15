@@ -33,7 +33,6 @@ export const useForm = (props: IProps) => {
             resetForm: () => void,
             setSubmitting: (isSubmitting: boolean) => void
         ) => {
-            console.log(values);
             if(props.isPreview || props.isView) {
                 resetForm();
                 toast.success("Form submission works correctly!");
@@ -51,12 +50,14 @@ export const useForm = (props: IProps) => {
                     answer: values[field.fieldId.toLowerCase()],
                 }
             })
+            
             const formResponse: IFormResponse = {
                 formId: new mongoose.Types.ObjectId(props.formId),
                 answers: answers,
-                userId: formik.values.allowAnonymous ? "Anonymous" : new mongoose.Types.ObjectId(user._id),
+                userId: new mongoose.Types.ObjectId(user._id),
+                anonymous: !formik.values.allowAnonymous || false,
             }
-            console.log(formResponse);
+            
             try{
                 const res = await fetch("/api/add-response",
                     {
@@ -94,6 +95,7 @@ export const useForm = (props: IProps) => {
             handleSubmitForm(values, resetForm, setSubmitting);
         },
         validationSchema,
+
         enableReinitialize: true,
         validateOnMount: true,
         validateOnChange: false,
