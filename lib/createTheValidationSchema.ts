@@ -24,9 +24,9 @@ export const generateValidationSchema = (formData: IFormField[]) => {
         if(field.type === "checkbox") {
             let validator = yup.boolean();
 
-            // if (field.required) {
-            //     validator = validator.required("This field is required");
-            // }
+            if (field.required) {
+                validator = validator.required("This field is required");
+            }
 
             acc[field.fieldId.toLowerCase()] = validator;
             return acc;
