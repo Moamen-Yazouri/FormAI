@@ -7,7 +7,7 @@ import { Loader2 } from "lucide-react"
 import MotionedSelect from "@/components/motionedSelect/motionedSelect"
 
 const SignUpForm = () => {
-  const { formik } = useForm()
+  const { formik, created } = useForm()
 
   return (
     <FormikProvider value={formik}>
@@ -17,6 +17,7 @@ const SignUpForm = () => {
           name="name"
           isPassword={false}
           placeholder="Moamen Yazouri"
+          disabled={formik.isSubmitting || created}
           style={{
             label: "",
             input:
@@ -29,6 +30,7 @@ const SignUpForm = () => {
           name="email"
           isPassword={false}
           placeholder="email@example.com"
+          disabled={formik.isSubmitting || created}
           style={{
             label: "",
             input:
@@ -39,6 +41,7 @@ const SignUpForm = () => {
         <MotionedSelect
           label="Role"
           name="role"
+          disabled={formik.isSubmitting || created}
           options={[
             { value: "user", label: "User" },
             { value: "creator", label: "Creator" },
@@ -50,6 +53,7 @@ const SignUpForm = () => {
           name="password"
           isPassword={true}
           placeholder="••••••••"
+          disabled={formik.isSubmitting || created}
           style={{
             label: "",
             input:
@@ -62,6 +66,7 @@ const SignUpForm = () => {
           name="confirmedPassword"
           isPassword={true}
           placeholder="••••••••"
+          disabled={formik.isSubmitting || created}
           style={{
             label: "",
             input:
@@ -71,6 +76,7 @@ const SignUpForm = () => {
 
         <Button
           type="submit"
+          disabled={formik.isSubmitting || created}
           className="w-full bg-cyan-500 hover:bg-cyan-400 mt-1 text-sm py-2 cursor-pointer text-white disabled:opacity-70 disabled:cursor-not-allowed"
         >
           {formik.isSubmitting ? (

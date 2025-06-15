@@ -5,13 +5,14 @@ import { INITIAL_VALUES } from "../constants";
 import { validationSchema } from "../validationSchema";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "@/providers/auth/authProvider";
 import { IContextUser } from "@/@types";
 
 const useSignIn = () => {
     const {setUser} = useContext(AuthContext);
     const router = useRouter();
+    const [logged, setLogged] = useState(false);
     const handleSignIn = async(
         values: FormValues,
         resetForm: () => void,
@@ -30,7 +31,8 @@ const useSignIn = () => {
                 toast.error(data.message);
                 return;
             }
-            toast.success(data.message);
+            setLogged(true);
+            toast.success(data.message || "Signed in successfully");
             const userForContext: IContextUser = {
                 name: data.user.name, 
                 email: data.user.email, 
@@ -38,21 +40,17 @@ const useSignIn = () => {
                 _id: data.user._id
             }
             setUser(userForContext)
-                resetForm();
+            resetForm();
+            setTimeout(() => {
                 if(data.user.role === "creator") {
                     router.push("/form-generator");
-                    toast.dismiss();
-                }
-                
-                else if(data.user.role === "user") {
+                } else if(data.user.role === "user") {
                     router.push(`/available-forms/${data.user.name}`);
-                    toast.dismiss();
-                }
-
-                else {
+                } else {
                     router.push("/admin/dashboard");
-                    toast.dismiss();
                 }
+                toast.dismiss();
+            }, 500);
             
         }
         catch(err) {
@@ -75,6 +73,6 @@ const useSignIn = () => {
         validateOnChange: false,
         validateOnBlur: false,
     })
-    return {formik}
+    return {formik, logged}
 }
 export default useSignIn;

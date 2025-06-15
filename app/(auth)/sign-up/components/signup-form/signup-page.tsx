@@ -32,16 +32,6 @@ export default function SignUp() {
             <CardContent className="space-y-2 pt-2 pb-3">
                 <SignUpForm />
 
-                <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                    <span className="w-full border-t border-slate-700" />
-                </div>
-                <div className="relative flex justify-center text-[10px] uppercase">
-                    <span className="bg-slate-900 px-2 text-slate-500">
-                    or continue with
-                    </span>
-                </div>
-                </div>
             </CardContent>
 
             <CardFooter className="flex justify-center pt-1 pb-3">

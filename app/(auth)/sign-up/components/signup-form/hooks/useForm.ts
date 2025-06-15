@@ -4,10 +4,13 @@ import { FormValues } from "../types";
 import { INITIAL_VALUES } from "../constatnts";
 import { validationSchema } from "../validationSchema";
 import { toast } from "sonner";
-import { redirect } from "next/navigation";
 import { IUser } from "@/@types";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const useSignIn = () => {
+    const [created, setCreated] = useState(false);
+    const router = useRouter();
     const handleSignUp = async(
         values: FormValues,
         resetForm: () => void,
@@ -34,12 +37,13 @@ const useSignIn = () => {
                 toast.error(data.message);
                 return;
             }
-
+            setCreated(true);
             resetForm();
             toast.success("Account Created Successfully!");
             setTimeout(() => {
-                redirect("/sign-in")
-            }, 1000)
+                toast.dismiss();
+                router.push("/sign-in");
+            }, 500)
         }
         catch(err){
             if(err instanceof Error) {
@@ -61,6 +65,9 @@ const useSignIn = () => {
         validateOnChange: false,
         validateOnBlur: false,
     })
-    return {formik}
+    return {
+        formik,
+        created
+    }
 }
 export default useSignIn;
