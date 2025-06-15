@@ -1,16 +1,14 @@
 "use client"
 
-import type React from "react"
-import { use, useState } from "react"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Camera, Check, X } from "lucide-react"
-import { AuthContext } from "@/providers/auth/authProvider"
-import FullPageLoader from "./profileLoader"
+import type React from "react";
+import { useContext} from "react";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Card, CardContent } from "@/components/ui/card";
+import { AuthContext } from "@/providers/auth/authProvider";
+import FullPageLoader from "./profileLoader";
 
 export default function ProfileHeader() {
-    const { user, isLoading } = use(AuthContext)
+    const { user, isLoading } = useContext(AuthContext)
     
 
     if (isLoading) return <FullPageLoader />

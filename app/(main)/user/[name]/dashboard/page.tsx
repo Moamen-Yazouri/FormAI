@@ -12,7 +12,7 @@ export const metadata = {
         "user activity",
         "user tools",
     ],
-    metadataBase: new URL(new URL("https://formai.vercel.app"),),
+    metadataBase: new URL(new URL("https://form-ai-gold.vercel.app"),),
     openGraph: {
         title: "User Dashboard | FormAI",
         description:
