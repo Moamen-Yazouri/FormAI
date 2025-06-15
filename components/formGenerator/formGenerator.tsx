@@ -58,7 +58,7 @@ const FormGenerator = (props: IProps) => {
         <p className="text-slate-400 mt-2 mb-6">Thank you for your time.</p>
 
         <Button
-          onClick={() => router.push(`/available-forms/${user!.name}`)}
+          onClick={() => router.back()}
           className="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold"
         >
           Back to Forms List

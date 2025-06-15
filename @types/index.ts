@@ -74,6 +74,7 @@ export interface IForm {
     allowAnonymous: boolean;
     expiredAt?: Date;
     allowedUsers?: string[];
+    anonymousNumber?: number
 }
 
 export type IAnswer = {
@@ -83,8 +84,9 @@ export type IAnswer = {
 
 export interface IFormResponse {
     formId: mongoose.Types.ObjectId;
-    userId: mongoose.Types.ObjectId | String;
-    answers: IAnswer[]; 
+    userId: mongoose.Types.ObjectId;
+    answers: IAnswer[];
+    anonymous: boolean;
 }
 
 export interface IDisplayResponse {

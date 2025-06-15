@@ -40,6 +40,7 @@ const formSchema = new Schema<IFormDocument>(
             return farFuture;
         },
         },
+        anonymousNumber: { type: Number, default: 0 },
     },
     { timestamps: true }
 );

@@ -1,6 +1,6 @@
-import { IForm, IFormFromDB, IFormPopulatedByCreator, IFormResponse } from "@/@types";
+import { IForm, IFormFromDB, IFormPopulatedByCreator } from "@/@types";
 import FormModel from "@/DB/models/form.model";
-import responseModel from "@/DB/models/response.model";
+
 
 
 class FormsRepo {
@@ -50,6 +50,13 @@ class FormsRepo {
         return await FormModel.deleteMany({creatorId: userId});
     }
     async addRespondant (formId: string, userId: string) {
+        if(userId === "Anonymous") {
+            return await FormModel.findByIdAndUpdate(formId, {
+                $inc: {
+                    anonymousNumber: 1
+                }
+            }).lean<IFormFromDB>();
+        }
         return await FormModel.findByIdAndUpdate(formId, {
             $addToSet: {
                 answeredBy: userId

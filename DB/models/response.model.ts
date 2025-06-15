@@ -6,14 +6,15 @@ export interface IResponseDocument extends IFormResponse, Document { }
 const ResponseSchema = new Schema<IResponseDocument>(
     {
         formId: { type: Schema.Types.ObjectId, ref: "Form", required: true },
-        userId: { type: Schema.Types.ObjectId || String, ref: "User", required: true },
+        userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
         answers: [
         {
             fieldId: { type: String, required: true },
             answer: { type: Schema.Types.Mixed, required: true },
         }
         ],
-    },
+        anonymous: { type: Boolean, default: false },
+    }, 
     { timestamps: true }
 );
 

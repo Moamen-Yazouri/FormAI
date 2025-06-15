@@ -1,4 +1,4 @@
-import { IFormResponse, IResponseFromDB, IResponsePopulatedUser, IUserFromDB, IUserResponseTable } from "@/@types";
+import { IFormResponse, IResponseFromDB, IResponsePopulatedUser, IUserFromDB } from "@/@types";
 import responseModel from "@/DB/models/response.model";
 import { IResponseDetailsFromDB } from "../services/types";
 
@@ -49,7 +49,17 @@ class ResponseRepo {
                 select: "title"
             }
         ])
-        const filtered = creatorResponses.filter(r => r.formId !== null);
+        const filtered = creatorResponses.filter(r => r.formId !== null).map(res => {
+            if(res.anonymous) {
+                return {...res, userId: {
+                    name: "Anonymous",
+                    email: "Anonymous"
+                }}
+            }
+            else {
+                return res;
+            }
+        });
         return filtered;
     }
 
