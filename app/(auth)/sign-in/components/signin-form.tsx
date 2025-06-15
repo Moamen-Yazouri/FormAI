@@ -9,8 +9,7 @@ import MotionField from "@/components/motionTextField/motionTextField";
 import useSignIn from "./hooks/useSignIn";
 
 const SignInForm = () => {
-  const { formik } = useSignIn();
-
+  const { formik, logged } = useSignIn(); 
   return (
     <FormikProvider value={formik}>
       <Form className="space-y-4">
@@ -25,6 +24,7 @@ const SignInForm = () => {
             input:
               "w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500",
           }}
+          disabled={formik.isSubmitting || logged}
         />
 
         <MotionField
@@ -38,6 +38,7 @@ const SignInForm = () => {
             input:
               "w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500",
           }}
+          disabled={formik.isSubmitting || logged}
         />
 
         <Link
@@ -56,7 +57,7 @@ const SignInForm = () => {
           <Button
             type="submit"
             className="w-full cursor-pointer bg-cyan-500 hover:bg-cyan-400 mt-2 text-white disabled:opacity-70 disabled:cursor-not-allowed"
-            disabled={formik.isSubmitting}
+            disabled={formik.isSubmitting || logged}
           >
             {formik.isSubmitting ? (
               <Loader2 className="animate-spin text-white" />
