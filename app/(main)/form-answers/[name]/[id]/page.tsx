@@ -3,9 +3,7 @@ import { getFormAnswers } from '../../service/answers.service';
 import ResponsesTable from '@/components/responses-table/responsesTable';
 import { getAccessRights } from '../../service/accessRights.service';
 import { handleAccess } from '@/lib/triggerCoventions';
-import formsRepo from '@/module/repositories/forms.repo';
-import responseModel from '@/DB/models/response.model';
-import { IResponsePopulatedCreator } from '@/@types';
+
 export const metadata = {
     title: "Form Answers | FormAI",
     description:
