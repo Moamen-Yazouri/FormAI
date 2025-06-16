@@ -1,7 +1,6 @@
 "use client"
 import React from "react";
 import { cn } from "@/lib/utils";
-import { useSidebar } from "../ui/sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 interface ScrollableContainerProps extends React.HTMLAttributes<HTMLDivElement> {

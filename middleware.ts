@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import {  getNamePath, getRoutePath } from "./routes/utils/handlePaths";
+import { getRoutePath } from "./routes/utils/handlePaths";
 import { getToken } from "./lib/getToken";
 import { PageAccessName, protectedRoutes } from "./routes/types";
 import { routesAccess } from "./routes/pageAccessRights";
@@ -8,10 +8,7 @@ import { withCORS } from "./routes/utils/withCORS";
 export default async function middleware(req: NextRequest) {
     const fullPath: string = req.nextUrl.pathname;
     const routePath: PageAccessName = getRoutePath(fullPath);
-    const name = getNamePath(fullPath);
-    console.log(name)
     const token = await getToken();
-    console.log(routePath);
     const { role } = routesAccess.get(routePath) || { role: [] };
     if (routePath === "/sign-in" || routePath === "/sign-up") {
         const isLogged = Boolean(token);

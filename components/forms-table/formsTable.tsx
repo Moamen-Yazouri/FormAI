@@ -78,7 +78,7 @@ const FormsTable = (props: IProps) => {
                 <TableHead className="text-cyan-300 font-semibold">Form Name</TableHead>
                 <TableHead className="text-cyan-300 font-semibold">Creator</TableHead>
                 {
-                    user.role === "admin" && props.available && (
+                    user.role === "admin" && !props.available && (
                         <TableHead className="text-cyan-300 font-semibold">Responses</TableHead>
                     )
                 }
@@ -108,7 +108,7 @@ const FormsTable = (props: IProps) => {
 
                 <TableCell className="text-slate-100">{form.creator}</TableCell>
                 {
-                    user.role === "admin" && props.available && (                        
+                    user.role === "admin" && !props.available && (                        
                         <TableCell>
                             <Badge
                             variant="secondary"

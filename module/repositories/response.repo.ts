@@ -72,18 +72,18 @@ class ResponseRepo {
     async getFormResponses(formId: string) {
             const formResponses = await responseModel.find().populate([
                 {
-                    path: "userId",
-                    select: "name email -_id"
+                    match: { _id: formId },
+                    path: "formId",
+                    select: "title"
                 },
                 {
-                    path: "formId",
-                    match: { _id: formId },
-                    select: "title"
+                    path: "userId",
+                    select: "name email -_id"
                 }
             ]).lean<IResponsePopulatedCreator[]>();
 
-            const filtered = formResponses
-            return filtered;
+            
+            return formResponses;
     }
 
     async getUserResponses(id: string) {

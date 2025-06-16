@@ -7,7 +7,7 @@ export const deleteResponse = async (responseId: string) => {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ responseId }),
+        body: JSON.stringify({responseId}),
         });
 
         const { response } = await res.json();

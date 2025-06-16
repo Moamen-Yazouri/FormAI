@@ -1,4 +1,10 @@
-import { IAnswer, IDisplayResponse, IFormResponse, IResponseFromDB } from "@/@types";
+import { 
+    IAnswer, 
+    IDisplayResponse, 
+    IFormResponse, 
+    IResponseFromDB, 
+    IResponsePopulatedCreator 
+} from "@/@types";
 import formsRepo from "../repositories/forms.repo";
 import responseRepo from "../repositories/response.repo";
 import formsService from "./forms.service";
@@ -86,7 +92,13 @@ class ResponseService {
         if(!response) {
             throw new Error("No response found");
         }
-        return response;
+        if(response.anonymous) {
+            await formsService.removeAnonymous(String(response.formId));
+        }
+        else {
+            await formsService.removeRespondant(String(response.formId), String(response.userId));
+        }
+        return await responseRepo.deleteResponse(id);
     }
 
     async deleteFromResponses(formId: string) {
@@ -109,11 +121,16 @@ class ResponseService {
         if(!isOwner) {
             throw new Error("You are not the owner of this form");
         }
-        const responses = await responseRepo.getFormResponses(formId);
+
+        const responses = (await responseRepo.getFormResponses(formId))
+                        .filter(res => res.formId !== null);
         if(!responses) {
             throw new Error("No responses found");
         }
-        const hideAnonymousNames = responses.map(res => {
+        const hideAnonymousNames: IResponsePopulatedCreator[] = responses.map(res => {
+                if(!res.anonymous) {
+                    return res;
+                }
                 return {
                     ...res,
                     userId: {
