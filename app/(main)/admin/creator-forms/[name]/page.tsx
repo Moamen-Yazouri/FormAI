@@ -1,6 +1,7 @@
 import {connection} from '@/DB/connection';
 import dashboardService from '@/module/services/admin/dashboard.service';
 import FormsTable from '@/components/forms-table/formsTable';
+
 export const metadata = {
     title: "Creator forms | FormAI",
     description:
@@ -13,8 +14,7 @@ export const metadata = {
         "admin tools",
         "creator forms"
     ],
-    viewport: "width=device-width, initial-scale=1",
-    metadataBase: new URL(new URL("https://formai.vercel.app"),),
+    metadataBase: new URL(new URL("https://form-ai-gold.vercel.app"),),
     openGraph: {
         title: "Creator Forms | FormAI",
         description:
@@ -38,6 +38,12 @@ export const metadata = {
         charSet: "utf-8", 
     },
 };
+
+export const viewport = {
+    width: "device-width",
+    initialScale: 1
+}
+
 interface IProps {
     params: Promise < {
         name: string

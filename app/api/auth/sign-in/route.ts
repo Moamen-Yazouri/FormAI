@@ -1,4 +1,4 @@
-import { IUser } from "@/@types";
+import { IUserFromDB } from "@/@types";
 import { connection } from "@/DB/connection";
 import authService from "@/module/services/auth.service";
 
@@ -14,7 +14,7 @@ export const POST = async(req: NextRequest) => {
 
         await connection();
 
-        const {token, user}: {token: string, user: IUser} = await authService.signin(data);
+        const {token, user}: {token: string, user: IUserFromDB} = await authService.signin(data);
         return NextResponse.json({message: "User logged successfully", token, user}, {status: 200})
     }
     catch(err) {

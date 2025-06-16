@@ -2,7 +2,7 @@ import { connection } from "@/DB/connection";
 import { toast } from "sonner";
 import { IAnsweredForms } from "../types";
 import dashboardService from "@/module/services/user/dashboard.service";
-import { IFormTable, IUserForm, IUserResponseDetails } from "@/@types";
+import { IFormTable, IUserResponseDetails } from "@/@types";
 
 class FetchDataService {
     async availableForms(username: string): Promise<IFormTable[]> {

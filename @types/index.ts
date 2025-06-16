@@ -25,6 +25,7 @@ export interface IResponseFromDB {
     createdAt: string; 
     updatedAt: string;
     __v: number;
+    anonymous: boolean;
 }
 
 export enum ERole {
@@ -74,6 +75,7 @@ export interface IForm {
     allowAnonymous: boolean;
     expiredAt?: Date;
     allowedUsers?: string[];
+    anonymousNumber?: number
 }
 
 export type IAnswer = {
@@ -83,8 +85,9 @@ export type IAnswer = {
 
 export interface IFormResponse {
     formId: mongoose.Types.ObjectId;
-    userId: mongoose.Types.ObjectId | String;
-    answers: IAnswer[]; 
+    userId: mongoose.Types.ObjectId;
+    answers: IAnswer[];
+    anonymous: boolean;
 }
 
 export interface IDisplayResponse {
@@ -215,4 +218,8 @@ export interface IUserResponseDetails {
 export interface IActive {
     userId: mongoose.Types.ObjectId,
     lastActive: Date,
+}
+export interface IOptions {
+    value: string;
+    label: string;
 }

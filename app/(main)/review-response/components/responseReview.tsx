@@ -28,8 +28,8 @@ export default function ResponseDetailsPage({ response }: IProps) {
         try {
         await navigator.clipboard.writeText(JSON.stringify([response], null, 2))
         toast.success("Response copied to clipboard!")
-        } catch (err) {
-        toast.error("Failed to copy response to clipboard!")
+        } catch {
+            toast.error( "Failed to copy response to clipboard!")
         }
     }
 

@@ -1,6 +1,6 @@
-import CreatorDashboard from '../dashboard/components/creatorDashboard';
-import FetchServices from '../dashboard/services/fetchData.service';
-
+import { Suspense } from 'react';
+import DashboardContent from './components/dashboardContent';
+import LoadingPage from '@/components/loadingPage/loadingPage';
 export const metadata = {
     title: "Creator Dashboard | FormAI",
     description:
@@ -12,8 +12,7 @@ export const metadata = {
         "responses moderation",
         "creator tools",
     ],
-    viewport: "width=device-width, initial-scale=1",
-    metadataBase: new URL(new URL("https://formai.vercel.app"),),
+    metadataBase: new URL(new URL("https://form-ai-gold.vercel.app"),),
     openGraph: {
         title: "Creator Dashboard | FormAI",
         description:
@@ -38,33 +37,20 @@ export const metadata = {
     },
 };
 
+export const viewport = {
+    width: "device-width",
+    initialScale: 1
+}
+
 interface IProps {
   params: Promise<{name: string}>; 
 }
 const page = async (props: IProps) => {
-      const name = decodeURIComponent((await props.params).name); 
-
-      const [
-        formData,
-        formCreationData,
-        formResponseData,
-        creatorActivityData,
-        responses,
-    ] = await Promise.all([
-        FetchServices.formsData(name),      
-        FetchServices.formCreationData(name),
-        FetchServices.formResponseData(name),
-        FetchServices.creatorActivityData(name),
-        FetchServices.creatorResponses(name),
-    ]);
+  const name = decodeURIComponent((await props.params).name); 
   return (
-    <CreatorDashboard 
-      formsData={formData} 
-      formCreationData={formCreationData} 
-      formResponsesData={formResponseData} 
-      creatorActivityData={creatorActivityData}
-      responses={responses}
-    />
+    <Suspense fallback={<LoadingPage />}>
+      <DashboardContent name={name} />
+    </Suspense>
   )
 }
 

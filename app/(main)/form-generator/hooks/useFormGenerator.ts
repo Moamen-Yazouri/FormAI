@@ -7,7 +7,7 @@ import {
     useState 
 } from "react";
 import { toast } from "sonner";
-
+const publicNext: string = process.env.NEXT_PUBLIC_URL || "";
 export const useFormGenerator = () => {
     const {user} = useContext(AuthContext);
     const [prompt, setPrompt] = useState("")
@@ -67,13 +67,13 @@ const handleRemoveEmail = (emailToRemove: string) => {
     setEmails(emails.filter((e) => e !== emailToRemove))
 }
 
-    const generateForm = async () => {
+    const generateForm = async () => { 
         try {
             setIsSent(true)
             setError(null)
             setLoading(true)
             resetTextareaHeight()
-            const res = await fetch("http://localhost:3000/api/generate-form",
+            const res = await fetch(`${publicNext}/api/generate-form`,
             {
                 method: "POST",
                 headers: {
@@ -121,7 +121,7 @@ const handleRemoveEmail = (emailToRemove: string) => {
             allowedUsers: emails || [],
         }
         try {
-            const res = await fetch("http://localhost:3000/api/add-form",
+            const res = await fetch(`${publicNext}/api/add-form`,
                 {
                     method: "POST",
                     headers: {

@@ -43,11 +43,12 @@ const ResponsesTable = ({ responses, isSummary }: IProps) => {
     const { searchTerm, setSearchTerm, filteredResponses, handleDelete } = useFilter(responses);
     const [deleting, setDeleting] = useState<boolean>(false);
     const {user, isLoading} = useContext(AuthContext);
-        const handleCopy = async (response: ICreatorResponses) => {  
+
+    const handleCopy = async (response: ICreatorResponses) => {  
         try {
             await navigator.clipboard.writeText(JSON.stringify([response], null, 2))
             toast.success("Response copied to clipboard!")
-        } catch (err) {
+        } catch  {
             toast.error("Failed to copy response to clipboard!")
         }
     }

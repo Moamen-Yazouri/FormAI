@@ -1,6 +1,5 @@
 import { useFormik } from "formik"
 import { FormValues } from "../types"
-import { INITIAL_VALUES } from "../constants"
 import { validationSchema } from "../validationSchema"
 import { use } from "react"
 import { AuthContext } from "@/providers/auth/authProvider"
@@ -30,7 +29,6 @@ export const useAccountSetingForm = () => {
                 toast.success(`Email updated to: ${user.email} successfully`);
             }
             else {
-                console.log("HHH", data.message);
                 toast.error(data.message);
             }
         }

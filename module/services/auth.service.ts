@@ -55,7 +55,8 @@ class AuthService {
             email: user.email,
             userId: String(user._id),
             name: user.name,
-            role: user.role
+            role: user.role,
+            lastActive: new Date(),
         }
         
         const token = await generateToken(payload);

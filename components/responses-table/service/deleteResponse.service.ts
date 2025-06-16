@@ -1,5 +1,5 @@
 export const deleteResponse = async (responseId: string) => {
-    const localUrl = process.env.NEXT_PUBLIC_URL;
+    const localUrl = process.env.NEXT_PUBLIC_URL || "";
 
     try {
         const res = await fetch(`${localUrl}/api/delete-response`, {
@@ -12,8 +12,8 @@ export const deleteResponse = async (responseId: string) => {
 
         const { response } = await res.json();
         return response;
-    } catch (err: any) {
-        console.error(err.message || "Failed to delete the response!");
+    } catch {
+        console.error("Failed to delete the response!");
         return null;
     }
 };

@@ -1,4 +1,4 @@
-import { IDashboardForm } from "@/@types";
+import { IFormTable } from "@/@types";
 import { connection } from "@/DB/connection"
 import dashboardService from "@/module/services/admin/dashboard.service";
 import { NextResponse } from "next/server";
@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 export const GET = async () => {
     try {
         await connection();
-        const formsData: IDashboardForm[] = await dashboardService.getFormsData();
+        const formsData: IFormTable[] = await dashboardService.getFormsData();
         if (!formsData || formsData.length === 0) {
             return NextResponse.json({ message: "No forms found" }, { status: 404 });
         }

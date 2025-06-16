@@ -10,11 +10,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select"
+import { IOptions } from "@/@types"
 
-type IOptions = {
-  label: string
-  value: string
-}
 
 type ISelectProps = Omit<
   React.SelectHTMLAttributes<HTMLSelectElement>,
@@ -30,7 +27,7 @@ const CustomSelectField: React.FC<ISelectProps> = ({
   name,
   label,
   options,
-  ...rest
+  disabled,
 }) => {
   const [field, meta, helpers] = useField<string>(name)
 
@@ -49,6 +46,7 @@ const CustomSelectField: React.FC<ISelectProps> = ({
         name={field.name}
         value={field.value}
         onValueChange={(val) => helpers.setValue(val)}
+        disabled={disabled || false}
       >
         <SelectTrigger className="bg-slate-900/50 w-fit border border-cyan-600/30 text-slate-200 placeholder:text-cyan-300 hover:border-cyan-500 focus:border-cyan-500 focus:ring-cyan-500/30 transition-all duration-200">
           <SelectValue

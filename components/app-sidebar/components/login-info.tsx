@@ -1,18 +1,20 @@
 "use client"
 
 import { AuthContext } from "@/providers/auth/authProvider"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import Loader from "../loader"
 import { SidebarFooter } from "@/components/ui/sidebar"
 import { Button } from "@/components/ui/button"
 import { LogOut } from "lucide-react"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar } from "@/components/ui/avatar"
 import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 
 const LoginInfo = () => {
   const { user, isLoading, revalidateUser } = useContext(AuthContext)
   const router = useRouter();
+  const [loggingOut, setLoggingOut] = useState(false);
 
   if (isLoading) return <Loader />
   if (!user) return null
@@ -23,13 +25,22 @@ const LoginInfo = () => {
     .join("")
 
   const handleLogout = async () => {
-    await Promise.all([
-      fetch("/api/auth/logout", {
-        method: "POST",
-        credentials: "include",
-      }),
-      revalidateUser(),
-    ])
+    setLoggingOut(true);
+    try{
+      await Promise.all([
+        fetch("/api/auth/logout", {
+          method: "POST",
+          credentials: "include",
+        }),
+        revalidateUser(),
+      ]);
+    }
+    catch {
+      toast.error("Something went wrong")
+    }
+    finally {
+      setLoggingOut(false)
+    }
     router.push("/sign-in")
   }
 
@@ -38,10 +49,9 @@ const LoginInfo = () => {
       <div className="p-4 bg-gradient-to-r from-slate-900/60 via-blue-900/40 to-cyan-900/40 backdrop-blur-md">
         <div className="flex items-center gap-3">
           <Avatar className="ring-2 ring-cyan-500/30">
-            <AvatarImage src="/placeholder.svg?height=32&width=32" />
-            <AvatarFallback className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-semibold">
+            <div className=" w-full flex items-center justify-center bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-semibold">
               {nameForAvatar}
-            </AvatarFallback>
+            </div>
           </Avatar>
           <div className="flex flex-col">
             <span className="text-sm font-medium bg-gradient-to-r from-cyan-300 to-blue-300 bg-clip-text text-transparent">
@@ -56,8 +66,15 @@ const LoginInfo = () => {
           size="sm"
           className="w-full mt-4 text-red-300 hover:text-red-200 hover:bg-red-900/30 border border-red-700/30 hover:border-red-600/50 transition-all duration-200"
         >
-          <LogOut className="h-4 w-4 mr-2" />
-          <span>Log out</span>
+          
+            {
+              loggingOut ? (<Loader />) : (
+                <>
+                  <LogOut className="h-4 w-4 mr-2" />
+                  <span>Log out</span>
+                </>
+              )
+            }
         </Button>
       </div>
     </SidebarFooter>

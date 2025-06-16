@@ -1,7 +1,8 @@
 import { IFormFromDB, IResponseFromDB } from "@/@types";
 
 class ActionServices {
-    private baseUrl: string = "http://localhost:3000//api/dashboard";
+    private nextPublic: string = process.env.NEXT_PUBLIC_URL || "";
+    private baseUrl: string = `${this.nextPublic}/api/dashboard`;
     async deleteForm(formId: string): Promise<IFormFromDB | null> {
         try {
             const res = await fetch(`${this.baseUrl}/delete-from`,

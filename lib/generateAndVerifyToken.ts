@@ -30,7 +30,7 @@ export const verifyToken = async (token: string): Promise<ITokenPayload | null> 
             algorithms: ["HS256"]
         });
         return payload as ITokenPayload;
-    } catch (error) {
+    } catch {
         return null;
     }
 }

@@ -13,8 +13,7 @@ export const metadata = {
         "platform oversight",
         "admin tools",
     ],
-    viewport: "width=device-width, initial-scale=1",
-    metadataBase: new URL(new URL("https://formai.vercel.app"),),
+    metadataBase: new URL(new URL("https://form-ai-gold.vercel.app"),),
     openGraph: {
         title: "All forms | FormAI",
         description:
@@ -38,6 +37,11 @@ export const metadata = {
         charSet: "utf-8", 
     },
 };
+
+export const viewport = {
+    width: "device-width",
+    initialScale: 1
+}
 const page = async() => {
     const users = await fetchDataService.usersData();
     return (

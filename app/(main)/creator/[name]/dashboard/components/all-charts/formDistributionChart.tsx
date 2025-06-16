@@ -47,7 +47,6 @@ const FormsDistribution = ({ formResponsesData }: IProps) => {
     innerRadius,
     outerRadius,
     percent,
-    index,
   }: {
     cx: number
     cy: number

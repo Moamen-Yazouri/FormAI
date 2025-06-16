@@ -3,11 +3,11 @@ import { IAnswer, IFormField, IFormResponse } from "@/@types";
 import { useFormik } from "formik";
 import { IFormValues } from "../types";
 import { getInitials } from "../getInitials";
-import { generateValidationScehma } from "@/lib/createTheValidationSchema";
 import { toast } from "sonner";
 import { useContext, useMemo, useState } from "react";
 import { AuthContext } from "@/providers/auth/authProvider";
 import * as mongoose from "mongoose";
+import { generateValidationSchema } from "@/lib/createTheValidationSchema";
 
 interface IProps {
     fields: IFormField[];
@@ -19,13 +19,14 @@ interface IProps {
 
 export const useForm = (props: IProps) => {
         const {user} = useContext(AuthContext);
-        const [submitted, setSubmitted] = useState(false)
+        const [submitted, setSubmitted] = useState(false);
+
         const initialValues = useMemo(() => {
-            return getInitials(props.fields); 
+            return getInitials(props.fields);
         }, [props.fields, props.allowAnonymous]);
 
         const validationSchema = useMemo(() => {
-            return generateValidationScehma(props.fields);
+            return generateValidationSchema(props.fields);
         }, [props.fields, props.allowAnonymous]);
 
         const handleSubmitForm = async(
@@ -33,7 +34,6 @@ export const useForm = (props: IProps) => {
             resetForm: () => void,
             setSubmitting: (isSubmitting: boolean) => void
         ) => {
-            console.log(values);
             if(props.isPreview || props.isView) {
                 resetForm();
                 toast.success("Form submission works correctly!");
@@ -45,20 +45,26 @@ export const useForm = (props: IProps) => {
                 toast.error("You must be logged in to submit a form!");
                 return;
             }
-            const answers: IAnswer[] = props.fields.map(field => {
+            const answers: IAnswer[] = props.fields
+            .filter(field => {
+                return field.fieldId !== "allowAnonymos";
+            })
+            .map(field => {
                 return {
                     fieldId: field.fieldId,
                     answer: values[field.fieldId.toLowerCase()],
                 }
             })
+            const anonymous = props.allowAnonymous ? !values.anonymous: false;
             const formResponse: IFormResponse = {
                 formId: new mongoose.Types.ObjectId(props.formId),
                 answers: answers,
-                userId: formik.values.allowAnonymous ? "Anonymous" : new mongoose.Types.ObjectId(user._id),
+                userId: new mongoose.Types.ObjectId(user._id),
+                anonymous: anonymous,
             }
-            console.log(formResponse);
+            
             try{
-                const res = await fetch("http://localhost:3000/api/add-response",
+                const res = await fetch("/api/add-response",
                     {
                         method: "POST",
                         headers: {
@@ -94,8 +100,9 @@ export const useForm = (props: IProps) => {
             handleSubmitForm(values, resetForm, setSubmitting);
         },
         validationSchema,
+
         enableReinitialize: true,
-        validateOnMount: true,
+        validateOnMount: false,
         validateOnChange: false,
     })
     return {

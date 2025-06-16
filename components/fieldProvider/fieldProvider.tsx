@@ -1,4 +1,4 @@
-import { IFormField } from '@/@types'
+import { IFormField, IOptions } from '@/@types'
 import React from 'react';
 import MotionedTextArea from '../motionTextarea/MotionTextarea';
 import MotionedSelect from '../motionedSelect/motionedSelect';

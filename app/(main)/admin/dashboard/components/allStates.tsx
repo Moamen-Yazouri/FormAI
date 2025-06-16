@@ -1,5 +1,7 @@
 import React from 'react';
 import StateCard from './stateCard';
+import { IStateCard } from '../types';
+
 interface IProps {
     cards: IStateCard[]
 }

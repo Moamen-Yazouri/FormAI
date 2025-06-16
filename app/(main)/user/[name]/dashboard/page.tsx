@@ -1,5 +1,6 @@
-import UserDashboard from "./components/userDashboard";
-import fetchDataService from "./service/fetchData.service";
+import { Suspense } from "react";
+import DashboardContent from "./components/dashboardContent";
+import LoadingPage from "@/components/loadingPage/loadingPage";
 export const metadata = {
     title: "User Dashboard | FormAI",
     description:
@@ -11,8 +12,7 @@ export const metadata = {
         "user activity",
         "user tools",
     ],
-    viewport: "width=device-width, initial-scale=1",
-    metadataBase: new URL(new URL("https://formai.vercel.app"),),
+    metadataBase: new URL(new URL("https://form-ai-gold.vercel.app"),),
     openGraph: {
         title: "User Dashboard | FormAI",
         description:
@@ -36,27 +36,22 @@ export const metadata = {
         charSet: "utf-8", 
     },
 };
+
+export const viewport = {
+    width: "device-width",
+    initialScale: 1
+}
+
 interface IProps {
     params: Promise<{name: string}>
 }
 export default async function UserFormActivityPage(props: IProps) {
     
     const name = decodeURIComponent((await props.params).name);
-    const [
-        responses,
-        availableForms,
-    ] = await Promise.all([
-        fetchDataService.answeredForms(name),
-        fetchDataService.availableForms(name),
-    ]) 
-    const data = {
-        formsCompleted: responses.length,
-        formsAvailable: availableForms.length,
-        averageCompletionTime: "3m 45s",
-        availableForms,
-        completedForms: responses,
-    }
+
     return (
-        <UserDashboard {...data} name={name}/>
+        <Suspense fallback={<LoadingPage/>}>
+            <DashboardContent name={name} />
+        </Suspense>
     )
 }

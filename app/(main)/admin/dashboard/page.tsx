@@ -1,7 +1,6 @@
-import AdminDashboard from './components/adminDashboard';
-import FetchData from "./services/fetchData.service";
-import { getActives } from './utils/getActives';
-
+import { Suspense } from 'react';
+import DashboardContent from './components/dashboardContent';
+import LoadingPage from '@/components/loadingPage/loadingPage';
 export const metadata = {
     title: "Admin Dashboard | FormAI",
     description:
@@ -13,8 +12,7 @@ export const metadata = {
         "platform oversight",
         "admin tools",
     ],
-    viewport: "width=device-width, initial-scale=1",
-    metadataBase: new URL(new URL("https://formai.vercel.app"),),
+    metadataBase: new URL(new URL("https://form-ai-gold.vercel.app"),),
     openGraph: {
         title: "All forms | FormAI",
         description:
@@ -38,31 +36,17 @@ export const metadata = {
         charSet: "utf-8", 
     },
 };
-const page = async() => {
 
-    const [
-        userActivityData,
-        formCreationData,
-        formResponsesData,
-        usersData,
-        formsData,
-    ] = await Promise.all([
-        FetchData.usersActivity(),      
-        FetchData.formCreationData(),
-        FetchData.formResponsesData(),
-        FetchData.usersData(),
-        FetchData.formsData(),
-    ]);
-    const activeUsers = getActives(usersData);
+export const viewport = {
+    width: "device-width",
+    initialScale: 1
+}
+
+const page = () => {
     return (
-        <AdminDashboard 
-            usersData={usersData}
-            formsData={formsData}
-            userActivityData={userActivityData}
-            formCreationData={formCreationData}
-            formResponsesData={formResponsesData} 
-            activeUsers={activeUsers}        
-        />
+        <Suspense fallback={<LoadingPage/>}>
+            <DashboardContent />
+        </Suspense>
     )
 }
 

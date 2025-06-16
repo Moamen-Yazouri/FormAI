@@ -7,7 +7,8 @@ import {
 } from "@/@types";
 
 class FetchData {
-    private baseUrl: string = "http://localhost:3000//api/admin";
+    private publicNext: string = process.env.NEXT_PUBLIC_URL || "";
+    private baseUrl: string = `${this.publicNext}/api/admin`;
 
     async usersActivity(): Promise<IUsersActivityData[]> {
         try {

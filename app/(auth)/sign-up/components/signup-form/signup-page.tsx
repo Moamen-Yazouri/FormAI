@@ -1,8 +1,6 @@
 "use client"
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Github } from "lucide-react";
 import { motion } from "framer-motion";
 import SignUpForm from "./signup-form";
 import Logo from "@/components/header/logo";
@@ -34,24 +32,6 @@ export default function SignUp() {
             <CardContent className="space-y-2 pt-2 pb-3">
                 <SignUpForm />
 
-                <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                    <span className="w-full border-t border-slate-700" />
-                </div>
-                <div className="relative flex justify-center text-[10px] uppercase">
-                    <span className="bg-slate-900 px-2 text-slate-500">
-                    or continue with
-                    </span>
-                </div>
-                </div>
-
-                <Button
-                variant="outline"
-                className="w-full border-slate-700 text-slate-300 hover:bg-slate-800/40 text-sm py-1.5"
-                >
-                <Github className="mr-2 h-4 w-4" />
-                GitHub
-                </Button>
             </CardContent>
 
             <CardFooter className="flex justify-center pt-1 pb-3">

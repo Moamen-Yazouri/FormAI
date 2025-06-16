@@ -3,7 +3,6 @@ import { getFormAnswers } from '../../service/answers.service';
 import ResponsesTable from '@/components/responses-table/responsesTable';
 import { getAccessRights } from '../../service/accessRights.service';
 import { handleAccess } from '@/lib/triggerCoventions';
-
 export const metadata = {
     title: "Form Answers | FormAI",
     description:
@@ -16,8 +15,7 @@ export const metadata = {
         "admin tools",
         "creator tools",
     ],
-    viewport: "width=device-width, initial-scale=1",
-    metadataBase: new URL(new URL("https://formai.vercel.app"),),
+    metadataBase: new URL(new URL("https://form-ai-gold.vercel.app"),),
     openGraph: {
         title: "Form Answers | FormAI",
         description:
@@ -41,6 +39,11 @@ export const metadata = {
         charSet: "utf-8", 
     },
 };
+
+export const viewport = {
+    width: "device-width",
+    initialScale: 1
+}
 
 interface IProps {
     params: Promise<{id: string, name: string}>
