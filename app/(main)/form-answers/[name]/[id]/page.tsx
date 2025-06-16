@@ -3,6 +3,7 @@ import { getFormAnswers } from '../../service/answers.service';
 import ResponsesTable from '@/components/responses-table/responsesTable';
 import { getAccessRights } from '../../service/accessRights.service';
 import { handleAccess } from '@/lib/triggerCoventions';
+
 export const metadata = {
     title: "Form Answers | FormAI",
     description:
@@ -53,9 +54,8 @@ const page = async(props: IProps) => {
     const validName = decodeURIComponent(name);
     const access = await getAccessRights(id);
     handleAccess(access);
-
     const { answers} = await getFormAnswers(id, validName);
-    console.log(answers);
+    
     return (
         <ResponsesTable responses={answers} />
     )

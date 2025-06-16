@@ -74,7 +74,9 @@ class FormServices {
         if(!creator) {
             throw new Error("Creator not found");
         }
-        
+        if(creator.role === "admin") {
+            return true;
+        }
         if(!form) {
             throw new Error("Form not found");
         }

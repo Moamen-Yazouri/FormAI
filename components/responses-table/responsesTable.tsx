@@ -53,6 +53,7 @@ const ResponsesTable = ({ responses, isSummary }: IProps) => {
         }
     }
     const handleDeleteResponse = async (id: string) => {
+        console.log(id);
         setDeleting(true);
         const deletedResponse = await deleteResponse(id);
         setDeleting(false);
@@ -69,7 +70,7 @@ const ResponsesTable = ({ responses, isSummary }: IProps) => {
         
     }
     if(isLoading || deleting) {
-        return <TablesLoader itemName={"Response"}/>
+        return <TablesLoader itemName={"Response"} action="Loading"/>
     }
     if(!user) {
         return null;
