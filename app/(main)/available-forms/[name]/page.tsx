@@ -48,7 +48,7 @@ const AvailableForms = async(props: IProps) => {
     const name = decodeURIComponent((await props.params).name);
     const availableForms = await fetchDataService.getAvailableForms(name);
     return (
-        <FormsTable forms= {availableForms} />
+        <FormsTable forms= {availableForms} available={true}/>
     )
 }
 

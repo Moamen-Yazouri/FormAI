@@ -3,6 +3,7 @@ import { INavItem } from "../types";
 import { FileText, LayoutDashboard, MessageCircleMoreIcon, Sparkles, User } from "lucide-react";
 
 export const getNavItems = (role: UserRoles, name: string): INavItem[] => {
+    
     switch(role) {
         case "admin": {
             const navItems = [

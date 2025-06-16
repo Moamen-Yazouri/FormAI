@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { getForm } from "./service/form.service";
 import { AuthContext } from "@/providers/auth/authProvider";
 import { useRouter } from "next/navigation";
+import { useSidebar } from "../ui/sidebar";
 
 
 interface IProps {
@@ -24,6 +25,7 @@ const FormTemplate = (props: IProps) => {
   const { user, isLoading } = useContext(AuthContext);
   const router = useRouter();
   const [responded, setResponded] = useState<boolean>(false);
+  const {isMobile} = useSidebar();
   const fields: IFormField[] = useMemo(() => {
     if (data) {
       if(data.allowAnonymous) {
@@ -61,7 +63,7 @@ const FormTemplate = (props: IProps) => {
 
   return (
         
-      <div className="w-full p-5 min-h-screen relative overflow-hidden custom-scrollbar">
+      <div className={`w-full p-5 relative overflow-hidden custom-scrollbar ${isMobile ? "mt-15" : ""}`}>
         {(loading || isLoading) && <LoadingPage />}
 
         {data && (

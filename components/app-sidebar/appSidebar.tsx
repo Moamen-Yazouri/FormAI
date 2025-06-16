@@ -12,12 +12,12 @@ import LoginInfo from "./components/login-info";
 import Logo from "../header/logo";
 
 export default function AppSidebar() {
-  const { isMobile } = useSidebar()
+  const { isMobile } = useSidebar();
 
   return (
     <>
       {isMobile && (
-        <div className="fixed top-0 left-0 right-0 h-14 z-30 flex items-center px-4 border-b border-cyan-800/30 bg-gradient-to-r from-slate-950 via-blue-950 to-cyan-950 backdrop-blur-md">
+        <div className="mb-20 absolute top-0 left-0 right-0 h-14 z-30 flex items-center px-4 border-b !bg-gradient-to-b !from-slate-950 !via-blue-950 !to-cyan-950 !text-slate-200 !border-r !border-cyan-800/30 backdrop-blur-md">
           <SidebarTrigger className="mr-2 text-cyan-300 hover:text-white hover:bg-cyan-800/30 rounded-md p-1 transition-all duration-200">
             <Menu className="h-5 w-5" />
           </SidebarTrigger>
