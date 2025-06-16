@@ -6,7 +6,7 @@ import {
   CardDescription, 
   CardHeader, 
   CardTitle 
-} from "@/components/ui/card";
+} from "@/components/ui/card"
 
 import { 
   PieChart, 
@@ -15,7 +15,7 @@ import {
   Tooltip, 
   Legend, 
   ResponsiveContainer 
-} from "recharts";
+} from "recharts"
 
 interface IFormResponseData {
   formId: string
@@ -39,6 +39,8 @@ const COLORS = [
 
 const FormsDistribution = ({ formResponsesData }: IProps) => {
   const topForms = [...formResponsesData].sort((a, b) => b.responsesCount - a.responsesCount).slice(0, 5)
+
+  const hasNoResponses = topForms.every(form => form.responsesCount === 0)
 
   const renderCustomizedLabel = ({
     cx,
@@ -85,45 +87,52 @@ const FormsDistribution = ({ formResponsesData }: IProps) => {
           Distribution of responses across your top forms
         </CardDescription>
       </CardHeader>
+      
       <CardContent className="pt-4">
-        <div className="h-[300px] w-full">
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={topForms}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                label={renderCustomizedLabel}
-                outerRadius={85}
-                dataKey="responsesCount"
-                nameKey="formTitle"
-              >
-                {topForms.map((_, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "rgba(15, 23, 42, 0.95)",
-                  borderColor: "rgba(6, 182, 212, 0.4)",
-                  borderRadius: "0.5rem",
-                  backdropFilter: "blur(8px)",
-                }}
-                labelStyle={{ color: "#67e8f9" }}
-                itemStyle={{ color: "#bae6fd" }}
-                formatter={(value, name, props) => [`${value} responses`, props.payload.formTitle]}
-              />
-              <Legend
-                wrapperStyle={{
-                  color: "#67e8f9",
-                  fontSize: "14px",
-                  paddingTop: "8px",
-                }}
-              />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
+        {topForms.length === 0 || hasNoResponses ? (
+          <div className="text-center py-12 text-slate-400 font-medium">
+            No form responses yet.
+          </div>
+        ) : (
+          <div className="h-[300px] w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={topForms}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={renderCustomizedLabel}
+                  outerRadius={85}
+                  dataKey="responsesCount"
+                  nameKey="formTitle"
+                >
+                  {topForms.map((_, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "rgba(15, 23, 42, 0.95)",
+                    borderColor: "rgba(6, 182, 212, 0.4)",
+                    borderRadius: "0.5rem",
+                    backdropFilter: "blur(8px)",
+                  }}
+                  labelStyle={{ color: "#67e8f9" }}
+                  itemStyle={{ color: "#bae6fd" }}
+                  formatter={(value, _, props) => [`${value} responses`, props.payload.formTitle]}
+                />
+                <Legend
+                  wrapperStyle={{
+                    color: "#67e8f9",
+                    fontSize: "14px",
+                    paddingTop: "8px",
+                  }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+        )}
       </CardContent>
     </Card>
   )
