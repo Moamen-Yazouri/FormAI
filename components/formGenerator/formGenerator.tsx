@@ -71,15 +71,6 @@ const FormGenerator = (props: IProps) => {
     <FormikProvider value={formik}>
       <Form className="flex flex-col gap-5 w-full bg-gradient-to-br from-slate-950 via-blue-950 to-cyan-950    shadow-xl p-6 text-slate-200">
         <CardContent className="flex flex-col space-y-4 bg-slate-900/40 backdrop-blur-sm rounded-lg p-6 border border-cyan-700/10">
-          {props.allowAnonymous && (
-            <MotionField
-              label={`Include Your Email: ${user?.email} in the response`}
-              name="allowAnonymous"
-              type="checkbox"
-              className="w-full"
-            />
-          )}
-
           {props.fields.map((field, index) => (
             <FieldProvider key={index} field={field} />
           ))}

@@ -114,6 +114,10 @@ class ResponseRepo {
     async deleteUserResponses(userId: string) {
         return await responseModel.deleteMany({ userId: userId });
     }
+    
+    async getResponseByUserIdAndFormId(userId: string, formId: string) {
+        return await responseModel.findOne({ userId: userId, formId: formId }).lean<IResponseFromDB>();
+    }
 }
 
 export default new ResponseRepo();

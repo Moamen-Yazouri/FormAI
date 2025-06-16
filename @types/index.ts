@@ -25,6 +25,7 @@ export interface IResponseFromDB {
     createdAt: string; 
     updatedAt: string;
     __v: number;
+    anonymous: boolean;
 }
 
 export enum ERole {

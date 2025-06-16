@@ -1,8 +1,8 @@
 "use client";
 import { Card, CardHeader } from "@/components/ui/card";
-import type { IForm } from "@/@types";
+import type { IForm, IFormField } from "@/@types";
 import FormGenerator from "../formGenerator/formGenerator";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import LoadingPage from "../loadingPage/loadingPage";
 import { motion } from "framer-motion";
 import { getForm } from "./service/form.service";
@@ -24,7 +24,23 @@ const FormTemplate = (props: IProps) => {
   const { user, isLoading } = useContext(AuthContext);
   const router = useRouter();
   const [responded, setResponded] = useState<boolean>(false);
-
+  const fields: IFormField[] = useMemo(() => {
+    if (data) {
+      if(data.allowAnonymous) {
+        const anonymousField: IFormField = {
+          fieldId: "allowAnonymos",
+          name: "allowAnonymos",
+          type: "checkbox",
+          label: `Include Your email: ${user?.email || ""} on response`,
+          required: false,
+        }
+        return [anonymousField, ...data.fields];
+      } else {
+        return data.fields;
+      }
+    }
+    return [];
+  }, [data]);
   useEffect(() => {
     if (id && user) {
       getForm(id)
@@ -84,7 +100,7 @@ const FormTemplate = (props: IProps) => {
                 </div>
               ) : (
                 <FormGenerator
-                  fields={data.fields}
+                  fields={fields}
                   formId={String(id)}
                   allowAnonymous={data.allowAnonymous}
                   isPreview={props.isPreview}
