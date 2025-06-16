@@ -8,6 +8,9 @@ import { IDisplayResponse } from "@/@types";
 import ResponseInfoCard from "./responseInfoCard";
 import QuestionCard from "./questionCard";
 import { toast } from "sonner";
+import { useContext } from "react";
+import { AuthContext } from "@/providers/auth/authProvider";
+import TablesLoader from "@/components/tables-loader/tablesLoader";
 
 interface IProps {
     response: IDisplayResponse | null
@@ -15,6 +18,12 @@ interface IProps {
 
 export default function ResponseDetailsPage({ response }: IProps) {
     const router = useRouter();
+    const {user, isLoading} = useContext(AuthContext)
+
+    if (isLoading) return <TablesLoader itemName="Responses" />
+
+    if(!user) return null;
+
     if (!response) {
         toast.error("Response not found")
         setTimeout(() => {
@@ -85,7 +94,9 @@ export default function ResponseDetailsPage({ response }: IProps) {
 
             <div className="flex gap-2">
                 {
-                    response.respondentEmail !== "Anonymous" && (
+                    response.respondentEmail !== "Anonymous" && 
+                    response.respondentName !== user.name && 
+                    (
                         <a href={`mailto:${info.respondentEmail}`}>
                             <Button
                                 variant="outline"

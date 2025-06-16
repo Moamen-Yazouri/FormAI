@@ -7,9 +7,15 @@ import {
     IFormCreationData, 
     IFormTable 
 } from "@/@types";
-import { getActiveStatus, getDateOnly, getMonthName, getWeekDaysDates } from "@/lib/dateUtils";
+import { 
+    getActiveStatus, 
+    getDateOnly, 
+    getMonthName, 
+    getWeekDaysDates 
+} from "@/lib/dateUtils";
 import dashboardRepo from "../../repositories/admin/dashboard.repo";
 import { months } from "@/constants/dateConstants";
+import { creatorFormsFormatter, userDataFormatter } from "./utils";
 
 class DashboardService {
     async getUsersData() {
@@ -18,26 +24,7 @@ class DashboardService {
             const forms = await dashboardRepo.getUserForms(userId) || [];
             return forms.length;
         }
-        const usersData: IUserData[] = await Promise.all(
-            users.sort((a, b) => {
-                const aActive = getActiveStatus(a.lastActive);
-                const bActive = getActiveStatus(b.lastActive);
-                if(aActive === "active" && bActive === "inactive") return -1;
-                if(aActive === "inactive" && bActive === "active") return 1;
-                return 0;
-            })
-            .map(async (user) => {
-                return {
-                    id: String(user._id),
-                    name: user.name,
-                    email: user.email,
-                    role: user.role,
-                    status: getActiveStatus(user.lastActive),
-                    forms: await formsCount(String(user._id)),
-                    lastActive: getDateOnly(user.lastActive),
-                }
-            })
-        )
+        const usersData: IUserData[] = await Promise.all(userDataFormatter(users, formsCount));
         return usersData;
     }
 
@@ -46,18 +33,7 @@ class DashboardService {
             const user: IUserFromDB | null = await dashboardRepo.getUserByName(username);
             if (user) {
                 const forms: IFormFromDB[] = await dashboardRepo.getUserForms(user._id);
-                const formsData: IFormTable[] = forms.map(form => {
-                    const resNubmber = (form.anonymousNumber || 0) + (form.answeredBy?.length || 0)
-                    return {
-                        id: String(form._id),
-                        name: form.title,
-                        creator: user.name,
-                        description: form.description,
-                        responses: resNubmber,
-                        createdAt: getDateOnly(form.createdAt),
-                        deadline: form.expiredAt ? getDateOnly(form.expiredAt) : "No deadline",
-                    }
-                })
+                const formsData: IFormTable[] = creatorFormsFormatter(forms, username)
                 return formsData;
             }
             console.error("User not found!");

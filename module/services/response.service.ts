@@ -135,7 +135,7 @@ class ResponseService {
     }
     async handleEditResponse(prevResponse: IResponseFromDB, newResponse: IFormResponse) {
         const uId = String(newResponse.userId);
-        const fId = String(newResponse.formId);
+        const fId = String(prevResponse.formId);
         if(prevResponse.anonymous && !newResponse.anonymous) {
             await formsService.removeAnonymous(fId);
             await formsService.addRespondant(fId, uId);

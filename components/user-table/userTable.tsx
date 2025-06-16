@@ -187,7 +187,7 @@ const UsersTable = (props: IProps) => {
           <Link href={`/admin/all-users`}>
             <Button
               variant="outline"
-              className="text-cyan-400 border-cyan-400/40 hover:bg-gradient-to-r hover:from-blue-700/20 hover:to-cyan-600/20 transition"
+              className="bg-slate-900/30 text-cyan-300 border-cyan-500/30 hover:bg-gradient-to-r hover:from-blue-800/30 hover:to-cyan-700/30 hover:text-white transition-colors flex items-center gap-2"
             >
               View All Users
             </Button>

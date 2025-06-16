@@ -55,7 +55,8 @@ export const useForm = (props: IProps) => {
                     answer: values[field.fieldId.toLowerCase()],
                 }
             })
-            const anonymous = props.allowAnonymous ? !values.anonymous: false;
+            const anonymous = props.allowAnonymous ? !values.allowanonymos: false;
+            
             const formResponse: IFormResponse = {
                 formId: new mongoose.Types.ObjectId(props.formId),
                 answers: answers,

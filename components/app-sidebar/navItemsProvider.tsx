@@ -16,8 +16,8 @@ import { getNavItems } from "./util/getNavItems"
 
 export default function NavItemsProvider() {
   const { user, isLoading } = useContext(AuthContext)
-  const pathname = usePathname()
-
+  const pathname = usePathname();
+  
   if (isLoading || !user) return null
   const navItems = getNavItems(user.role, user.name)
 
@@ -27,7 +27,7 @@ export default function NavItemsProvider() {
         <SidebarGroupContent>
           <SidebarMenu>
             {navItems.map((item) => {
-              const isActive = pathname === item.href
+              const isActive = decodeURIComponent(pathname) === item.href
               return (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
