@@ -99,6 +99,7 @@ const handleRemoveEmail = (emailToRemove: string) => {
         }
     }
     const handlePublishForm = async () => {
+        setShowPublishDialog(false);
         setIsPublishing(true);
 
         if(!user) {
