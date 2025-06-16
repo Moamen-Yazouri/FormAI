@@ -1,41 +1,49 @@
-import { IAnswer, IDisplayResponse, IFormResponse } from "@/@types";
+import { 
+    IAnswer, 
+    IDisplayResponse, 
+    IFormResponse, 
+    IResponseFromDB, 
+    IResponsePopulatedCreator 
+} from "@/@types";
 import formsRepo from "../repositories/forms.repo";
 import responseRepo from "../repositories/response.repo";
 import formsService from "./forms.service";
 import { getDateOnly } from "@/lib/dateUtils";
-import { generateValidationSchema } from "@/lib/createTheValidationSchema";
+import { validateResponse } from "@/lib/validateResponse";
 
 
 class ResponseService {
         async addResponse (response: IFormResponse) {
         const form = await formsRepo.getFormById(String(response.formId));
+        const userId = String(response.userId);
+        const formId = String(response.formId);
 
         if(!form) {
             throw new Error("No form found");
         }
-        const validation: {[key: string]: any} = {};
-        response.answers.forEach(answer => {
-            validation[String(answer.fieldId).toLowerCase()] = answer.answer;
-        })
-        const isValid = await generateValidationSchema(form.fields).isValid(validation);
+
+        const isValid = await validateResponse(response.answers, form.fields);
 
         if(!isValid) {
             throw new Error("Invalid response");
         }
-        const responded = form.answeredBy.some(res => String(res) === String(response.userId));
-        console.log(validation);
-        if(!responded) {
-            let idToSend = String(response.userId);
+
+        const prevResponse = await responseRepo.getResponseByUserIdAndFormId(userId, formId);
+
+        if(!prevResponse) {
+            let idToSend = userId;
             if(response.anonymous) {
                 idToSend = "Anonymous";
             }
             await formsRepo.addRespondant(String(response.formId), idToSend);
             return await responseRepo.addResponse(response);
         }
+
         else {
-            console.log("Already responded");
+            await this.handleEditResponse(prevResponse, response);
             return await responseRepo.updateResponse(response);
         }
+
     }
     async getResponseById(id: string) {
         const response = await responseRepo.getResponseById(id);
@@ -44,16 +52,28 @@ class ResponseService {
         }
         return response;
     }
-    async getResponse(id: string) {
+
+    async getResponseByUserAndFormId(userId: string, formId: string) {
+        const response = await responseRepo.getResponseByUserIdAndFormId(userId, formId);
+        return response;
+    }
+    async getResponseData(id: string) {
         const response = await responseRepo.getResponseData(id);
-        const answers: IAnswer[] = response.answers;
         if(!response) {
             throw new Error("No response found");
         }
+        return response;
+    }
+    async getResponse(id: string) {
+        const response = await responseRepo.getResponseData(id);
+        if(!response) {
+            throw new Error("No response found");
+        }
+        const answers: IAnswer[] = response.answers;
         const responseData: IDisplayResponse = {
             formTitle: response.formId.title,
-            respondentName: response.userId.name || "Anonymous",
-            respondentEmail: response.userId.email,
+            respondentName: response.anonymous? "Anonymous" : response.userId.name,
+            respondentEmail: response.anonymous? "Anonymous" : response.userId.email,
             submittedAt: response.createdAt,
             responses: answers.map(answer => {
                 {
@@ -72,7 +92,13 @@ class ResponseService {
         if(!response) {
             throw new Error("No response found");
         }
-        return response;
+        if(response.anonymous) {
+            await formsService.removeAnonymous(String(response.formId));
+        }
+        else {
+            await formsService.removeRespondant(String(response.formId), String(response.userId));
+        }
+        return await responseRepo.deleteResponse(id);
     }
 
     async deleteFromResponses(formId: string) {
@@ -95,11 +121,26 @@ class ResponseService {
         if(!isOwner) {
             throw new Error("You are not the owner of this form");
         }
-        const responses = await responseRepo.getFormResponses(formId);
+
+        const responses = (await responseRepo.getFormResponses(formId))
+                        .filter(res => res.formId !== null);
         if(!responses) {
             throw new Error("No responses found");
         }
-        const responsesData = responses.map(res => {
+        const hideAnonymousNames: IResponsePopulatedCreator[] = responses.map(res => {
+                if(!res.anonymous) {
+                    return res;
+                }
+                return {
+                    ...res,
+                    userId: {
+                        name: "Anonymous",
+                        email: "Anonymous"
+                    }
+                }
+            
+        })
+        const responsesData = hideAnonymousNames.map(res => {
             return {
                 id: String(res._id),
                 formTitle: res.formId.title, 
@@ -108,6 +149,20 @@ class ResponseService {
                 date: getDateOnly(res.createdAt)}
         })
         return responsesData;
+    }
+    async handleEditResponse(prevResponse: IResponseFromDB, newResponse: IFormResponse) {
+        const uId = String(newResponse.userId);
+        const fId = String(prevResponse.formId);
+        if(prevResponse.anonymous && !newResponse.anonymous) {
+            await formsService.removeAnonymous(fId);
+            await formsService.addRespondant(fId, uId);
+        }
+        else {
+            if(newResponse.anonymous) {
+                await formsService.removeRespondant(fId, uId);
+                await formsService.addAnonymous(fId);
+            }
+        }
     }
 }
 

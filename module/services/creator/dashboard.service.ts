@@ -1,6 +1,5 @@
 import { 
     IFormFromDB, 
-    IFormTable, 
     IResponsePopulatedCreator 
 } from "@/@types";
 import { 
@@ -10,11 +9,11 @@ import {
     IFormResponseData 
 } from "@/app/(main)/creator/[name]/dashboard/types";
 import { connection } from "@/DB/connection";
-import { getDateOnly } from "@/lib/dateUtils";
 import { getDataPerDate } from "@/lib/getDataPerDate";
 import formsRepo from "@/module/repositories/forms.repo";
 import responseRepo from "@/module/repositories/response.repo";
 import userRepo from "@/module/repositories/user.repo";
+import { formatCreatorForms, formatCreatorResponses } from "./utils";
 
 class DashboardService {
     async formCreationData (name: string) {
@@ -49,10 +48,11 @@ class DashboardService {
         const forms = await formsRepo.getCreatorForm(String(creator._id));
         if(forms) {
             const formResponseData: IFormResponseData[] = forms.map((form) => {
+                const resCount = (form.answeredBy?.length || 0) + (form?.anonymousNumber || 0);
                 return {
                     formId: String(form._id),
                     formTitle: form.title,
-                    responsesCount: form.answeredBy?.length || 0,
+                    responsesCount: resCount, 
                 }
             })
 
@@ -75,10 +75,8 @@ class DashboardService {
             throw new Error("No forms found!");
         }
 
-        if(creator === null) {
-            throw new Error("Creator not found!");
-        }
         const responses: IResponsePopulatedCreator[] | null = await responseRepo.getCreatorResponses(creator);
+
         if(!responses) {
             throw new Error("Creator not found!")
         };
@@ -102,23 +100,13 @@ class DashboardService {
     async getCreatorForms(name: string) {
         await connection()
         const creator = await userRepo.getUserByName(name);
+
         if(!creator) throw new Error("Invalid creator name!");
 
         const forms: IFormFromDB[]  = await formsRepo.getCreatorForm(creator._id);
 
         if(forms.length > 0) {
-            const formsData: IFormTable[] = forms.map((form) => {
-                return {
-                    id: String(form._id),
-                    name: form.title,
-                    creator: creator.name,
-                    description: form.description,
-                    createdAt: getDateOnly(form.createdAt),
-                    responses: form.answeredBy?.length || 0,
-                    deadline: form.expiredAt ? getDateOnly(form.expiredAt) : "No deadline",
-                }
-            })
-            return formsData;
+            return formatCreatorForms(forms, name);
         }
         throw new Error("No forms yet!");
     }
@@ -135,27 +123,10 @@ class DashboardService {
             throw new Error("No user found!");
         }
 
-        if(responses?.length === 0) {
-            throw new Error("No response found!")
+        if(responses.length === 0) {
+            throw new Error("No responses found!")
         }
-
-        const filteredResponses: ICreatorResponses[] = responses.filter(
-            response => response.formId !== null
-        )
-        .map(
-            res => ({
-                id: String(res._id),
-                formTitle: res.formId.title, 
-                respondentName: res.userId.name,
-                respondentEmail: res.userId.email,
-                date: getDateOnly(res.createdAt)
-            })
-        );
-        const sortedResponses = filteredResponses.sort((a, b) => {
-            const dateA = new Date(a.date);
-            const dateB = new Date(b.date);
-            return dateB.getTime() - dateA.getTime();
-        })
+        const sortedResponses: ICreatorResponses[] = formatCreatorResponses(responses)
         return sortedResponses;
     }
 }

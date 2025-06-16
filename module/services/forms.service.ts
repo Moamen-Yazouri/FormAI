@@ -20,6 +20,21 @@ class FormServices {
     }
 
 
+    async addRespondant (formId: string, userId: string) {
+        return await formsRepo.addRespondant(formId, userId);
+    }
+
+    async removeRespondant (formId: string, userId: string) {
+        return await formsRepo.removeRespondant(formId, userId);
+    }
+
+    async addAnonymous (formId: string) {
+        return await formsRepo.addAnonymous(formId);
+    }
+
+    async removeAnonymous (formId: string) {
+        return await formsRepo.removeAnonymous(formId);
+    }
 
     async getAnswerdForms (username: string) {
         const user = await userRepo.getUserByName(username);
@@ -56,12 +71,12 @@ class FormServices {
     async ensureFormCreator (formId: string, creatorName: string): Promise<Boolean> {
         const form = await formsRepo.getFormById(formId);
         const creator = await userRepo.getUserByName(creatorName);
-        console.log(creator?._id);
-        console.log(String(form?.creatorId ));
         if(!creator) {
             throw new Error("Creator not found");
         }
-        
+        if(creator.role === "admin") {
+            return true;
+        }
         if(!form) {
             throw new Error("Form not found");
         }

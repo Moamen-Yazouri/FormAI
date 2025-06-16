@@ -5,11 +5,11 @@ import { NextRequest, NextResponse } from "next/server";
 export const DELETE = async (req: NextRequest) => {
     await connection();
     try {
-        const { id } = await req.json();
-        if (id) {
+        const { responseId } = await req.json();
+        if (!responseId) {
             return NextResponse.json({message: "No id provided!"}, {status: 400});
         }
-        const response = await responseService.deleteResponse(id);
+        const response = await responseService.deleteResponse(responseId);
         if(!response) {
             return NextResponse.json({message: "No response found!"}, {status: 404});
         }

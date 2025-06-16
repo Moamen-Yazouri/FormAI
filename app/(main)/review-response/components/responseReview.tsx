@@ -8,13 +8,21 @@ import { IDisplayResponse } from "@/@types";
 import ResponseInfoCard from "./responseInfoCard";
 import QuestionCard from "./questionCard";
 import { toast } from "sonner";
+import { useContext } from "react";
+import { AuthContext } from "@/providers/auth/authProvider";
+import TablesLoader from "@/components/tables-loader/tablesLoader";
 
 interface IProps {
     response: IDisplayResponse | null
 }
 
 export default function ResponseDetailsPage({ response }: IProps) {
-    const router = useRouter()
+    const router = useRouter();
+    const {user, isLoading} = useContext(AuthContext)
+
+    if (isLoading) return <TablesLoader itemName="Responses" />
+
+    if(!user) return null;
 
     if (!response) {
         toast.error("Response not found")
@@ -42,7 +50,6 @@ export default function ResponseDetailsPage({ response }: IProps) {
     return (
         <div className="min-h-screen w-full bg-gradient-to-br from-slate-950 via-blue-900 to-indigo-900 text-slate-200">
         <div className="container mx-auto px-4 py-8 max-w-4xl">
-            {/* Top Bar */}
             <div className="flex items-center justify-between mb-6">
             <Button
                 variant="ghost"
@@ -54,17 +61,16 @@ export default function ResponseDetailsPage({ response }: IProps) {
             </Button>
             </div>
 
-            {/* Response Info */}
             <div className="mb-6">
-            <ResponseInfoCard info={info} />
+                <ResponseInfoCard info={info} />
             </div>
 
-            {/* Questions */}
+
             <div className="mb-6">
             <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
                 <FileText className="h-5 w-5 text-cyan-400" />
                 <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent">
-                Response Details
+                    Response Details
                 </span>
             </h2>
 
@@ -77,7 +83,6 @@ export default function ResponseDetailsPage({ response }: IProps) {
 
             <Separator className="my-6 bg-cyan-700/20" />
 
-            {/* Actions */}
             <div className="flex justify-between items-center mt-8">
             <Button
                 variant="outline"
@@ -88,15 +93,21 @@ export default function ResponseDetailsPage({ response }: IProps) {
             </Button>
 
             <div className="flex gap-2">
-                <a href={`mailto:${info.respondentEmail}`}>
-                <Button
-                    variant="outline"
-                    className="flex items-center gap-2 text-cyan-300 border-cyan-400/30 bg-slate-900/30 hover:bg-cyan-800/20 hover:text-white transition-colors"
-                >
-                    <Mail className="h-4 w-4" />
-                    Contact Respondent
-                </Button>
-                </a>
+                {
+                    response.respondentEmail !== "Anonymous" && 
+                    response.respondentName !== user.name && 
+                    (
+                        <a href={`mailto:${info.respondentEmail}`}>
+                            <Button
+                                variant="outline"
+                                className="flex items-center gap-2 text-cyan-300 border-cyan-400/30 bg-slate-900/30 hover:bg-cyan-800/20 hover:text-white transition-colors"
+                            >
+                                <Mail className="h-4 w-4" />
+                                Contact Respondent
+                            </Button>
+                        </a>
+                    )
+                }
 
                 <Button
                 onClick={handleCopy}
@@ -109,5 +120,5 @@ export default function ResponseDetailsPage({ response }: IProps) {
             </div>
         </div>
         </div>
-  )
+    )
 }

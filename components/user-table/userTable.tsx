@@ -1,8 +1,14 @@
-"use client"
-
-import type { IUserData } from "@/@types"
-import { Button } from "@/components/ui/button"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+"use client";
+import type { IUserData } from "@/@types";
+import { Button } from "@/components/ui/button";
+import { 
+  Table,
+  TableBody, 
+  TableCell, 
+  TableHead, 
+  TableHeader, 
+  TableRow 
+} from "@/components/ui/table";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { MoreVertical, Eye } from "lucide-react"
 import { useState } from "react"
@@ -58,6 +64,7 @@ const UsersTable = (props: IProps) => {
     name
       .split(" ")
       .map((n) => n[0])
+      .slice(0, 3)
       .join("")
       .toUpperCase()
   if(deleteing) return <TablesLoader itemName="User"/>
@@ -130,7 +137,7 @@ const UsersTable = (props: IProps) => {
                   {user.role}
                 </Badge>
               </TableCell>
-              <TableCell className="text-slate-100 font-medium">{user.forms}</TableCell>
+              <TableCell className="text-slate-100 font-medium">{user.role === "user" ? "-" : user.forms}</TableCell>
               <TableCell className="text-slate-400">{user.lastActive}</TableCell>
               <TableCell className="text-right">
                 <DropdownMenu>
@@ -149,7 +156,7 @@ const UsersTable = (props: IProps) => {
                     className="bg-gradient-to-br from-blue-900/90 via-indigo-800/85 to-cyan-700/80 backdrop-blur-md shadow-xl"
                   >
                     <DropdownMenuLabel className="text-blue-300">Actions</DropdownMenuLabel>
-                    {user.role === "creator" && (
+                    {user.role !== "user" && (
                       <DropdownMenuItem
                         className="flex items-center gap-2 text-slate-300 hover:bg-gradient-to-r from-cyan-600/30 to-blue-600/30 hover:text-cyan-200 cursor-pointer"
                         onClick={() => router.push(`/admin/creator-forms/${user.name}`)}
@@ -180,7 +187,7 @@ const UsersTable = (props: IProps) => {
           <Link href={`/admin/all-users`}>
             <Button
               variant="outline"
-              className="text-cyan-400 border-cyan-400/40 hover:bg-gradient-to-r hover:from-blue-700/20 hover:to-cyan-600/20 transition"
+              className="bg-slate-900/30 text-cyan-300 border-cyan-500/30 hover:bg-gradient-to-r hover:from-blue-800/30 hover:to-cyan-700/30 hover:text-white transition-colors flex items-center gap-2"
             >
               View All Users
             </Button>

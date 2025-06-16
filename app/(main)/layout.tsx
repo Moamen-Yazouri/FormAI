@@ -13,7 +13,7 @@ export default function RootLayout({
 
         <SidebarProvider className="w-full">
           <AppSidebar />
-          {children}
+            {children}
         </SidebarProvider>
   )
 }

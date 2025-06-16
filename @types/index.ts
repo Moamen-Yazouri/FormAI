@@ -21,10 +21,11 @@ export interface IResponseFromDB {
     _id: string; 
     formId: string;
     userId: string;
-    answers: string[]; 
+    answers: IAnswer[]; 
     createdAt: string; 
     updatedAt: string;
     __v: number;
+    anonymous: boolean;
 }
 
 export enum ERole {
@@ -146,6 +147,7 @@ export interface IFormPopulatedByCreator extends Omit<IFormFromDB, "creatorId"> 
     }
 }
 
+
 export interface IUserResponse extends Omit<IFormResponse, "formId">  {
     formId: {
         title: string
@@ -214,10 +216,7 @@ export interface IUserResponseDetails {
     createdAt: string,
     completedAt: string,
 }
-export interface IActive {
-    userId: mongoose.Types.ObjectId,
-    lastActive: Date,
-}
+
 export interface IOptions {
     value: string;
     label: string;

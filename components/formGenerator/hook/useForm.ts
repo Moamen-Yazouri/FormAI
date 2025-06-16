@@ -19,9 +19,10 @@ interface IProps {
 
 export const useForm = (props: IProps) => {
         const {user} = useContext(AuthContext);
-        const [submitted, setSubmitted] = useState(false)
+        const [submitted, setSubmitted] = useState(false);
+
         const initialValues = useMemo(() => {
-            return getInitials(props.fields); 
+            return getInitials(props.fields);
         }, [props.fields, props.allowAnonymous]);
 
         const validationSchema = useMemo(() => {
@@ -44,18 +45,23 @@ export const useForm = (props: IProps) => {
                 toast.error("You must be logged in to submit a form!");
                 return;
             }
-            const answers: IAnswer[] = props.fields.map(field => {
+            const answers: IAnswer[] = props.fields
+            .filter(field => {
+                return field.fieldId !== "allowAnonymos";
+            })
+            .map(field => {
                 return {
                     fieldId: field.fieldId,
                     answer: values[field.fieldId.toLowerCase()],
                 }
             })
+            const anonymous = props.allowAnonymous ? !values.allowanonymos: false;
             
             const formResponse: IFormResponse = {
                 formId: new mongoose.Types.ObjectId(props.formId),
                 answers: answers,
                 userId: new mongoose.Types.ObjectId(user._id),
-                anonymous: !formik.values.allowAnonymous || false,
+                anonymous: anonymous,
             }
             
             try{
@@ -68,11 +74,8 @@ export const useForm = (props: IProps) => {
                         body: JSON.stringify(formResponse),
                     }
                 )
-
-                const data = await res.json();
                 if(!res.ok) {
-                    console.error(data.message);
-                    toast.error(data.message);
+                    toast.error("Failed To Submot Your Response");
                     return;
                 }
                 resetForm();
@@ -97,7 +100,7 @@ export const useForm = (props: IProps) => {
         validationSchema,
 
         enableReinitialize: true,
-        validateOnMount: true,
+        validateOnMount: false,
         validateOnChange: false,
     })
     return {

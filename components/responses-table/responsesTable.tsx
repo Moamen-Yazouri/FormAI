@@ -53,6 +53,7 @@ const ResponsesTable = ({ responses, isSummary }: IProps) => {
         }
     }
     const handleDeleteResponse = async (id: string) => {
+        console.log(id);
         setDeleting(true);
         const deletedResponse = await deleteResponse(id);
         setDeleting(false);
@@ -69,7 +70,7 @@ const ResponsesTable = ({ responses, isSummary }: IProps) => {
         
     }
     if(isLoading || deleting) {
-        return <TablesLoader itemName={"Response"}/>
+        return <TablesLoader itemName={"Response"} action="Loading"/>
     }
     if(!user) {
         return null;
@@ -172,7 +173,7 @@ const ResponsesTable = ({ responses, isSummary }: IProps) => {
             <Link href={`/${user.role || "creator"}/${user.name}/all-responses`}>
                 <Button
                 variant="outline"
-                className="text-cyan-400 border-cyan-400/40 hover:bg-gradient-to-r hover:from-blue-700/20 hover:to-cyan-600/20 transition"
+                className="bg-slate-900/30 text-cyan-300 border-cyan-500/30 hover:bg-gradient-to-r hover:from-blue-800/30 hover:to-cyan-700/30 hover:text-white transition-colors flex items-center gap-2"
                 >
                 View All Responses
                 </Button>

@@ -1,4 +1,10 @@
-import { IFormResponse, IResponseFromDB, IResponsePopulatedUser, IUserFromDB } from "@/@types";
+import { 
+    IFormResponse, 
+    IResponseFromDB, 
+    IResponsePopulatedCreator, 
+    IResponsePopulatedUser, 
+    IUserFromDB 
+} from "@/@types";
 import responseModel from "@/DB/models/response.model";
 import { IResponseDetailsFromDB } from "../services/types";
 
@@ -28,7 +34,7 @@ class ResponseRepo {
                 path: "userId",
                 select: "name email -_id"
             }
-        ]);
+        ]).lean<IResponsePopulatedCreator>();
     }
 
     async addResponse(response: IFormResponse) {
@@ -66,17 +72,18 @@ class ResponseRepo {
     async getFormResponses(formId: string) {
             const formResponses = await responseModel.find().populate([
                 {
-                    path: "userId",
-                    select: "name email -_id"
+                    match: { _id: formId },
+                    path: "formId",
+                    select: "title"
                 },
                 {
-                    path: "formId",
-                    match: { _id: formId },
-                    select: "title"
+                    path: "userId",
+                    select: "name email -_id"
                 }
-            ])
-            const filtered = formResponses.filter(r => r.formId !== null);
-            return filtered;
+            ]).lean<IResponsePopulatedCreator[]>();
+
+            
+            return formResponses;
     }
 
     async getUserResponses(id: string) {
@@ -86,8 +93,8 @@ class ResponseRepo {
                 select: "title -_id"
             },
         ])
-            .lean<IResponsePopulatedUser[]>();
-        return userResponses;
+        .lean<IResponsePopulatedUser[]>();
+        return userResponses.filter(r => !r.anonymous);
     }
 
     async getUserResponseDetails(id: string) {
@@ -113,6 +120,10 @@ class ResponseRepo {
 
     async deleteUserResponses(userId: string) {
         return await responseModel.deleteMany({ userId: userId });
+    }
+    
+    async getResponseByUserIdAndFormId(userId: string, formId: string) {
+        return await responseModel.findOne({ userId: userId, formId: formId }).lean<IResponseFromDB>();
     }
 }
 

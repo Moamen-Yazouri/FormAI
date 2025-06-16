@@ -51,15 +51,35 @@ class FormsRepo {
     }
     async addRespondant (formId: string, userId: string) {
         if(userId === "Anonymous") {
-            return await FormModel.findByIdAndUpdate(formId, {
-                $inc: {
-                    anonymousNumber: 1
-                }
-            }).lean<IFormFromDB>();
+            return await this.addAnonymous(formId);
         }
         return await FormModel.findByIdAndUpdate(formId, {
             $addToSet: {
                 answeredBy: userId
+            }
+        }).lean<IFormFromDB>();
+    }
+    
+    async removeRespondant (formId: string, userId: string) {
+        return await FormModel.findByIdAndUpdate(formId, {
+            $pull: {
+                answeredBy: userId
+            }
+        }).lean<IFormFromDB>();
+    }
+
+    async addAnonymous (formId: string) {
+        return await FormModel.findByIdAndUpdate(formId, {
+            $inc: {
+                anonymousNumber: 1
+            }
+        }).lean<IFormFromDB>();
+    }
+
+    async removeAnonymous (formId: string) {
+        return await FormModel.findByIdAndUpdate(formId, {
+            $inc: {
+                anonymousNumber: -1
             }
         }).lean<IFormFromDB>();
     }

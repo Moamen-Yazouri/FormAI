@@ -34,6 +34,7 @@ import clsx from "clsx";
 interface IProps {
     forms: IFormTable[]
     isSummary?: boolean
+    available?: boolean
 }
 
 const FormsTable = (props: IProps) => {
@@ -76,7 +77,11 @@ const FormsTable = (props: IProps) => {
             <TableRow className="border-b border-cyan-500/20 hover:bg-blue-800/10">
                 <TableHead className="text-cyan-300 font-semibold">Form Name</TableHead>
                 <TableHead className="text-cyan-300 font-semibold">Creator</TableHead>
-                <TableHead className="text-cyan-300 font-semibold">Responses</TableHead>
+                {
+                    user.role === "admin" && !props.available && (
+                        <TableHead className="text-cyan-300 font-semibold">Responses</TableHead>
+                    )
+                }
                 <TableHead className="text-cyan-300 font-semibold">Created Date</TableHead>
                 <TableHead className="text-cyan-300 font-semibold">Deadline</TableHead>
                 <TableHead className="text-cyan-300 font-semibold text-right">Actions</TableHead>
@@ -102,15 +107,18 @@ const FormsTable = (props: IProps) => {
                 </TableCell>
 
                 <TableCell className="text-slate-100">{form.creator}</TableCell>
-
-                <TableCell>
-                    <Badge
-                    variant="secondary"
-                    className=" bg-gradient-to-r from-blue-500/70 to-cyan-400/70 text-white border-cyan-500/50 shadow-sm"
-                    >
-                    {form.responses}
-                    </Badge>
-                </TableCell>
+                {
+                    user.role === "admin" && !props.available && (                        
+                        <TableCell>
+                            <Badge
+                            variant="secondary"
+                            className=" bg-gradient-to-r from-blue-500/70 to-cyan-400/70 text-white border-cyan-500/50 shadow-sm"
+                            >
+                            {form.responses}
+                            </Badge>
+                        </TableCell>
+                    )
+                }
                 <TableCell className="text-slate-400">{String(form.createdAt)}</TableCell>
                 <TableCell className="text-cyan-300 font-medium">
                     <div className="inline-flex items-center justify-center gap-1 bg-cyan-800/30 px-2 py-1 rounded-md border border-cyan-500/30 text-xs">
@@ -188,7 +196,7 @@ const FormsTable = (props: IProps) => {
                 <Link href={user.role === "admin" ? `/admin/all-forms` : `/creator/${user.name}/my-forms`}>
                     <Button
                     variant="outline"
-                    className="text-cyan-400 border-cyan-400/40 hover:bg-gradient-to-r hover:from-blue-700/20 hover:to-cyan-600/20 transition"
+                    className="bg-slate-900/30 text-cyan-300 border-cyan-500/30 hover:bg-gradient-to-r hover:from-blue-800/30 hover:to-cyan-700/30 hover:text-white transition-colors flex items-center gap-2"
                     >
                     View All Forms
                     </Button>

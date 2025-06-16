@@ -9,6 +9,9 @@ export const  getAccessRights = async (formId: string): Promise<AccessRightsType
     if(!token) {
         return "unauthorized";
     }
+    if(token.role === "admin") {
+        return "allowed";
+    }
     try {
         await connection();
         const form = await formsService.getFormById(formId);
