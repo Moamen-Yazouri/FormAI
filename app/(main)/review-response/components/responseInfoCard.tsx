@@ -1,7 +1,8 @@
-import { IDisplayResponse } from '@/@types'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Calendar, Mail, User } from 'lucide-react'
-import React from 'react'
+import { IDisplayResponse } from '@/@types';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { getDateOnly } from '@/lib/dateUtils';
+import { Calendar, Mail, User } from 'lucide-react';
+import React from 'react';
 
 interface IProps {
     info: Omit<IDisplayResponse, "responses">
@@ -24,7 +25,6 @@ const ResponseInfoCard = (props: IProps) => {
 
         <CardContent className="pt-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            {/* Respondent Name */}
             <div className="flex items-center gap-3">
                 <div className="h-10 w-10 rounded-full bg-cyan-500/20 flex items-center justify-center">
                 <User className="h-5 w-5 text-cyan-400" />
@@ -35,10 +35,9 @@ const ResponseInfoCard = (props: IProps) => {
                 </div>
             </div>
 
-            {/* Email */}
             <div className="flex items-center gap-3">
                 <div className="h-10 w-10 rounded-full bg-blue-500/20 flex items-center justify-center">
-                <Mail className="h-5 w-5 text-blue-400" />
+                <Mail className="h-5 w-5 !text-cyan-400" />
                 </div>
                 <div>
                 <p className="text-sm font-medium text-slate-400">Email</p>
@@ -46,15 +45,14 @@ const ResponseInfoCard = (props: IProps) => {
                 </div>
             </div>
 
-            {/* Date */}
             <div className="flex items-center gap-3">
                 <div className="h-10 w-10 rounded-full bg-indigo-500/20 flex items-center justify-center">
-                <Calendar className="h-5 w-5 text-indigo-400" />
+                <Calendar className="h-5 w-5 !text-cyan-400" />
                 </div>
                 <div>
                 <p className="text-sm font-medium text-slate-400">Submitted</p>
                 <p className="font-medium text-slate-100">
-                    {new Date(info.submittedAt).toLocaleDateString()}
+                    {getDateOnly(new Date(info.submittedAt))}
                 </p>
                 </div>
             </div>

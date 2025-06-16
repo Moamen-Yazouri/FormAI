@@ -1,8 +1,14 @@
-"use client"
-
-import type { IUserData } from "@/@types"
-import { Button } from "@/components/ui/button"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+"use client";
+import type { IUserData } from "@/@types";
+import { Button } from "@/components/ui/button";
+import { 
+  Table,
+  TableBody, 
+  TableCell, 
+  TableHead, 
+  TableHeader, 
+  TableRow 
+} from "@/components/ui/table";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { MoreVertical, Eye } from "lucide-react"
 import { useState } from "react"
@@ -131,7 +137,7 @@ const UsersTable = (props: IProps) => {
                   {user.role}
                 </Badge>
               </TableCell>
-              <TableCell className="text-slate-100 font-medium">{user.forms}</TableCell>
+              <TableCell className="text-slate-100 font-medium">{user.role === "user" ? "-" : user.forms}</TableCell>
               <TableCell className="text-slate-400">{user.lastActive}</TableCell>
               <TableCell className="text-right">
                 <DropdownMenu>
@@ -150,7 +156,7 @@ const UsersTable = (props: IProps) => {
                     className="bg-gradient-to-br from-blue-900/90 via-indigo-800/85 to-cyan-700/80 backdrop-blur-md shadow-xl"
                   >
                     <DropdownMenuLabel className="text-blue-300">Actions</DropdownMenuLabel>
-                    {user.role === "creator" && (
+                    {user.role !== "user" && (
                       <DropdownMenuItem
                         className="flex items-center gap-2 text-slate-300 hover:bg-gradient-to-r from-cyan-600/30 to-blue-600/30 hover:text-cyan-200 cursor-pointer"
                         onClick={() => router.push(`/admin/creator-forms/${user.name}`)}

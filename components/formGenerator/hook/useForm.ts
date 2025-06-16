@@ -73,11 +73,8 @@ export const useForm = (props: IProps) => {
                         body: JSON.stringify(formResponse),
                     }
                 )
-
-                const data = await res.json();
                 if(!res.ok) {
-                    console.error(data.message);
-                    toast.error(data.message);
+                    toast.error("Failed To Submot Your Response");
                     return;
                 }
                 resetForm();

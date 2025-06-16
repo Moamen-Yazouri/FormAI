@@ -55,6 +55,7 @@ const page = async(props: IProps) => {
     handleAccess(access);
 
     const { answers} = await getFormAnswers(id, validName);
+    console.log(answers);
     return (
         <ResponsesTable responses={answers} />
     )
