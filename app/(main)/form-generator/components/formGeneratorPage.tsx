@@ -31,7 +31,7 @@ export default function FormGeneratorPage() {
         generateForm,
         setPrompt,
         handlePublishForm,
-    } = useFormGenerator()
+    } = useFormGenerator();
 
     return (
         <div className="min-h-screen w-full bg-gradient-to-r from-slate-900/60 via-blue-900/40 to-cyan-900/40 relative overflow-hidden flex flex-col">
