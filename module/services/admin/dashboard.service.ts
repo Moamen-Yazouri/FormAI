@@ -47,12 +47,13 @@ class DashboardService {
             if (user) {
                 const forms: IFormFromDB[] = await dashboardRepo.getUserForms(user._id);
                 const formsData: IFormTable[] = forms.map(form => {
+                    const resNubmber = (form.anonymousNumber || 0) + (form.answeredBy?.length || 0)
                     return {
                         id: String(form._id),
                         name: form.title,
                         creator: user.name,
                         description: form.description,
-                        responses: form.answeredBy?.length || 0,
+                        responses: resNubmber,
                         createdAt: getDateOnly(form.createdAt),
                         deadline: form.expiredAt ? getDateOnly(form.expiredAt) : "No deadline",
                     }
@@ -72,12 +73,13 @@ class DashboardService {
         const populatedForms: IFormPopulatedByCreator[] = await dashboardRepo.getAllFormsWithCreators();
 
         const formsData: IFormTable[] = populatedForms.map(form => {
+            const resNubmber = (form.anonymousNumber || 0) + (form.answeredBy?.length || 0)
             return {
                 id: String(form._id),
                 name: form.title,
                 description: form.description,
                 creator: form.creatorId.name,
-                responses: form.answeredBy?.length || 0,
+                responses: resNubmber,
                 createdAt: getDateOnly(form.createdAt),
                 deadline: form.expiredAt? getDateOnly(form.expiredAt) : "No deadline",
             }

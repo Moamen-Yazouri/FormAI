@@ -3,7 +3,6 @@ import formsRepo from "../repositories/forms.repo";
 import responseRepo from "../repositories/response.repo";
 import formsService from "./forms.service";
 import { getDateOnly } from "@/lib/dateUtils";
-import { generateValidationSchema } from "@/lib/createTheValidationSchema";
 import { validateResponse } from "@/lib/validateResponse";
 
 
@@ -52,17 +51,23 @@ class ResponseService {
         const response = await responseRepo.getResponseByUserIdAndFormId(userId, formId);
         return response;
     }
-
-    async getResponse(id: string) {
+    async getResponseData(id: string) {
         const response = await responseRepo.getResponseData(id);
-        const answers: IAnswer[] = response.answers;
         if(!response) {
             throw new Error("No response found");
         }
+        return response;
+    }
+    async getResponse(id: string) {
+        const response = await responseRepo.getResponseData(id);
+        if(!response) {
+            throw new Error("No response found");
+        }
+        const answers: IAnswer[] = response.answers;
         const responseData: IDisplayResponse = {
             formTitle: response.formId.title,
-            respondentName: response.userId.name || "Anonymous",
-            respondentEmail: response.userId.email,
+            respondentName: response.anonymous? "Anonymous" : response.userId.name,
+            respondentEmail: response.anonymous? "Anonymous" : response.userId.email,
             submittedAt: response.createdAt,
             responses: answers.map(answer => {
                 {
@@ -108,7 +113,17 @@ class ResponseService {
         if(!responses) {
             throw new Error("No responses found");
         }
-        const responsesData = responses.map(res => {
+        const hideAnonymousNames = responses.map(res => {
+                return {
+                    ...res,
+                    userId: {
+                        name: "Anonymous",
+                        email: "Anonymous"
+                    }
+                }
+            
+        })
+        const responsesData = hideAnonymousNames.map(res => {
             return {
                 id: String(res._id),
                 formTitle: res.formId.title, 

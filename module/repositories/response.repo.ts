@@ -1,4 +1,10 @@
-import { IFormResponse, IResponseFromDB, IResponsePopulatedUser, IUserFromDB } from "@/@types";
+import { 
+    IFormResponse, 
+    IResponseFromDB, 
+    IResponsePopulatedCreator, 
+    IResponsePopulatedUser, 
+    IUserFromDB 
+} from "@/@types";
 import responseModel from "@/DB/models/response.model";
 import { IResponseDetailsFromDB } from "../services/types";
 
@@ -28,7 +34,7 @@ class ResponseRepo {
                 path: "userId",
                 select: "name email -_id"
             }
-        ]);
+        ]).lean<IResponsePopulatedCreator>();
     }
 
     async addResponse(response: IFormResponse) {
@@ -74,8 +80,9 @@ class ResponseRepo {
                     match: { _id: formId },
                     select: "title"
                 }
-            ])
-            const filtered = formResponses.filter(r => r.formId !== null);
+            ]).lean<IResponsePopulatedCreator[]>();
+
+            const filtered = formResponses
             return filtered;
     }
 
@@ -86,8 +93,8 @@ class ResponseRepo {
                 select: "title -_id"
             },
         ])
-            .lean<IResponsePopulatedUser[]>();
-        return userResponses;
+        .lean<IResponsePopulatedUser[]>();
+        return userResponses.filter(r => !r.anonymous);
     }
 
     async getUserResponseDetails(id: string) {

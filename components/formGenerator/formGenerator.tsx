@@ -2,17 +2,15 @@
 
 import { IFormField } from "@/@types";
 import { Form, FormikProvider } from "formik";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import FieldProvider from "../fieldProvider/fieldProvider";
 import { useForm } from "./hook/useForm";
 import { CardContent } from "../ui/card";
 import { Loader2, Save } from "lucide-react";
 import { Button } from "../ui/button";
-import MotionField from "../motionTextField/motionTextField";
-import { AuthContext } from "@/providers/auth/authProvider";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import LoadingPage from "../loadingPage/loadingPage";
+
 
 interface IProps {
   fields: IFormField[];
@@ -24,7 +22,6 @@ interface IProps {
 
 const FormGenerator = (props: IProps) => {
   const { formik, submitted } = useForm({ ...props });
-  const { user, isLoading } = useContext(AuthContext);
   const [isSub, setIsSub] = useState(formik.isSubmitting);
   const router = useRouter();
   useEffect(() => {
@@ -36,14 +33,7 @@ const FormGenerator = (props: IProps) => {
     router.back();
   };
 
-  if (isLoading) {
-    return (
-      <div className="w-full min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-cyan-950 px-4 md:px-10 py-8">
-        <LoadingPage />
-      </div>
-    );
-  }
-
+  
   if (submitted) {
     return (
       <motion.div

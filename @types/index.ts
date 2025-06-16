@@ -21,7 +21,7 @@ export interface IResponseFromDB {
     _id: string; 
     formId: string;
     userId: string;
-    answers: string[]; 
+    answers: IAnswer[]; 
     createdAt: string; 
     updatedAt: string;
     __v: number;
@@ -146,6 +146,7 @@ export interface IFormPopulatedByCreator extends Omit<IFormFromDB, "creatorId"> 
         name: string
     }
 }
+
 
 export interface IUserResponse extends Omit<IFormResponse, "formId">  {
     formId: {
