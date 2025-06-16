@@ -41,7 +41,7 @@ const LoginInfo = () => {
     finally {
       setLoggingOut(false)
     }
-    router.push("/sign-in")
+    router.push("/sign-in");
   }
 
   return (
