@@ -1,6 +1,6 @@
 import { UserRoles } from "@/@types";
 
-export type FormValues = {
+export type FormValues  = {
     name: string;
     role: UserRoles;
 }

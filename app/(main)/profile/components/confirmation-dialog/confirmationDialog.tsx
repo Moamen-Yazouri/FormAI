@@ -25,6 +25,7 @@ const ConfirmationDialog = (props: IProps) => {
     if (!user) return null
 
     const handleConfirmSubmit = async () => {
+        
         await submit()
         closeDialog(false)
     }

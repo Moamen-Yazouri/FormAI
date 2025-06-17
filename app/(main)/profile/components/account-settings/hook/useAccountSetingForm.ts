@@ -17,16 +17,19 @@ export const useAccountSetingForm = () => {
     ) => {
         if(values.name !== user.name) {
             const data = await ActionService.updateName(String(user._id), values.name!);
+
             if(data.user) {
-                toast.success(`Name updated to: ${user.name} successfully`);
+                toast.success(`Name updated to: ${data.user.name} successfully`);
             }
-            toast.error(data.message);
+            else {
+                toast.error(data.message);
+            }
         }
 
         if(values.email!== user.email) {
             const data = await ActionService.updateEmail(String(user._id), values.email!);
             if(data.user) {
-                toast.success(`Email updated to: ${user.email} successfully`);
+                toast.success(`Email updated to: ${data.user.email} successfully`);
             }
             else {
                 toast.error(data.message);
