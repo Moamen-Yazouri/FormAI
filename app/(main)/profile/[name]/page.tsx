@@ -1,4 +1,6 @@
+import { Suspense } from "react";
 import ProfilePage from "../components/profile-Page";
+import LoadingPage from "@/components/loadingPage/loadingPage";
 export const metadata = {
     title: "Profile | FormAI",
     description:
@@ -44,6 +46,8 @@ export const viewport = {
 
 export default async function Page() {
     return (
-        <ProfilePage />
+        <Suspense fallback={<LoadingPage />}>
+            <ProfilePage />
+        </Suspense>
     )
 }

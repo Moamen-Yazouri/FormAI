@@ -1,8 +1,5 @@
-import React from 'react';
-import { getFormAnswers } from '../../service/answers.service';
-import ResponsesTable from '@/components/responses-table/responsesTable';
-import { getAccessRights } from '../../service/accessRights.service';
-import { handleAccess } from '@/lib/triggerCoventions';
+import React, { Suspense } from 'react';
+import PageContent from '../../components/pageContent';
 
 export const metadata = {
     title: "Form Answers | FormAI",
@@ -52,12 +49,12 @@ interface IProps {
 const page = async(props: IProps) => {
     const {id, name} = await props.params;
     const validName = decodeURIComponent(name);
-    const access = await getAccessRights(id);
-    handleAccess(access);
-    const { answers} = await getFormAnswers(id, validName);
+
     
     return (
-        <ResponsesTable responses={answers} />
+        <Suspense>
+            <PageContent name={validName} id={id} />
+        </Suspense>
     )
 }
 

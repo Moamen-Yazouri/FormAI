@@ -1,6 +1,7 @@
-import React from 'react'
-import fetchDataService from '../dashboard/services/fetchData.service';
-import ResponsesTable from '@/components/responses-table/responsesTable';
+import React, { Suspense } from 'react';
+import PageContent from './components/pageContent';
+import LoadingPage from '@/components/loadingPage/loadingPage';
+
 export const metadata = {
     title: "Creator Forms Responses | FormAI",
     description:
@@ -46,9 +47,11 @@ interface IProps {
 }
 const page = async (props: IProps) => {
     const name = decodeURIComponent((await props.params).name);
-    const responses = await fetchDataService.creatorResponses(name)
+
     return (
-        <ResponsesTable responses={responses} />
+        <Suspense fallback={<LoadingPage />}>
+            <PageContent name={name}/>
+        </Suspense>
     )
 }
 
