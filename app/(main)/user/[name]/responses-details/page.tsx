@@ -1,5 +1,6 @@
-import CompletedFormsPage from './components/userResponses';
-import fetchDataService from '../dashboard/service/fetchData.service';
+import { Suspense } from 'react';
+import PageContent from './components/pageContent';
+import LoadingPage from '@/components/loadingPage/loadingPage';
 export const metadata = {
     title: "Responses Details | FormAI",
     description:
@@ -46,10 +47,10 @@ interface IProps {
 }
 const page = async(props: IProps) => {
     const nameParam = (await props.params);
-    const name = decodeURIComponent(nameParam.name); 
-    const responseDetails = await fetchDataService.getUserResponseDetails(name);
     return (
-        <CompletedFormsPage responsesDetails={responseDetails} />
+        <Suspense fallback={<LoadingPage />}>
+            <PageContent name={nameParam.name} />
+        </Suspense>
     )
 }
 

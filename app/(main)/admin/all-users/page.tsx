@@ -1,6 +1,6 @@
-import React from 'react';
-import fetchDataService from '../dashboard/services/fetchData.service';
-import UsersTable from '@/components/user-table/userTable';
+import React, { Suspense } from 'react';
+import LoadingPage from '@/components/loadingPage/loadingPage';
+import PageContent from './components/pageContent';
 
 export const metadata = {
     title: "All users | FormAI",
@@ -43,9 +43,10 @@ export const viewport = {
     initialScale: 1
 }
 const page = async() => {
-    const users = await fetchDataService.usersData();
     return (
-        <UsersTable users={users}/>
+        <Suspense fallback={<LoadingPage />}>
+            <PageContent />
+        </Suspense>
     )
 }
 

@@ -1,6 +1,6 @@
-import React from 'react'
-import fetchDataService from '../service/fetchData.service';
-import FormsTable from '@/components/forms-table/formsTable';
+import React, { Suspense } from 'react'
+import LoadingPage from '@/components/loadingPage/loadingPage';
+import PageContent from '../components/pageContent';
 
 export const metadata = {
     title: "Available Forms | FormAI",
@@ -46,9 +46,11 @@ interface IProps {
 }
 const AvailableForms = async(props: IProps) => {
     const name = decodeURIComponent((await props.params).name);
-    const availableForms = await fetchDataService.getAvailableForms(name);
+
     return (
-        <FormsTable forms= {availableForms} available={true}/>
+        <Suspense fallback={<LoadingPage />}>
+            <PageContent name={name} />
+        </Suspense>
     )
 }
 

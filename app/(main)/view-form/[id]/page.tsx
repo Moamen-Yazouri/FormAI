@@ -1,6 +1,6 @@
-import FormTemplate from '@/components/form-template/formTemplate';
-import { handleAccess } from '@/lib/triggerCoventions';
-import { getAccessRights } from '../service/accessRight.service';
+import { Suspense } from 'react';
+import PageContent from '../components/page-content';
+import LoadingPage from '@/components/loadingPage/loadingPage';
 export const metadata = {
     title: "View Form | FormAI",
     description:
@@ -47,10 +47,11 @@ interface IProps {
 }
 const page = async(props: IProps) => {
     const id = (await props.params).id;
-    const access = await getAccessRights(id);
-    handleAccess(access);
+
     return (
-        <FormTemplate isPreview={false} id={id} isView={true}/>
+        <Suspense fallback={<LoadingPage/>}>
+            <PageContent id={id}/>
+        </Suspense>
     )
 }
 

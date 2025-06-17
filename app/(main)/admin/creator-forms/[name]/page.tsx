@@ -1,6 +1,6 @@
-import {connection} from '@/DB/connection';
-import dashboardService from '@/module/services/admin/dashboard.service';
-import FormsTable from '@/components/forms-table/formsTable';
+import LoadingPage from '@/components/loadingPage/loadingPage';
+import { Suspense } from 'react';
+import PageContent from '../components/pageContent';
 
 export const metadata = {
     title: "Creator forms | FormAI",
@@ -51,10 +51,11 @@ interface IProps {
 }
 const AllForms = async (props : IProps) => {
     const username = (await props.params).name;
-    await connection();
-    const userFormsData = await dashboardService.getCreatorForms(username);
+
     return (
-        <FormsTable forms={userFormsData}/>
+        <Suspense fallback= {<LoadingPage />}>
+            <PageContent name={username}/>
+        </Suspense>
     )
 }
 

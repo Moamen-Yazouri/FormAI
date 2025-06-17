@@ -1,7 +1,6 @@
-import { IFormTable } from '@/@types';
-import React from 'react';
-import fetchDataService from '../dashboard/services/fetchData.service';
-import FormsTable from '@/components/forms-table/formsTable';
+import React, { Suspense } from 'react';
+import PageContent from './components/pageContent';
+import LoadingPage from '@/components/loadingPage/loadingPage';
 
 export const metadata = {
     title: "All forms | FormAI",
@@ -45,10 +44,10 @@ export const viewport = {
     initialScale: 1
 }
 const page = async() => {
-
-    const forms: IFormTable[] = await fetchDataService.formsData();
     return (
-        <FormsTable forms={forms}/>
+        <Suspense fallback={<LoadingPage/>}>
+            <PageContent />
+        </Suspense>
     )
 }
 

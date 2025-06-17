@@ -1,6 +1,6 @@
-import React from 'react';
-import FormsTable from '@/components/forms-table/formsTable';
-import { getCreatorForms } from '../service/fetchData.service';
+import React, { Suspense } from 'react';
+import PageContent from '../components/pageContent';
+import LoadingPage from '@/components/loadingPage/loadingPage';
 export const metadata = {
     title: "My Forms | FormAI",
     description:
@@ -45,9 +45,11 @@ interface IProps {
 }
 const page = async (props: IProps) => {
     const name = decodeURIComponent((await props.params).name);
-    const forms = await getCreatorForms(name)
+    
     return (
-        <FormsTable forms={forms}/>
+        <Suspense fallback={<LoadingPage />}>
+            <PageContent name={name} />
+        </Suspense>
     )
 }
 
