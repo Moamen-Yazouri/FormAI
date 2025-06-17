@@ -16,7 +16,7 @@ export const metadata = {
             "Create intelligent, responsive forms with our AI-powered builder. Customize fields, logic, and design effortlessly.",
         url: "/form-generator",
         siteName: "FormAI",
-        images: ["/logo.png"],
+        images: ["/form-generator.png"],
         type: "website",
     },
     twitter: {
@@ -26,7 +26,7 @@ export const metadata = {
         title: "Form Generator | FormAI",
         description:
             "Create intelligent, responsive forms with our AI-powered builder. Customize fields, logic, and design effortlessly.",
-        images: ["/logo.png"],
+        images: ["/form-generator.png"],
     },
     other: {
         formai: "Moamen-Yazouri", 

@@ -18,7 +18,7 @@ export const metadata = {
         "Explore all available forms created by the community. Browse, preview, and participate in AI-enhanced data collection.",
         url: "/available-forms/[name]",
         siteName: "FormAI",
-        images: ["/logo.png"],
+        images: ["/landing.png"],
         type: "website",
     },
     twitter: {
@@ -28,7 +28,7 @@ export const metadata = {
         title: "Available Forms | FormAI",
         description:
             "Explore all available forms created by the community. Browse, preview, and participate in AI-enhanced data collection.",
-        images: ["/logo.png"],
+        images: ["/landing.png"],
     },
     other: {
         formai: "Moamen-Yazouri", 

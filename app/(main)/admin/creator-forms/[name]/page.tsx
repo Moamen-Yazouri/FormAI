@@ -21,7 +21,7 @@ export const metadata = {
         "Access a centralized page to view and manage a creator forms. Ensure platform quality, moderate content, and streamline oversight with powerful admin tools.",
         url: "/admin/creator-forms",
         siteName: "FormAI",
-        images: ["/logo.png"],
+        images: ["/landing.png"],
         type: "website",
     },
     twitter: {
@@ -31,7 +31,7 @@ export const metadata = {
         title: "All forms | FormAI",
         description:
             "Access a centralized page to view and manage all creators forms. Ensure platform quality, moderate content, and streamline oversight with powerful admin tools.",
-        images: ["/logo.png"],
+        images: ["/landing.png"],
     },
     other: {
         formai: "Moamen-Yazouri", 

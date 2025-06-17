@@ -20,7 +20,7 @@ export const metadata = {
         "Access a centralized page to view and manage all users and creators. Ensure platform quality, moderate content, and streamline oversight with powerful admin tools.",
         url: "/admin/all-users",
         siteName: "FormAI",
-        images: ["/logo.png"],
+        images: ["/landing.png"],
         type: "website",
     },
     twitter: {

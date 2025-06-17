@@ -18,7 +18,7 @@ export const metadata = {
         "View and manage all the forms you’ve created. Edit, duplicate, or track performance from one centralized page.",
         url: "/my-forms/[name]",
         siteName: "FormAI",
-        images: ["/logo.png"],
+        images: ["/landing.png"],
         type: "website",
     },
     twitter: {
@@ -28,7 +28,7 @@ export const metadata = {
         title: "My Forms | FormAI",
         description:
             "View and manage all the forms you’ve created. Edit, duplicate, or track performance from one centralized page.",
-        images: ["/logo.png"],
+        images: ["/landing.png"],
     },
     other: {
         formai: "Moamen-Yazouri", 

@@ -15,7 +15,7 @@ export const metadata = {
             "Fill out this AI-powered form to provide your input. Fast, responsive, and tailored to your needs.",
         url: "/answer-form/[id]",
         siteName: "FormAI",
-        images: ["/logo.png"],
+        images: ["/landing.png"],
         type: "website",
     },
     twitter: {
@@ -25,7 +25,7 @@ export const metadata = {
         title: "Answer Form | FormAI",
         description:
             "Fill out this AI-powered form to provide your input. Fast, responsive, and tailored to your needs.",
-        images: ["/logo.png"],
+        images: ["/landing.png"],
     },
     other: {
         formai: "Moamen-Yazouri", 

@@ -19,7 +19,7 @@ export const metadata = {
           "Manage your forms, track response data, and build smarter user experiences with your personalized dashboard.",
         url: "/creator/[name]/dashboard",
         siteName: "FormAI",
-        images: ["/logo.png"],
+        images: ["/landing.png"],
         type: "website",
     },
     twitter: {
@@ -29,7 +29,7 @@ export const metadata = {
         title: "Creator Dashboard | FormAI",
         description:
             "Manage your forms, track response data, and build smarter user experiences with your personalized dashboard.",
-        images: ["/logo.png"],
+        images: ["/landing.png"],
     },
     other: {
         formai: "Moamen-Yazouri", 
