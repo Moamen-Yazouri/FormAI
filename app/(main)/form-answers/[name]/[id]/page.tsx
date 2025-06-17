@@ -23,7 +23,7 @@ export const metadata = {
         "Review individual responses submitted to your form. Filter, analyze, and manage data effortlessly with AI-enhanced tools.",
         url: "/form-answers/[name]/[id]",
         siteName: "FormAI",
-        images: ["/logo.png"],
+        images: ["/landing.png"],
         type: "website",
     },
     twitter: {
@@ -33,7 +33,7 @@ export const metadata = {
         title: "Form Answers | FormAI",
         description:
             "Review individual responses submitted to your form. Filter, analyze, and manage data effortlessly with AI-enhanced tools.",
-        images: ["/logo.png"],
+        images: ["/landing.png"],
     },
     other: {
         formai: "Moamen-Yazouri", 

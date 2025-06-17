@@ -19,7 +19,7 @@ export const metadata = {
         "Update your personal information and change your password securely. Manage your account settings with ease.",
         url: "/profile/[name]",
         siteName: "FormAI",
-        images: ["/logo.png"],
+        images: ["/profile.png"],
         type: "website",
     },
     twitter: {
@@ -29,7 +29,7 @@ export const metadata = {
         title: "Profile | FormAI",
         description:
             "Update your personal information and change your password securely. Manage your account settings with ease.",        
-        images: ["/logo.png"],
+        images: ["/profile.png"],
     },
     other: {
         formai: "Moamen-Yazouri", 

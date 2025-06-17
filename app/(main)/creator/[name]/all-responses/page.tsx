@@ -18,7 +18,7 @@ export const metadata = {
         "View and analyze responses submitted to your forms. Gain insights and manage data effortlessly with Form AI Builder.",
         url: "/creator/[name]/all-responses",
         siteName: "FormAI",
-        images: ["/logo.png"],
+        images: ["/landing.png"],
         type: "website",
     },
     twitter: {
@@ -28,7 +28,7 @@ export const metadata = {
         title: "Creator Forms Responses | FormAI",
         description:
             "View and analyze responses submitted to your forms. Gain insights and manage data effortlessly with Form AI Builder.",
-        images: ["/logo.png"],
+        images: ["/landing.png"],
     },
     other: {
         formai: "Moamen-Yazouri", 

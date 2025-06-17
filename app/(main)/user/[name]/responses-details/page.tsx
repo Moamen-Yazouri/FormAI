@@ -18,7 +18,7 @@ export const metadata = {
         "View and manage the responses you’ve submitted to forms. Keep track of your activity and submissions in one place.",
         url: "/user/[name]/responses-details",
         siteName: "FormAI",
-        images: ["/logo.png"],
+        images: ["/landing.png"],
         type: "website",
     },
     twitter: {
@@ -28,7 +28,7 @@ export const metadata = {
         title: "Responses Details | FormAI",
         description:
             "View and manage the responses you’ve submitted to forms. Keep track of your activity and submissions in one place.",
-        images: ["/logo.png"],
+        images: ["/landing.png"],
     },
     other: {
         formai: "Moamen-Yazouri", 
