@@ -14,7 +14,7 @@ const fadeUp = {
         }
     },
 }
-const actionButtons = () => {
+const MemoizedActionButtons = () => {
     const { user } = useContext(AuthContext);
     const router = useRouter();
 
@@ -57,5 +57,5 @@ const actionButtons = () => {
         </motion.div>
     )
 }
-const MemoizedActionButtons = React.memo(actionButtons);
-export default MemoizedActionButtons;
+
+export default React.memo(MemoizedActionButtons);;

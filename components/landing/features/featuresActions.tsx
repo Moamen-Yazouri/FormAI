@@ -5,7 +5,7 @@ import { ArrowRight } from 'lucide-react'
 import { useRouter } from 'next/navigation';
 import React, { useContext } from 'react'
 
-const featuresActions = () => {
+const MemoizedFeaturesActions = () => {
     const { user } = useContext(AuthContext);
     const router = useRouter();
     const handleStart = () => {
@@ -39,5 +39,5 @@ const featuresActions = () => {
         </motion.div>
     )
 }
-const MemoizedFeaturesActions = React.memo(featuresActions);
-export default MemoizedFeaturesActions;
+
+export default React.memo(MemoizedFeaturesActions);
