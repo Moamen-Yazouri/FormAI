@@ -1,10 +1,9 @@
-"use client" 
 import Header from "@/components/header/header";
-import FeaturesSection from "@/components/landing/features/features";
-import CTASection from "@/components/landing/CTA";
-import Footer from "@/components/landing/footer";
-import Hero from "./hero/hero";
-import AboutSection from "./about-us/about-us";
+import MemoizedHero from "./hero/hero";
+import FeaturesSection from "./features/featuresSection";
+import CTASection from "./CTA/CTASection";
+import MemoizedAboutUs from "./about-us/about-us";
+import Footer from "./footer/footerSection";
 
 export default function LandingPage() {
 
@@ -13,13 +12,13 @@ export default function LandingPage() {
             <Header/>
 
             <main className="flex-1">
-                <Hero/>
+                <MemoizedHero/>
 
                 <FeaturesSection/>
 
                 <CTASection/>
 
-                <AboutSection/>
+                <MemoizedAboutUs/>
             </main>
 
             <Footer/>
