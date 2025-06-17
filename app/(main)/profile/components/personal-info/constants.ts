@@ -9,6 +9,10 @@ export const OPTIONS: IOptions[] = [
         value: "creator",
         label: "Creator",
     },
+    {
+        value: "admin",
+        label: "Admin",
+    },
 
 ]
 
