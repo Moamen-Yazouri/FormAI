@@ -22,10 +22,7 @@ import { AccessRightsType } from "@/@types/access";
                 if(form.isPublic || allowed.includes(token.userId)) return "allowed";
                 return "forbidden";
             }
-            catch(e) {
-                if(e instanceof Error) {
-                    throw new Error(e.message);
-                }
+            catch {
                 throw new Error("Something went wrong!");
             }
         }

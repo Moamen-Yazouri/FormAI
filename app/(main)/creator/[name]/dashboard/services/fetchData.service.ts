@@ -14,10 +14,7 @@ class FetchServices {
 
             return formCreationData;
         }
-        catch (error) {
-            if(error instanceof Error) {
-                return[];
-            }
+        catch {
             console.error("Failed to fetch form creation data!");
             return [];
         }
@@ -33,11 +30,8 @@ class FetchServices {
 
             return formResponseData;
         }
-        catch (error) {
-            if(error instanceof Error) {
-                console.error(error.message);
-                return[];
-            }
+        catch  {
+        
             console.error("Failed to fetch form creation data!");
             return [];
         } 
@@ -53,11 +47,7 @@ class FetchServices {
 
             return creatorActivityData;
         }
-        catch (error) {
-            if(error instanceof Error) {
-                console.error(error.message);
-                return[];
-            }
+        catch  {
             console.error("Failed to fetch creator activity data!");
             return [];
         } 
@@ -72,11 +62,7 @@ class FetchServices {
 
             return formsData;
         }
-        catch (error) {
-            if(error instanceof Error) {
-                console.error(error.message);
-                return[];
-            }
+        catch  {
             console.error("Failed to fetch creator forms data!");
             return [];
         }
@@ -90,10 +76,7 @@ class FetchServices {
             }
             return responses;
         }
-        catch (error) {
-            if(error instanceof Error) {
-                return[];
-            }
+        catch {
             console.error("Failed to fetch creator responses!");
             return [];
         }

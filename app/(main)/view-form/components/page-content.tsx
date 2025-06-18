@@ -7,6 +7,7 @@ interface IProps {
 }
 
 const PageContent = async({ id }: IProps) => {
+    
     const access = await getAccessRights(id);
     handleAccess(access);
     return (

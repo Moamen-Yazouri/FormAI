@@ -21,11 +21,7 @@ export const  getAccessRights = async (formId: string): Promise<AccessRightsType
         if( String(form.creatorId) !== token.userId) return "forbidden";
         return "allowed";
     }
-    catch (error) {
-        if(error instanceof Error) {
-            throw new Error(error.message);
-            ;
-        }
+    catch  {
         throw new Error("Something went wrong!");
     }
 }
