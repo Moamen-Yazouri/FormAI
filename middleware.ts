@@ -10,10 +10,24 @@ export default async function middleware(req: NextRequest) {
     const routePath: PageAccessName = getRoutePath(fullPath);
     const token = await getToken();
     const { role } = routesAccess.get(routePath) || { role: [] };
-    if (routePath === "/sign-in" || routePath === "/sign-up") {
-        const isLogged = Boolean(token);
+    const isLogged = Boolean(token);
+
+    if(routePath === "/already-logged" || routePath === "/forbidden") {
+        if (!isLogged) {
+            return NextResponse.redirect(new URL("/unauthorized", req.url));
+        }
+    }
+
+    if(String(routePath) === "/unauthorized") {
         if (isLogged) {
-            return NextResponse.redirect(new URL("/", req.url));
+            return NextResponse.redirect(new URL("/already-logged", req.url));
+        }
+    }
+
+    if (routePath === "/sign-in" || routePath === "/sign-up") {
+        
+        if (isLogged) {
+            return NextResponse.redirect(new URL("/already-logged", req.url));
         }
     }
     if (protectedRoutes.includes(routePath)) {
@@ -40,6 +54,9 @@ export const config = {
         "/form-generator/:path*",
         "/my-forms/:path*",
         "/profile/:path*",
-        "/view-form/:path*"
+        "/view-form/:path*",
+        "/unauthorized/:path*",
+        "/forbidden/:path*",
+        "/already-logged/:path*",
     ]
 };

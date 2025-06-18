@@ -16,7 +16,9 @@ export type PageAccessName =
     | "/my-forms"
     | "/profile"
     | "/view-form"
-
+    | "/already-logged"
+    | "/forbidden"
+    
 export const protectedRoutes = Array.from(routesAccess.keys());
 
 export interface IPageAccessRights {

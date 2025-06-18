@@ -25,7 +25,7 @@ const MemoizedActionButtons = () => {
 
     const handleDemo = useCallback(() => {
         
-        console.log("Demo clicked");
+        
     }, []);
     return (
         <motion.div
@@ -50,9 +50,14 @@ const MemoizedActionButtons = () => {
                 onClick={handleDemo}
                 className="group border border-cyan-700/30 text-slate-300 hover:bg-cyan-900/20 hover:text-white hover:border-cyan-600 px-8 py-3 rounded-lg font-medium w-full sm:w-auto transition-all duration-300 backdrop-blur-sm will-change-transform"
             >
-                <span className="flex items-center justify-center">
+                <a 
+                    href ="https://www.youtube.com/watch?v=1FZRk-t1zFc" 
+                    className="flex items-center justify-center"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                >
                     <Zap className="mr-2 h-4 w-4 group-hover:text-cyan-400 transition-colors" /> Watch Demo
-                </span>
+                </a>
             </motion.button>
         </motion.div>
     )
