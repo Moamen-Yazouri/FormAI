@@ -14,5 +14,5 @@ export const handleAccess = (access: AccessRightsType) => {
     if(access === "notFound") {
         notFound();
     }
-
+    return;
 } 
