@@ -22,7 +22,7 @@ export const routesAccess = new Map<PageAccessName, IPageAccessRights>([
     [
         "/available-forms",
         {
-            role: ["creator", "user", "creator"]
+            role: ["creator", "user", "admin"]
         }
     ],
     [
@@ -67,5 +67,17 @@ export const routesAccess = new Map<PageAccessName, IPageAccessRights>([
             role: ["creator", "admin"]
         }
     ],
+    [
+        "/forbidden",
+        {
+            role: ["creator", "admin", "user"]
+        }
+    ],
 
+    [
+        "/already-logged",
+        {
+            role: ["creator", "admin", "user"]
+        }
+    ]
 ])

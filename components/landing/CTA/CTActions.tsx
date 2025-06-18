@@ -1,7 +1,7 @@
 "use client";
 import { AuthContext } from '@/providers/auth/authProvider';
 import { motion } from 'framer-motion'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Zap } from 'lucide-react'
 import { useRouter } from 'next/navigation';
 import React, { useCallback, useContext } from 'react'
 const itemVariants = {
@@ -51,7 +51,14 @@ const CTActions = () => {
                 onClick={handleDemo}
                 className="border border-cyan-700/30 text-slate-300 hover:bg-cyan-900/20 hover:text-white hover:border-cyan-600 px-8 py-4 rounded-lg font-medium transition-all duration-300 backdrop-blur-sm will-change-transform"
             >
-                Watch Demo
+                <a 
+                    href ="https://www.youtube.com/watch?v=1FZRk-t1zFc" 
+                    className="flex items-center justify-center"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                >
+                    <Zap className="mr-2 h-4 w-4 group-hover:text-cyan-400 transition-colors" /> Watch Demo
+                </a>
             </motion.button>
         </motion.div>
     )

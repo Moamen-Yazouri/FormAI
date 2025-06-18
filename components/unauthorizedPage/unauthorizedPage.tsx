@@ -208,7 +208,7 @@ export default function UnauthorizedPage() {
                 asChild
                 variant="outline"
                 size="lg"
-                className="border-cyan-500/40 text-[#8bc9ff] hover:bg-slate-800/30 hover:text-cyan-200 hover:border-cyan-400/60"
+                className="bg-gradient-to-r from-blue-700 via-indigo-800 to-blue-900 hover:from-blue-600 hover:via-indigo-700 hover:to-blue-800 text-white shadow-md hover:shadow-xl px-6 py-3 transition"
                 >
                 <Link href="/sign-in">
                     <Shield className="h-5 w-5 mr-2" />
@@ -222,7 +222,7 @@ export default function UnauthorizedPage() {
                 variant="outline"
                 size="lg"
                 onClick={() => router.back()}
-                className="border-blue-500/30 text-[#8bc9ff] hover:bg-blue-800/30 hover:text-blue-200 hover:border-blue-400/60"
+                className="bg-slate-900/50 text-cyan-300 border border-cyan-500/30 hover:bg-cyan-800/10 hover:text-white transition-all duration-200"
                 >
                 <ArrowLeft className="h-5 w-5 mr-2" />
                 Go Back

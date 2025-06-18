@@ -39,7 +39,7 @@ const Header = () => {
     finally {
       setTimeout(() => {
         setLoggingOut(false)
-      }, 1000);
+      }, 2000);
     }
     router.push("/sign-in")
   };
