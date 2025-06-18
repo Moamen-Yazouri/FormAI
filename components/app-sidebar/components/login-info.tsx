@@ -39,9 +39,13 @@ const LoginInfo = () => {
       toast.error("Something went wrong")
     }
     finally {
-      setLoggingOut(false)
+      setTimeout(() => {
+        setLoggingOut(false)
+      }, 2000);
     }
-    router.push("/sign-in");
+    setTimeout(() => {
+      router.push("/sign-in");
+    }, 1000);
   }
 
   return (
