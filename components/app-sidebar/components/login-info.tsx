@@ -27,13 +27,14 @@ const LoginInfo = () => {
   const handleLogout = async () => {
     setLoggingOut(true);
     try{
-      await Promise.all([
-        fetch("/api/auth/logout", {
+      await fetch("/api/auth/logout", {
           method: "POST",
           credentials: "include",
         }),
-        revalidateUser(),
-      ]);
+
+      revalidateUser();
+
+      router.push("/sign-in");
     }
     catch {
       toast.error("Something went wrong")
@@ -43,9 +44,7 @@ const LoginInfo = () => {
         setLoggingOut(false)
       }, 2000);
     }
-    setTimeout(() => {
-      router.push("/sign-in");
-    }, 1000);
+    
   }
 
   return (
