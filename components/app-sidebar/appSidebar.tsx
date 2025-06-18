@@ -6,7 +6,7 @@ import {
   SidebarTrigger,
   useSidebar
 } from "@/components/ui/sidebar";
-import { Sparkles, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import NavItemsProvider from "./navItemsProvider";
 import LoginInfo from "./components/login-info";
 import Logo from "../header/logo";
