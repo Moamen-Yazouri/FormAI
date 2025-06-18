@@ -31,7 +31,7 @@ const LoginInfo = () => {
       await fetch("/api/auth/logout", {
           method: "POST",
           credentials: "include",
-        }),
+        });
 
       await revalidateUser();
 

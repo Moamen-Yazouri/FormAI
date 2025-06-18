@@ -19,10 +19,7 @@ class ActionService {
             const data = await res.json();
             return {message: `Email updated to: ${data.updatedUser.email}, successfully`, user: data.updatedUser};
         }
-        catch(e) {
-            if(e instanceof Error) {
-                return {message: e.message, user: undefined};
-            }
+        catch {
             return {message: "Something went wrong", user: undefined};
         }
     }
@@ -43,10 +40,7 @@ class ActionService {
             const data = await res.json();
             return {message: `Name updated to: ${data.updatedUser.name}, successfully`, user: data.updatedUser};
         }
-        catch(e) {
-            if(e instanceof Error) {
-                return {message: e.message, user: undefined};
-            }
+        catch {
             return {message: "Something went wrong", user: undefined};
         }
     }
@@ -66,10 +60,7 @@ class ActionService {
             const data = await res.json();
             return {message: `Role updated to: ${data.updatedUser.role}, successfully`, user: data.updatedUser};
         }
-        catch(e) {
-            if(e instanceof Error) {
-                return {message: e.message, user: undefined};
-            }
+        catch {
             return {message: "Something went wrong", user: undefined};
         }
     }
@@ -89,10 +80,8 @@ class ActionService {
             const data = await res.json();
             return {message: `Password updated successfully!`, user: data.updatedUser}; 
         }
-        catch(e) {
-            if(e instanceof Error) {
-                return {message: e.message, user: undefined};
-            }
+        catch {
+            
             return {message: "Something went wrong", user: undefined};
         }
     }

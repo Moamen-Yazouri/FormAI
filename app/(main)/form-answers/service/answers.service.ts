@@ -10,10 +10,7 @@ export const getFormAnswers = async (id: string, name: string) => {
         }
         return {message: "Success", answers: answers};
     }
-    catch (error) {
-        if(error instanceof Error) {
-            return {message: error.message, answers: []}
-        }
+    catch  {
         return {message: "Something went wrong!", answers: []}
     }
 };

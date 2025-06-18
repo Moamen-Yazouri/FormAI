@@ -14,11 +14,8 @@ class FetchDataService {
             }
             return forms
         }
-        catch (error) {
-            if(error instanceof Error) {
-                console.error(error.message);
-                return [];
-            }   
+        catch {
+            console.error("Failed to fetch available forms data!");
             return [];
         }
     }
