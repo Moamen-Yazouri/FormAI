@@ -170,7 +170,7 @@ const ResponsesTable = ({ responses, isSummary }: IProps) => {
 
         {isSummary && (
             <div className="flex justify-center p-4">
-            <Link href={`/${user.role || "creator"}/${user.name}/all-responses`}>
+            <Link href={`/${user.role}/${user.name}/all-responses`}>
                 <Button
                 variant="outline"
                 className="bg-slate-900/30 text-cyan-300 border-cyan-500/30 hover:bg-gradient-to-r hover:from-blue-800/30 hover:to-cyan-700/30 hover:text-white transition-colors flex items-center gap-2"

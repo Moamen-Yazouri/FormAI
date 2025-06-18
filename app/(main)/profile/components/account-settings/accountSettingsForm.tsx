@@ -2,22 +2,23 @@
 
 import MotionField from "@/components/motionTextField/motionTextField"
 import { Form, FormikProvider } from "formik"
-import { use, useState, useEffect, useMemo } from "react"
+import { useContext, useState, useEffect, useMemo } from "react"
 import { useAccountSetingForm } from "./hook/useAccountSetingForm"
 import { Button } from "@/components/ui/button"
 import { CardFooter } from "@/components/ui/card"
 import LoadingSpinner from "@/app/(main)/form-generator/components/loading-spinner"
 import { AuthContext } from "@/providers/auth/authProvider"
 import ConfirmationDialog from "../confirmation-dialog/confirmationDialog"
+import FullPageLoader from "../profileLoader"
 
 const AccountSettingsForm = () => {
-  const { user } = use(AuthContext)
-  const { formik } = useAccountSetingForm()
-  const [showConfirmDialog, setShowConfirmDialog] = useState(false)
-  const [disabled, setDisabled] = useState(true)
+  const { user, isLoading } = useContext(AuthContext);
+  const { formik } = useAccountSetingForm();
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [disabled, setDisabled] = useState(true);
 
   const hasChanges = useMemo(() => {
-    if (!user || !formik.values) return false
+    if (!user || !formik.values) return false;
     return (
       formik.values.name !== user.name ||
       formik.values.email !== user.email
@@ -36,8 +37,9 @@ const AccountSettingsForm = () => {
       })
     }
   }
+  if(isLoading) return <FullPageLoader />
 
-  if (!user) return null
+  if (!user && !isLoading) return null
 
   return (
     <>

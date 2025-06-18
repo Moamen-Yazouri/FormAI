@@ -8,6 +8,7 @@ export const POST = async (req: NextRequest) => {
     if(!payload) {
         return NextResponse.json({message: "Invalid payload"}, {status: 400});
     }
+
     if(!payload.id || !payload.role) {
         return NextResponse.json({message: "Invalid payload"}, {status: 400}); 
     }
@@ -18,7 +19,8 @@ export const POST = async (req: NextRequest) => {
         if(!updateUser) {
             return NextResponse.json({message: "User not found"}, {status: 404});
         }    
-    } catch (error) {
+    } 
+    catch (error) {
         if(error instanceof Error) {
             return NextResponse.json({message: error.message}, {status: 500});
         }
