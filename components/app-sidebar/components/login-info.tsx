@@ -27,12 +27,13 @@ const LoginInfo = () => {
   const handleLogout = async () => {
     setLoggingOut(true);
     try{
+
       await fetch("/api/auth/logout", {
           method: "POST",
           credentials: "include",
         }),
 
-      revalidateUser();
+      await revalidateUser();
 
       router.push("/sign-in");
     }
