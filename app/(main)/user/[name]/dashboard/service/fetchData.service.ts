@@ -12,7 +12,7 @@ class FetchDataService {
             if(forms.length === 0) {
                 toast.warning("No forms available!");
             }
-            return forms;
+            return forms.slice(0, 5);
         }
         catch (error) {
             if(error instanceof Error) {

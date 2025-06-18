@@ -6,6 +6,7 @@ import { ArrowRight, CheckCircle } from "lucide-react";
 import React from "react";
 import { IAnsweredForms } from "../types";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface IProps {
   completedForms: IAnsweredForms[];
@@ -27,7 +28,9 @@ const CompletedForms = ({ completedForms, name }: IProps) => {
                 You haven't completed any forms yet.
               </div>
             ) : (
-              completedForms.map((form) => (
+              completedForms
+                .slice(0, 5)
+                .map((form) => (
                 <div
                   key={form.id}
                   className="flex items-center justify-between p-3 rounded-lg border border-cyan-700/30 bg-slate-900/40 hover:bg-cyan-900/10 transition-colors"
@@ -44,14 +47,28 @@ const CompletedForms = ({ completedForms, name }: IProps) => {
                   <Button
                     variant="outline"
                     className="border-cyan-500/20 text-cyan-300 bg-slate-900/30 hover:bg-cyan-700/20 hover:text-white transition-colors flex items-center gap-2"
-                    onClick={() => router.push(`/user/${name}/responses-details`)}
+                    onClick={() => router.push(`/review-response/${form.id}`)}
                   >
-                    Show All Responses Details <ArrowRight className="h-4 w-4" />
+                    Show Details <ArrowRight className="h-4 w-4" />
                   </Button>
                 </div>
               ))
             )}
           </div>
+          {
+            completedForms.length > 5 && (              
+              <div className="flex justify-center p-4 mt-2">
+                <Link href={`/user/${name}/responses-details`}>
+                  <Button
+                    variant="outline"
+                    className="bg-slate-900/30 text-cyan-300 border-cyan-500/30 hover:bg-gradient-to-r hover:from-blue-800/30 hover:to-cyan-700/30 hover:text-white transition-colors flex items-center gap-2"
+                  >
+                  View All Responses
+                  </Button>
+                </Link>
+              </div>
+            )
+          }
         </CardContent>
       </Card>
     </div>
