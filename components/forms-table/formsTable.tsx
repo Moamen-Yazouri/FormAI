@@ -208,7 +208,7 @@ const FormsTable = (props: IProps) => {
             </TableBody>
         </Table>
         {
-            isSummary && forms.length > 0  &&(
+            isSummary && forms.length > 4  && (
                 <div className="flex justify-center p-4">
                     <Button
                     variant="outline"

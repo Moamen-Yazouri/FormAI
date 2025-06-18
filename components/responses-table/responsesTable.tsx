@@ -168,7 +168,7 @@ const ResponsesTable = ({ responses, isSummary }: IProps) => {
             </TableBody>
         </Table>
 
-        {isSummary && (
+        {isSummary && responses.length > 5 && (
             <div className="flex justify-center p-4">
             <Link href={`/${user.role}/${user.name}/all-responses`}>
                 <Button
