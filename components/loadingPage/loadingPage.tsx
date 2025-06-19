@@ -48,7 +48,7 @@ export default function LoadingPage() {
       </div>
 
       <div className="flex items-center gap-2">
-        <Logo size={35}/>
+        <Logo size={40} />
         <span className="text-2xl font-bold text-slate-200">FormAI</span>
       </div>
     </div>
