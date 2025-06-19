@@ -1,7 +1,7 @@
 "use client"
 import React from "react";
 import { cn } from "@/lib/utils";
-import { useIsMobile } from "@/hooks/use-mobile";
+
 
 interface ScrollableContainerProps extends React.HTMLAttributes<HTMLDivElement> {
     maxHeight?: string
@@ -10,7 +10,7 @@ interface ScrollableContainerProps extends React.HTMLAttributes<HTMLDivElement> 
 
 const ScrollableContainer = React.forwardRef<HTMLDivElement, ScrollableContainerProps>(
     ({ className, children, maxHeight = "70vh", hideScrollbar = false, ...props }, ref) => {
-        const isMobile = useIsMobile();
+        
         return (
         <div
             ref={ref}
