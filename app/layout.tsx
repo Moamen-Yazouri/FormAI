@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from "sonner";
 import { AuthProvider } from "@/providers/auth/authProvider";
-import { ScrollableContainer } from "@/components/scroll-container/scroll-container";
+
 
 
 
@@ -23,9 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <AuthProvider>
-          <ScrollableContainer maxHeight="100vh">
             {children}
-          </ScrollableContainer>
         </AuthProvider>
         
         <Toaster richColors />
