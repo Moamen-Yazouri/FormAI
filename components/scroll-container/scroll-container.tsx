@@ -1,14 +1,17 @@
-"use client"
-import React from "react";
+"use client";
+
+import React, { useMemo } from "react";
 import { cn } from "@/lib/utils";
 
 
 interface ScrollableContainerProps extends React.HTMLAttributes<HTMLDivElement> {
-    maxHeight?: string
-    hideScrollbar?: boolean
+    maxHeight?: string;
+    hideScrollbar?: boolean;
+    enableScrollOptimization?: boolean;
 }
 
 const ScrollableContainer = React.forwardRef<HTMLDivElement, ScrollableContainerProps>(
+  
     ({ className, children, maxHeight = "70vh", hideScrollbar = false, ...props }, ref) => {
         
         return (
@@ -24,6 +27,6 @@ const ScrollableContainer = React.forwardRef<HTMLDivElement, ScrollableContainer
     },
 )
 
-ScrollableContainer.displayName = "ScrollableContainer"
+ScrollableContainer.displayName = "ScrollableContainer";
 
-export { ScrollableContainer }
+export { ScrollableContainer };
