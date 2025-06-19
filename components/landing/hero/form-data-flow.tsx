@@ -1,202 +1,306 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { useMousePosition } from "./hook/use-mouse-position";
+import { useEffect, useRef, useState, useCallback } from "react";
 
 interface FormDataFlowProps {
   id?: string;
   className?: string;
 }
 
-export const FormDataFlow = ({ id = "form-data-flow", className = "h-full w-full" }: FormDataFlowProps) => {
+interface DataPoint {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  size: number;
+  type: number;
+  opacity: number;
+  pulsePhase: number;
+}
+
+interface Connection {
+  point1Index: number;
+  point2Index: number;
+  opacity: number;
+  flowProgress: number;
+}
+
+export const FormDataFlow = ({ 
+  id = "form-data-flow", 
+  className = "h-full w-full" 
+}: FormDataFlowProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const mousePosition = useMousePosition();
+  const animationRef = useRef<number>(0);
   const [isReady, setIsReady] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  
+  const dataPointsRef = useRef<DataPoint[]>([]);
+  const connectionsRef = useRef<Connection[]>([]);
+  const mouseRef = useRef({ x: 0, y: 0 });
+  const lastScrollY = useRef(0);
+  const isScrolling = useRef(false);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
+  
+  const particleCount = typeof window !== "undefined" && window.innerWidth < 768 ? 15 : 25;
+  const maxConnections = Math.floor(particleCount * 0.3);
 
+  const colors = {
+    primary: "#22D3EE",
+    secondary: "#0EA5E9", 
+    accent: "#0891B2",
+    flow: "#7DD3FC"
+  };
+
+  const initializeCanvas = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const handleResize = () => {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-      setDimensions({ width, height });
-      canvas.width = width;
-      canvas.height = height;
-      init();
-    };
+    
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    canvas.style.width = rect.width + "px";
+    canvas.style.height = rect.height + "px";
+    
+    ctx.scale(dpr, dpr);
+    setDimensions({ width: rect.width, height: rect.height });
 
-    let dataPoints: DataPoint[] = [];
-    let connections: Connection[] = [];
-    let animationFrameId: number;
+    
+    dataPointsRef.current = Array.from({ length: particleCount }, () => ({
+      x: Math.random() * rect.width,
+      y: Math.random() * rect.height,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4,
+      size: Math.random() * 2 + 1.5,
+      type: Math.floor(Math.random() * 4),
+      opacity: Math.random() * 0.4 + 0.2,
+      pulsePhase: Math.random() * Math.PI * 2,
+    }));
 
-    class DataPoint {
-      x: number;
-      y: number;
-      size: number;
-      speedX: number;
-      speedY: number;
-      type: string;
-      opacity: number;
-      pulsePhase: number;
-
-      constructor() {
-        this.x = Math.random() * canvas!.width;
-        this.y = Math.random() * canvas!.height;
-        this.size = Math.random() * 3 + 2;
-        this.speedX = (Math.random() - 0.5) * 0.5;
-        this.speedY = (Math.random() - 0.5) * 0.5;
-        this.type = ["input", "checkbox", "select", "analytics"][Math.floor(Math.random() * 4)];
-        this.opacity = Math.random() * 0.5 + 0.3;
-        this.pulsePhase = Math.random() * Math.PI * 2;
+    
+    connectionsRef.current = [];
+    for (let i = 0; i < maxConnections; i++) {
+      const point1Index = Math.floor(Math.random() * particleCount);
+      let point2Index = Math.floor(Math.random() * particleCount);
+      while (point2Index === point1Index) {
+        point2Index = Math.floor(Math.random() * particleCount);
       }
+      
+      connectionsRef.current.push({
+        point1Index,
+        point2Index,
+        opacity: 0.05,
+        flowProgress: Math.random(),
+      });
+    }
 
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        this.pulsePhase += 0.02;
-        if(!canvas) return;
-        if (this.x > canvas.width) this.x = 0;
-        if (this.x < 0) this.x = canvas.width;
-        if (this.y > canvas.height) this.y = 0;
-        if (this.y < 0) this.y = canvas.height;
+    setIsReady(true);
+  }, [particleCount, maxConnections]);
 
-        const dx = mousePosition.x - this.x;
-        const dy = mousePosition.y - this.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        if (distance < 150) {
-          const angle = Math.atan2(dy, dx);
-          const force = (150 - distance) / 150;
-          this.x -= Math.cos(angle) * force * 2;
-          this.y -= Math.sin(angle) * force * 2;
+  const drawDataPoint = useCallback((ctx: CanvasRenderingContext2D, point: DataPoint) => {
+    const pulse = Math.sin(point.pulsePhase) * 0.2 + 0.8;
+    const currentOpacity = point.opacity * pulse;
+    
+    ctx.save();
+    ctx.globalAlpha = currentOpacity;
+
+    switch (point.type) {
+      case 0: 
+        ctx.strokeStyle = colors.primary;
+        ctx.lineWidth = 0.8;
+        ctx.strokeRect(point.x - 6, point.y - 2, 12, 4);
+        ctx.fillStyle = colors.accent;
+        ctx.fillRect(point.x - 4, point.y - 0.5, 3, 1);
+        break;
+      case 1: 
+        ctx.strokeStyle = colors.secondary;
+        ctx.lineWidth = 0.8;
+        ctx.strokeRect(point.x - 2.5, point.y - 2.5, 5, 5);
+        ctx.fillStyle = colors.accent;
+        ctx.fillRect(point.x - 1, point.y - 1, 2, 2);
+        break;
+      case 2: 
+        ctx.strokeStyle = colors.primary;
+        ctx.lineWidth = 0.8;
+        ctx.strokeRect(point.x - 5, point.y - 2, 10, 4);
+        ctx.fillStyle = colors.accent;
+        ctx.beginPath();
+        ctx.moveTo(point.x + 2, point.y - 0.5);
+        ctx.lineTo(point.x + 3.5, point.y + 0.5);
+        ctx.lineTo(point.x + 0.5, point.y + 0.5);
+        ctx.closePath();
+        ctx.fill();
+        break;
+      case 3: 
+        ctx.fillStyle = colors.secondary;
+        for (let i = 0; i < 3; i++) {
+          const height = Math.random() * 3 + 1;
+          ctx.fillRect(point.x - 3 + i * 2, point.y + 1 - height, 1.5, height);
         }
-      }
+        break;
+    }
 
-      draw() {
-        const pulse = Math.sin(this.pulsePhase) * 0.3 + 0.7;
-        const currentOpacity = this.opacity * pulse;
-        if(!ctx) return;
+    ctx.restore();
+  }, [colors]);
+
+  const animate = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas || !isVisible || isScrolling.current) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    ctx.clearRect(0, 0, dimensions.width, dimensions.height);
+
+    
+    connectionsRef.current.forEach((connection) => {
+      const point1 = dataPointsRef.current[connection.point1Index];
+      const point2 = dataPointsRef.current[connection.point2Index];
+      
+      if (!point1 || !point2) return;
+
+      const distance = Math.sqrt((point2.x - point1.x) ** 2 + (point2.y - point1.y) ** 2);
+      
+      if (distance < 80) {
+        connection.flowProgress += 0.008;
+        if (connection.flowProgress > 1) connection.flowProgress = 0;
+
         ctx.save();
-        ctx.globalAlpha = currentOpacity;
+        ctx.globalAlpha = connection.opacity * (1 - distance / 80);
+        ctx.strokeStyle = colors.primary;
+        ctx.lineWidth = 0.3;
+        ctx.beginPath();
+        ctx.moveTo(point1.x, point1.y);
+        ctx.lineTo(point2.x, point2.y);
+        ctx.stroke();
 
-        switch (this.type) {
-          case "input":
-            ctx.strokeStyle = "#22D3EE";
-            ctx.lineWidth = 1;
-            ctx.strokeRect(this.x - 8, this.y - 3, 16, 6);
-            ctx.fillStyle = "#0891B2";
-            ctx.fillRect(this.x - 6, this.y - 1, 4, 2);
-            break;
-          case "checkbox":
-            ctx.strokeStyle = "#0EA5E9";
-            ctx.lineWidth = 1;
-            ctx.strokeRect(this.x - 3, this.y - 3, 6, 6);
-            ctx.fillStyle = "#0284C7";
-            ctx.fillRect(this.x - 1, this.y - 1, 2, 2);
-            break;
-          case "select":
-            ctx.strokeStyle = "#22D3EE";
-            ctx.lineWidth = 1;
-            ctx.strokeRect(this.x - 6, this.y - 3, 12, 6);
-            ctx.fillStyle = "#0891B2";
-            ctx.beginPath();
-            ctx.moveTo(this.x + 3, this.y - 1);
-            ctx.lineTo(this.x + 5, this.y + 1);
-            ctx.lineTo(this.x + 1, this.y + 1);
-            ctx.closePath();
-            ctx.fill();
-            break;
-          case "analytics":
-            ctx.fillStyle = "#0EA5E9";
-            for (let i = 0; i < 3; i++) {
-              const height = Math.random() * 4 + 2;
-              ctx.fillRect(this.x - 4 + i * 3, this.y + 2 - height, 2, height);
-            }
-            break;
-        }
-
+        
+        const flowX = point1.x + (point2.x - point1.x) * connection.flowProgress;
+        const flowY = point1.y + (point2.y - point1.y) * connection.flowProgress;
+        ctx.fillStyle = colors.flow;
+        ctx.beginPath();
+        ctx.arc(flowX, flowY, 0.8, 0, Math.PI * 2);
+        ctx.fill();
         ctx.restore();
       }
-    }
+    });
 
-    class Connection {
-      constructor(public point1: DataPoint, public point2: DataPoint) {
-        this.opacity = 0.1;
-        this.flowProgress = 0;
+    
+    dataPointsRef.current.forEach((point) => {
+      
+      point.x += point.vx;
+      point.y += point.vy;
+      point.pulsePhase += 0.015;
+
+      
+      if (point.x > dimensions.width) point.x = 0;
+      if (point.x < 0) point.x = dimensions.width;
+      if (point.y > dimensions.height) point.y = 0;
+      if (point.y < 0) point.y = dimensions.height;
+
+      
+      const dx = mouseRef.current.x - point.x;
+      const dy = mouseRef.current.y - point.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      if (distance < 100) {
+        const angle = Math.atan2(dy, dx);
+        const force = (100 - distance) / 100;
+        point.x -= Math.cos(angle) * force * 0.5;
+        point.y -= Math.sin(angle) * force * 0.5;
       }
-      opacity: number;
-      flowProgress: number;
 
-      update() {
-        this.flowProgress += 0.01;
-        if (this.flowProgress > 1) this.flowProgress = 0;
-      }
+      drawDataPoint(ctx, point);
+    });
 
-      draw() {
-        const distance = Math.sqrt((this.point2.x - this.point1.x) ** 2 + (this.point2.y - this.point1.y) ** 2);
-        if(!ctx) return;
-        if (distance < 120) {
-          ctx.save();
-          ctx.globalAlpha = this.opacity * (1 - distance / 120);
-          ctx.strokeStyle = "#22D3EE";
-          ctx.lineWidth = 0.5;
-          ctx.beginPath();
-          ctx.moveTo(this.point1.x, this.point1.y);
-          ctx.lineTo(this.point2.x, this.point2.y);
-          ctx.stroke();
+    animationRef.current = requestAnimationFrame(animate);
+  }, [dimensions, isVisible, drawDataPoint, colors]);
 
-          const flowX = this.point1.x + (this.point2.x - this.point1.x) * this.flowProgress;
-          const flowY = this.point1.y + (this.point2.y - this.point1.y) * this.flowProgress;
-          ctx.fillStyle = "#7DD3FC";
-          ctx.beginPath();
-          ctx.arc(flowX, flowY, 1, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.restore();
-        }
-      }
-    }
-
-    const init = () => {
-      dataPoints = Array.from({ length: 40 }, () => new DataPoint());
-      connections = [];
-      for (let i = 0; i < dataPoints.length; i++) {
-        for (let j = i + 1; j < dataPoints.length; j++) {
-          if (Math.random() < 0.1) {
-            connections.push(new Connection(dataPoints[i], dataPoints[j]));
-          }
-        }
-      }
+  
+  useEffect(() => {
+    let mouseTimeout: NodeJS.Timeout;
+    
+    const handleMouseMove = (e: MouseEvent) => {
+      clearTimeout(mouseTimeout);
+      mouseTimeout = setTimeout(() => {
+        mouseRef.current = { x: e.clientX, y: e.clientY };
+      }, 16); 
     };
 
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      connections.forEach((c) => {
-        c.update();
-        c.draw();
-      });
-      dataPoints.forEach((p) => {
-        p.update();
-        p.draw();
-      });
-      animationFrameId = requestAnimationFrame(animate);
-    };
-
-    handleResize();
-    animate();
-    setIsReady(true);
-
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     return () => {
-      window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('mousemove', handleMouseMove);
+      clearTimeout(mouseTimeout);
     };
-  }, [mousePosition.x, mousePosition.y]);
+  }, []);
+
+  
+  useEffect(() => {
+    let scrollTimeout: NodeJS.Timeout;
+    
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const scrollDelta = Math.abs(currentScrollY - lastScrollY.current);
+      
+      if (scrollDelta > 3) {
+        isScrolling.current = true;
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          isScrolling.current = false;
+        }, 100);
+      }
+      
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(scrollTimeout);
+    };
+  }, []);
+
+  
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      setIsVisible(!document.hidden);
+    };
+
+    const handleResize = () => {
+      initializeCanvas();
+    };
+
+    if (typeof window !== "undefined") {
+      initializeCanvas();
+      window.addEventListener("resize", handleResize);
+      document.addEventListener("visibilitychange", handleVisibilityChange);
+      
+      return () => {
+        window.removeEventListener("resize", handleResize);
+        document.removeEventListener("visibilitychange", handleVisibilityChange);
+      };
+    }
+  }, [initializeCanvas]);
+
+  
+  useEffect(() => {
+    if (isReady && isVisible) {
+      animationRef.current = requestAnimationFrame(animate);
+    } else if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current);
+    }
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [isReady, isVisible, animate]);
 
   if (!isReady) return null;
 
@@ -207,13 +311,13 @@ export const FormDataFlow = ({ id = "form-data-flow", className = "h-full w-full
       className={className}
       style={{
         background: "transparent",
-        width: dimensions.width,
-        height: dimensions.height,
         position: "absolute",
         top: 0,
         left: 0,
         pointerEvents: "none",
         zIndex: 0,
+        width: "100%",
+        height: "100%",
       }}
     />
   );
