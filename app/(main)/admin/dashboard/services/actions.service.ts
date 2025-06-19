@@ -24,10 +24,7 @@ class ActionsService {
             }
             return data.deletedForm as IFormFromDB;
         }
-        catch(err) {
-            if(err instanceof Error) {
-                console.error(err.message);
-            }
+        catch {
             console.error("faild to delete the form!");
             return null;
         }
@@ -51,10 +48,7 @@ class ActionsService {
             }
             return data.deletedUser as IUserFromDB;
         }
-        catch(err) {
-            if(err instanceof Error) {
-                console.error(err.message);
-            }
+        catch {
             console.error("faild to delete the user!");
             return null;
         }

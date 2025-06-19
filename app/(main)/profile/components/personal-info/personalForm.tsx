@@ -17,7 +17,7 @@ const PersonalForm = () => {
   const [disabled, setDisabled] = useState(true)
   const [showConfirmDialog, setShowConfirmDialog] = useState(false)
   const { user } = use(AuthContext)
-  const { formik } = usePersonalInfo()
+  const { formik } = usePersonalInfo();
 
   const hasChanges = useMemo(() => {
     if (!user || !formik.values) return false
@@ -42,6 +42,7 @@ const PersonalForm = () => {
   if (!user || !formik.values) return null
 
   const handleCancel = () => {
+
     formik.setValues({
       name: user.name,
       role: user.role,
@@ -60,9 +61,7 @@ const PersonalForm = () => {
             placeholder="Enter your name"
           />
 
-          {user.role !== "admin" && (
-            <MotionedSelect name="role" options={OPTIONS} label="Select a new Role:" />
-          )}
+        <MotionedSelect name="role" options={OPTIONS} label="Select a new Role:"  disabled={user.role === "admin"}/>
 
           <CardFooter className="flex justify-end gap-2 border-t border-cyan-700/20 px-3 py-4">
             {!disabled && (

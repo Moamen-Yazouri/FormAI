@@ -1,5 +1,6 @@
 
 import Image from "next/image";
+import React from "react";
 
 const HeroImage = () => (
   <div className="flex-1 relative w-full group flex items-center justify-center">
@@ -38,5 +39,5 @@ const HeroImage = () => (
     </div>
   </div>
 );
-
-export default HeroImage;
+const MemoizedHeroImage = React.memo(HeroImage);
+export default MemoizedHeroImage;

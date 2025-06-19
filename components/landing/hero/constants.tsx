@@ -23,3 +23,9 @@ export const formElements = [
     { icon: Database, label: "Data Flow", color: "text-cyan-400" },
     { icon: Brain, label: "AI Processing", color: "text-sky-400" },
 ]
+
+export const textFlipWords = [
+    "Generate Forms",
+    "Deploy Forms", 
+    "Answer Forms"
+];

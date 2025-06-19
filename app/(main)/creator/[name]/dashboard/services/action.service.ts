@@ -21,10 +21,8 @@ class ActionServices {
             }
             return data.deletedForm as IFormFromDB;
         }
-        catch(err) {
-            if(err instanceof Error) {
-                console.error(err.message);
-            }
+        catch {
+
             console.error("faild to delete the form!");
             return null;
         }
@@ -48,10 +46,7 @@ class ActionServices {
             }
             return data.response as IResponseFromDB;
         }
-        catch(err) {
-            if(err instanceof Error) {
-                console.error(err.message);
-            }
+        catch {
             console.error("faild to delete the response!");
             return null;
         }

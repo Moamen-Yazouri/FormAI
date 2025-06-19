@@ -17,7 +17,7 @@ export const metadata = {
         "Create your Form AI Builder account and start building intelligent, dynamic forms powered by AI.",
         url: "/sign-up",
         siteName: "FormAI",
-        images: ["/logo.png"],
+        images: ["/signup.png"],
         type: "website",
     },
     twitter: {
@@ -27,7 +27,7 @@ export const metadata = {
         title: "Sign-Up | FormAI",
         description:
             "Create your Form AI Builder account and start building intelligent, dynamic forms powered by AI.",
-        images: ["/logo.png"],
+        images: ["/signup.png"],
     },
     other: {
         formai: "Moamen-Yazouri", 

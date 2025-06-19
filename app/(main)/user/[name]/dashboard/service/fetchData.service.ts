@@ -12,13 +12,9 @@ class FetchDataService {
             if(forms.length === 0) {
                 toast.warning("No forms available!");
             }
-            return forms;
+            return forms.slice(0, 5);
         }
-        catch (error) {
-            if(error instanceof Error) {
-                console.error(error.message);
-                return [];
-            }
+        catch  {
             console.error("Something went wrong!");
             return [];
         }
@@ -30,11 +26,7 @@ class FetchDataService {
             const responses = await dashboardService.getUserResponses(username);
             return responses;
         }
-        catch (error) {
-            if(error instanceof Error) {
-                console.error(error.message);
-                return [];
-            }
+        catch {
             console.error("Something went wrong!");
             return [];
         }
@@ -50,11 +42,7 @@ class FetchDataService {
             }
             return responsesDetails
         }
-        catch (error) {
-            if(error instanceof Error) {
-                console.error(error.message);
-                return [];
-            }
+        catch  {
             console.error("Something went wrong!");
             return [];
         }

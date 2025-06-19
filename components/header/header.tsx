@@ -25,13 +25,15 @@ const Header = () => {
   const handleLogout = async () => {
     setLoggingOut(true);
     try{
-      await Promise.all([
-        fetch("/api/auth/logout", {
+      await fetch("/api/auth/logout", {
           method: "POST",
           credentials: "include",
-        }),
-        revalidateUser(),
-      ]);
+        });
+        
+
+    await revalidateUser();
+
+    router.push("/sign-in")
     }
     catch {
       toast.error("Something went wrong")
@@ -39,9 +41,9 @@ const Header = () => {
     finally {
       setTimeout(() => {
         setLoggingOut(false)
-      }, 1000);
+      }, 2000);
     }
-    router.push("/sign-in")
+
   };
 
   const handleDashboard = () => {

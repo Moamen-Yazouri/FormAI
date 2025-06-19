@@ -132,7 +132,7 @@ export default function UserDashboard(props: IProps) {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="mb-8"
             >
-            <FormsTable forms={availableForms} />
+            <FormsTable forms={availableForms} isSummary={true}/>
             </motion.div>
 
 

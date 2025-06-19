@@ -1,5 +1,6 @@
-import CompletedFormsPage from './components/userResponses';
-import fetchDataService from '../dashboard/service/fetchData.service';
+import { Suspense } from 'react';
+import PageContent from './components/pageContent';
+import LoadingPage from '@/components/loadingPage/loadingPage';
 export const metadata = {
     title: "Responses Details | FormAI",
     description:
@@ -18,7 +19,7 @@ export const metadata = {
         "View and manage the responses you’ve submitted to forms. Keep track of your activity and submissions in one place.",
         url: "/user/[name]/responses-details",
         siteName: "FormAI",
-        images: ["/logo.png"],
+        images: ["/landing.png"],
         type: "website",
     },
     twitter: {
@@ -28,7 +29,7 @@ export const metadata = {
         title: "Responses Details | FormAI",
         description:
             "View and manage the responses you’ve submitted to forms. Keep track of your activity and submissions in one place.",
-        images: ["/logo.png"],
+        images: ["/landing.png"],
     },
     other: {
         formai: "Moamen-Yazouri", 
@@ -46,10 +47,10 @@ interface IProps {
 }
 const page = async(props: IProps) => {
     const nameParam = (await props.params);
-    const name = decodeURIComponent(nameParam.name); 
-    const responseDetails = await fetchDataService.getUserResponseDetails(name);
     return (
-        <CompletedFormsPage responsesDetails={responseDetails} />
+        <Suspense fallback={<LoadingPage />}>
+            <PageContent name={nameParam.name} />
+        </Suspense>
     )
 }
 

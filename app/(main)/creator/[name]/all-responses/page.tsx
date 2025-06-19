@@ -1,6 +1,7 @@
-import React from 'react'
-import fetchDataService from '../dashboard/services/fetchData.service';
-import ResponsesTable from '@/components/responses-table/responsesTable';
+import React, { Suspense } from 'react';
+import PageContent from './components/pageContent';
+import LoadingPage from '@/components/loadingPage/loadingPage';
+
 export const metadata = {
     title: "Creator Forms Responses | FormAI",
     description:
@@ -18,7 +19,7 @@ export const metadata = {
         "View and analyze responses submitted to your forms. Gain insights and manage data effortlessly with Form AI Builder.",
         url: "/creator/[name]/all-responses",
         siteName: "FormAI",
-        images: ["/logo.png"],
+        images: ["/landing.png"],
         type: "website",
     },
     twitter: {
@@ -28,7 +29,7 @@ export const metadata = {
         title: "Creator Forms Responses | FormAI",
         description:
             "View and analyze responses submitted to your forms. Gain insights and manage data effortlessly with Form AI Builder.",
-        images: ["/logo.png"],
+        images: ["/landing.png"],
     },
     other: {
         formai: "Moamen-Yazouri", 
@@ -46,9 +47,11 @@ interface IProps {
 }
 const page = async (props: IProps) => {
     const name = decodeURIComponent((await props.params).name);
-    const responses = await fetchDataService.creatorResponses(name)
+
     return (
-        <ResponsesTable responses={responses} />
+        <Suspense fallback={<LoadingPage />}>
+            <PageContent name={name}/>
+        </Suspense>
     )
 }
 

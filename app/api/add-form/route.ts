@@ -4,12 +4,12 @@ import { connection, NextRequest, NextResponse } from "next/server";
 
 export const POST = async (request: NextRequest ) => {
     const formData: IForm = await request.json();
+    console.log(formData);
     if(!formData) {
         return NextResponse.json({message: "Form data not found!"})
     }
     await connection();
     try {
-        console.log(formData);
         await formsService.addNewForm(formData);
         return NextResponse.json({message: "Form added successfully!"}, {status: 201})
     }

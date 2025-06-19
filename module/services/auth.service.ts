@@ -7,6 +7,7 @@ import xss from "xss";
 import { generateToken } from "@/lib/generateAndVerifyToken";
 import { cookies } from "next/headers";
 import userService from "./user.service";
+import { getToken } from "@/lib/getToken";
 
 class AuthService {
     async signUp(user: IUser) {
@@ -72,5 +73,15 @@ class AuthService {
         };
     }
     
+    async validateName(name: string) {
+        const payload = await getToken();
+        if(!payload) {
+            return "unauthorized";
+        }
+        if(payload.name === name) {
+            return "allowed";
+        }
+        return "forbidden";
+    }
 }
 export default new AuthService();

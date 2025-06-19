@@ -19,7 +19,7 @@ export const metadata = {
             "Access your dashboard to view submitted forms, manage account settings, and track your activity in one place.",
         url: "/user/[name]",
         siteName: "FormAI",
-        images: ["/logo.png"],
+        images: ["/landing.png"],
         type: "website",
     },
     twitter: {
@@ -29,7 +29,7 @@ export const metadata = {
         title: "User Dashboard | FormAI",
         description:
             "Access your dashboard to view submitted forms, manage account settings, and track your activity in one place.",
-        images: ["/logo.png"],
+        images: ["/landing.png"],
     },
     other: {
         formai: "Moamen-Yazouri", 

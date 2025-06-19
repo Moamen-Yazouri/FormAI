@@ -1,6 +1,8 @@
 import { FormValues } from "./types";
 
-export const INITIAL_VALUES: FormValues = {
-    email: "",
+
+
+export const INITIAL_USER: FormValues = {
     name: "",
-} 
+    email: "",
+}

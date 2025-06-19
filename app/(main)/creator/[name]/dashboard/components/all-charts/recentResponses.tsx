@@ -30,36 +30,41 @@ const RecentResponses = ({ recentResponses }: IProps) => {
       </CardHeader>
 
       <CardContent>
-        <div className="space-y-4">
-          {recentResponses.map((response) => (
-            <div
-              key={response.id}
-              className="flex items-center gap-4 rounded-md border border-slate-700/40 bg-slate-900/30 p-3 hover:bg-slate-800/40 transition"
-            >
-            <Avatar className="h-9 w-9 ring-2 ring-cyan-500/40">
-              <AvatarFallback className="bg-cyan-700 text-white font-bold text-sm">
-                {response.respondentName
-                  .split(" ")
-                  .map((n) => n[0])
-                  .join("")
-                  .slice(0, 2)}
-              </AvatarFallback>
-            </Avatar>
+        {recentResponses.length === 0 ? (
+          <p className="text-center text-slate-400 py-4">
+            No recent responses yet.
+          </p>
+        ) : (
+          <div className="space-y-4">
+            {recentResponses.map((response) => (
+              <div
+                key={response.id}
+                className="flex items-center gap-4 rounded-md border border-slate-700/40 bg-slate-900/30 p-3 hover:bg-slate-800/40 transition"
+              >
+                <Avatar className="h-9 w-9 ring-2 ring-cyan-500/40">
+                  <AvatarFallback className="bg-cyan-700 text-white font-bold text-sm">
+                    {response.respondentName
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")
+                      .slice(0, 2)}
+                  </AvatarFallback>
+                </Avatar>
 
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-slate-100">
+                    {response.respondentName}
+                  </p>
+                  <p className="text-xs text-slate-400">{response.formTitle}</p>
+                </div>
 
-              <div className="flex-1">
-                <p className="text-sm font-medium text-slate-100">
-                  {response.respondentName}
-                </p>
-                <p className="text-xs text-slate-400">{response.formTitle}</p>
+                <div className="text-xs text-slate-400">
+                  {new Date(response.date).toLocaleDateString()}
+                </div>
               </div>
-
-              <div className="text-xs text-slate-400">
-                {new Date(response.date).toLocaleDateString()}
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </CardContent>
     </Card>
   )

@@ -1,6 +1,6 @@
-import React from 'react';
-import fetchDataService from '../dashboard/services/fetchData.service';
-import UsersTable from '@/components/user-table/userTable';
+import React, { Suspense } from 'react';
+import LoadingPage from '@/components/loadingPage/loadingPage';
+import PageContent from './components/pageContent';
 
 export const metadata = {
     title: "All users | FormAI",
@@ -20,7 +20,7 @@ export const metadata = {
         "Access a centralized page to view and manage all users and creators. Ensure platform quality, moderate content, and streamline oversight with powerful admin tools.",
         url: "/admin/all-users",
         siteName: "FormAI",
-        images: ["/logo.png"],
+        images: ["/landing.png"],
         type: "website",
     },
     twitter: {
@@ -43,9 +43,10 @@ export const viewport = {
     initialScale: 1
 }
 const page = async() => {
-    const users = await fetchDataService.usersData();
     return (
-        <UsersTable users={users}/>
+        <Suspense fallback={<LoadingPage />}>
+            <PageContent />
+        </Suspense>
     )
 }
 

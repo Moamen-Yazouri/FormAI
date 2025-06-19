@@ -1,6 +1,6 @@
 "server-only";
 import { PageAccessName, protectedRoutes } from "../types";
-import { isInteger } from "formik";
+
 
 export const getPaths = (pathname: string) => {
     return pathname.split("/").filter((path) => path !== "");

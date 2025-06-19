@@ -13,11 +13,7 @@ export const getCreatorForms = async (name: string) => {
 
             return formsData;
         }
-        catch (error) {
-            if(error instanceof Error) {
-                console.error(error.message);
-                return[];
-            }
+        catch {
             console.error("Failed to fetch creator forms data!");
             return [];
         }

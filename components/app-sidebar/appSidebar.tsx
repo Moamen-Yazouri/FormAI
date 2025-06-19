@@ -6,7 +6,7 @@ import {
   SidebarTrigger,
   useSidebar
 } from "@/components/ui/sidebar";
-import { Sparkles, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import NavItemsProvider from "./navItemsProvider";
 import LoginInfo from "./components/login-info";
 import Logo from "../header/logo";
@@ -22,7 +22,7 @@ export default function AppSidebar() {
             <Menu className="h-5 w-5" />
           </SidebarTrigger>
           <div className="flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-cyan-400" />
+            <Logo size={30} />
             <h1 className="text-lg font-bold bg-gradient-to-r from-cyan-300 to-blue-300 bg-clip-text text-transparent">
               FormAI
             </h1>

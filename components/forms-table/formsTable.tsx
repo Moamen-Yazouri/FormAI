@@ -24,9 +24,8 @@ import ActionsProvider from "@/components/form-actions-provider/ActionsProvider"
 import { toast } from "sonner";
 import SearchBar from "../text-search-bar/searchBar";
 import { useFilter } from "./hook/useFilter";
-import Link from "next/link";
 import { deleteForm } from "./actions/form.action";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { AuthContext } from "@/providers/auth/authProvider";
 import TablesLoader from "../tables-loader/tablesLoader";
 import clsx from "clsx";
@@ -41,13 +40,14 @@ const FormsTable = (props: IProps) => {
     const { forms, isSummary } = props;
     const {user, isLoading} = useContext(AuthContext);
     const [deleting, setDeleting] = useState<boolean>(false)
-    const [formToDelete, setFormToDelete] = useState<string | null>(null)
+    const [formToDelete, setFormToDelete] = useState<string | null>(null);
+    const router = useRouter();
     const { 
         setSearchTerm, 
         searchTerm, 
         filteredForms, 
         handleDelete 
-    } = useFilter(forms)
+    } = useFilter(forms);
     const pathname = usePathname();
     const isAvailable = pathname.includes("available-forms");
 
@@ -67,6 +67,23 @@ const FormsTable = (props: IProps) => {
 
         setFormToDelete(null)   
     }
+
+    const handleViewAll = () => {
+        if(!user) return;
+
+        if (user.role === "admin") {
+            router.push("/admin/all-forms");
+        }
+
+        else if(user.role === "creator") {
+            router.push(`/creator/${user.name}/my-forms`);
+        }
+
+        else {
+            router.push(`/available-forms/${user.name}`);
+        }
+    }
+
     if(isLoading || deleting) return <TablesLoader itemName={"Forms"} action="Loading"/>
     if(!user) return null; 
     return (
@@ -191,16 +208,15 @@ const FormsTable = (props: IProps) => {
             </TableBody>
         </Table>
         {
-            isSummary && forms.length > 0  &&(
+            isSummary && forms.length > 4  && (
                 <div className="flex justify-center p-4">
-                <Link href={user.role === "admin" ? `/admin/all-forms` : `/creator/${user.name}/my-forms`}>
                     <Button
                     variant="outline"
                     className="bg-slate-900/30 text-cyan-300 border-cyan-500/30 hover:bg-gradient-to-r hover:from-blue-800/30 hover:to-cyan-700/30 hover:text-white transition-colors flex items-center gap-2"
+                    onClick={handleViewAll}
                     >
-                    View All Forms
+                        View All Forms
                     </Button>
-                </Link>
                 </div>
             )
         }
@@ -208,4 +224,4 @@ const FormsTable = (props: IProps) => {
     )
 }
 
-export default FormsTable
+export default FormsTable;

@@ -21,7 +21,7 @@ export const metadata = {
         "Examine individual form submissions in detail. Review answers, assess input quality, and take action if needed.",
         url: "/review-response/[id]",
         siteName: "FormAI",
-        images: ["/logo.png"],
+        images: ["/landing.png"],
         type: "website",
     },
     twitter: {
@@ -31,7 +31,7 @@ export const metadata = {
         title: "Review Response | FormAI",
         description:
             "Examine individual form submissions in detail. Review answers, assess input quality, and take action if needed.",
-        images: ["/logo.png"],
+        images: ["/landing.png"],
     },
     other: {
         formai: "Moamen-Yazouri", 
