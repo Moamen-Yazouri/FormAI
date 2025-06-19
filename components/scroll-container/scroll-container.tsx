@@ -14,7 +14,7 @@ const ScrollableContainer = React.forwardRef<HTMLDivElement, ScrollableContainer
         return (
         <div
             ref={ref}
-            className={cn("overflow-y-auto", hideScrollbar ? "scrollbar-hide" : "custom-scrollbar pr-2", isMobile && "mt-14",className)}
+            className={cn("overflow-y-auto", hideScrollbar ? "scrollbar-hide" : "custom-scrollbar pr-2", className)}
             style={{ maxHeight }}
             {...props}
         >
