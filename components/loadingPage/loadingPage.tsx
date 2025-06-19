@@ -1,7 +1,8 @@
 "use client"
 
-import { FileText } from "lucide-react"
+
 import { useEffect, useState } from "react"
+import Logo from "../header/logo"
 
 export default function LoadingPage() {
   const [rotation, setRotation] = useState(0)
@@ -47,7 +48,7 @@ export default function LoadingPage() {
       </div>
 
       <div className="flex items-center gap-2">
-        <FileText className="h-6 w-6 text-cyan-500" />
+        <Logo size={40} />
         <span className="text-2xl font-bold text-slate-200">FormAI</span>
       </div>
     </div>
