@@ -1,5 +1,5 @@
-interface IStateCard {
-    stateTitle: string;
-    stateValue: number;
-    statePercentage: number;
+export interface IStateCard {
+    stateTitle: string,
+    stateValue: number,
+    statePercentage: number,
 }

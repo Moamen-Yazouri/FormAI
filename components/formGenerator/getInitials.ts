@@ -6,6 +6,9 @@ export const getInitials = (fields: IFormField[]) => {
             if (Array.isArray(field.options) && field.type === "radio") {
                 acc[field.fieldId.toLowerCase()] = [];
             }
+            else if(field.type === "checkbox") {
+                acc[field.fieldId.toLowerCase()] = false;
+            }
             else {
                 acc[field.fieldId.toLowerCase()] = "";
             }

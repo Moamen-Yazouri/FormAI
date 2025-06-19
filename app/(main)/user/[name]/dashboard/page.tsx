@@ -1,93 +1,57 @@
-import UserDashboard from "./components/userDashboard";
-import fetchDataService from "./service/fetchData.service";
+import { Suspense } from "react";
+import DashboardContent from "./components/dashboardContent";
+import LoadingPage from "@/components/loadingPage/loadingPage";
+export const metadata = {
+    title: "User Dashboard | FormAI",
+    description:
+        "Your personal dashboard to manage form submissions, update profile settings, and monitor your activity across Form AI Builder.",
+    keywords: [
+        "user management",
+        "user responses",
+        "user moderation",
+        "user activity",
+        "user tools",
+    ],
+    metadataBase: new URL(new URL("https://form-ai-gold.vercel.app"),),
+    openGraph: {
+        title: "User Dashboard | FormAI",
+        description:
+            "Access your dashboard to view submitted forms, manage account settings, and track your activity in one place.",
+        url: "/user/[name]",
+        siteName: "FormAI",
+        images: ["/landing.png"],
+        type: "website",
+    },
+    twitter: {
+        card: "summary_large_image",
+        site: "@FormAI",
+        creator: "@Moamen-Yazouri",
+        title: "User Dashboard | FormAI",
+        description:
+            "Access your dashboard to view submitted forms, manage account settings, and track your activity in one place.",
+        images: ["/landing.png"],
+    },
+    other: {
+        formai: "Moamen-Yazouri", 
+        charSet: "utf-8", 
+    },
+};
+
+export const viewport = {
+    width: "device-width",
+    initialScale: 1
+}
+
 interface IProps {
     params: Promise<{name: string}>
 }
-        const mockData = {
-        formsCompleted: 6,
-        formsAvailable: 4,
-        averageCompletionTime: "3m 45s",
-        completedForms: [
-            {
-                id: "form-1",
-                title: "Customer Feedback Survey",
-                date: "2 days ago",
-            },
-            {
-                id: "form-2",
-                title: "Product Satisfaction",
-                date: "1 week ago",
-            },
-            {
-                id: "form-3",
-                title: "Website Usability Test",
-                date: "2 weeks ago",
-            },
-            {
-                id: "form-4",
-                title: "Service Quality Evaluation",
-                date: "3 weeks ago",
-            },
-            {
-                id: "form-5",
-                title: "Feature Request Form",
-                date: "1 month ago",
-            },
-            {
-                id: "form-6",
-                title: "User Experience Survey",
-                date: "1 month ago",
-            },
-        ],
-        availableForms: [
-            {
-                id: "form-7",
-                formTitle: "Quarterly Feedback",
-                description: "Help us improve our services with your quarterly feedback",
-                deadline: "3 days left",
-                creator: "Sarah Johnson",
-            },
-            {
-                id: "form-8",
-                formTitle: "New Feature Evaluation",
-                description: "Evaluate our latest features and provide your thoughts",
-                deadline: "5 days left",
-                creator: "Michael Chen",
-            },
-            {
-                id: "form-9",
-                formTitle: "User Satisfaction Survey",
-                description: "Tell us about your overall satisfaction with our platform",
-                deadline: "1 week left",
-                creator: "Alex Rodriguez",
-            },
-            {
-                id: "form-10",
-                formTitle: "Product Improvement Ideas",
-                description: "Share your ideas on how we can improve our products",
-                creator: "Emily Parker",
-            },
-        ],
-        }
-
 export default async function UserFormActivityPage(props: IProps) {
-    const name = decodeURIComponent((await props.params).name)
-    const [
-        responses,
-        availableForms,
-    ] = await Promise.all([
-        fetchDataService.answeredForms(name),
-        fetchDataService.availableForms(name),
-    ]) 
-    console.log(availableForms);
-    const data = {
-        formsCompleted: responses.length,
-        formsAvailable: availableForms.length,
-        averageCompletionTime: "3m 45s",
-        availableForms,
-        completedForms: responses,
-    }
+    
+    const name = decodeURIComponent((await props.params).name);
+
     return (
-        <UserDashboard {...data} name={name}/>
+        <Suspense fallback={<LoadingPage/>}>
+            <DashboardContent name={name} />
+        </Suspense>
     )
 }

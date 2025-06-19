@@ -1,29 +1,52 @@
-import AdminDashboard from './components/adminDashboard';
-import FetchData from "./services/fetchData.service";
+import { Suspense } from 'react';
+import DashboardContent from './components/dashboardContent';
+import LoadingPage from '@/components/loadingPage/loadingPage';
+export const metadata = {
+    title: "Admin Dashboard | FormAI",
+    description:
+        "Powerful admin dashboard to oversee form submissions, manage users, and control platform settings in one centralized interface.",
+    keywords: [
+        "admin form management",
+        "view all forms",
+        "form moderation",
+        "platform oversight",
+        "admin tools",
+    ],
+    metadataBase: new URL(new URL("https://form-ai-gold.vercel.app"),),
+    openGraph: {
+        title: "All forms | FormAI",
+        description:
+        "Access the admin dashboard to manage users, forms, and platform activity. Monitor submissions, enforce policies, and maintain control over your application's operations.",
+        url: "/admin/dashboard",
+        siteName: "FormAI",
+        images: ["/landing.png"],
+        type: "website",
+    },
+    twitter: {
+        card: "summary_large_image",
+        site: "@FormAI",
+        creator: "@Moamen-Yazouri",
+        title: "Admin Dashboard | FormAI",
+        description:
+            "Access the admin dashboard to manage users, forms, and platform activity. Monitor submissions, enforce policies, and maintain control over your application's operations.",
+        images: ["/landing.png"],
+    },
+    other: {
+        formai: "Moamen-Yazouri", 
+        charSet: "utf-8", 
+    },
+};
 
-const page = async() => {
+export const viewport = {
+    width: "device-width",
+    initialScale: 1
+}
 
-    const [
-        userActivityData,
-        formCreationData,
-        formResponsesData,
-        usersData,
-        formsData,
-    ] = await Promise.all([
-        FetchData.usersActivity(),      
-        FetchData.formCreationData(),
-        FetchData.formResponsesData(),
-        FetchData.usersData(),
-        FetchData.formsData(),
-    ]);
+const page = () => {
     return (
-        <AdminDashboard 
-            usersData={usersData} 
-            formsData={formsData} 
-            userActivityData={userActivityData} 
-            formCreationData={formCreationData} 
-            formResponsesData={formResponsesData}        
-        />
+        <Suspense fallback={<LoadingPage/>}>
+            <DashboardContent />
+        </Suspense>
     )
 }
 

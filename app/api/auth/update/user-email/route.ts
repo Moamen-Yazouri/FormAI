@@ -14,11 +14,12 @@ export const POST = async (req: NextRequest) => {
     }
     await connection();
     try {
+        console.log(newEmail.id, newEmail.email)
         const user = await userService.updateEmail(newEmail.id, newEmail.email);
         if(!user) {
             return NextResponse.json({message: "User not found"}, {status: 404});
         }
-        return NextResponse.json({message: "User email updated successfully", user}, {status: 200})
+        return NextResponse.json({message: "User email updated successfully", updatedUser: user}, {status: 200})
     }
     catch(err) {
         if(err instanceof Error) {

@@ -1,94 +1,57 @@
-"use client" 
-import {usePathname, useRouter} from "next/navigation"
-import {
-    Sidebar,
-    SidebarFooter,
-    SidebarHeader,
+"use client"
 
-    SidebarTrigger,
-    useSidebar
-} from "@/components/ui/sidebar"
 import {
-    LogOut,
-    Sparkles,
-    Menu
-} from "lucide-react"
-import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar"
-import {Button} from "@/components/ui/button"
-import { AuthContext } from "@/providers/auth/authProvider"
-import { use, useContext } from "react"
-import NavItemsProvider from "./navItemsProvider"
-import Loader from "./loader"
+  Sidebar,
+  SidebarHeader,
+  SidebarTrigger,
+  useSidebar
+} from "@/components/ui/sidebar";
+import { Menu } from "lucide-react";
+import NavItemsProvider from "./navItemsProvider";
+import LoginInfo from "./components/login-info";
+import Logo from "../header/logo";
 
 export default function AppSidebar() {
-    const {user, isLoading} = use(AuthContext)
-    const router = useRouter();
-    const pathname = usePathname();
-    const {isMobile} = useSidebar();
-    const nameForAvatar = user?.name?.split(" ").map((word) => word[0]).join("")
+  const { isMobile } = useSidebar();
 
+  return (
+    <>
+      {isMobile && (
+        <div className="mb-20 absolute top-0 left-0 right-0 h-14 z-30 flex items-center px-4 border-b !bg-gradient-to-b !from-slate-950 !via-blue-950 !to-cyan-950 !text-slate-200 !border-r !border-cyan-800/30 backdrop-blur-md">
+          <SidebarTrigger className="mr-2 text-cyan-300 hover:text-white hover:bg-cyan-800/30 rounded-md p-1 transition-all duration-200">
+            <Menu className="h-5 w-5" />
+          </SidebarTrigger>
+          <div className="flex items-center gap-2">
+            <Logo size={30} />
+            <h1 className="text-lg font-bold bg-gradient-to-r from-cyan-300 to-blue-300 bg-clip-text text-transparent">
+              FormAI
+            </h1>
+          </div>
+        </div>
+      )}
 
+      <Sidebar
+        variant="sidebar"
+        collapsible="icon"
+        className="!bg-gradient-to-b !from-slate-950 !via-blue-950 !to-cyan-950 !text-slate-200 !border-r !border-cyan-800/30 backdrop-blur-md
+        [&_*]:!bg-transparent
+        [&_*]:!text-slate-200
+        [&_svg]:!text-cyan-400
+        [&_button]:!hover:bg-cyan-800/30
+        [&_button]:!hover:text-white"
+      >
+        <SidebarHeader className="p-4 border-b !border-cyan-800/20 bg-gradient-to-r from-slate-800/40 to-cyan-800/40">
+          <div className="flex items-center gap-2">
+            <Logo size={40}/>
+            <span className="font-bold text-xl bg-gradient-to-r from-cyan-300 via-blue-300 to-sky-300 bg-clip-text text-transparent">
+              FormAI
+            </span>
+          </div>
+        </SidebarHeader>
 
-    if(pathname.includes("answer-form")) return null;
-
-    const handleLogout = async () => {
-        await fetch("/api/auth/logout", {
-            method: "POST",
-            credentials: "include",
-        });
-        router.push("/sign-in");
-    }
-
-    return (
-        <> 
-            {
-            isMobile && (
-                <div className="fixed top-0 left-0 right-0 h-14 border-b bg-white z-30 flex items-center px-4">
-                    <SidebarTrigger className="mr-2">
-                        <Menu className="h-5 w-5"/>
-                    </SidebarTrigger>
-                    <div className="flex items-center gap-2">
-                        <Sparkles className="h-5 w-5 text-purple-600"/>
-                        <h1 className="text-lg font-bold text-purple-900">FormAI</h1>
-                    </div>
-                </div>
-            )
-        }
-
-            <Sidebar variant="sidebar" collapsible="icon">
-                <SidebarHeader className="p-4">
-                    <div className="flex items-center gap-2">
-                        <Sparkles className="h-6 w-6 text-purple-600"/>
-                        <span className="font-bold text-xl text-purple-900">FormAI</span>
-                    </div>
-                </SidebarHeader>
-
-                <NavItemsProvider name={user!.name} role={user!.role}/>
-
-                <SidebarFooter className="border-t">
-                    <div className="p-4">
-                        <div className="flex items-center gap-3">
-                            <Avatar>
-                                <AvatarImage src="/placeholder.svg?height=32&width=32"/>
-                                <AvatarFallback className="bg-purple-200 text-purple-900">{nameForAvatar}</AvatarFallback>
-                            </Avatar>
-                            <div className="flex flex-col">
-                                <span className="text-sm font-medium">{user!.name}</span>
-                                <span className="text-xs text-muted-foreground">{user!.email}</span>
-                            </div>
-                        </div>
-                        <Button 
-                            onClick={handleLogout} 
-                            variant="ghost" 
-                            size="sm" 
-                            className="w-full mt-4 text-red-500 hover:text-red-600 hover:bg-red-50 cursor-pointer"
-                        >
-                            <LogOut className="h-4 w-4 mr-2"/>
-                            <span>Log out</span>
-                        </Button>
-                    </div>
-                </SidebarFooter>
-            </Sidebar>
-        </>
-    )
+        <NavItemsProvider />
+        <LoginInfo />
+      </Sidebar>
+    </>
+  )
 }

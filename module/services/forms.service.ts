@@ -1,8 +1,7 @@
 import { IForm, IFormFromDB } from "@/@types";
 import formsRepo from "../repositories/forms.repo";
-
 import userRepo from "../repositories/user.repo";
-import responseService from "./response.service";
+
 class FormServices {
     async getFormById(formId: string): Promise<IFormFromDB | null> {
             const form = await formsRepo.getFormById(formId);
@@ -21,6 +20,21 @@ class FormServices {
     }
 
 
+    async addRespondant (formId: string, userId: string) {
+        return await formsRepo.addRespondant(formId, userId);
+    }
+
+    async removeRespondant (formId: string, userId: string) {
+        return await formsRepo.removeRespondant(formId, userId);
+    }
+
+    async addAnonymous (formId: string) {
+        return await formsRepo.addAnonymous(formId);
+    }
+
+    async removeAnonymous (formId: string) {
+        return await formsRepo.removeAnonymous(formId);
+    }
 
     async getAnswerdForms (username: string) {
         const user = await userRepo.getUserByName(username);
@@ -39,14 +53,11 @@ class FormServices {
         if(!form) {
             throw new Error("Form not found");
         }
-        // const deleteResponses = await responseService.deleteFromResponses(String(form._id));
-        // if(!deleteResponses) {
-        //     throw new Error("Failed to delete responses");
-        // }
+
         const deletedForm = await formsRepo.deleteForm(formId);
         return deletedForm;
     }
-    deleteUserForms = async (userId: string) => {
+    deleteUserForms  = async (userId: string) => {
         const forms = await formsRepo.getCreatorForm(userId);
         if(forms.length > 0) {
             const deletedForms = await formsRepo.deleteUserForms(userId);
@@ -56,5 +67,25 @@ class FormServices {
         }
         return forms;
     }
+
+    async ensureFormCreator (formId: string, creatorName: string): Promise<Boolean> {
+        const form = await formsRepo.getFormById(formId);
+        const creator = await userRepo.getUserByName(creatorName);
+        if(!creator) {
+            throw new Error("Creator not found");
+        }
+        if(creator.role === "admin") {
+            return true;
+        }
+        if(!form) {
+            throw new Error("Form not found");
+        }
+        
+        if(String(form.creatorId) !== String(creator._id)) {
+            return false;
+        }
+        return true;
+    }
+
 }
 export default new FormServices();

@@ -1,54 +1,29 @@
-"use client" 
-import type React from "react"
+"use client"
 
-import {Suspense, use, useState} from "react"
-import {toast} from "sonner"
-import {Button} from "@/components/ui/button"
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle
-} from "@/components/ui/card"
-import {Input} from "@/components/ui/input"
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue
-} from "@/components/ui/select"
-import LoadingSpinner from "../../../form-generator/components/loading-spinner"
-import { AuthContext } from "@/providers/auth/authProvider"
-import PersonalForm from "./personalForm"
 import { motion } from "framer-motion"
-import FullPageLoader from "../profileLoader"
-
-
-
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import PersonalForm from "./personalForm"
 
 export default function PersonalInfo() {
-    
-
-    return (
-        <Card className="border-purple-200 shadow-sm pb-0">
-            <CardHeader >
-                <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
-                >
-                <div>
-                    <CardTitle className="text-purple-900">Security Settings</CardTitle>
-                    <CardDescription>Update your password and manage your account security.</CardDescription>
-                </div>
-                </motion.div>
-            </CardHeader>
-            <Suspense fallback= {<FullPageLoader />}>
-                <PersonalForm/>
-            </Suspense>
-        </Card>
-    )
+  return (
+    <Card className="bg-gradient-to-br from-blue-950 via-indigo-950 to-cyan-900 border border-cyan-700/20 shadow-2xl backdrop-blur-md pb-0">
+      <CardHeader>
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <div>
+            <CardTitle className="bg-gradient-to-r from-cyan-300 via-blue-300 to-indigo-300 bg-clip-text text-transparent">
+              Personal Information
+            </CardTitle>
+            <CardDescription className="text-slate-400">
+              Update your personal information and account preferences.
+            </CardDescription>
+          </div>
+        </motion.div>
+      </CardHeader>
+      <PersonalForm />
+    </Card>
+  )
 }

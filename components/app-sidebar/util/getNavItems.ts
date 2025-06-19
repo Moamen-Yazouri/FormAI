@@ -3,6 +3,7 @@ import { INavItem } from "../types";
 import { FileText, LayoutDashboard, MessageCircleMoreIcon, Sparkles, User } from "lucide-react";
 
 export const getNavItems = (role: UserRoles, name: string): INavItem[] => {
+    
     switch(role) {
         case "admin": {
             const navItems = [
@@ -24,27 +25,52 @@ export const getNavItems = (role: UserRoles, name: string): INavItem[] => {
                 {
                     title: "My Forms",
                     icon: FileText,
-                    href: `my-forms/${name}`
-                }
+                    href: `/my-forms/${name}`
+                },
+                {
+                    title: "All Forms",
+                    icon: FileText,
+                    href: "/admin/all-forms"
+                },
+                {
+                    title: "All Users",
+                    icon: User,
+                    href: "/admin/all-users"
+                },
             ]
             return navItems;
         }
         case "creator": {
             const navItems = [
                 {
-                    title: "Dashboard",
-                    icon: LayoutDashboard,
-                    href: `/creator/${name}/dashboard`,
-                }, 
-                {
                     title: "Profile",
                     icon: User,
                     href: `/profile/${name}`,
                 },
                 {
+                    title: "Dashboard",
+                    icon: LayoutDashboard,
+                    href: `/creator/${name}/dashboard`,
+                }, 
+                {
                     title: "Form Generator",
                     icon: Sparkles,
                     href: "/form-generator"
+                },
+                {
+                    title: "Created Forms",
+                    icon: Sparkles,
+                    href: `/my-forms/${name}`
+                },
+                {
+                    title: "Received Responses",
+                    icon: Sparkles,
+                    href: `/creator/${name}/all-responses`
+                },
+                {
+                    title: "Available Forms",
+                    icon: FileText,
+                    href: `/available-forms/${name}`
                 },
             ]
             return navItems;
@@ -52,19 +78,19 @@ export const getNavItems = (role: UserRoles, name: string): INavItem[] => {
         case "user": {
             const navItems = [
                 {
-                    title: "Dashboard",
-                    icon: LayoutDashboard,
-                    href: `/user/${name}/dashboard`,
-                }, 
-                {
                     title: "Profile",
                     icon: User,
                     href: `/profile/${name}`,
                 },
                 {
+                    title: "Dashboard",
+                    icon: LayoutDashboard,
+                    href: `/user/${name}/dashboard`,
+                }, 
+                {
                     title: "Available Forms",
                     icon: FileText,
-                    href: `/user/${name}/available-forms`
+                    href: `/available-forms/${name}`
                 },
                 {
                     title: "My Responses",

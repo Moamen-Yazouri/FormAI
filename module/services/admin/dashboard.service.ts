@@ -1,7 +1,21 @@
-import { IUserFromDB, IUserData, IFormPopulatedByCreator, IFormData, IUsersActivityData, IFormFromDB, IFormCreationData, IFormTable } from "@/@types";
-import { getActiveStatus, getDateOnly, getMonthName, getWeekDaysDates } from "@/lib/dateUtils";
+import { 
+    IUserFromDB, 
+    IUserData, 
+    IFormPopulatedByCreator, 
+    IUsersActivityData, 
+    IFormFromDB, 
+    IFormCreationData, 
+    IFormTable 
+} from "@/@types";
+import { 
+    getActiveStatus, 
+    getDateOnly, 
+    getMonthName, 
+    getWeekDaysDates 
+} from "@/lib/dateUtils";
 import dashboardRepo from "../../repositories/admin/dashboard.repo";
 import { months } from "@/constants/dateConstants";
+import { creatorFormsFormatter, userDataFormatter } from "./utils";
 
 class DashboardService {
     async getUsersData() {
@@ -10,19 +24,7 @@ class DashboardService {
             const forms = await dashboardRepo.getUserForms(userId) || [];
             return forms.length;
         }
-        const usersData: IUserData[] = await Promise.all(
-            users.map(async (user) => {
-                return {
-                    id: String(user._id),
-                    name: user.name,
-                    email: user.email,
-                    role: user.role,
-                    status: getActiveStatus(user.updatedAt, new Date().toISOString()),
-                    forms: await formsCount(String(user._id)),
-                    lastActive: getDateOnly(user.updatedAt),
-                }
-            })
-        )
+        const usersData: IUserData[] = await Promise.all(userDataFormatter(users, formsCount));
         return usersData;
     }
 
@@ -31,15 +33,7 @@ class DashboardService {
             const user: IUserFromDB | null = await dashboardRepo.getUserByName(username);
             if (user) {
                 const forms: IFormFromDB[] = await dashboardRepo.getUserForms(user._id);
-                const formsData: IFormTable[] = forms.map(form => {
-                    return {
-                        id: String(form._id),
-                        name: form.title,
-                        creator: user.name,
-                        responses: form.answeredBy?.length || 0,
-                        createdAt: getDateOnly(form.createdAt),
-                    }
-                })
+                const formsData: IFormTable[] = creatorFormsFormatter(forms, username)
                 return formsData;
             }
             console.error("User not found!");
@@ -55,12 +49,15 @@ class DashboardService {
         const populatedForms: IFormPopulatedByCreator[] = await dashboardRepo.getAllFormsWithCreators();
 
         const formsData: IFormTable[] = populatedForms.map(form => {
+            const resNubmber = (form.anonymousNumber || 0) + (form.answeredBy?.length || 0)
             return {
                 id: String(form._id),
                 name: form.title,
+                description: form.description,
                 creator: form.creatorId.name,
-                responses: form.answeredBy?.length || 0,
+                responses: resNubmber,
                 createdAt: getDateOnly(form.createdAt),
+                deadline: form.expiredAt? getDateOnly(form.expiredAt) : "No deadline",
             }
         })
         return formsData;
@@ -72,7 +69,7 @@ class DashboardService {
         const userActivityData: IUsersActivityData[] = dates.map((date) => {
             return {
                 name: date.day,
-                active: users.filter(user => (getActiveStatus(user.updatedAt, date.date) === "active")).length || 0,
+                active: users.filter(user => (getActiveStatus(user.lastActive) === "active")).length || 0,
                 new: users.filter(user => getDateOnly(user.createdAt) === getDateOnly(date.date)).length || 0,
             }
         })

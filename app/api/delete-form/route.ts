@@ -1,18 +1,20 @@
-import { IFormFromDB, IUserFromDB } from "@/@types";
+import { IFormFromDB } from "@/@types";
 import { connection } from "@/DB/connection";
-import dashboardRepo from "@/module/repositories/admin/dashboard.repo";
 import responseRepo from "@/module/repositories/response.repo";
 import formsService from "@/module/services/forms.service";
 import { NextRequest, NextResponse } from "next/server";
 
 export const DELETE = async (req: NextRequest) => {
-    await connection();
-    try {
+    
         const formId = (await req.json()).formId;
         if (!formId) {
             return NextResponse.json({ message: "Form ID is required!" }, { status: 401 });
         }
 
+        await connection();
+
+        try {
+        console.log("Form ID: ", formId);
         await responseRepo.deleteFormResponses(formId);
 
         const deletedForm: IFormFromDB | null = await formsService.deleteForm(formId); 

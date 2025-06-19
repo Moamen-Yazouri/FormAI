@@ -1,7 +1,8 @@
 import { IFormFromDB, IResponseFromDB } from "@/@types";
 
 class ActionServices {
-    private baseUrl: string = "http://localhost:3000//api/dashboard";
+    private nextPublic: string = process.env.NEXT_PUBLIC_URL || "";
+    private baseUrl: string = `${this.nextPublic}/api/dashboard`;
     async deleteForm(formId: string): Promise<IFormFromDB | null> {
         try {
             const res = await fetch(`${this.baseUrl}/delete-from`,
@@ -20,10 +21,8 @@ class ActionServices {
             }
             return data.deletedForm as IFormFromDB;
         }
-        catch(err) {
-            if(err instanceof Error) {
-                console.error(err.message);
-            }
+        catch {
+
             console.error("faild to delete the form!");
             return null;
         }
@@ -47,10 +46,7 @@ class ActionServices {
             }
             return data.response as IResponseFromDB;
         }
-        catch(err) {
-            if(err instanceof Error) {
-                console.error(err.message);
-            }
+        catch {
             console.error("faild to delete the response!");
             return null;
         }

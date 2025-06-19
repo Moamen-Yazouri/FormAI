@@ -2,22 +2,20 @@ import { useFormik } from "formik"
 import { FormValues } from "../types"
 import { validationSchema } from "../validationSchems";
 import { AuthContext } from "@/providers/auth/authProvider";
-import { use } from "react";
+import {  useContext } from "react";
 import { toast } from "sonner";
 import ActionService from "../../../service/action.service"
-interface IProps extends FormValues{}
 
-export const usePersonalInfo = (props: IProps) => {
-    const {user, revalidateUser} = use(AuthContext);
-    if(!user) {
-        throw new Error("User not found");
-    }
+
+export const usePersonalInfo = () => {
+    const { user,revalidateUser} = useContext(AuthContext);
+
     const handleSubmit = async(
         values: FormValues,
         setSubmitting: (isSubmitting: boolean) => void,
     ) => {
-        if(values.name !== user.name) {
-            const data = await ActionService.updateName(String(user._id), values.name);
+        if(values.name !== user!.name) {
+            const data = await ActionService.updateName(String(user!._id), values.name);
             if(data.user) {
                 toast.success(`Name updated to: ${values.name} successfully`);
             }
@@ -26,8 +24,8 @@ export const usePersonalInfo = (props: IProps) => {
             }
         }
 
-        if(values.role !== user.role) {
-            const data = await ActionService.updateEmail(String(user._id), values.role);
+        if(values.role !== user!.role) {
+            const data = await ActionService.updateRole(String(user!._id), values.role);
             if(data.user) {
                 toast.success(`Role updated to: ${values.role} successfully`);
             }
@@ -38,8 +36,9 @@ export const usePersonalInfo = (props: IProps) => {
         await revalidateUser();
         setSubmitting(false);
     }
+
     const formik = useFormik<FormValues>({
-        initialValues: {...props},
+        initialValues: user!,
         onSubmit: (values, {setSubmitting}) => {
             handleSubmit(values, setSubmitting);
         },

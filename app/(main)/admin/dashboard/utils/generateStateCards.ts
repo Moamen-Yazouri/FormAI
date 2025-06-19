@@ -1,3 +1,5 @@
+import { IStateCard } from "../types"
+
 export const generateStateCards = (
     totalUsers: number,
     activeUsers: number,

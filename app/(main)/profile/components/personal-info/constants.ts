@@ -1,4 +1,4 @@
-import { FormValues } from "./types"
+import { IOptions } from "@/@types";
 
 export const OPTIONS: IOptions[] = [
     {
@@ -9,6 +9,12 @@ export const OPTIONS: IOptions[] = [
         value: "creator",
         label: "Creator",
     },
+    {
+        value: "admin",
+        label: "Admin",
+    },
 
 ]
+
+
 

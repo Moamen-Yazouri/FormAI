@@ -1,9 +1,9 @@
-import { IFormField } from '@/@types'
-import React from 'react'
-import MotionedTextArea from '../motionTextarea/MotionTextarea'
-import MotionedSelect from '../motionedSelect/motionedSelect'
-import MotionedRadio from '../morionedRadio/MotionedRadio'
-import MotionField from '../motionTextField/motionTextField'
+import { IFormField, IOptions } from '@/@types'
+import React from 'react';
+import MotionedTextArea from '../motionTextarea/MotionTextarea';
+import MotionedSelect from '../motionedSelect/motionedSelect';
+import MotionedRadio from '../morionedRadio/MotionedRadio';
+import MotionField from '../motionTextField/motionTextField';
 interface IProps {
     field: IFormField
 }
@@ -48,19 +48,22 @@ const FieldProvider = (props: IProps) => {
         }
         case "radio": {
             return (
-                <fieldset className='flex items-start justify-center flex-col gap-y-2'>
-                    <legend className='text-start mb-2'>{props.field.label} :</legend>
-                    {
-                        options.map((option, index) => (
-                            <MotionedRadio
-                                key={index}
-                                name={props.field.fieldId.toLowerCase()}
-                                value={option.value}
-                                required={props.field.required}
-                            />
-                        ))
-                    }
+                <fieldset className="flex flex-col items-start justify-center gap-y-2">
+                <legend className="text-slate-200 mb-2 text-base">
+                    {props.field.label}:
+                </legend>
+
+                {options.map((option, index) => (
+                    <MotionedRadio
+                    key={index}
+                    name={props.field.fieldId.toLowerCase()}
+                    value={option.value}
+                    required={props.field.required}
+                    className="text-slate-200 focus-visible:ring-2 focus-visible:ring-cyan-500/40 focus-visible:border-cyan-500" // apply here if custom input
+                    />
+                ))}
                 </fieldset>
+
             )
         }
         default: {

@@ -6,7 +6,7 @@ class ActionService {
 
     async updateEmail(id: string, email: string): Promise<{message: string, user: IUserFromDB | undefined}> {
         try {
-            const res = await fetch(`${this.urlAddress}/api/auth/aut/update/user-email`,
+            const res = await fetch(`${this.urlAddress}/api/auth/update/user-email`,
                 {
                     method: "POST",
                     headers: {
@@ -19,10 +19,7 @@ class ActionService {
             const data = await res.json();
             return {message: `Email updated to: ${data.updatedUser.email}, successfully`, user: data.updatedUser};
         }
-        catch(e) {
-            if(e instanceof Error) {
-                return {message: e.message, user: undefined};
-            }
+        catch {
             return {message: "Something went wrong", user: undefined};
         }
     }
@@ -43,10 +40,7 @@ class ActionService {
             const data = await res.json();
             return {message: `Name updated to: ${data.updatedUser.name}, successfully`, user: data.updatedUser};
         }
-        catch(e) {
-            if(e instanceof Error) {
-                return {message: e.message, user: undefined};
-            }
+        catch {
             return {message: "Something went wrong", user: undefined};
         }
     }
@@ -66,10 +60,7 @@ class ActionService {
             const data = await res.json();
             return {message: `Role updated to: ${data.updatedUser.role}, successfully`, user: data.updatedUser};
         }
-        catch(e) {
-            if(e instanceof Error) {
-                return {message: e.message, user: undefined};
-            }
+        catch {
             return {message: "Something went wrong", user: undefined};
         }
     }
@@ -89,10 +80,8 @@ class ActionService {
             const data = await res.json();
             return {message: `Password updated successfully!`, user: data.updatedUser}; 
         }
-        catch(e) {
-            if(e instanceof Error) {
-                return {message: e.message, user: undefined};
-            }
+        catch {
+            
             return {message: "Something went wrong", user: undefined};
         }
     }

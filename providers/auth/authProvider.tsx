@@ -1,6 +1,6 @@
 "use client"
 import { IAuthContext, IContextUser } from "@/@types";
-import { createContext, use, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { INITIAL_CONTEXT } from "./constants";
 import { provideUser } from "./service/provide-user.service";
 
@@ -15,7 +15,8 @@ const AuthProvider = (props: IProps) => {
     const [isLoading, setLoading] = useState<boolean>(true);
 
     const revalidateUser = async() => {
-        await provideUser();
+        const data = await provideUser();
+        setUser(data);
     }
     useEffect(() => {
         provideUser().then((user) => {
@@ -26,8 +27,8 @@ const AuthProvider = (props: IProps) => {
     
     const value: IAuthContext = {
         user,
-        setUser,
         isLoading,
+        setUser,
         revalidateUser
     }
     return <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>

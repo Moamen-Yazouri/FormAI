@@ -1,88 +1,108 @@
 "use client"
-import MotionedSelect from "@/components/motionedSelect/motionedSelect";
-import MotionField from "@/components/motionTextField/motionTextField";
-import { Button } from "@/components/ui/button";
-import { CardFooter } from "@/components/ui/card";
-import { Form, FormikProvider } from "formik";
-import type React from "react";
-import { use, useEffect, useState } from "react";
-import { OPTIONS } from "./constants";
-import { AuthContext } from "@/providers/auth/authProvider";
-import { usePersonalInfo } from "./hook/usePersonalForm";
-import LoadingSpinner from "@/app/(main)/form-generator/components/loading-spinner";
-import ConfirmationDialog from "../confirmation-dialog/confirmationDialog";
+
+import MotionedSelect from "@/components/motionedSelect/motionedSelect"
+import MotionField from "@/components/motionTextField/motionTextField"
+import { Button } from "@/components/ui/button"
+import { CardFooter } from "@/components/ui/card"
+import { Form, FormikProvider } from "formik"
+import { use, useEffect, useMemo, useState } from "react"
+import { OPTIONS } from "./constants"
+import { AuthContext } from "@/providers/auth/authProvider"
+import { usePersonalInfo } from "./hook/usePersonalForm"
+import LoadingSpinner from "@/app/(main)/form-generator/components/loading-spinner"
+import ConfirmationDialog from "../confirmation-dialog/confirmationDialog"
+import type { UserRoles } from "@/@types"
 
 const PersonalForm = () => {
-    const { user } = use(AuthContext)
-    if (!user) {
-        throw new Error("You are not logged in")
-    }
-    const [disabled, setDisabled] = useState<boolean>(true)
-    const [showConfirmDialog, setShowConfirmDialog] = useState<boolean>(false)
-    const { formik } = usePersonalInfo({ name: user.name, role: user.role })
+  const [disabled, setDisabled] = useState(true)
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false)
+  const { user } = use(AuthContext)
+  const { formik } = usePersonalInfo();
 
-    useEffect(() => {
-        if (formik.values.name !== user.name || formik.values.role !== user.role) {
-        setDisabled(false)
-        } else {
-        setDisabled(true)
-        }
-        if (formik.isSubmitting) {
-        setDisabled(true)
-        }
-    }, [formik.values, formik.isSubmitting, user.name, user.role])
+  const hasChanges = useMemo(() => {
+    if (!user || !formik.values) return false
+    return formik.values.name !== user.name || formik.values.role !== user.role
+  }, [formik.values, user])
 
-    const handleCancle = () => {
+  useEffect(() => {
+    setDisabled(formik.isSubmitting || !hasChanges)
+  }, [hasChanges, formik.isSubmitting])
+
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
         formik.setValues({
-            name: user!.name,
-            role: user!.role,
-        }) 
+          name: user.name,
+          role: user.role,
+        })
+      }, 100)
     }
+  }, [user])
 
-    const handleSubmitClick = () => {
-        setShowConfirmDialog(true)
-    }
-    return (
-        <>
-        <FormikProvider value={formik}>
-            <Form className="flex justify-center flex-col w-full gap-6 p-5">
-            <MotionField name="name" isPassword={false} label="Name:" type="text" placeholder="Enter your name" />
+  if (!user || !formik.values) return null
 
-            <MotionedSelect name={"role"} options={OPTIONS} label="Select a new Role: "/>
-            <CardFooter className="flex justify-end space-x-2 border-t px-3 py-2">
-                {
-                    !disabled && (
-                        <Button
-                            type="button"
-                            variant="outline"
-                            onClick={handleCancle}
-                            disabled={formik.isSubmitting}
-                            className="border-purple-200 hover:bg-purple-50"
-                        >
-                            Cancel
-                        </Button>
-                    )
-                }
+  const handleCancel = () => {
 
-                <Button
-                    type="button"
-                    onClick={handleSubmitClick}
-                    disabled={disabled}
-                    className="bg-purple-600 hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                    {formik.isSubmitting ? <LoadingSpinner className="mr-2" /> : "Save Changes"}
-                </Button>
-            </CardFooter>
-            </Form>
-        </FormikProvider>
-            <ConfirmationDialog 
-                dialogState={showConfirmDialog} 
-                closeDialog={setShowConfirmDialog} 
-                values={formik.values} 
-                submit={formik.submitForm}
-            />
-        </>
-    )
+    formik.setValues({
+      name: user.name,
+      role: user.role,
+    })
+  }
+
+  return (
+    <>
+      <FormikProvider value={formik}>
+        <Form className="flex flex-col gap-6 w-full p-5">
+          <MotionField
+            name="name"
+            type="text"
+            isPassword={false}
+            label="Name:"
+            placeholder="Enter your name"
+          />
+
+        <MotionedSelect name="role" options={OPTIONS} label="Select a new Role:"  disabled={user.role === "admin"}/>
+
+          <CardFooter className="flex justify-end gap-2 border-t border-cyan-700/20 px-3 py-4">
+            {!disabled && (
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={handleCancel}
+                disabled={formik.isSubmitting}
+                className="text-slate-300 hover:text-cyan-200 hover:bg-cyan-900/20 transition-all duration-200"
+              >
+                Cancel
+              </Button>
+            )}
+
+            <Button
+              type="button"
+              onClick={() => setShowConfirmDialog(true)}
+              disabled={disabled}
+              className="bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 hover:from-blue-500 hover:via-indigo-500 hover:to-cyan-500 text-white shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-lg"
+            >
+              {formik.isSubmitting ? (
+                <>
+                  <LoadingSpinner className="mr-2" />
+                  Saving...
+                </>
+              ) : (
+                "Save Changes"
+              )}
+            </Button>
+          </CardFooter>
+        </Form>
+      </FormikProvider>
+
+      <ConfirmationDialog
+        dialogState={showConfirmDialog}
+        closeDialog={setShowConfirmDialog}
+        values={{ ...formik.values, role: formik.values.role as UserRoles }}
+        submit={formik.submitForm}
+      />
+    </>
+  )
 }
 
 export default PersonalForm

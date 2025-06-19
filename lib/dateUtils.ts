@@ -5,8 +5,8 @@ export const getDateFromISO = (isoDate: string) => {
     return date;
 }
 
-export const  getActiveStatus = (date: string, compareDate: string) => {
-    const compare = new Date(compareDate).getTime();
+export const  getActiveStatus = (date: string) => {
+    const compare = new Date().getTime();
     const provided = new Date(date).getTime();
 
     const threeDays = 3 * 24 * 60 * 60 * 1000;
@@ -18,7 +18,6 @@ export const  getActiveStatus = (date: string, compareDate: string) => {
     else {
         return "active"
     }
-
 }
 export const getISOStringFromDay = (day: number) => {
     const now = new Date();

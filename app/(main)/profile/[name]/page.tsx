@@ -1,49 +1,53 @@
+import { Suspense } from "react";
+import ProfilePage from "../components/profile-Page";
+import LoadingPage from "@/components/loadingPage/loadingPage";
+export const metadata = {
+    title: "Profile | FormAI",
+    description:
+        "Manage your account settings. Edit your profile information and update your password securely with Form AI Builder.",
+    keywords: [
+        "profile",
+        "account",
+        "settings",
+        "change password",
+        "change name",
+        "change email",
+        "change role"
+    ],
+    metadataBase: new URL(new URL("https://form-ai-gold.vercel.app"),),
+    openGraph: {
+        title: "Profile | FormAI",
+        description:
+        "Update your personal information and change your password securely. Manage your account settings with ease.",
+        url: "/profile/[name]",
+        siteName: "FormAI",
+        images: ["/profile.png"],
+        type: "website",
+    },
+    twitter: {
+        card: "summary_large_image",
+        site: "@FormAI",
+        creator: "@Moamen-Yazouri",
+        title: "Profile | FormAI",
+        description:
+            "Update your personal information and change your password securely. Manage your account settings with ease.",        
+        images: ["/profile.png"],
+    },
+    other: {
+        formai: "Moamen-Yazouri", 
+        charSet: "utf-8", 
+    },
+};
 
-"use client"
+export const viewport = {
+    width: "device-width",
+    initialScale: 1
+}
 
-import { Suspense, useContext, useState } from "react"
-import { AuthContext } from "@/providers/auth/authProvider"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Loader } from "lucide-react"
-import PersonalInfoForm from "../components/personal-info/personal-info-form"
-import AccountSettings from "../components/account-settings/account-settings"
-import SecuritySettings from "../components/security/security-settings"
-import ProfileHeader from "../components/profile-header"
-import FullPageLoader from "../components/profileLoader"
-
-
-
-export default function ProfilePage() {
-    
-
-
-
+export default async function Page() {
     return (
-        <div className="container max-w-5xl py-6 md:py-10 px-4 md:px-6">
-        <h1 className="text-2xl font-bold text-purple-900 mb-6">Profile Settings</h1>
-        <Suspense fallback={<FullPageLoader/>}>
-            <ProfileHeader  /> 
+        <Suspense fallback={<LoadingPage />}>
+            <ProfilePage />
         </Suspense>
-
-        <Tabs defaultValue="personal" className="mt-8">
-            <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 mb-8">
-            <TabsTrigger value="personal">Personal Info</TabsTrigger>
-            <TabsTrigger value="account">Account</TabsTrigger>
-            <TabsTrigger value="security">Security</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="personal" className="space-y-4">
-                    <PersonalInfoForm />
-            </TabsContent>
-
-            <TabsContent value="account" className="space-y-4">
-                    <AccountSettings />
-            </TabsContent>
-
-            <TabsContent value="security" className="space-y-4">
-                <SecuritySettings />
-            </TabsContent>
-        </Tabs>
-        </div>
     )
 }

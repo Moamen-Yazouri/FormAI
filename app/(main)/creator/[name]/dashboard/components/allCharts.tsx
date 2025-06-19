@@ -1,8 +1,13 @@
-import { ICreatorActivityData, ICreatorResponses, IFormCreationData, IFormResponseData } from "../types"
-import CreatorActivityChart from "./all-charts/creatorActivityChart"
-import FormCreationTrend from "./all-charts/formCreationChart"
-import FormsDistribution from "./all-charts/formDistributionChart"
-import RecentResponses from "./all-charts/recentResponses"
+import { 
+    ICreatorActivityData, 
+    ICreatorResponses, 
+    IFormCreationData, 
+    IFormResponseData 
+} from "../types";
+import CreatorActivityChart from "./all-charts/creatorActivityChart";
+import FormCreationTrend from "./all-charts/formCreationChart";
+import FormsDistribution from "./all-charts/formDistributionChart";
+import RecentResponses from "./all-charts/recentResponses";
 
 
 interface IProps {

@@ -1,6 +1,6 @@
-import { IForm, IFormFromDB, IFormPopulatedByCreator, IFormResponse } from "@/@types";
+import { IForm, IFormFromDB, IFormPopulatedByCreator } from "@/@types";
 import FormModel from "@/DB/models/form.model";
-import responseModel from "@/DB/models/response.model";
+
 
 
 class FormsRepo {
@@ -13,7 +13,6 @@ class FormsRepo {
             .lean<IFormPopulatedByCreator[]>();
         return allowedForms;
     }
-
     async getFormById(formId: string): Promise<IFormFromDB | null> {
         return await FormModel.findById(formId).lean<IFormFromDB>();
     }
@@ -24,9 +23,7 @@ class FormsRepo {
     async addForm(formData: IForm): Promise<IFormFromDB> {
         return await FormModel.create(formData);
     }
-    async addResponse(response: IFormResponse) {
-        return await responseModel.create(response);
-    }
+
 
     async getAnswerdForms (id: string) {
         const answeredForms = await FormModel.findOne({
@@ -51,6 +48,40 @@ class FormsRepo {
     }
     async deleteUserForms (userId: string) {
         return await FormModel.deleteMany({creatorId: userId});
+    }
+    async addRespondant (formId: string, userId: string) {
+        if(userId === "Anonymous") {
+            return await this.addAnonymous(formId);
+        }
+        return await FormModel.findByIdAndUpdate(formId, {
+            $addToSet: {
+                answeredBy: userId
+            }
+        }).lean<IFormFromDB>();
+    }
+    
+    async removeRespondant (formId: string, userId: string) {
+        return await FormModel.findByIdAndUpdate(formId, {
+            $pull: {
+                answeredBy: userId
+            }
+        }).lean<IFormFromDB>();
+    }
+
+    async addAnonymous (formId: string) {
+        return await FormModel.findByIdAndUpdate(formId, {
+            $inc: {
+                anonymousNumber: 1
+            }
+        }).lean<IFormFromDB>();
+    }
+
+    async removeAnonymous (formId: string) {
+        return await FormModel.findByIdAndUpdate(formId, {
+            $inc: {
+                anonymousNumber: -1
+            }
+        }).lean<IFormFromDB>();
     }
 }
 

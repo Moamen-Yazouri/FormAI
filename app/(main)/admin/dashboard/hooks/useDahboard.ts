@@ -1,6 +1,6 @@
 "use client"
-import { IFormTable, IUserData } from "@/@types"
-import { useCallback, useMemo, useState } from "react"
+import { IFormTable, IUserData } from "@/@types";
+import { useMemo, useState } from "react";
 import { generateStateCards } from "../utils/generateStateCards";
 import { getActivesFirst } from "../utils/sortArray";
 import { getSortedForms } from "../utils/sortByResponse";
@@ -45,4 +45,4 @@ const useDashboard = (props: IProps) => {
         stateCardsData,
     }
 }
-export default useDashboard
+export default useDashboard;

@@ -3,11 +3,11 @@ import { IAnswer, IFormField, IFormResponse } from "@/@types";
 import { useFormik } from "formik";
 import { IFormValues } from "../types";
 import { getInitials } from "../getInitials";
-import { generateValidationScehma } from "@/lib/createTheValidationSchema";
 import { toast } from "sonner";
 import { useContext, useMemo, useState } from "react";
 import { AuthContext } from "@/providers/auth/authProvider";
 import * as mongoose from "mongoose";
+import { generateValidationSchema } from "@/lib/createTheValidationSchema";
 
 interface IProps {
     fields: IFormField[];
@@ -19,13 +19,14 @@ interface IProps {
 
 export const useForm = (props: IProps) => {
         const {user} = useContext(AuthContext);
-        const [submitted, setSubmitted] = useState(false)
+        const [submitted, setSubmitted] = useState(false);
+
         const initialValues = useMemo(() => {
-            return getInitials(props.fields); 
+            return getInitials(props.fields);
         }, [props.fields, props.allowAnonymous]);
 
         const validationSchema = useMemo(() => {
-            return generateValidationScehma(props.fields);
+            return generateValidationSchema(props.fields);
         }, [props.fields, props.allowAnonymous]);
 
         const handleSubmitForm = async(
@@ -44,49 +45,52 @@ export const useForm = (props: IProps) => {
                 toast.error("You must be logged in to submit a form!");
                 return;
             }
-            const answers: IAnswer[] = props.fields.map(field => {
+            const answers: IAnswer[] = props.fields
+            .filter(field => {
+                return field.fieldId !== "allowAnonymos";
+            })
+            .map(field => {
                 return {
                     fieldId: field.fieldId,
                     answer: values[field.fieldId.toLowerCase()],
                 }
             })
+            const anonymous = props.allowAnonymous ? !values.allowanonymos: false;
+            
             const formResponse: IFormResponse = {
                 formId: new mongoose.Types.ObjectId(props.formId),
                 answers: answers,
                 userId: new mongoose.Types.ObjectId(user._id),
+                anonymous: anonymous,
             }
-            console.log(formResponse);
-        try{
-
-            const res = await fetch("http://localhost:3000/api/add-response",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(formResponse),
+            
+            try{
+                const res = await fetch("/api/add-response",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(formResponse),
+                    }
+                )
+                if(!res.ok) {
+                    toast.error("Failed To Submot Your Response");
+                    return;
                 }
-            )
-
-            const data = await res.json();
-            if(!res.ok) {
-                console.error(data.message);
-                toast.error(data.message);
-                return;
+                resetForm();
+                toast.success("Response recorded successfully!");
+                setSubmitted(true)
             }
-            resetForm();
-            toast.success("Response recorded successfully!");
-            setSubmitted(true)
-        }
-        catch(err){
-            if(err instanceof Error) {
-                toast.error(err.message)
+            catch(err){
+                if(err instanceof Error) {
+                    toast.error(err.message)
+                }
+                toast.error("Something went wrong!")
             }
-            toast.error("Something went wrong!")
-        }
-        finally{
-            setSubmitting(false);
-        }
+            finally{
+                setSubmitting(false);
+            }
     }
     const formik = useFormik<IFormValues>({
         initialValues: initialValues,
@@ -94,8 +98,9 @@ export const useForm = (props: IProps) => {
             handleSubmitForm(values, resetForm, setSubmitting);
         },
         validationSchema,
+
         enableReinitialize: true,
-        validateOnMount: true,
+        validateOnMount: false,
         validateOnChange: false,
     })
     return {

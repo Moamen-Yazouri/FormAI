@@ -45,6 +45,13 @@ class UserRepo {
             { new: true }
         ).lean<IUserFromDB>();
     }
+    async setLastActive (userId: string, date: Date) {
+        return await userModel.findOneAndUpdate(
+            {_id: userId},
+            {$set: {lastActive: date}},
+            { new: true }
+        ).lean<IUserFromDB>();
+    }
 }
 
 export default new UserRepo();

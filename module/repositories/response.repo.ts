@@ -1,17 +1,29 @@
-import { IResponseFromDB, IResponsePopulatedUser, IUserFromDB, IUserResponseTable } from "@/@types";
+import { 
+    IFormResponse, 
+    IResponseFromDB, 
+    IResponsePopulatedCreator, 
+    IResponsePopulatedUser, 
+    IUserFromDB 
+} from "@/@types";
 import responseModel from "@/DB/models/response.model";
-import mongoose from "mongoose";
-import userRepo from "./user.repo";
-
-import { getDateOnly } from "@/lib/dateUtils";
 import { IResponseDetailsFromDB } from "../services/types";
-import { deleteUser } from "@/components/user-table/actions/user.action";
+
 
 class ResponseRepo {
     async getResponseById(responseId: string) {
-        return await responseModel.findById(responseId);
+        return await responseModel.findById(responseId).lean<IResponseFromDB>() ;
     }
-
+    async updateResponse(response: IFormResponse) {
+        const { formId, userId } = response;
+        return await responseModel.findOneAndUpdate(
+            {
+                formId,
+                userId
+            },
+            response, 
+            { new: true }
+        );
+    }
     async getResponseData(responseId: string) {
         return await responseModel.findById(responseId).populate([
             {
@@ -22,10 +34,12 @@ class ResponseRepo {
                 path: "userId",
                 select: "name email -_id"
             }
-        ]);
+        ]).lean<IResponsePopulatedCreator>();
     }
 
-
+    async addResponse(response: IFormResponse) {
+        return await responseModel.create(response);
+    }
     async getCreatorResponses(creator: IUserFromDB) {
         if (!creator) {
             throw new Error("Invalid Creator name!")
@@ -41,8 +55,35 @@ class ResponseRepo {
                 select: "title"
             }
         ])
-        const filtered = creatorResponses.filter(r => r.formId !== null);
+        const filtered = creatorResponses.filter(r => r.formId !== null).map(res => {
+            if(res.anonymous) {
+                return {...res, userId: {
+                    name: "Anonymous",
+                    email: "Anonymous"
+                }}
+            }
+            else {
+                return res;
+            }
+        });
         return filtered;
+    }
+
+    async getFormResponses(formId: string) {
+            const formResponses = await responseModel.find().populate([
+                {
+                    match: { _id: formId },
+                    path: "formId",
+                    select: "title"
+                },
+                {
+                    path: "userId",
+                    select: "name email -_id"
+                }
+            ]).lean<IResponsePopulatedCreator[]>();
+
+            
+            return formResponses;
     }
 
     async getUserResponses(id: string) {
@@ -52,8 +93,8 @@ class ResponseRepo {
                 select: "title -_id"
             },
         ])
-            .lean<IResponsePopulatedUser[]>();
-        return userResponses;
+        .lean<IResponsePopulatedUser[]>();
+        return userResponses.filter(r => !r.anonymous);
     }
 
     async getUserResponseDetails(id: string) {
@@ -79,6 +120,10 @@ class ResponseRepo {
 
     async deleteUserResponses(userId: string) {
         return await responseModel.deleteMany({ userId: userId });
+    }
+    
+    async getResponseByUserIdAndFormId(userId: string, formId: string) {
+        return await responseModel.findOne({ userId: userId, formId: formId }).lean<IResponseFromDB>();
     }
 }
 

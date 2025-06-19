@@ -6,6 +6,8 @@ import { comparePassword, hashPassword } from "@/lib/compareAndHash";
 import xss from "xss";
 import { generateToken } from "@/lib/generateAndVerifyToken";
 import { cookies } from "next/headers";
+import userService from "./user.service";
+import { getToken } from "@/lib/getToken";
 
 class AuthService {
     async signUp(user: IUser) {
@@ -27,6 +29,7 @@ class AuthService {
             password: hashedPass,
             name: xss(user.name),
             role: user.role,
+            lastActive: new Date(),
         }
 
         const newUser = await authRepo.createUser(data);
@@ -53,19 +56,32 @@ class AuthService {
             email: user.email,
             userId: String(user._id),
             name: user.name,
-            role: user.role
+            role: user.role,
+            lastActive: new Date(),
         }
-        console.log(payload);
+        
         const token = await generateToken(payload);
         (await cookies()).set("auth-token", token, {
             httpOnly: true,
             secure: true,
             expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
         });
+        await userService.updateLastActive(user._id, new Date());
         return {
             user,
             token,
         };
-    }   
+    }
+    
+    async validateName(name: string) {
+        const payload = await getToken();
+        if(!payload) {
+            return "unauthorized";
+        }
+        if(payload.name === name) {
+            return "allowed";
+        }
+        return "forbidden";
+    }
 }
 export default new AuthService();

@@ -1,24 +1,20 @@
 import { connection } from "@/DB/connection";
 import { toast } from "sonner";
-import { IAnsweredForms, IAvailableForms } from "../types";
+import { IAnsweredForms } from "../types";
 import dashboardService from "@/module/services/user/dashboard.service";
-import { IUserForm, IUserResponseDetails } from "@/@types";
+import { IFormTable, IUserResponseDetails } from "@/@types";
 
 class FetchDataService {
-    async availableForms(username: string): Promise<IUserForm[]> {
+    async availableForms(username: string): Promise<IFormTable[]> {
         await connection();
         try {
             const forms = await dashboardService.getUserForms(username);
             if(forms.length === 0) {
                 toast.warning("No forms available!");
             }
-            return forms;
+            return forms.slice(0, 5);
         }
-        catch (error) {
-            if(error instanceof Error) {
-                console.error(error.message);
-                return [];
-            }
+        catch  {
             console.error("Something went wrong!");
             return [];
         }
@@ -30,11 +26,7 @@ class FetchDataService {
             const responses = await dashboardService.getUserResponses(username);
             return responses;
         }
-        catch (error) {
-            if(error instanceof Error) {
-                console.error(error.message);
-                return [];
-            }
+        catch {
             console.error("Something went wrong!");
             return [];
         }
@@ -46,16 +38,11 @@ class FetchDataService {
         try {
             const responsesDetails: IUserResponseDetails[] = await dashboardService.getUserResponsesDetails(username);
             if(responsesDetails.length == 0) {
-                toast.warning("You do not have answered any forms");
                 return [];
             }
             return responsesDetails
         }
-        catch (error) {
-            if(error instanceof Error) {
-                console.error(error.message);
-                return [];
-            }
+        catch  {
             console.error("Something went wrong!");
             return [];
         }

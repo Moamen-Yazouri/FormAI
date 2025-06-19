@@ -7,7 +7,8 @@ import {
 } from "@/@types";
 
 class FetchData {
-    private baseUrl: string = "http://localhost:3000//api/dashboard";
+    private publicNext: string = process.env.NEXT_PUBLIC_URL || "";
+    private baseUrl: string = `${this.publicNext}/api/admin`;
 
     async usersActivity(): Promise<IUsersActivityData[]> {
         try {
@@ -20,10 +21,7 @@ class FetchData {
             const userActivityData: IUsersActivityData[] = data.usersActivityData;
             return userActivityData;
         }
-        catch(err) {
-            if(err instanceof Error) {
-                console.error(err.message);
-            }
+        catch {
             console.error("faild to fetch users activity data!");
             return []
         }
@@ -40,10 +38,7 @@ class FetchData {
             const formCreationData: IFormCreationData[] = data.formsCreationData;
             return formCreationData;
         }
-        catch(err) {
-            if(err instanceof Error) {
-                console.error(err.message);
-            }
+        catch {
             console.error("faild to fetch forms creation data!");
             return []
         }
@@ -60,10 +55,8 @@ class FetchData {
             const formResponsesData: IFormResponseData[] = data.formResponsesData;
             return formResponsesData;
         }
-        catch(err) {
-            if(err instanceof Error) {
-                console.error(err.message);
-            }
+        catch {
+
             console.error("faild to fetch forms responses data!");
             return []
         }        
@@ -80,10 +73,8 @@ class FetchData {
             const usersData: IUserData[] = data.usersData;
             return usersData;
         }
-        catch(err) {
-            if(err instanceof Error) {
-                console.error(err.message);
-            }
+        catch {
+    
             console.error("faild to fetch users data!");
             return []
         }    
@@ -100,10 +91,7 @@ class FetchData {
             const formsData: IFormTable[] = data.formsData;
             return formsData;
         }
-        catch(err) {
-            if(err instanceof Error) {
-                console.error(err.message);
-            }
+        catch {
             console.error("faild to fetch forms data!");
             return []
         }    

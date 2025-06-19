@@ -1,4 +1,4 @@
-import React, { use } from 'react'
+import { useContext } from 'react'
 import { FormValues } from '../types'
 import { useFormik } from 'formik';
 import { INITIAL_VALUES } from '../constants';
@@ -8,8 +8,9 @@ import { toast } from 'sonner';
 import { AuthContext } from '@/providers/auth/authProvider';
 
 export const usePasswordUpdate = () => {
-    const {user} = use(AuthContext);
-    if(!user) {
+    const {user, isLoading} = useContext(AuthContext);
+    
+    if(!user && !isLoading) {
         throw new Error("User not found"); 
     }
     const onSubmit = async (
@@ -18,7 +19,7 @@ export const usePasswordUpdate = () => {
         resetForm: () => void,
     ) => {
         const data = await actionService.updatePassword(
-            String(user._id),
+            String(user!._id),
             values.prevPassword,
             values.newPassword,
         );

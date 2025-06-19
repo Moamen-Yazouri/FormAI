@@ -1,5 +1,5 @@
 export const deleteForm = async (formId: string) => {
-    const localUrl = process.env.NEXT_PUBLIC_URL;
+    const localUrl = process.env.NEXT_PUBLIC_URL || "";
 
     try {
         const res = await fetch(`${localUrl}/api/delete-form`, {
@@ -10,10 +10,10 @@ export const deleteForm = async (formId: string) => {
         body: JSON.stringify({ formId }),
         });
 
-        const { formsData } = await res.json();
-        return formsData;
-    } catch (err: any) {
-        console.error(err.message || "Failed to delete the form!");
+        const { deletedForm } = await res.json();
+        return deletedForm;
+    } catch {
+        console.error("Failed to delete the form!");
         return null;
     }
 };
