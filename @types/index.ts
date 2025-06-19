@@ -7,6 +7,7 @@ export interface IUserFromDB {
     role: UserRoles;  
     createdAt: string;    
     updatedAt: string;
+    lastActive: string;
 }
 
 export interface IFormFromDB extends IForm {
@@ -20,10 +21,11 @@ export interface IResponseFromDB {
     _id: string; 
     formId: string;
     userId: string;
-    answers: string[]; 
+    answers: IAnswer[]; 
     createdAt: string; 
     updatedAt: string;
     __v: number;
+    anonymous: boolean;
 }
 
 export enum ERole {
@@ -38,6 +40,7 @@ export interface IUser {
     role: UserRoles;
     email: string;
     password: string;
+    lastActive: Date;
 }
 export enum EType {
     text = "text",
@@ -72,6 +75,7 @@ export interface IForm {
     allowAnonymous: boolean;
     expiredAt?: Date;
     allowedUsers?: string[];
+    anonymousNumber?: number
 }
 
 export type IAnswer = {
@@ -81,8 +85,9 @@ export type IAnswer = {
 
 export interface IFormResponse {
     formId: mongoose.Types.ObjectId;
-    userId?: mongoose.Types.ObjectId;
-    answers: IAnswer[]; 
+    userId: mongoose.Types.ObjectId;
+    answers: IAnswer[];
+    anonymous: boolean;
 }
 
 export interface IDisplayResponse {
@@ -105,6 +110,7 @@ export interface IAuthContext {
     user: IContextUser | null;
     setUser: React.Dispatch<React.SetStateAction<IContextUser | null>>;
     revalidateUser: () => Promise<void>;
+    isLoading: boolean;
 }
 
 export interface IUserData {
@@ -121,8 +127,10 @@ export interface IFormTable {
     id: string,
     name: string,
     creator: string,
+    description: string,
     responses: number,
     createdAt: Date | string,
+    deadline: string;
 }
 
 export interface IUserForm {
@@ -138,6 +146,7 @@ export interface IFormPopulatedByCreator extends Omit<IFormFromDB, "creatorId"> 
         name: string
     }
 }
+
 
 export interface IUserResponse extends Omit<IFormResponse, "formId">  {
     formId: {
@@ -165,11 +174,6 @@ export interface IFormResponseData {
     name: string,
     value: number,
 }
-// export interface IStateCard {
-//     stateTitle: string,
-//     stateValue: number,
-//     statePercentage: number,
-// }
 
 export interface IActiveUsers {
     id: string | number,
@@ -211,4 +215,9 @@ export interface IUserResponseDetails {
     creator:  string,
     createdAt: string,
     completedAt: string,
+}
+
+export interface IOptions {
+    value: string;
+    label: string;
 }

@@ -1,5 +1,5 @@
 import { IUser } from "@/@types";
 
-export interface FormValues extends IUser {
+export interface FormValues extends Omit<IUser, "lastActive">   {
     confirmedPassword: string;
 }
