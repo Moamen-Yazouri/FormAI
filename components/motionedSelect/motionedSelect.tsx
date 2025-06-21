@@ -1,16 +1,17 @@
 "use client"
 
-import withMotion from "@/HOC/withMotion"
-import { Label } from "@radix-ui/react-label"
-import { useField } from "formik"
+import withMotion from "@/HOC/withMotion";
+import { Label } from "@radix-ui/react-label";
+import { useField } from "formik";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select"
-import { IOptions } from "@/@types"
+} from "../ui/select";
+import { IOptions } from "@/@types";
+import { useEffect } from "react";
 
 
 type ISelectProps = Omit<
@@ -28,8 +29,15 @@ const CustomSelectField: React.FC<ISelectProps> = ({
   label,
   options,
   disabled,
+  defaultValue
 }) => {
-  const [field, meta, helpers] = useField<string>(name)
+  const [field, meta, helpers] = useField<string>(name);
+
+  useEffect(() => {
+    if (!field.value && options.length > 0) {
+      helpers.setValue(defaultValue || options[0].value)
+    }
+  }, [field.value, options, helpers, defaultValue]);
 
   return (
     <div className="flex flex-col gap-2">
@@ -46,14 +54,10 @@ const CustomSelectField: React.FC<ISelectProps> = ({
         name={field.name}
         value={field.value}
         onValueChange={(val) => helpers.setValue(val)}
-        disabled={disabled || false}
+        disabled={disabled || false} 
       >
         <SelectTrigger className="bg-slate-900/50 w-fit border border-cyan-600/30 text-slate-200 placeholder:text-cyan-300 hover:border-cyan-500 focus:border-cyan-500 focus:ring-cyan-500/30 transition-all duration-200">
-          <SelectValue
-            placeholder={
-              label && label.toLowerCase() === name ? "Select" : name
-            }
-          />
+          <SelectValue placeholder={label} />
         </SelectTrigger>
         <SelectContent className="bg-slate-900/90 border border-cyan-600/20 text-blue-200 shadow-xl backdrop-blur-md">
           {options.map((option, index) => (
