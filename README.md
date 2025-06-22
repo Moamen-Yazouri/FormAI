@@ -8,8 +8,15 @@ FormAI is a modern, intelligent platform that enables creators to generate smart
 
 ## 🌐 Live Demo
 
-🔗 [[https://formai.com](https://form-ai-gold.vercel.app/)]  
+🔗 [https://formai.com](https://form-ai-gold.vercel.app/)
 
+---
+
+## 🎥 Demo Video
+
+[![Watch the FormAI Demo](https://img.youtube.com/vi/1FZRk-t1zFc/0.jpg)](https://youtu.be/1FZRk-t1zFc)
+
+> 🎬 Click the image to watch a quick demo of how FormAI works in action — from AI form generation to live response tracking.
 
 ---
 
@@ -48,7 +55,7 @@ MONGODB_URI=your_mongodb_connection_string
 SALT_ROUNDS=10
 SESSION_SECRET=your_session_secret
 
-NEXT_PUBLIC_URL= your local host link
+NEXT_PUBLIC_URL=http://localhost:3000
 
 GEMINI_API_KEY=your_gemini_api_key
 
