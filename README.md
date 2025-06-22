@@ -8,8 +8,8 @@ FormAI is a modern, intelligent platform that enables creators to generate smart
 
 ## 🌐 Live Demo
 
-🔗 [https://formai.com](https://formai.com)  
-*(Replace with your actual deployed link)*
+🔗 [[https://formai.com](https://form-ai-gold.vercel.app/)]  
+
 
 ---
 
