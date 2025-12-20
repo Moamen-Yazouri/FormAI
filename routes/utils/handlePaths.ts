@@ -24,7 +24,7 @@ export const getNamePath = (pathname: string) => {
     }
     if(paths.length > 1) {
         const isValid = paths[1].split("").every((char) => {
-            !Number(char) && char !== "-"
+            return !Number(char) && char !== "-"
         })
         if(!isValid) {
             return paths[1];

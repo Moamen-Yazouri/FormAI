@@ -14,7 +14,7 @@ export default function RootLayout({
 
         <SidebarProvider className="w-full">
           <AppSidebar />
-          <ScrollableContainer maxHeight="100vh" className="">
+          <ScrollableContainer maxHeight="100vh" className="w-full">
             {children}
           </ScrollableContainer>
         </SidebarProvider>
