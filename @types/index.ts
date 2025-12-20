@@ -181,7 +181,7 @@ export interface IActiveUsers {
     email: string,
     avatar: string,
     lastActive: string,
-    status: String,
+    status: string,
     forms: number,
 }
 
